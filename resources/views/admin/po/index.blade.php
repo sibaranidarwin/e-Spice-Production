@@ -184,6 +184,7 @@
                                 <table id="list" class="table">
                                     <thead>
                                         <tr>
+                                            <th>Selection</th>
                                             <th class="serial">#</th>
                                             <th width="501px">GR Number</th>
                                             <th class="text-center">No PO</th>
@@ -191,12 +192,12 @@
                                             <th class="text-center">GR Slip Date</th>
                                             <th class="text-center">Material Number</th>
                                             <th class="text-center">Reference</th>
-                                            <th class="text-center">Vendor Part Number</th>
+                                            <!-- <th class="text-center">Vendor Part Number</th>
                                             <th class="text-center">Item Description</th>
                                             <th class="text-center">UoM</th>
                                             <th class="text-center">Currency</th>
                                             <th class="text-center">Harga Satuan</th>
-                                            <th class="text-center">Jumlah</th>
+                                            <th class="text-center">Jumlah</th> -->
                                             <th class="text-center">Jumlah Harga</th>
                                             <th class="text-center">Tax Code</th>
                                             <th class="text-center">Valuation Type</th>
@@ -206,6 +207,7 @@
                                     <tbody>
                                         @foreach($good_receipts as $good_receipt)
                                         <tr>
+                                            <td><input name="selector[]" type="checkbox" <?php echo $good_receipt ?> value="<?php echo $good_receipt['id']; ?>"></td>
                                             <td class="serial">{{++$i}}</td>
                                             <td><span class="name">{{$good_receipt->GR_Number}}</span> </td>
                                             <td class="text-center"> <span class="">{{$good_receipt->id_gr}}</span> </td>
@@ -213,12 +215,12 @@
                                             <td class="text-center"> <span class="">{{$good_receipt->GR_Date}}</span> </td>
                                             <td class="text-center"> <span class="">{{$good_receipt->Material_Number}}</span> </td>
                                             <td class="text-center"> <span class="">{{$good_receipt->Ref_Doc_No}}</span> </td>
-                                            <td class="text-center"> <span class="">{{$good_receipt->Vendor_Part_Number}}</span> </td>
+                                            <!-- <td class="text-center"> <span class="">{{$good_receipt->Vendor_Part_Number}}</span> </td>
                                             <td class="text-center"> <span class="">{{$good_receipt->Mat_Desc}}</span> </td>
                                             <td class="text-center"> <span class="">{{$good_receipt->UOM}}</span> </td>
                                             <td class="text-center"> <span class="">{{$good_receipt->Currency}}</span> </td>
                                             <td class="text-center"> <span class="">{{$good_receipt->harga_satuan}}</span> </td>
-                                            <td class="text-center"> <span class="">{{$good_receipt->jumlah}}</span> </td>
+                                            <td class="text-center"> <span class="">{{$good_receipt->jumlah}}</span> </td> -->
                                             <td class="text-center"> <span class="">{{$good_receipt->jumlah_harga}}</span> </td>
                                             <td class="text-center"> <span class="">{{$good_receipt->Tax_Code}}</span> </td>
                                             <td class="text-center"> <span class=""></span> </td>
