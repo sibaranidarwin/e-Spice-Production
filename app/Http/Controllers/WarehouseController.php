@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Vendor;
 use App\Profile;
-
+use App\good_receipt;
 
 use Auth;
 use Illuminate\Support\Facades\Hash;
@@ -29,6 +29,11 @@ class WarehouseController extends Controller
         $users = User::first()->paginate(10);
         return view('admin.warehouse.index', compact('users'))
                 ->with('i',(request()->input('page', 1) -1) *5);
+    }
+    public function index2()
+    {
+       
+        return view('warehouse.dashboard');
     }
 
     /**

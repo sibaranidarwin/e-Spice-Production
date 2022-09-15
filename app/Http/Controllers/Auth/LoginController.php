@@ -67,8 +67,7 @@ class LoginController extends Controller
                 return redirect()->route('index');
             }
         }else{
-            return redirect('login-user')
-                ->with('error','Email-Address And Password Are Wrong.');
+            return redirect('login-user')->with('error','Email-Address And Password Are Wrong.');
         }
           
     }

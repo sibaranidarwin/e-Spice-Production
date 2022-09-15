@@ -104,8 +104,26 @@ Route::get('vendor/dashboard', 'VendorController@index2')->name('vendor/dashboar
 // // INI MIDDLEWARE Accounting
 // // DASHBOARD
 Route::get('accounting/dashboard', 'AccountingController@index2')->name('accounting/dashboard');
-
 Route::get('accounting/po', 'AccountingController@po');
+
+
+// // INI MIDDLEWARE Procumerent
+Route::get('procumerent/dashboard', 'ProcumerentController@index2')->name('procurement/dashboard');
+Route::get('procumerent/po', 'ProcumerentController@po');
+
+
+// // INI MIDDLEWARE Warehouse
+Route::get('warehouse/dashboard', 'WarehouseController@index2')->name('warehouse/dashboard');
+Route::get('warehouse/po', 'WarehouseController@po');
+
+// // INI MIDDLEWARE Vendor
+Route::get('vendor/dashboard', 'VendorController@index2')->name('vendor/dashboard');
+Route::get('vendor/po', 'VendorController@po');
+
+
+
+
+
 // // PENGUMUMAN
 Route::get('petugas/pengumuman', 'PetugasPengumumanController@index')->middleware('petugas');
 Route::get('petugas/pengumuman/{id}/show', 'PetugasPengumumanController@showing')->name('petuags-pengumuman.showing')->middleware('petugas');

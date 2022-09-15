@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\User;
 use App\Vendor;
 use App\Profile;
+use App\good_receipt;
 
 
 use Auth;
@@ -27,7 +28,7 @@ class VendorController extends Controller
     public function index()
     {
         $users = User::first()->paginate(10);
-        return view('admin.accounting.index', compact('users'))
+        return view('admin.vendor.index', compact('users'))
                 ->with('i',(request()->input('page', 1) -1) *5);
     }
     public function index2()

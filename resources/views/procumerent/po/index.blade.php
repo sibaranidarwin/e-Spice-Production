@@ -2,8 +2,7 @@
 @section('content')
 
 <body>
-    <!-- Left Panel -->
-    <aside id="left-panel" class="left-panel">
+<aside id="left-panel" class="left-panel">
         <nav class="navbar navbar-expand-sm navbar-default">
             <div id="main-menu" class="main-menu collapse navbar-collapse">
                 <ul class="nav navbar-nav">
@@ -15,8 +14,8 @@
                     <li class="menu-item-has-children dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-envelope"></i>Data PO</a>
                         <ul class="sub-menu children dropdown-menu">                            
-                            <li><i class="fa fa-tags"></i><a href="{{url('admin/po')}}">Tampilkan</a></li>
-                            <li><i class="fa fa-pencil-square-o"></i><a href="{{url('admin/pengumuman/create')}}">Buat PO</a></li>
+                            <li><i class="fa fa-tags"></i><a href="{{url('accounting/po')}}">Tampilkan</a></li>
+                            <li><i class="fa fa-pencil-square-o"></i><a href="{{url('accounting/pengumuman/create')}}">Buat PO</a></li>
                         </ul>
                     </li>
 
@@ -35,55 +34,11 @@
 
                         </ul>
                     </li>
-                    <li class="menu-title">User</li><!-- /.menu-title -->
-                    <li class="menu-item-has-children dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-user"></i>Admin</a>
-                        <ul class="sub-menu children dropdown-menu">
-                            <li><i class="menu-icon fa fa-users"></i><a href="{{url('admin/user')}}">Semua User</a></li>
-                            <li><i class="menu-icon fa fa-unlock-alt"></i><a href="{{route('user.showing',auth()->user()->id)}}">Edit Profile</a></li>
-                        </ul>
-                    </li>
-                    <li class="menu-item-has-children dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-user"></i>Accounting</a>
-                        <ul class="sub-menu children dropdown-menu">
-                            <li><i class="menu-icon fa fa-share"></i><a href="{{url('admin/accounting')}}">Semua Accounting</a></li>
-                        </ul>
-                    </li>
-                    <li class="menu-item-has-children dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-user"></i>Warehouse</a>
-                        <ul class="sub-menu children dropdown-menu">
-                            <li><i class="menu-icon fa fa-share"></i><a href="{{url('admin/warehouse')}}">Semua Warehouse</a></li>
-                        </ul>
-                    </li>
-                    <li class="menu-item-has-children dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-user"></i>Procumerent</a>
-                        <ul class="sub-menu children dropdown-menu">
-                            <li><i class="menu-icon fa fa-share"></i><a href="{{url('admin/procumerent')}}">Semua Procumerent</a></li>
-                        </ul>
-                    </li>
-                    <li class="menu-item-has-children dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-users"></i>Vendor</a>
-                        <ul class="sub-menu children dropdown-menu">
-                            <li><i class="menu-icon fa fa-share"></i><a href="{{url('admin/vendor')}}">Semua Vendor</a></li>
-                        </ul>
-                    </li>
-                    <li class="menu-title">Laporan</li><!-- /.menu-title -->
-                    <li class="menu-item-has-children dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-paste"></i>Laporan</a>
-                        <ul class="sub-menu children dropdown-menu">                            
-                            <li><i class="fa fa-rotate-right"></i><a href="{{url('admin/laporan')}}">Buat Laporan</a></li>
-                        </ul>
-                    </li>
-
+                  
                 </ul>
             </div><!-- /.navbar-collapse -->
         </nav>
     </aside>
-    <!-- /#left-panel -->
-
-
-
-    <!-- Left Panel -->
 
     <!-- Right Panel -->
 
@@ -145,8 +100,8 @@
                             <div class="page-title">
                                 <ol class="breadcrumb text-right">
                                     <li><a href="#">Dashboard</a></li>
-                                    <li><a href="#">User</a></li>
-                                    <li class="active">Semua Procumerent</li>
+                                    <li><a href="#">Good Receipt</a></li>
+                                    <li class="active">Tampilkan</li>
                                 </ol>
                             </div>
                         </div>
@@ -183,61 +138,111 @@
                                 </div>
                               @endif
                             <div class="card-header">
-                                <strong class="card-title">Semua Vendor</strong>
+                                <strong class="card-title">Semua Good Receipt</strong>
                             </div>
                             <div class="table-stats order-table ov-h">
-                                <table class="table ">
+                                <table id="list" class="table">
                                     <thead>
                                         <tr>
                                             <th class="serial">#</th>
-                                            <th class="avatar">Avatar</th>
-                                            <th>Name</th>
-                                            <th>Email</th>
-                                            <th class="text-center">Role</th>
-                                            <th class="text-center">Action</th>
+                                            <th width="501px">GR Number</th>
+                                            <th class="text-center">No PO</th>
+                                            <th class="text-center">PO Item</th>
+                                            <th class="text-center">GR Slip Date</th>
+                                            <th class="text-center">Material Number</th>
+                                            <th class="text-center">Reference</th>
+                                            <th class="text-center">Vendor Part Number</th>
+                                            <th class="text-center">Item Description</th>
+                                            <th class="text-center">UoM</th>
+                                            <th class="text-center">Currency</th>
+                                            <th class="text-center">Harga Satuan</th>
+                                            <th class="text-center">Jumlah</th>
+                                            <th class="text-center">Jumlah Harga</th>
+                                            <th class="text-center">Tax Code</th>
+                                            <th class="text-center">Valuation Type</th>
+                                            <th width="501px">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach($users as $user)
-                                        @if($user->level == "procurement")
+                                        @foreach($good_receipts as $good_receipt)
                                         <tr>
                                             <td class="serial">{{++$i}}</td>
-                                            <td class="avatar">
-                                                <div class="round-img">
-                                                    <a href="#"><img class="rounded-circle" src="{{asset('upload/'.$user->foto)}}" alt=""></a>
-                                                </div>
-                                            </td>
-                                            <td> <span class="name">{{$user->name}}</span> </td>
-                                            <td class="text-lowercase">{{$user->email}} </td>
-                                            <td class="text-center"> <span class="badge badge-warning font-weight-bold">Procumerent</span> </td>
-                                            <td class="text-center"><span>
-                                                <form action="{{route('user.destroy',$user->id)}}" method="POST">
+                                            <td><span class="name">{{$good_receipt->GR_Number}}</span> </td>
+                                            <td class="text-center"> <span class="">{{$good_receipt->id_gr}}</span> </td>
+                                            <td class="text-center"> <span class="">{{$good_receipt->po_item}}</span> </td>
+                                            <td class="text-center"> <span class="">{{$good_receipt->GR_Date}}</span> </td>
+                                            <td class="text-center"> <span class="">{{$good_receipt->Material_Number}}</span> </td>
+                                            <td class="text-center"> <span class="">{{$good_receipt->Ref_Doc_No}}</span> </td>
+                                            <td class="text-center"> <span class="">{{$good_receipt->Vendor_Part_Number}}</span> </td>
+                                            <td class="text-center"> <span class="">{{$good_receipt->Mat_Desc}}</span> </td>
+                                            <td class="text-center"> <span class="">{{$good_receipt->UOM}}</span> </td>
+                                            <td class="text-center"> <span class="">{{$good_receipt->Currency}}</span> </td>
+                                            <td class="text-center"> <span class="">{{$good_receipt->harga_satuan}}</span> </td>
+                                            <td class="text-center"> <span class="">{{$good_receipt->jumlah}}</span> </td>
+                                            <td class="text-center"> <span class="">{{$good_receipt->jumlah_harga}}</span> </td>
+                                            <td class="text-center"> <span class="">{{$good_receipt->Tax_Code}}</span> </td>
+                                            <td class="text-center"> <span class=""></span> </td>
+                                            <td class="text-center"><span >
+                                            <form action="" method="POST">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-danger fa fa-times" onclick="return confirm('Are you sure?')"></button>
-                                                <a href="{{route('masyarakat.showing',$user->id)}}" class="btn fa fa-eye"></a>
-                                                <a href="{{route('masyarakat.edit',$user->id)}}"  class="btn btn-primary fa fa-edit"></a> 
+                                                <a href="" class="btn fa fa-eye"></a>
+                                                <a href=""  class="btn btn-primary fa fa-edit"></a>
                                             </form>
                                             </span></td>
                                         </tr>
-                                        @endif
-                                        @endforeach
-                                       
-
-                                        
+                                        @endforeach  
                                     </tbody>
                                 </table>
                             </div> <!-- /.table-stats -->
                         </div>
                     </div>
                 </div>
+            </div>
+
         </div>
     </div><!-- .animated -->
 </div><!-- .content -->
 
 <div class="clearfix"></div>
 
+<footer class="site-footer">
+    <div class="footer-inner bg-white">
+        <div class="row">
+            <div class="col-sm-6">
+                Copyright &copy; 2018 Ela Admin
+            </div>
+            <div class="col-sm-6 text-right">
+                Designed by <a href="https://colorlib.com">Colorlib</a>
+            </div>
+        </div>
+    </div>
+</footer>
 
 </div><!-- /#right-panel -->
 
+<script>
+        $(document).ready(function() {
+            $('#list').DataTable({
+                "order": [
+                    [1, "desc"]
+                ],
+                "language": {
+                    "lengthMenu": "Tampilkan _MENU_ Data Keluarga per halaman",
+                    "zeroRecords": "Maaf, tidak dapat menemukan apapun",
+                    "info": "Menampilkan halaman _PAGE_ dari _PAGES_ halaman",
+                    "infoEmpty": "Tidak ada Keluarga yang dapat ditampilkan",
+                    "infoFiltered": "(dari _MAX_ total keluarga)",
+                    "search": "Cari :",
+                    "paginate": {
+                        "first": "Pertama",
+                        "last": "Terakhir",
+                        "next": "",
+                        "previous": ""
+                    },
+                }
+            });
+        });
+    </script>
 @endsection
