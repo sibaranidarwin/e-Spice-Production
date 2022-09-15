@@ -10,7 +10,7 @@
         <link rel="shortcut icon" type="image/x-icon" href="{{asset('assets/img/favicon.ico')}}">
 
         <!-- CSS here -->
-            <link rel="stylesheet" href="{{asset('assets/css/bootstrap.min.css')}}">
+        <link rel="stylesheet" href="{{asset('assets/css/bootstrap.min.css')}}">
   <link rel="stylesheet" href="{{asset('assets/css/owl.carousel.min.css')}}">
   <link rel="stylesheet" href="{{asset('assets/css/slicknav.css')}}">
   <link rel="stylesheet" href="{{asset('assets/css/animate.min.css')}}">
@@ -47,6 +47,7 @@
             @yield('content')
         </main>
    <footer>
+
 
        <!-- Footer Start-->
       <div class="footer-main" data-background="assets/img/shape/footer_bg.png">

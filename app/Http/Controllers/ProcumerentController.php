@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Vendor;
 use App\Profile;
+use App\good_receipt;
 
 
 use Auth;
@@ -30,7 +31,19 @@ class ProcumerentController extends Controller
         return view('admin.procumerent.index', compact('users'))
                 ->with('i',(request()->input('page', 1) -1) *5);
     }
-
+    public function index2()
+    {
+        {
+            return view('procumerent.dashboard');
+        }
+    }
+    
+    public function po()
+    {   
+        $good_receipts = good_receipt::latest()->get();
+        return view('procumerent.po.index',compact('good_receipts'))
+                ->with('i',(request()->input('page', 1) -1) *5);
+    }
     /**
      * Show the form for creating a new resource.
      *
