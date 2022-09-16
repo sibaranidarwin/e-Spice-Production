@@ -99,8 +99,6 @@ Route::resource('admin/laporan', 'LaporanController')->middleware('admin');
 Route::get('pengaduan_pdf/cetak_pdf', 'LaporanController@cetak_pdf')->name('cetak-laporan');
 
 
-Route::get('vendor/dashboard', 'VendorController@index2')->name('vendor/dashboard');
-
 // // INI MIDDLEWARE Accounting
 // // DASHBOARD
 Route::get('accounting/dashboard', 'AccountingController@index2')->name('accounting/dashboard');
@@ -116,10 +114,11 @@ Route::get('procumerent/po', 'ProcumerentController@po');
 Route::get('warehouse/dashboard', 'WarehouseController@index2')->name('warehouse/dashboard');
 Route::get('warehouse/po', 'WarehouseController@po');
 
+
 // // INI MIDDLEWARE Vendor
 Route::get('vendor/dashboard', 'VendorController@index2')->name('vendor/dashboard');
 Route::get('vendor/po', 'VendorController@po');
-
+Route::get('vendor/createpo', 'VendorController@createpo')->name('vendor/createpo');
 
 
 

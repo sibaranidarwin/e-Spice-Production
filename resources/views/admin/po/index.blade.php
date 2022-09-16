@@ -16,8 +16,7 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-envelope"></i>Data PO</a>
                         <ul class="sub-menu children dropdown-menu">                            
                             <li><i class="fa fa-tags"></i><a href="{{url('admin/po')}}">Tampilkan</a></li>
-                            <li><i class="fa fa-pencil-square-o"></i><a href="{{url('admin/pengumuman/create')}}">Buat PO</a></li>
-                        </ul>
+                           </ul>
                     </li>
 
                     <li class="menu-item-has-children dropdown ">
@@ -185,8 +184,8 @@
                                     <thead>
                                         <tr>
                                             <th>Selection</th>
-                                            <th class="serial">#</th>
-                                            <th width="501px">GR Number</th>
+                                            <th class="serial">No</th>
+                                            <th width="5px">GR Number</th>
                                             <th class="text-center">No PO</th>
                                             <th class="text-center">PO Item</th>
                                             <th class="text-center">GR Slip Date</th>

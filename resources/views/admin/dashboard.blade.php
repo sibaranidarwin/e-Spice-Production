@@ -15,7 +15,7 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-envelope"></i>Data PO</a>
                         <ul class="sub-menu children dropdown-menu">                            
                             <li><i class="fa fa-tags"></i><a href="{{url('admin/po')}}">Tampilkan</a></li>
-                            <li><i class="fa fa-pencil-square-o"></i><a href="{{url('admin/pengumuman/create')}}">Buat PO</a></li>
+                           
                         </ul>
                     </li>
 
@@ -139,7 +139,7 @@
                                     <div class="stat-content">
                                         <div class="text-left dib">
                                             <div class="stat-text"><span class="count">23569</span></div>
-                                            <div class="stat-heading">Pengaduan</div>
+                                            <div class="stat-heading"></div>
                                         </div>
                                     </div>
                                 </div>
