@@ -27,7 +27,7 @@
                         </div>
                         <div class="col-xl-2 col-lg-2 col-md-3">
                             <div class="header-right-btn f-right d-none d-lg-block">
-                                <a href="{{url('login-user')}}" class="btn header-btn">MASUK</a>
+                                <a href="{{url('login-user')}}" class="btn header-btn">Login</a>
                             </div>
                         </div>
                         @else
@@ -44,7 +44,7 @@
                         </div>
                         <div class="col-xl-3 col-lg-3 col-md-3">
                             <div class="header-right-btn f-right d-none d-lg-block">
-                                <a href="{{url('pengaduan')}}" class="btn header-btn">Masuk</a>
+                                <a href="{{url('pengaduan')}}" class="btn header-btn">Login</a>
                                 <a href="{{url('profile')}}"class="btn header-btn small" style=";min-width: 5px;min-height: 5px;width: 40px;font-size: 18px;height: 40px;padding: 10px" ><i class="fa fa-user text-center"></i></a>
                                 <a href="{{ route('logout') }}"   onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();" class="btn header-btn small" style=";min-width: 5px;min-height: 5px;width: 40px;font-size: 18px;height: 40px;padding: 10px" ><i class="fa fa-sign-out-alt text-center"></i></a>

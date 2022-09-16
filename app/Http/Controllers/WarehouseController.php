@@ -35,7 +35,12 @@ class WarehouseController extends Controller
        
         return view('warehouse.dashboard');
     }
-
+    public function po()
+    {   
+        $good_receipts = good_receipt::latest()->get();
+        return view('warehouse.po.index',compact('good_receipts'))
+                ->with('i',(request()->input('page', 1) -1) *5);
+    }
     /**
      * Show the form for creating a new resource.
      *

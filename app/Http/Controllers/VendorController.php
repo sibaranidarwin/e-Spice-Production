@@ -36,7 +36,16 @@ class VendorController extends Controller
        
         return view('vendor.dashboard');
     }
-
+    public function po()
+    {   
+        $good_receipts = good_receipt::latest()->get();
+        return view('vendor.po.index',compact('good_receipts'))
+                ->with('i',(request()->input('page', 1) -1) *5);
+    }
+    public function createpo()
+    {
+        return view('vendor.po.create');
+    }
     /**
      * Show the form for creating a new resource.
      *
