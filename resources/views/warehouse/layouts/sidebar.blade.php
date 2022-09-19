@@ -104,8 +104,8 @@
                         </a>
 
                         <div class="user-menu dropdown-menu">
-                            <a class="nav-link" href="{{route('user.show',auth()->user()->id)}}"><i
-                                    class="fa fa- user"></i>My Profile</a>
+                            <a class="nav-link" href="{{route('warehouse-user.show',auth()->user()->id)}}"><i
+                                class="fa fa- user"></i>My Profile</a>
 
                             <a class="nav-link" href="{{url('admin/pengaduan')}}"><i
                                     class="fa fa- user"></i>Notifications <span class="count">13</span></a>

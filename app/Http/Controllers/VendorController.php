@@ -46,6 +46,16 @@ class VendorController extends Controller
     {
         return view('vendor.po.create');
     }
+    
+    public function product()
+    {
+        return view('vendor.product.index');
+    }
+    public function createproduct()
+    {
+        return view('vendor.product.create');
+    }
+    
     /**
      * Show the form for creating a new resource.
      *
@@ -116,7 +126,7 @@ class VendorController extends Controller
                 'email'     => $request->email,
                 "foto"        => $namaBaru,
                 ]);  
-       return redirect ('admin/masyarakat')->with('success','Data Has Been Update');
+       return redirect ('vendor/masyarakat')->with('success','Data Has Been Update');
     }
 
     /**
@@ -133,10 +143,7 @@ class VendorController extends Controller
     }
     public function showing($id){
         $user = \App\User::find($id);
-        return view('admin.masyarakat.show',compact('user'));  
+        return view('vendor.user.profile',compact('user'));  
     }
-     public function profile($id){
-        $user = \App\Masyarakat::find($id);
-        return view('admin.masyarakat.ubah-masyarakat',compact('user'));  
-    }
+    
 }

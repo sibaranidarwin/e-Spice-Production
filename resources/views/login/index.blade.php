@@ -34,7 +34,7 @@
 		<div class="container-login100">
 			<div class="wrap-login100">
 				<div class="login100-pic js-tilt" data-tilt>
-					<img src="{{asset('assets/img/hero/DOC4.jpg')}}" alt="IMG">
+				<a href="{{ route('index') }}"><img src="{{asset('assets/img/hero/DOC4.jpg')}}" alt="IMG"></a>
 				</div>
 
 				<form method="POST" action="{{ route('loginpost') }}">
@@ -94,7 +94,7 @@
 							Username / Password?
 						</a> -->
 						<a class="txt2" href="{{url('daftar-login')}}">
-							DAFTAR SEKARANG
+							REGISTER NOW
 							<i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
 						</a>
 					</div>

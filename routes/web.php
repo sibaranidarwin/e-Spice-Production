@@ -104,15 +104,20 @@ Route::get('pengaduan_pdf/cetak_pdf', 'LaporanController@cetak_pdf')->name('ceta
 Route::get('accounting/dashboard', 'AccountingController@index2')->name('accounting/dashboard');
 Route::get('accounting/po', 'AccountingController@po');
 
+Route::get('accounting/user/{id}/show', 'AccountingController@showing')->name('accounting-user.show');
+
 
 // // INI MIDDLEWARE Procumerent
 Route::get('procumerent/dashboard', 'ProcumerentController@index2')->name('procurement/dashboard');
 Route::get('procumerent/po', 'ProcumerentController@po');
 
+Route::get('procumerent/user/{id}/show', 'ProcumerentController@showing')->name('procumerent-user.show');
 
 // // INI MIDDLEWARE Warehouse
 Route::get('warehouse/dashboard', 'WarehouseController@index2')->name('warehouse/dashboard');
 Route::get('warehouse/po', 'WarehouseController@po');
+
+Route::get('warehouse/user/{id}/show', 'WarehouseController@showing')->name('warehouse-user.show');
 
 
 // // INI MIDDLEWARE Vendor
@@ -120,7 +125,12 @@ Route::get('vendor/dashboard', 'VendorController@index2')->name('vendor/dashboar
 Route::get('vendor/po', 'VendorController@po');
 Route::get('vendor/createpo', 'VendorController@createpo')->name('vendor/createpo');
 
+Route::get('vendor/product', 'VendorController@product')->name('vendor/product');
+Route::get('vendor/createproduct', 'VendorController@createproduct')->name('vendor/createproduct');
 
+Route::get('vendor/user/{id}/show', 'VendorController@showing')->name('vendor-user.show');
+Route::get('vendor/user/{id}/profile', 'VendorController@show')->name('vendor-user.showing');
+Route::post('vendor/{id}/profile','VendorController@heyupdate')->name('update-vendor');
 
 
 // // PENGUMUMAN

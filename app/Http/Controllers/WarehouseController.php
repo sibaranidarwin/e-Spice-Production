@@ -128,7 +128,7 @@ class WarehouseController extends Controller
     }
     public function showing($id){
         $user = \App\User::find($id);
-        return view('admin.masyarakat.show',compact('user'));  
+        return view('warehouse.user.profile',compact('user'));  
     }
      public function profile($id){
         $user = \App\Masyarakat::find($id);

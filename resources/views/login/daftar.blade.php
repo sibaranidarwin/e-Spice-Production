@@ -39,7 +39,7 @@
                 <form method="POST" action="{{ route('register') }}" class="login100-form validate-form">
                     @csrf
                     <span class="login100-form-title">
-                        DAFTAR AKUN e-Spice
+                        Register e-Spice
                     </span>
 
                     <div class="wrap-input100 validate-input" data-validate="Valid name is required">
@@ -119,7 +119,7 @@
 
                     <div class="container-login100-form-btn">
                         <button type="submit" class="login100-form-btn login">
-                            DAFTAR
+                            Register
                         </button>
                     </div>
 
@@ -131,7 +131,7 @@
 							Username / Password?
 						</a> -->
                         <a class="txt2" href="{{url('login-user')}}">
-                            kembali
+                            Back
                             <i class="fa fa-long-arrow-right " aria-hidden="true"></i>
                         </a>
                     </div>
@@ -141,7 +141,7 @@
                     </div>
                 </form>
                 <div class="login100-pic js-tilt" data-tilt style="padding-top: 10%">
-                    <img src="{{asset('assets/img/hero/DOC4.jpg')}}" alt="IMG">
+                    <a href="{{ route('index') }}"><img src="{{asset('assets/img/hero/DOC4.jpg')}}" alt="IMG"></a>
                 </div>
             </div>
         </div>
