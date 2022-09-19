@@ -131,9 +131,9 @@ class AccountingController extends Controller
     }
     public function showing($id){
         $user = \App\User::find($id);
-        return view('admin.masyarakat.show',compact('user'));  
+        return view('accounting.user.profile',compact('user'));  
     }
-     public function profile($id){
+    public function profile($id){
         $user = \App\Masyarakat::find($id);
         return view('admin.masyarakat.ubah-masyarakat',compact('user'));  
     }
