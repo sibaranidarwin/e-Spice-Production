@@ -100,7 +100,7 @@ php artisan serve
 
 Login Admin http://127.0.0.0:8000/masuk <br>
 email : admin@gmail.com <br>
-password : asdqwe123
+password : adminadmin
 
 ## About Laravel
 
