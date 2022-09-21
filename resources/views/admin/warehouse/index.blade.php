@@ -17,7 +17,7 @@
                         <ol class="breadcrumb text-right">
                             <li><a href="#">Dashboard</a></li>
                             <li><a href="#">User</a></li>
-                            <li class="active">Semua Procumerent</li>
+                            <li class="active">Semua Warehouse</li>
                         </ol>
                     </div>
                 </div>
@@ -54,7 +54,7 @@
                     </div>
                     @endif
                     <div class="card-header">
-                        <strong class="card-title">Semua Vendor</strong>
+                        <strong class="card-title">Semua Warehouse</strong>
                     </div>
                     <div class="table-stats order-table ov-h">
                         <table class="table ">

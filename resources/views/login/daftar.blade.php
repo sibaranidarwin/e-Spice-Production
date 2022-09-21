@@ -64,7 +64,7 @@
                         @enderror
                     </div>
                     <input type="text" name="foto" hidden="" value="avatar.png">
-                    <input type="text" name="level" hidden="" value="admin">
+                    <input type="text" name="level" hidden="" value="vendor">
 
                     <div class="wrap-input100 validate-input" data-validate="Valid companycode is required">
                         <input class="input100" type="number" name="companycode" required=""
@@ -131,7 +131,7 @@
 							Username / Password?
 						</a> -->
                         <a class="txt2" href="{{url('login-user')}}">
-                            Back
+                            BACK TO LOGIN
                             <i class="fa fa-long-arrow-right " aria-hidden="true"></i>
                         </a>
                     </div>

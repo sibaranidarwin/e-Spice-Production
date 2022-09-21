@@ -90,29 +90,29 @@
                     <li class="active">
                         <a href="{{url('admin/dashboard')}}"><i class="menu-icon fa fa-laptop"></i>Dashboard</a>
                     </li>
-                    <li class="menu-title">KELOLA DATA</li><!-- /.menu-title -->
+                    <li class="menu-title">MANAGE DATA</li><!-- /.menu-title -->
                     <li class="menu-item-has-children dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                            aria-expanded="false"> <i class="menu-icon fa fa-envelope"></i>Data PO</a>
+                            aria-expanded="false"> <i class="menu-icon fa fa-list-ul"></i>Purchase Order</a>
                         <ul class="sub-menu children dropdown-menu">
-                            <li><i class="fa fa-tags"></i><a href="{{url('admin/po')}}">Tampilkan</a></li>
+                            <li><i class="fa fa-table"></i><a href="{{url('admin/po')}}">Show</a></li>
                         </ul>
                     </li>
 
                     <li class="menu-item-has-children dropdown ">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                            aria-expanded="false"> <i class="menu-icon fa fa-table"></i>Data Invoice</a>
+                            aria-expanded="false"> <i class="menu-icon fa fa-money"></i>Invoice</a>
                         <ul class="sub-menu children dropdown-menu ">
-                            <li><i class="fa fa-table "></i><a href="{{url('admin/pengaduan')}}">Tampilkan</a></li>
+                            <li><i class="fa fa-table "></i><a href="{{url('admin/pengaduan')}}">Show</a></li>
 
 
                         </ul>
                     </li>
                     <li class="menu-item-has-children dropdown ">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                            aria-expanded="false"> <i class="menu-icon fa fa-comments-o"></i>Data PO Bermasalah</a>
+                            aria-expanded="false"> <i class="menu-icon fa fa-list-ol"></i>Disputed Purchase</a>
                         <ul class="sub-menu children dropdown-menu ">
-                            <li><i class="fa fa-table "></i><a href="{{url('admin/komentar')}}">Tampilkan</a></li>
+                            <li><i class="fa fa-table "></i><a href="{{url('admin/komentar')}}">Show</a></li>
 
                         </ul>
                     </li>
@@ -121,7 +121,7 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
                             aria-expanded="false"> <i class="menu-icon fa fa-user"></i>Admin</a>
                         <ul class="sub-menu children dropdown-menu">
-                            <li><i class="menu-icon fa fa-users"></i><a href="{{url('admin/user')}}">Semua User</a></li>
+                            <li><i class="menu-icon fa fa-users"></i><a href="{{url('admin/user')}}">All User</a></li>
                             <li><i class="menu-icon fa fa-unlock-alt"></i><a
                                     href="{{route('user.showing',auth()->user()->id)}}">Edit Profile</a></li>
                         </ul>
@@ -130,7 +130,7 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
                             aria-expanded="false"> <i class="menu-icon fa fa-user"></i>Accounting</a>
                         <ul class="sub-menu children dropdown-menu">
-                            <li><i class="menu-icon fa fa-share"></i><a href="{{url('admin/accounting')}}">Semua
+                            <li><i class="menu-icon fa fa-share"></i><a href="{{url('admin/accounting')}}">All
                                     Accounting</a></li>
                         </ul>
                     </li>
@@ -138,7 +138,7 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
                             aria-expanded="false"> <i class="menu-icon fa fa-user"></i>Warehouse</a>
                         <ul class="sub-menu children dropdown-menu">
-                            <li><i class="menu-icon fa fa-share"></i><a href="{{url('admin/warehouse')}}">Semua
+                            <li><i class="menu-icon fa fa-share"></i><a href="{{url('admin/warehouse')}}">All
                                     Warehouse</a></li>
                         </ul>
                     </li>
@@ -146,7 +146,7 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
                             aria-expanded="false"> <i class="menu-icon fa fa-user"></i>Procumerent</a>
                         <ul class="sub-menu children dropdown-menu">
-                            <li><i class="menu-icon fa fa-share"></i><a href="{{url('admin/procumerent')}}">Semua
+                            <li><i class="menu-icon fa fa-share"></i><a href="{{url('admin/procumerent')}}">All
                                     Procumerent</a></li>
                         </ul>
                     </li>
@@ -154,19 +154,20 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
                             aria-expanded="false"> <i class="menu-icon fa fa-users"></i>Vendor</a>
                         <ul class="sub-menu children dropdown-menu">
-                            <li><i class="menu-icon fa fa-share"></i><a href="{{url('admin/vendor')}}">Semua Vendor</a>
+                            <li><i class="menu-icon fa fa-share"></i><a href="{{url('admin/vendor')}}">All Vendor</a>
                             </li>
                         </ul>
                     </li>
-                    <li class="menu-title">Laporan</li><!-- /.menu-title -->
-                    <li class="menu-item-has-children dropdown">
+                    <!-- <li class="menu-title">Laporan</li> -->
+                    <!-- /.menu-title -->
+                    <!-- <li class="menu-item-has-children dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
                             aria-expanded="false"> <i class="menu-icon fa fa-paste"></i>Laporan</a>
                         <ul class="sub-menu children dropdown-menu">
                             <li><i class="fa fa-rotate-right"></i><a href="{{url('admin/laporan')}}">Buat Laporan</a>
                             </li>
                         </ul>
-                    </li>
+                    </li> -->
 
                 </ul>
             </div><!-- /.navbar-collapse -->
@@ -195,7 +196,8 @@
                         <a href="#" class="dropdown-toggle active" data-toggle="dropdown" aria-haspopup="true"
                             aria-expanded="false">
                             <img class="user-avatar rounded-circle" src="{{asset('upload/'.auth()->user()->foto)}}"
-                                alt="User Avatar">
+                                alt="User Avatar"> &nbsp;
+                            {{ auth()->user()->name}} &nbsp;
                         </a>
 
                         <div class="user-menu dropdown-menu">

@@ -101,6 +101,7 @@
                             aria-expanded="false">
                             <img class="user-avatar rounded-circle" src="{{asset('upload/'.auth()->user()->foto)}}"
                                 alt="User Avatar">
+                                &nbsp; {{ auth()->user()->name}} &nbsp;
                         </a>
 
                         <div class="user-menu dropdown-menu">

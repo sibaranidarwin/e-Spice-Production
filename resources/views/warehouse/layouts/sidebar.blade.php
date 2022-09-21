@@ -51,7 +51,7 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
                             aria-expanded="false"> <i class="menu-icon fa fa-envelope"></i>Data PO</a>
                         <ul class="sub-menu children dropdown-menu">
-                            <li><i class="fa fa-tags"></i><a href="{{url('warehouse/po')}}">Tampilkan</a></li>
+                            <li><i class="fa fa-tags"></i><a href="{{url('warehouse/po')}}">Show</a></li>
                             <li><i class="fa fa-pencil-square-o"></i><a href="{{url('warehouse/createpo')}}">Buat PO</a>
                             </li>
                         </ul>
@@ -61,7 +61,7 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
                             aria-expanded="false"> <i class="menu-icon fa fa-table"></i>Data Invoice</a>
                         <ul class="sub-menu children dropdown-menu ">
-                            <li><i class="fa fa-table "></i><a href="{{url('warehouse/pengaduan')}}">Tampilkan</a></li>
+                            <li><i class="fa fa-table "></i><a href="{{url('warehouse/pengaduan')}}">Show</a></li>
 
 
                         </ul>
@@ -70,7 +70,7 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
                             aria-expanded="false"> <i class="menu-icon fa fa-comments-o"></i>Data PO Bermasalah</a>
                         <ul class="sub-menu children dropdown-menu ">
-                            <li><i class="fa fa-table "></i><a href="{{url('warehouse/komentar')}}">Tampilkan</a></li>
+                            <li><i class="fa fa-table "></i><a href="{{url('warehouse/komentar')}}">Show</a></li>
 
                         </ul>
                     </li>
@@ -101,6 +101,7 @@
                             aria-expanded="false">
                             <img class="user-avatar rounded-circle" src="{{asset('upload/'.auth()->user()->foto)}}"
                                 alt="User Avatar">
+                                &nbsp; {{ auth()->user()->name}} &nbsp;
                         </a>
 
                         <div class="user-menu dropdown-menu">
