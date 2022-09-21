@@ -46,42 +46,42 @@
                 <li class="active">
                     <a href="{{url('vendor/dashboard')}}"><i class="menu-icon fa fa-laptop"></i>Dashboard</a>
                 </li>
-                <li class="menu-title">KELOLA DATA</li><!-- /.menu-title -->
+                <li class="menu-title">MANAGE DATA</li><!-- /.menu-title -->
                 <li class="menu-item-has-children dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                        aria-expanded="false"> <i class="menu-icon fa fa-envelope"></i>Data PO</a>
+                        aria-expanded="false"> <i class="menu-icon fa fa-list-ul"></i>Purchase Order</a>
                     <ul class="sub-menu children dropdown-menu">
-                        <li><i class="fa fa-tags"></i><a href="{{url('vendor/po')}}">Tampilkan</a></li>
-                        <li><i class="fa fa-pencil-square-o"></i><a href="{{url('vendor/createpo')}}">Tambah PO</a>
+                        <li><i class="fa fa-table"></i><a href="{{url('vendor/po')}}">Show</a></li>
+                        <!-- <li><i class="fa fa-pencil-square-o"></i><a href="{{url('vendor/createpo')}}">Tambah PO</a> -->
                         </li>
                     </ul>
                 </li>
 
-                <li class="menu-item-has-children dropdown">
+                <!-- <li class="menu-item-has-children dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
                         aria-expanded="false"> <i class="menu-icon fa fa-list"></i>Data Product</a>
                     <ul class="sub-menu children dropdown-menu">
-                        <li><i class="fa fa-tags"></i><a href="{{url ('vendor/product') }}">Tampilkan</a></li>
+                        <li><i class="fa fa-tags"></i><a href="{{url ('vendor/product') }}">Show</a></li>
                         <li><i class="fa fa-pencil-square-o"></i><a href="{{url('vendor/createproduct')}}">Tambah
                                 Product</a>
                         </li>
                     </ul>
-                </li>
+                </li> -->
 
                 <li class="menu-item-has-children dropdown ">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                        aria-expanded="false"> <i class="menu-icon fa fa-table"></i>Data Invoice</a>
+                        aria-expanded="false"> <i class="menu-icon fa fa-money"></i>Invoice</a>
                     <ul class="sub-menu children dropdown-menu ">
-                        <li><i class="fa fa-table "></i><a href="{{url('vendor/pengaduan')}}">Tampilkan</a></li>
+                        <li><i class="fa fa-table "></i><a href="{{url('vendor/pengaduan')}}">Show</a></li>
 
 
                     </ul>
                 </li>
                 <li class="menu-item-has-children dropdown ">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                        aria-expanded="false"> <i class="menu-icon fa fa-comments-o"></i>Data PO Bermasalah</a>
+                        aria-expanded="false"> <i class="menu-icon fa fa-list-ol"></i>Disputed Purchase</a>
                     <ul class="sub-menu children dropdown-menu ">
-                        <li><i class="fa fa-table "></i><a href="{{url('vendor/komentar')}}">Tampilkan</a></li>
+                        <li><i class="fa fa-table "></i><a href="{{url('vendor/komentar')}}">Show</a></li>
 
                     </ul>
                 </li>
@@ -112,6 +112,7 @@
                         aria-expanded="false">
                         <img class="user-avatar rounded-circle" src="{{asset('upload/'.auth()->user()->foto)}}"
                             alt="User Avatar">
+                            &nbsp; {{ auth()->user()->name}} &nbsp;
                     </a>
 
                     <div class="user-menu dropdown-menu">

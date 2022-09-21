@@ -35,7 +35,7 @@
                         @csrf
 
                         <div class="card-header">
-                            <strong class="card-title">Buat Purchase Order</strong>
+                            <strong class="card-title">Tambahkan Purchase Order</strong>
                         </div><br>
 
                         <div class="row">

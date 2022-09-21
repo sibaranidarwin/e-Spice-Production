@@ -78,7 +78,7 @@
                             <div class="col-lg-7 col-md-9 ">
                                 <div class="hero__caption">
                                     <h1 data-animation="fadeInLeft" data-delay=".4s">e-Spice</h1>
-                                    <p data-animation="fadeInLeft" data-delay=".6s">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravi.</p>
+                                    <p data-animation="fadeInLeft" data-delay=".6s">Vendor Invoicing System is a website created to make it easier for MIP/MKP/MHA parties to receive invoices from vendors, where the process is done online entry.</p>
                                     <!-- Hero-btn -->
                                     @guest
                                     <!-- <div class="hero__btn" data-animation="fadeInLeft" data-delay=".8s">

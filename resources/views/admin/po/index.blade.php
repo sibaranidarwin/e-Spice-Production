@@ -1,5 +1,17 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.6/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.flash.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.print.min.js"></script>
+
 @extends('admin.layouts.app')
 @section('content')
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.6/css/buttons.dataTables.min.css">
 
         <div class="breadcrumbs">
             <div class="breadcrumbs-inner">
@@ -16,8 +28,8 @@
                             <div class="page-title">
                                 <ol class="breadcrumb text-right">
                                     <li><a href="#">Dashboard</a></li>
-                                    <li><a href="#">Good Receipt</a></li>
-                                    <li class="active">Tampilkan</li>
+                                    <li><a href="#">Purchase Order List</a></li>
+                                    <li class="active">Show</li>
                                 </ol>
                             </div>
                         </div>
@@ -60,7 +72,7 @@
                                 <table id="list" class="table">
                                     <thead>
                                         <tr>
-                                            <th>Selection</th>
+                                            <th><input type="checkbox" onchange="checkAll(this)"></th>
                                             <th class="serial">No</th>
                                             <th width="5px">GR Number</th>
                                             <th class="text-center">No PO</th>
@@ -129,7 +141,7 @@
     <div class="footer-inner bg-white">
         <div class="row">
             <div class="col-sm-6">
-                Copyright &copy; 2018 Ela Admin
+                <!-- Copyright &copy; 2018 Ela Admin -->
             </div>
             <div class="col-sm-6 text-right">
                 Designed by <a href="https://colorlib.com">Colorlib</a>
@@ -139,28 +151,31 @@
 </footer>
 
 </div><!-- /#right-panel -->
-
-<script>
-        $(document).ready(function() {
-            $('#list').DataTable({
-                "order": [
-                    [1, "desc"]
-                ],
-                "language": {
-                    "lengthMenu": "Tampilkan _MENU_ Data Keluarga per halaman",
-                    "zeroRecords": "Maaf, tidak dapat menemukan apapun",
-                    "info": "Menampilkan halaman _PAGE_ dari _PAGES_ halaman",
-                    "infoEmpty": "Tidak ada Keluarga yang dapat ditampilkan",
-                    "infoFiltered": "(dari _MAX_ total keluarga)",
-                    "search": "Cari :",
-                    "paginate": {
-                        "first": "Pertama",
-                        "last": "Terakhir",
-                        "next": "",
-                        "previous": ""
-                    },
-                }
-            });
+<script type="text/javascript"> 
+    $(document).ready(function () {
+        $('#list').DataTable({
+            dom: 'Bfrtip',
+            buttons: ['copy', 'csv', 'excel', 'print']
         });
-    </script>
+    });
+
+    function checkAll(box) 
+  {
+   let checkboxes = document.getElementsByTagName('input');
+
+   if (box.checked) { // jika checkbox teratar dipilih maka semua tag input juga dipilih
+    for (let i = 0; i < checkboxes.length; i++) {
+     if (checkboxes[i].type == 'checkbox') {
+      checkboxes[i].checked = true;
+     }
+    }
+   } else { // jika checkbox teratas tidak dipilih maka semua tag input juga tidak dipilih
+    for (let i = 0; i < checkboxes.length; i++) {
+     if (checkboxes[i].type == 'checkbox') {
+      checkboxes[i].checked = false;
+     }
+    }
+   }
+  }
+</script>
 @endsection

@@ -54,7 +54,7 @@
                     </div>
                     @endif
                     <div class="card-header">
-                        <strong class="card-title">Semua Vendor</strong>
+                        <strong class="card-title">Semua Procumerent</strong>
                     </div>
                     <div class="table-stats order-table ov-h">
                         <table class="table ">
