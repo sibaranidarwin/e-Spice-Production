@@ -1,5 +1,6 @@
 @extends('vendor.layouts.sidebar')
 @section('content')
+<link rel="stylesheet" href="{{asset('assets/css/argon-dashboard.css')}}">
 <div class="breadcrumbs">
     <div class="breadcrumbs-inner">
         <div class="row m-0">
@@ -77,7 +78,7 @@
                                     <input type="password" class="form-control" value="{{$user->password}}" disabled="">
                                     <input type="hidden" name="fotoLama" value="{{$user->foto}}">
 
-                                </div> 
+                                </div>
                                 <div class="text-center">
                                     <button type="submit" class="btn btn-primary"
                                         onclick="return confirm('Are you sure?')">UPDATE</button>

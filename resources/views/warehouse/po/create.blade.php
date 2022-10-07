@@ -1,4 +1,4 @@
-@extends('vendor.layouts.sidebar')
+@extends('warehouse.layouts.sidebar')
 @section('content')
 
     <div class="breadcrumbs">

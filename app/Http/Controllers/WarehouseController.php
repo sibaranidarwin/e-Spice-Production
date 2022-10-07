@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\User;
-use App\Vendor;
+use App\Invoice;
 use App\Profile;
 use App\good_receipt;
 
@@ -37,9 +37,22 @@ class WarehouseController extends Controller
     }
     public function po()
     {   
-        $good_receipts = good_receipt::latest()->get();
+        $good_receipts = good_receipt::where("Status","Not Verified")->orWhere("Status"," ")->orWhere("Status","Reject")->get();
         return view('warehouse.po.index',compact('good_receipts'))
                 ->with('i',(request()->input('page', 1) -1) *5);
+    }
+    public function invoice()
+    {
+     $invoice = Invoice::latest()->get();
+     return view('warehouse.invoice.index',compact('invoice'))
+             ->with('i',(request()->input('page', 1) -1) *5);
+    }
+    public function detailinvoice(Request $request, $id){
+        $invoice = Invoice::where('id', $id)->get();
+
+         $good_receipts =good_receipt::where('id', $id)->get();
+       
+        return view('warehouse.invoice.detail', compact('invoice','good_receipts'))->with('i',(request()->input('page', 1) -1) *5);
     }
     /**
      * Show the form for creating a new resource.

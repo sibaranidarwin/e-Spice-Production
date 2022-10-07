@@ -9,7 +9,7 @@
                         <!-- Logo -->
                         <div class="col-xl-2 col-lg-2 col-md-1">
                             <div class="logo">
-                                <a href="{{url('/')}}"><img src="assets/img/logo/logo_espice.PNG" alt=""></a>
+                                <a href="{{url('/')}}"><img style="width: 180px;" src="assets/img/logo/logo_mkp.png" alt=""></a>
                             </div>
                         </div>
                                    
@@ -20,14 +20,14 @@
                                 <nav> 
                                     <ul id="navigation">    
                                         <li><a href="{{url('/')}}"> Home</a></li>
-                                        <li><a href="{{url('about')}}" style="color: #ff5c97;">About Pedora</a></li>
+                                        <li><a href="{{url('about')}}" style="color: #ff5c97;">About e-Spice</a></li>
                                     </ul>
                                 </nav>
                             </div>
                         </div>
                         <div class="col-xl-2 col-lg-2 col-md-3">
                             <div class="header-right-btn f-right d-none d-lg-block">
-                                <a href="{{url('login-user')}}" class="btn header-btn">MASUK</a>
+                                <a href="{{url('login-user')}}" class="btn header-btn">Login</a>
                             </div>
                         </div>
                         @else
@@ -37,7 +37,7 @@
                                 <nav> 
                                     <ul id="navigation">    
                                         <li><a href="{{url('home')}}"> Home</a></li>
-                                        <li><a href="{{url('about')}}" style="color: #ff5c97;">About Pedora</a></li>
+                                        <li><a href="{{url('about')}}" style="color: #ff5c97;">About e-Spice</a></li>
                                     </ul>
                                 </nav>
                             </div>
@@ -103,7 +103,7 @@
                 <div class="col-lg-8">
                     <div class="section-tittle text-center">
                         <span>Tentang</span>
-                        <h2>APA ITU PEDORA?</h2>
+                        <h2>APA ITU e-Spice?</h2>
                     </div>
                 </div>
             </div>
@@ -119,10 +119,10 @@
             <div class="col-lg-12 posts-list">
                <div class="single-post">
                   <div class="feature-img mx-auto" align="center">
-                     <iframe width="720" height="420" src="https://www.youtube.com/embed/pVJlNv0Zgd0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                     <iframe width="720" height="420" src="" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                   </div>
                   <div class="blog_details text-justify">
-                     <p class="excert">
+                     <!-- <p class="excert">
                       Pengelolaan pengaduan pelayanan publik di setiap organisasi penyelenggara di Indonesia belum terkelola secara efektif dan terintegrasi. Masing-masing organisasi penyelenggara mengelola pengaduan secara parsial dan tidak terkoordinir dengan baik. Akibatnya terjadi duplikasi penanganan pengaduan, atau bahkan bisa terjadi suatu pengaduan tidak ditangani oleh satupun organisasi penyelenggara, dengan alasan pengaduan bukan kewenangannya. Oleh karena itu, untuk mencapai visi dalam good governance maka perlu untuk mengintegrasikan sistem pengelolaan pengaduan pelayanan publik dalam satu pintu. Tujuannya, masyarakat memiliki satu saluran pengaduan secara Nasional.
                      </p>
                      <p>
@@ -140,7 +140,7 @@
                                 Jumlah pelapor per Januari 2019 adalah sebanyak 801.257 pengguna. Total laporan yang telah masuk sebanyak 1.389.891. Sumber laporan terbanyak melalui website diikuti oleh SMS, twitter dan aplikasi mobile
                             </p>
                      </p>
-                <p class="text-center font-weight-bold">“Berani LAPOR! Untuk Pelayanan Publik yang Lebih Baik”</p>
+                <p class="text-center font-weight-bold">“Berani LAPOR! Untuk Pelayanan Publik yang Lebih Baik”</p> -->
                   </div>
                </div>
 

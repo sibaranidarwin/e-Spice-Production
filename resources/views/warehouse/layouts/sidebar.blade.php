@@ -9,11 +9,11 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>e-Spice - Warehouse</title>
+    <title>e-Spice - Warehouse </title>
     <meta name="description" content="Ela Admin - HTML5 Admin Template">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="shortcut icon" type="image/x-icon" href="{{asset('admin/images/favicon.ico')}}">
+    <link rel="shortcut icon" type="image/x-icon" href="{{asset('assets/img/favicon.ico')}}">
 
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.0/normalize.min.css">
@@ -38,47 +38,45 @@
 
 </head>
 
-    <aside id="left-panel" class="left-panel">
-        <nav class="navbar navbar-expand-sm navbar-default">
-            <div id="main-menu" class="main-menu collapse navbar-collapse">
-                <ul class="nav navbar-nav">
-                    <li class="menu-title">DASHBOARD</li><!-- /.menu-title -->
-                    <li class="active">
-                        <a href="{{url('warehouse/dashboard')}}"><i class="menu-icon fa fa-laptop"></i>Dashboard</a>
-                    </li>
-                    <li class="menu-title">KELOLA DATA</li><!-- /.menu-title -->
-                    <li class="menu-item-has-children dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                            aria-expanded="false"> <i class="menu-icon fa fa-envelope"></i>Data PO</a>
-                        <ul class="sub-menu children dropdown-menu">
-                            <li><i class="fa fa-tags"></i><a href="{{url('warehouse/po')}}">Show</a></li>
-                            <li><i class="fa fa-pencil-square-o"></i><a href="{{url('warehouse/createpo')}}">Buat PO</a>
+<aside id="left-panel" class="left-panel">
+    <nav class="navbar navbar-expand-sm navbar-default">
+        <div id="main-menu" class="main-menu collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li class="menu-title">DASHBOARD</li><!-- /.menu-title -->
+                <li class="active">
+                    <a href="{{url('warehouse/dashboard')}}"><i class="menu-icon fa fa-laptop"></i>Dashboard</a>
+                </li>
+                <li class="menu-title">MANAGE DATA</li><!-- /.menu-title -->
+                <li class="menu-item-has-children dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false"> <i class="menu-icon fa fa-list-ul"></i>Good Receipt</a>
+                    <ul class="sub-menu children dropdown-menu">
+                        <li><i class="fa fa-table"></i><a href="{{url('warehouse/po')}}">Show</a></li>
                             </li>
-                        </ul>
-                    </li>
+                    </ul>
+                </li>
+                <li class="menu-item-has-children dropdown ">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false"> <i class="menu-icon fa fa-money"></i>Invoice</a>
+                    <ul class="sub-menu children dropdown-menu ">
+                        <li><i class="fa fa-table "></i><a href="{{url('warehouse/invoice')}}">Show</a></li>
 
-                    <li class="menu-item-has-children dropdown ">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                            aria-expanded="false"> <i class="menu-icon fa fa-table"></i>Data Invoice</a>
-                        <ul class="sub-menu children dropdown-menu ">
-                            <li><i class="fa fa-table "></i><a href="{{url('warehouse/pengaduan')}}">Show</a></li>
 
+                    </ul>
+                </li>
+                <li class="menu-item-has-children dropdown ">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false"> <i class="menu-icon fa fa-list-ol"></i>Disputed Purchase</a>
+                    <ul class="sub-menu children dropdown-menu ">
+                        <li><i class="fa fa-table "></i><a href="{{url('warehouse/disputed')}}">Show</a></li>
 
-                        </ul>
-                    </li>
-                    <li class="menu-item-has-children dropdown ">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                            aria-expanded="false"> <i class="menu-icon fa fa-comments-o"></i>Data PO Bermasalah</a>
-                        <ul class="sub-menu children dropdown-menu ">
-                            <li><i class="fa fa-table "></i><a href="{{url('warehouse/komentar')}}">Show</a></li>
+                    </ul>
+                </li>
 
-                        </ul>
-                    </li>
-
-                </ul>
-            </div><!-- /.navbar-collapse -->
-        </nav>
-    </aside>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </nav>
+</aside>
     <!-- /#left-panel -->
     <!-- Right Panel -->
     <div id="right-panel" class="right-panel">
@@ -101,7 +99,7 @@
                             aria-expanded="false">
                             <img class="user-avatar rounded-circle" src="{{asset('upload/'.auth()->user()->foto)}}"
                                 alt="User Avatar">
-                                &nbsp; {{ auth()->user()->name}} &nbsp;
+                                &nbsp; {{ auth()->user()->name}} &nbsp; <i class="fa fa-caret-down"></i>
                         </a>
 
                         <div class="user-menu dropdown-menu">

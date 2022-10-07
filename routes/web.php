@@ -11,13 +11,16 @@
 |
 */
 
+use Illuminate\Support\Facades\Route;
+
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home')->middleware('masyarakat');
-Route::resource('home','HomeController')->middleware('masyarakat');
+Route::get('/home', 'HomeController@index')->name('home')->middleware('vendor');
+Route::resource('home','HomeController')->middleware('vendor');
 
-Route::get('home/{id}/show/', 'HomeController@showing')->name('home.showing');
-Route::post('/','HomeController@komentar')->name('home.komentar');
+// Route::get('home/{id}/show/', 'HomeController@showing')->name('home.showing');
+// Route::post('/','HomeController@komentar')->name('home.komentar');
+
 Route::get('login-user', function () {
     return view('login/index');
 });
@@ -25,7 +28,6 @@ Route::get('login-user', function () {
 Route::get('daftar-login', function () {
     return view('login/daftar');
 });
-
 Route::post('login-user','Auth\LoginController@login')->name('loginpost');
 Route::post('daftar-login','Auth\RegisterController@showRegistrationForm')->name('register-create');
 
@@ -51,7 +53,10 @@ Route::resource('admin/komentar','KomentarController')->middleware('admin');
 // Purchase Order
 Route::resource('admin/po', 'PoController')->middleware('admin');
 Route::get('admin/po/{id}/show/', 'PoController@showing')->name('pengumuman.showing')->middleware('admin');
-
+// Invoice 
+Route::get('admin/invoice', 'InvoiceController@showing')->middleware('admin');
+//Purcahse order disputed
+Route::get('admin/disputed', 'PoController@disputed')->middleware('admin');
 // PENGUMUMAN
 Route::resource('admin/pengumuman', 'PengumumanController')->middleware('admin');
 Route::get('admin/pengumuman/{id}/show/', 'PengumumanController@showing')->name('pengumuman.showing')->middleware('admin');
@@ -104,6 +109,9 @@ Route::get('pengaduan_pdf/cetak_pdf', 'LaporanController@cetak_pdf')->name('ceta
 Route::get('accounting/dashboard', 'AccountingController@index2')->name('accounting/dashboard');
 Route::get('accounting/po', 'AccountingController@po');
 
+Route::get('accounting/invoice', 'AccountingController@invoice')->name('accounting/invoice');
+Route::get('accounting/detail-invoice/{id}', 'AccountingController@detailinvoice')->name('accounting-invoice');
+
 Route::get('accounting/user/{id}/show', 'AccountingController@showing')->name('accounting-user.show');
 
 
@@ -119,33 +127,52 @@ Route::get('warehouse/po', 'WarehouseController@po');
 
 Route::get('warehouse/user/{id}/show', 'WarehouseController@showing')->name('warehouse-user.show');
 
+Route::get('warehouse/invoice', 'WarehouseController@invoice')->name('warehouse/invoice');
+Route::get('warehouse/detail-invoice/{id}', 'WarehouseController@detailinvoice')->name('detail-invoice');
+
+Route::post('warehouse/edit-datagr}','PoController@edit')->name('update-datagr/{id}');
+Route::post('warehouse/updated-datagr','PoController@store')->name('update-datagr');
+
 
 // // INI MIDDLEWARE Vendor
 Route::get('vendor/dashboard', 'VendorController@index2')->name('vendor/dashboard');
-Route::get('vendor/po', 'VendorController@po');
+Route::get('vendor/purchaseorder', 'VendorController@po');
+Route::post('vendor/purchaseorder/{id}','VendorController@delete')->name('vendor-purchaseorder')->middleware('vendor');
 Route::get('vendor/createpo', 'VendorController@createpo')->name('vendor/createpo');
 
 Route::get('vendor/product', 'VendorController@product')->name('vendor/product');
 Route::get('vendor/createproduct', 'VendorController@createproduct')->name('vendor/createproduct');
+
+Route::post('vendor/dispute-datagr}','VendorController@edit')->name('dispute-datagr-vendor/{id}');
+
+Route::post('vendor/edit-datagr}','VendorController@edit')->name('update-datagr-vendor/{id}');
+Route::post('vendor/updated-datagr','VendorController@store')->name('update-datagr-vendor');
+
+Route::get('vendor/invoice', 'VendorController@invoice')->name('vendor/invoice');
+Route::get('vendor/detail-invoice/{id}', 'VendorController@detailinvoice')->name('detail-invoice');
 
 Route::get('vendor/user/{id}/show', 'VendorController@showing')->name('vendor-user.show');
 Route::get('vendor/user/{id}/profile', 'VendorController@show')->name('vendor-user.showing');
 Route::post('vendor/{id}/profile','VendorController@heyupdate')->name('update-vendor');
 
 
-// // PENGUMUMAN
-Route::get('petugas/pengumuman', 'PetugasPengumumanController@index')->middleware('petugas');
-Route::get('petugas/pengumuman/{id}/show', 'PetugasPengumumanController@showing')->name('petuags-pengumuman.showing')->middleware('petugas');
-// // USER
-Route::post('petugas/{id}/profile','UserController@heyupdate')->name('update-ptgs')->middleware('petugas');
-Route::get('petugas/user/{id}/profile', 'PetugasUserController@showing')->name('petugas-user.showing')->middleware('petugas');
-Route::get('petugas/user/{id}/show', 'PetugasUserController@show')->name('petugas-user.show')->middleware('petugas');
-// // PENGADUAN - TANGGAPAN
-Route::get('petugas/pengaduan', 'PetugasPengaduanController@index')->middleware('petugas');
-Route::get('petugas/pengaduan/{id}/show/', 'PetugasPengaduanController@showing')->name('petugas-tanggapan.showing')->middleware('petugas');
-Route::post('petugas/pengaduan/{id}','PetugasPengaduanController@delete')->name('pengaduan-petugas.delete')->middleware('petugas');
-Route::post('petugas/pengaduan/{id}/show','PetugasPengaduanController@update')->name('pengaduan-petugas.update')->middleware('petugas');
 
-// // KOMENTAR
-Route::get('petugas/komentar', 'PetugasKomentarController@index')->middleware('petugas');
-Route::post('petugas/komentar/{id}','PetugasKomentarController@delete')->name('komentar-petugas')->middleware('petugas');
+
+
+
+// // // PENGUMUMAN
+// Route::get('petugas/pengumuman', 'PetugasPengumumanController@index')->middleware('petugas');
+// Route::get('petugas/pengumuman/{id}/show', 'PetugasPengumumanController@showing')->name('petuags-pengumuman.showing')->middleware('petugas');
+// // // USER
+// Route::post('petugas/{id}/profile','UserController@heyupdate')->name('update-ptgs')->middleware('petugas');
+// Route::get('petugas/user/{id}/profile', 'PetugasUserController@showing')->name('petugas-user.showing')->middleware('petugas');
+// Route::get('petugas/user/{id}/show', 'PetugasUserController@show')->name('petugas-user.show')->middleware('petugas');
+// // // PENGADUAN - TANGGAPAN
+// Route::get('petugas/pengaduan', 'PetugasPengaduanController@index')->middleware('petugas');
+// Route::get('petugas/pengaduan/{id}/show/', 'PetugasPengaduanController@showing')->name('petugas-tanggapan.showing')->middleware('petugas');
+// Route::post('petugas/pengaduan/{id}','PetugasPengaduanController@delete')->name('pengaduan-petugas.delete')->middleware('petugas');
+// Route::post('petugas/pengaduan/{id}/show','PetugasPengaduanController@update')->name('pengaduan-petugas.update')->middleware('petugas');
+
+// // // KOMENTAR
+// Route::get('petugas/komentar', 'PetugasKomentarController@index')->middleware('petugas');
+// Route::post('petugas/komentar/{id}','PetugasKomentarController@delete')->name('komentar-petugas')->middleware('petugas');

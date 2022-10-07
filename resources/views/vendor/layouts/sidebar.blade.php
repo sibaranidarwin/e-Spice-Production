@@ -36,6 +36,49 @@
     <script src="{{asset('admin/assets/ckeditor/ckeditor.js')}}"></script>
 
 
+    <style>
+    #weatherWidget .currentDesc {
+        color: #ffffff !important;
+    }
+
+    .traffic-chart {
+        min-height: 335px;
+    }
+
+    #flotPie1 {
+        height: 150px;
+    }
+
+    #flotPie1 td {
+        padding: 3px;
+    }
+
+    #flotPie1 table {
+        top: 20px !important;
+        right: -10px !important;
+    }
+
+    .chart-container {
+        display: table;
+        min-width: 270px;
+        text-align: left;
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+
+    #flotLine5 {
+        height: 105px;
+    }
+
+    #flotBarChart {
+        height: 150px;
+    }
+
+    #cellPaiChart {
+        height: 160px;
+    }
+    </style>
+
 </head>
 
 <aside id="left-panel" class="left-panel">
@@ -49,9 +92,9 @@
                 <li class="menu-title">MANAGE DATA</li><!-- /.menu-title -->
                 <li class="menu-item-has-children dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                        aria-expanded="false"> <i class="menu-icon fa fa-list-ul"></i>Purchase Order</a>
+                        aria-expanded="false"> <i class="menu-icon fa fa-list-ul"></i>Good Receipt</a>
                     <ul class="sub-menu children dropdown-menu">
-                        <li><i class="fa fa-table"></i><a href="{{url('vendor/po')}}">Show</a></li>
+                        <li><i class="fa fa-table"></i><a href="{{url('vendor/purchaseorder')}}">Show</a></li>
                         <!-- <li><i class="fa fa-pencil-square-o"></i><a href="{{url('vendor/createpo')}}">Tambah PO</a> -->
                         </li>
                     </ul>
@@ -72,7 +115,7 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
                         aria-expanded="false"> <i class="menu-icon fa fa-money"></i>Invoice</a>
                     <ul class="sub-menu children dropdown-menu ">
-                        <li><i class="fa fa-table "></i><a href="{{url('vendor/pengaduan')}}">Show</a></li>
+                        <li><i class="fa fa-table "></i><a href="{{url('vendor/invoice')}}">Show</a></li>
 
 
                     </ul>
@@ -112,7 +155,7 @@
                         aria-expanded="false">
                         <img class="user-avatar rounded-circle" src="{{asset('upload/'.auth()->user()->foto)}}"
                             alt="User Avatar">
-                            &nbsp; {{ auth()->user()->name}} &nbsp;
+                            &nbsp; {{ auth()->user()->name}}&nbsp;<i class="fa fa-caret-down"></i>
                     </a>
 
                     <div class="user-menu dropdown-menu">

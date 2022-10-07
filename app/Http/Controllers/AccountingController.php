@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use App\Accounting;
-use App\Vendor;
+use App\Invoice;
 use App\Profile;
 use App\good_receipt;
 
@@ -117,6 +117,26 @@ class AccountingController extends Controller
         return view('accounting.po.index',compact('good_receipts'))
                 ->with('i',(request()->input('page', 1) -1) *5);
     }
+
+    public function invoice(){
+        $invoice = Invoice::latest()->get();
+        return view('accounting.invoice.index',compact('invoice'))
+                ->with('i',(request()->input('page', 1) -1) *5);
+   }
+   public function detailinvoice(Request $request, $id){
+    $invoice = Invoice::where('id', $id)->get();
+    
+    // $recordIds = $request->get('ids');
+    // $newStatus = $request->get('Status');
+
+    // $good_receipts = [];
+    // foreach($recordIds as $record) {
+    //     $good_receipt = good_receipt::find($record);
+    //     array_push($good_receipts, $good_receipt);
+    // }
+    return view('accounting.invoice.detail', compact('invoice'))->with('i',(request()->input('page', 1) -1) *5);
+}
+
     /**
      * Remove the specified resource from storage.
      *

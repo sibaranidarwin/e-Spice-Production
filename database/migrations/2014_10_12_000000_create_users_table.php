@@ -22,7 +22,7 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->enum('level',['vendor','admin','warehouse','accounting','procurement']);
-            $table->string('foto');
+            $table->string('foto')->default('avatar.png');
             $table->rememberToken();
             $table->timestamps();
         });

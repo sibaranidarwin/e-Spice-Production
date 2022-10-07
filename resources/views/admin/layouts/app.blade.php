@@ -93,7 +93,7 @@
                     <li class="menu-title">MANAGE DATA</li><!-- /.menu-title -->
                     <li class="menu-item-has-children dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                            aria-expanded="false"> <i class="menu-icon fa fa-list-ul"></i>Purchase Order</a>
+                            aria-expanded="false"> <i class="menu-icon fa fa-list-ul"></i>Good Receipt</a>
                         <ul class="sub-menu children dropdown-menu">
                             <li><i class="fa fa-table"></i><a href="{{url('admin/po')}}">Show</a></li>
                         </ul>
@@ -103,7 +103,7 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
                             aria-expanded="false"> <i class="menu-icon fa fa-money"></i>Invoice</a>
                         <ul class="sub-menu children dropdown-menu ">
-                            <li><i class="fa fa-table "></i><a href="{{url('admin/pengaduan')}}">Show</a></li>
+                            <li><i class="fa fa-table "></i><a href="{{url('admin/invoice')}}">Show</a></li>
 
 
                         </ul>
@@ -112,7 +112,7 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
                             aria-expanded="false"> <i class="menu-icon fa fa-list-ol"></i>Disputed Purchase</a>
                         <ul class="sub-menu children dropdown-menu ">
-                            <li><i class="fa fa-table "></i><a href="{{url('admin/komentar')}}">Show</a></li>
+                            <li><i class="fa fa-table "></i><a href="{{url('admin/disputed')}}">Show</a></li>
 
                         </ul>
                     </li>
@@ -197,7 +197,7 @@
                             aria-expanded="false">
                             <img class="user-avatar rounded-circle" src="{{asset('upload/'.auth()->user()->foto)}}"
                                 alt="User Avatar"> &nbsp;
-                            {{ auth()->user()->name}} &nbsp;
+                            {{ auth()->user()->name}} &nbsp; <i class="fa fa-caret-down"></i>
                         </a>
 
                         <div class="user-menu dropdown-menu">
