@@ -1,6 +1,7 @@
 @extends('warehouse.layouts.sidebar')
 @section('content')
 
+<link rel="stylesheet" href="{{asset('assets/css/argon-dashboard.css')}}">
         <!-- /#header -->
         <!-- Content -->
         <div class="content">
@@ -18,7 +19,7 @@
                                     <div class="stat-content">
                                         <div class="text-left dib">
                                             <div class="stat-text"><span class="count">23569</span></div>
-                                            <div class="stat-heading">Pengaduan</div>
+                                            <div class="stat-heading">Good Receipt</div>
                                         </div>
                                     </div>
                                 </div>
@@ -31,12 +32,12 @@
                             <div class="card-body">
                                 <div class="stat-widget-five">
                                     <div class="stat-icon dib flat-color-2">
-                                        <i class="fa fa-camera-retro"></i>
+                                       <i class='fa fa-file'></i>
                                     </div>
                                     <div class="stat-content">
                                         <div class="text-left dib">
                                             <div class="stat-text"><span class="count">3435</span></div>
-                                            <div class="stat-heading">Picture</div>
+                                            <div class="stat-heading">Invoice</div>
                                         </div>
                                     </div>
                                 </div>
@@ -49,12 +50,12 @@
                             <div class="card-body">
                                 <div class="stat-widget-five">
                                     <div class="stat-icon dib flat-color-3">
-                                        <i class="fa fa-check-circle"></i>
+                                        <i class="fa fa-warning"></i>
                                     </div>
                                     <div class="stat-content">
                                         <div class="text-left dib">
                                             <div class="stat-text"><span class="count">349</span></div>
-                                            <div class="stat-heading">Done</div>
+                                            <div class="stat-heading">Disputed</div>
                                         </div>
                                     </div>
                                 </div>
@@ -72,7 +73,7 @@
                                     <div class="stat-content">
                                         <div class="text-left dib">
                                             <div class="stat-text"><span class="count">2986</span></div>
-                                            <div class="stat-heading">Users</div>
+                                            <div class="stat-heading">Vendor</div>
                                         </div>
                                     </div>
                                 </div>

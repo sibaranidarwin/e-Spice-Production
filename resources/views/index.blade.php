@@ -20,7 +20,7 @@
                                 <nav> 
                                     <ul id="navigation">    
                                         <li><a href="{{url('/')}}"> Home</a></li>
-                                        <li><a href="{{url('')}}">About e-Spice</a></li>
+                                        <li><a href="{{url('/about')}}">About e-Spice</a></li>
                                     </ul>
                                 </nav>
                             </div>
@@ -99,7 +99,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="single-slider slider-height d-flex align-items-center" data-background="assets/img/hero/h1_hero.png">
+                {{-- <div class="single-slider slider-height d-flex align-items-center" data-background="assets/img/hero/h1_hero.png">
                     <div class="container">
                         <div class="row d-flex align-items-center">
                             <div class="col-lg-7 col-md-9 ">
@@ -119,7 +119,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> --}}
             </div>
         </div>
     </main>

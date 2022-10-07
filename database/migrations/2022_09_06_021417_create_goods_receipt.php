@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Auth\Events\Verified;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -14,7 +15,7 @@ class CreateGoodsReceipt extends Migration
     public function up()
     {
         Schema::create('goods_receipt', function (Blueprint $table) {
-            $table->bigIncrements('id_gr');
+            $table->bigIncrements('id');
             $table->string('vendor_id');
             $table->string('vendor_name');
             $table->string('no_po');
@@ -27,15 +28,15 @@ class CreateGoodsReceipt extends Migration
             $table->string('Mat_Desc');
             $table->string('Valuation_Type');
             $table->string('GR_Number');
-            $table->string('UOM');
+            $table->string('UOM')->nullable();
             $table->string('Currency');
             $table->float('harga_satuan');
-            $table->string('jumlah');
-            $table->string('jumlah_harga');
+            $table->string('jumlah')->nullable();
+            $table->string('jumlah_harga')->nullable();
             $table->float('total_harga');
-            $table->string('Tax_Code');
-            $table->string('Status');
-            $table->string('Mat_Doc_IT');
+            $table->string('Tax_Code')->nullable();
+            $table->enum('Status',['Not Verified', 'Verified', 'Reject'])->default("Not Verified")->nullable();
+            $table->string('Mat_Doc_IT')->nullable();
             $table->string('Year');
             $table->string('Comp_Code');
             $table->string('Ref_Doc_No');

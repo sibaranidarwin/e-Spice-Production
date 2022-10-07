@@ -1,6 +1,7 @@
 @extends('accounting.layouts.sidebar')
 @section('content')
 
+<link rel="stylesheet" href="{{asset('assets/css/argon-dashboard.css')}}">
         <!-- /#header -->
         <!-- Content -->
         <div class="content">
