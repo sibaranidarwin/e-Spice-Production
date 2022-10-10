@@ -17,7 +17,7 @@
                     <div class="page-title">
                         <ol class="breadcrumb text-right">
                             <li><a href="#">Dashboard</a></li>
-                            <li><a href="#">Edit Good Receipt List</a></li>
+                            <li><a href="#">Edit Good Receipt</a></li>
                             <li class="active">Create</li>
                         </ol>
                     </div>
@@ -36,11 +36,12 @@
                         <strong class="card-header">Edit Good Receipt</strong>
                     </div>
                     <div class="card-body">
-                        <form autocomplete="off" action="{{ route('update-datagr')}}" method="post"
+                        <form autocomplete="off" action="{{ route('update-datagr') }}" method="post"
                             enctype="multipart/form-data">
-                            @foreach ($good_receipts as $good)
                             @csrf
+                            @foreach ($good_receipts as $good)
                             <input type="hidden" name="id[]" value="{{$good->id}}">
+                            @endforeach
                             {{-- <b class="mb-4">
                                     {{ $good->id }}
                             </b> --}}
@@ -50,13 +51,22 @@
                             @error('id')<span class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                     </div> --}}
                     <div class="form-group">
-                        <label class="form-control-label" for="vendor_name[]">Vendor Number</label>
-                        <input type="text" class="form-control @error('vendor_name[]') is-invalid @enderror"
-                            name="vendor_name[]" placeholder="Masukkan Tanggal ..." value="{{ $good->vendor_name }}">
-                        @error('vendor_name[]')<span
-                            class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
+                        <label class="form-control-label" for="Status">Status</label><br>
+                        <select name="Status" class="form-control">
+                            <option selected>Silahkan Pilih Status</option>
+                            <option value="Verified" {{ $good->Status == "Verified" ? 'selected' : '' }}>Verified</option>
+                            <option value="Not Verified" {{ $good->Status == "Not Verified" ? 'selected' : '' }}>Not Verified</option>
+                            <option value="Reject" {{ $good->Status == "Reject" ? 'selected' : '' }}>Reject</option>    
+                        </select>
                     </div>
-                    <div class="form-group">
+                    {{-- <div class="form-group">
+                        <label class="form-control-label" for="Status">Status</label>
+                        <input type="text" class="form-control @error('Status') is-invalid @enderror"
+                            name="Status" placeholder="Mohon masukan alasan dispute invoice">
+                        @error('Status')<span
+                            class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
+                    </div> --}}
+                    {{-- <div class="form-group">
                         <label class="form-control-label" for="no_po[]">PO Number</label>
                         <input type="number" class="form-control @error('no_po[]') is-invalid @enderror" name="no_po[]"
                             placeholder="Masukkan Tanggal ..." value="{{ $good->no_po }}">
@@ -79,7 +89,7 @@
                     <div class="form-group">
                         <label class="form-control-label" for="Delivery_Note[]">Delivery Note</label>
                         <input type="text" class="form-control @error('Delivery_Note[]') is-invalid @enderror"
-                            name=" Delivery_Note[]" placeholder="Masukkan Tanggal ..." value="{{ $good->Delivery_Note }}">
+                            name="Delivery_Note[]" placeholder="Masukkan Tanggal ..." value="{{ $good->Delivery_Note }}">
                         @error('Delivery_Note[]')<span
                             class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                     </div>
@@ -107,11 +117,62 @@
                             </option>
                             <option value="Reject" {{ $good->Status == "Reject" ? 'selected' : '' }}>Reject</option>
                         </select>
-                    </div>
+                    </div> --}}
                     <hr>
-                    @endforeach
-                    <button type="submit" class="btn btn-warning" id="simpan">Edit</button>
+                    <button type="submit" name="action" value="edit" class="btn btn-success" id="simpan">Save</button>
+                    <a href="{{url('warehouse/po')}}" class="btn btn-danger">Return</a>
                     </form>
+                    <br>
+                    <strong class="card-header">Good Receipt Data to be Edit</strong>
+                    <table id="list" class="table">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>GR Number</th>
+                                <th>No PO</th>
+                                <th>PO Item</th>
+                                <th>GR Slip Date</th>
+                                <th>Material Number</th>
+                                <!-- <th class="text-center">Reference</th> -->
+                                <!-- <th class="text-center">Vendor Part Number</th>
+                                        <th class="text-center">Item Description</th>
+                                        <th class="text-center">UoM</th>
+                                        <th class="text-center">Currency</th>
+                                        <th class="text-center">Harga Satuan</th>
+                                        <th class="text-center">Jumlah</th> -->
+                                <!-- <th class="text-center">Jumlah Harga</th> -->
+                                <th>Tax Code</th>
+                                <!-- <th class="text-center">Valuation Type</th> -->
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($good_receipts as $good_receipt)
+                            <tr>
+                            <td><input type="hidden" name="ids[]" value="{{$good_receipt->id}}"></td>      
+                            
+                            <td><span class="name">{{$good_receipt->id}}</span> </td>
+                            <td> <span class="">{{$good_receipt->no_po}}</span> </td>
+                            <td> <span class="">{{$good_receipt->po_item}}</span> </td>
+                            <td> <span class="">{{$good_receipt->GR_Date}}</span> </td>
+                            <td> <span class="">{{$good_receipt->Material_Number}}</span>
+                            </td>
+                            <!-- <td class="text-center"> <span class="">{{$good_receipt->Ref_Doc_No}}</span> </td> -->
+                            <!-- <td class="text-center"> <span class="">{{$good_receipt->Vendor_Part_Number}}</span> </td>
+                                        <td class="text-center"> <span class="">{{$good_receipt->Mat_Desc}}</span> </td>
+                                        <td class="text-center"> <span class="">{{$good_receipt->UOM}}</span> </td>
+                                        <td class="text-center"> <span class="">{{$good_receipt->Currency}}</span> </td>
+                                        <td class="text-center"> <span class="">{{$good_receipt->harga_satuan}}</span> </td>
+                                        <td class="text-center"> <span class="">{{$good_receipt->jumlah}}</span> </td> -->
+                            <!-- <td class="text-center"> <span class="">{{$good_receipt->jumlah_harga}}</span> </td> -->
+                            <td> <span class="">{{$good_receipt->Tax_Code}}</span> </td>
+                            <!-- <td class="text-center"> <span class=""></span> </td> -->
+                            <td>{{ $good_receipt->Status }}</td>
+                            </tr>
+                            @endforeach
+                        </select>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>

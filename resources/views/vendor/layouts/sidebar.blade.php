@@ -124,7 +124,7 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
                         aria-expanded="false"> <i class="menu-icon fa fa-list-ol"></i>Disputed Purchase</a>
                     <ul class="sub-menu children dropdown-menu ">
-                        <li><i class="fa fa-table "></i><a href="{{url('vendor/komentar')}}">Show</a></li>
+                        <li><i class="fa fa-table "></i><a href="{{url('vendor/disputed')}}">Show</a></li>
 
                     </ul>
                 </li>
