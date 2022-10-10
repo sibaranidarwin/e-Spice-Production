@@ -32,32 +32,25 @@ class PoController extends Controller
         return view('warehouse.po.edit', compact('good_receipts'));
      }
     
-    public function store(Request $request){
-        
-        $arrLen = count($request->id);
-
-        for($i = 0; $i < $arrLen; $i++) {
-            $good_receipt = good_receipt::find($request->id[$i]);
-
-            $good_receipt->update([
-                'GR_Number' => $request->GR_Number[$i],
-                'no_po' => $request->no_po[$i],
-                'po_item' => $request->po_item[$i],
-                'GR_Date' => $request->GR_Date[$i],
-                'Material_Number' => $request->Material_Number[$i],
-                'Status' => $request->status[$i]
-            ]);
-            $good_receipt->save();
-        }
-
-       if($good_receipt){
+    public function update(Request $request)
+     {
+         foreach($request->id as $id) {
+             $good_receipt = good_receipt::find($id);
+             $good_receipt->update([
+                 'Status' => $request->Status,
+             ]);
+             $good_receipt->save();
+         }
+        if($good_receipt){
         //redirect dengan pesan sukses
-        return redirect('warehouse/po')->with('success','Data Telah di ubah.');
-      }else{
+        return redirect('warehouse/po')->with('success','Data Telah berhasil Didisputed.');
+        }
+        else{
         //redirect dengan pesan error
-        return redirect('warehouse/po')->with(['error' => 'Data Gagal Disimpan!']);
+        return redirect('warehouse/po')->with(['error' => 'Data Gagal Didisputed!']);
       }
-    }
+     }
+
     public function disputed()
     {
         return view('admin.po.disputed');

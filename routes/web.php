@@ -15,11 +15,6 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home')->middleware('vendor');
-Route::resource('home','HomeController')->middleware('vendor');
-
-// Route::get('home/{id}/show/', 'HomeController@showing')->name('home.showing');
-// Route::post('/','HomeController@komentar')->name('home.komentar');
 
 Route::get('login-user', function () {
     return view('login/index');
@@ -130,8 +125,8 @@ Route::get('warehouse/user/{id}/show', 'WarehouseController@showing')->name('war
 Route::get('warehouse/invoice', 'WarehouseController@invoice')->name('warehouse/invoice');
 Route::get('warehouse/detail-invoice/{id}', 'WarehouseController@detailinvoice')->name('detail-invoice');
 
-Route::post('warehouse/edit-datagr}','PoController@edit')->name('update-datagr/{id}');
-Route::post('warehouse/updated-datagr','PoController@store')->name('update-datagr');
+Route::post('warehouse/edit-datagr','PoController@edit')->name('update-datagr/{id}');
+Route::post('warehouse/updated-datagr','PoController@update')->name('update-datagr');
 
 
 // // INI MIDDLEWARE Vendor
@@ -143,13 +138,17 @@ Route::get('vendor/createpo', 'VendorController@createpo')->name('vendor/createp
 Route::get('vendor/product', 'VendorController@product')->name('vendor/product');
 Route::get('vendor/createproduct', 'VendorController@createproduct')->name('vendor/createproduct');
 
-Route::post('vendor/dispute-datagr}','VendorController@edit')->name('dispute-datagr-vendor/{id}');
+Route::post('vendor/dispute-datagr','VendorController@edit')->name('dispute-datagr-vendor/{id}');
 
-Route::post('vendor/edit-datagr}','VendorController@edit')->name('update-datagr-vendor/{id}');
+Route::post('vendor/edit-datagr','VendorController@edit')->name('update-datagr-vendor/{id}');
+Route::post('vendor/update-datagr','VendorController@update')->name('dispute_datagr');
 Route::post('vendor/updated-datagr','VendorController@store')->name('update-datagr-vendor');
+
 
 Route::get('vendor/invoice', 'VendorController@invoice')->name('vendor/invoice');
 Route::get('vendor/detail-invoice/{id}', 'VendorController@detailinvoice')->name('detail-invoice');
+
+// Route::get('vendor/disputed', 'VendorController@disputed')->name('vendor/disputed');
 
 Route::get('vendor/user/{id}/show', 'VendorController@showing')->name('vendor-user.show');
 Route::get('vendor/user/{id}/profile', 'VendorController@show')->name('vendor-user.showing');

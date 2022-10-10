@@ -36,11 +36,12 @@
                         <strong class="card-header">Dispute Good Receipt</strong>
                     </div>
                     <div class="card-body">
-                        <form autocomplete="off" action="{{ route('update-datagr-vendor/{id}') }}" method="post"
+                        <form autocomplete="off" action="{{ route('dispute_datagr') }}" method="post"
                             enctype="multipart/form-data">
-                            @foreach ($good_receipts as $good)
                             @csrf
+                            @foreach ($good_receipts as $good)
                             <input type="hidden" name="id[]" value="{{$good->id}}">
+                            @endforeach
                             {{-- <b class="mb-4">
                                     {{ $good->id }}
                             </b> --}}
@@ -49,11 +50,19 @@
                                         <input type="number" class="form-control @error('id') is-invalid @enderror" name="id" placeholder="Masukkan Tanggal ..." value="{{ $good->id }}">
                             @error('id')<span class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                     </div> --}}
+                    {{-- <div class="form-group">
+                        <label class="form-control-label" for="Status[]">Status</label> <br>
+                        <select name="status[]" class="form-control">
+                            <option value="Verified" {{ $good->Status == "Verified" ? 'selected' : '' }}>
+                                Verified</option>
+                            <option value="Dispute" {{ $good->Status == "Dispute" ? 'selected' : '' }}>Dispute</option>    
+                        </select>
+                    </div> --}}
                     <div class="form-group">
-                        <label class="form-control-label" for="vendor_name[]">Dispute Identification</label>
-                        <input type="number" class="form-control @error('vendor_name[]') is-invalid @enderror"
-                            name="vendor_name[]" placeholder="Mohon masukan alasan dispute invoice" value="{{ $good->vendor_name }}">
-                        @error('vendor_name[]')<span
+                        <label class="form-control-label" for="alasan_disp">Dispute Identification</label>
+                        <input type="text" class="form-control @error('alasan_disp') is-invalid @enderror"
+                            name="alasan_disp" placeholder="Mohon masukan alasan dispute invoice">
+                        @error('alasan_disp')<span
                             class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                     </div>
                     {{-- <div class="form-group">
@@ -109,8 +118,7 @@
                         </select>
                     </div> --}}
                     <hr>
-                    @endforeach
-                    <button type="submit" class="btn btn-success" id="simpan">Submit</button>
+                    <button type="submit" name="action" value="Dispute" class="btn btn-warning" id="simpan">Dispute</button>
                     <a href="{{url('vendor/purchaseorder')}}" class="btn btn-danger">Return</a>
                     </form>
                     <br>

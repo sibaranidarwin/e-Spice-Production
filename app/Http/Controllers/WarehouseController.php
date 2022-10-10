@@ -48,12 +48,28 @@ class WarehouseController extends Controller
              ->with('i',(request()->input('page', 1) -1) *5);
     }
     public function detailinvoice(Request $request, $id){
-        $invoice = Invoice::where('id', $id)->get();
 
-         $good_receipts =good_receipt::where('id', $id)->get();
-       
-        return view('warehouse.invoice.detail', compact('invoice','good_receipts'))->with('i',(request()->input('page', 1) -1) *5);
+        $invoices = Invoice::select("invoice.id", 
+                                    "invoice.posting_date", 
+                                    "invoice.baselinedate",
+                                    "invoice.vendor_invoice_number",
+                                    "invoice.faktur_pajak_number",
+                                    "invoice.total_harga_everify",
+                                    "invoice.ppn",
+                                    "invoice.total_harga_gross",
+                                    "goods_receipt.id",
+                                    "goods_receipt.no_po",
+                                    "goods_receipt.po_item",
+                                    "goods_receipt.GR_Date",
+                                    "goods_receipt.Material_Number",
+                                    "goods_receipt.Tax_Code",
+                                    "goods_receipt.Status"
+                                    )
+                                    ->join("goods_receipt", "goods_receipt.id", "=", "invoice.id_gr")
+                                    ->get();
+        return view('warehouse.invoice.detail', compact('invoices'))->with('i',(request()->input('page', 1) -1) *5);
     }
+
     /**
      * Show the form for creating a new resource.
      *
