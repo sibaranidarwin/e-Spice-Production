@@ -107,7 +107,7 @@
                                     <td>{{$item['total_harga_everify'] }}</td>
                                     <td>{{$item['status']}}</td>
                                     <td>
-                                        <a href="/warehouse/detail-invoice/{{$item->id}}" class="btn btn-warning">Detail</a>
+                                        <a href="/warehouse/detail-invoice/{{$item->id}}" class="btn btn-info">Detail</a>
                                     </td>
                                 </tr>
                              @endforeach
