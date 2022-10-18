@@ -18,7 +18,8 @@ class Vendor
         {if (auth()->user()->level == "accounting") {
             return $next($request);
         }
-        return redirect('/')->with('error',"You dont have Access.");
+        return redirect('/
+        ')->with('error',"You dont have Access.");
     }
 }
 }

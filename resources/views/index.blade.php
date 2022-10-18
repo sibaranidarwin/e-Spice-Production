@@ -19,8 +19,8 @@
                             <div class="main-menu f-left d-none d-lg-block">
                                 <nav> 
                                     <ul id="navigation">    
-                                        <li><a href="{{url('/')}}"> Home</a></li>
-                                        <li><a href="{{url('/about')}}">About e-Spice</a></li>
+                                        {{-- <li><a href="{{url('/')}}"> Home</a></li> --}}
+                                        {{-- <li><a href="{{url('/about')}}">About e-Spice</a></li> --}}
                                     </ul>
                                 </nav>
                             </div>
@@ -36,8 +36,8 @@
                             <div class="main-menu f-left d-none d-lg-block">
                                 <nav> 
                                     <ul id="navigation">    
-                                        <li><a href="{{url('home')}}"> Home</a></li>
-                                        <li><a href="{{url('about')}}">About e-Spice</a></li>
+                                        {{-- <li><a href="{{url('home')}}"> Home</a></li> --}}
+                                        {{-- <li><a href="{{url('about')}}">About e-Spice</a></li> --}}
                                     </ul>
                                 </nav>
                             </div>

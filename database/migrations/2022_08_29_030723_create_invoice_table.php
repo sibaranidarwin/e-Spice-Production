@@ -14,9 +14,7 @@ class CreateInvoiceTable extends Migration
     public function up()
     {
         Schema::create('invoice', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->bigInteger('id_gr')->unsigned();
-            $table->foreign('id_gr')->references('id')->on('goods_receipt');
+            $table->bigIncrements('id_inv');
             $table->date('posting_date');
             $table->string('vendor_invoice_number');
             $table->string('everify_number');

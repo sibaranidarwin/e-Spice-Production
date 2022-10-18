@@ -15,7 +15,9 @@ class CreateGoodsReceipt extends Migration
     public function up()
     {
         Schema::create('goods_receipt', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->bigIncrements('id_gr');
+            $table->bigInteger('id_inv')->unsigned();
+            $table->foreign('id_inv')->references('id_inv')->on('invoice');
             $table->string('vendor_id');
             $table->string('vendor_name');
             $table->string('no_po');
@@ -35,12 +37,15 @@ class CreateGoodsReceipt extends Migration
             $table->string('jumlah_harga')->nullable();
             $table->float('total_harga');
             $table->string('Tax_Code')->nullable();
+            $table->string('alasan_disp')->nullable();
             $table->enum('Status',['Not Verified', 'Verified', 'Reject'])->default("Not Verified")->nullable();
+            $table->enum('status_invoice',['Not Yet Verified-Draft', 'Verified Yet Verified-BA', 'Reject'])->default("Not Yet Verified-Draft")->nullable();
             $table->string('Mat_Doc_IT')->nullable();
             $table->string('Year');
             $table->string('Comp_Code');
             $table->string('Ref_Doc_No');
             $table->float('Total_Ppn');
+            $table->text('lampiran');
             $table->timestamps();
         });
     }

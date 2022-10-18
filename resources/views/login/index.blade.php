@@ -71,15 +71,16 @@
 							<i class="fa fa-envelope" aria-hidden="true"></i>
 						</span>
 					</div>
-	
+					
 					<div class="wrap-input100 validate-input" data-validate = "Password is required">
-						<input class="input100" type="password" name="password" placeholder="Password">
+						<input class="input100" type="password" name="password" placeholder="Password" id="myInput">
 						<span class="focus-input100"></span>
 						<span class="symbol-input100">
 							<i class="fa fa-lock" aria-hidden="true"></i>
 						</span>
 					</div>
-					
+					&nbsp;&nbsp;&nbsp;<input type="checkbox" onclick="myFunction()" class="mt-2"> Show Password
+
 					<div class="container-login100-form-btn">
 						<button type="submit" class="login100-form-btn login">
 							Login
@@ -93,10 +94,10 @@
 						<a class="txt2" href="#">
 							Username / Password?
 						</a> -->
-						<a class="txt2" href="{{url('daftar-login')}}">
+						{{-- <a class="txt2" href="{{url('daftar-login')}}">
 							REGISTER NOW
 							<i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
-						</a>
+						</a> --}}
 					</div>
 
 					<div class="text-center p-t-150">
@@ -120,6 +121,15 @@
 <!--===============================================================================================-->
 	<script src="{{asset('login/vendor/tilt/tilt.jquery.min.js')}}"></script>
 	<script >
+			function myFunction() {
+			var x = document.getElementById("myInput");
+			if (x.type === "password") {
+				x.type = "text";
+			} else {
+				x.type = "password";
+			}
+			}
+
 		$('.js-tilt').tilt({
 			scale: 1.1
 		})

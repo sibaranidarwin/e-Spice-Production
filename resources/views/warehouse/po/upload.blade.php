@@ -17,7 +17,7 @@
                     <div class="page-title">
                         <ol class="breadcrumb text-right">
                             <li><a href="#">Dashboard</a></li>
-                            <li><a href="#">Edit Good Receipt</a></li>
+                            <li><a href="#">Upload SPB Good Receipt</a></li>
                             <li class="active">Create</li>
                         </ol>
                     </div>
@@ -33,39 +33,26 @@
             <div class="col">
                 <div class="card  shadow h-100">
                     <div class="card-header">
-                        <strong class="card-header">Edit Good Receipt</strong>
+                        <strong class="card-header">Upload SPB Good Receipt</strong>
                     </div>
                     <div class="card-body">
                         <form autocomplete="off" action="{{ route('update-datagr') }}" method="post"
                             enctype="multipart/form-data">
                             @csrf
                             @foreach ($good_receipts as $good)
-                            <input type="hidden" name="id[]" value="{{$good->id_gr}}">
+                            <input type="hidden" name="id[]" value="{{$good->id}}">
                             @endforeach
-                            
-                            {{-- TODO: Remember this must can upload multiple file and save to db with format (fileone, filetwo, filethree) include the paht  --}}
                             <div class="form-group">
-                                <label class="form-control-label" for="lampiran">Upload SPB</label><strong style=" font-size: 10px;"> *.pdf max = 5MB</strong>
-                                <input type="file" name="lampiran[]" class="form-control" id="lampiran" multiple>
+                                <label class="form-control-label" for="Status">Upload File SPB</label><br>
+                                <input type="file" value="spb" class="">
                             </div>
-
-                            <div class="form-group">
-                                <label class="form-control-label" for="Status">Status</label><br>
-                                <select name="Status" class="form-control">
-                                    <option selected>Silahkan Pilih Status</option>
-                                    <option value="Verified" {{ $good->Status == "Verified" ? 'selected' : '' }}>
-                                        Verified</option>
-                                    <option value="Reject" {{ $good->Status == "Reject" ? 'selected' : '' }}>Reject
-                                    </option>
-                                </select>
-                            </div>
-
-                            <button type="submit" name="action" value="edit" class="btn btn-success"
+                            <hr>
+                            <button type="submit" name="action" value="Upload SPB" class="btn btn-success"
                                 id="simpan">Save</button>
                             <a href="{{url('warehouse/po')}}" class="btn btn-danger">Return</a>
                         </form>
                         <br>
-                        <strong class="card-header">Good Receipt Data to be Edit</strong>
+                        <strong class="card-header">Good Receipt Data to be Upload SPB</strong>
                         <table id="list" class="table table-stats order-table ov-h">
                             <thead>
                                 <tr>

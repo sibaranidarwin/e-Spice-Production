@@ -12,16 +12,17 @@
 <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.print.min.js"></script>
 <script src="https://cdn.datatables.net/datetime/1.1.2/js/dataTables.dateTime.min.js"></script>
 
-@extends('warehouse.layouts.sidebar')
+@extends('vendor.layouts.sidebar')
 @section('content')
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.6/css/buttons.dataTables.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/datetime/1.1.2/css/dataTables.dateTime.min.css">
+
 <link rel="stylesheet" href="{{asset('assets/css/argon-dashboard.css')}}">
 
 <style>
-    .table td, .table th {
+    .table td, .table th,  label{
         font-size: 11.4px;
     }
 </style>
@@ -82,21 +83,33 @@
                     </div>
                     <div class="card-body">
                     <div class="table-responsive text-nowrap">
-                        <form action="{{ route('update-datagr/{id}') }}" method="POST">
+                        <div class="row">
+                            <div class="col-4 bg-white mb-3">
+                                <label for="">From date: </label>
+                                <input type="text" id="min" name="min"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;----
+                            </div> 
+                            <div class="col-2 bg-white mb-4">
+                                <label for="">To date: </label>
+                                <input type="text" id="max" name="max">
+                            </div>
+                            <div class="col-4">
+                                <label for=""> </label>
+                            </div>
+                        </div>
+                        <form action="{{ route('update-datagr-vendor/{id_gr}') }}" method="POST">
                             @csrf
                             <table id="list" class="table table-striped" style="font-size: 10px;">
                                 <thead>
                                     <tr>
-                                    <th><input type="checkbox" onchange="checkAll(this)"></th>
-                                    <th>No</th>
-                                    <th>Status</th>
-                                    <th>GR Number</th>
-                                    <th>No PO</th>
-                                    <th>PO Item</th>
-                                    <th>GR Date</th>
-                                    <th>Part Number</th>
-                                    <th>Reference</th>
-                                    <th>Material Description</th>
+                                        <th>No</th>
+                                        <th>Status</th>
+                                        <th>GR Number</th>
+                                        <th>No PO</th>
+                                        <th>PO Item</th>
+                                        <th>GR Date</th>
+                                        <th>Part Number</th>
+                                        <th>Reference</th>
+                                        <th>Material Description</th>
                                     <th>QTY UOM</th>
                                     <th>Curr</th>
                                     <th>Unit Price</th>
@@ -106,17 +119,13 @@
                                 <tbody style="font-size: 11px;">
                                     @foreach($good_receipts as $good_receipt)
                                     <tr>
-                                        <td><input type="checkbox" name="ids[]" value="{{$good_receipt->id_gr}}"></td>
-                                        <td class="serial">{{++$i}}</td>
+                                        <td>{{++$i}}</td>
                                         <td >{{ $good_receipt->Status }}</td>
-                                        <td ><span class="name">{{$good_receipt->GR_Number}}</span> </td>
-                                        <td ><span>{{$good_receipt->no_po}}</span> <br><span style="font-style: italic;">Item No: {{$good_receipt->po_item}}</span></td>
+                                        <td ><span>{{$good_receipt->GR_Number}}</span></td>
+                                        <td ><span>{{$good_receipt->no_po}}</span></td>
                                         <td><span>{{$good_receipt->po_item}}</span></td>
                                         <td><span>{{$good_receipt->GR_Date}}</span></td>
-                                        <td> <span>{{$good_receipt->Material_Number}}</span>
-                                        <br>
-                                        <span class="name" style="font-style: italic;">{{$good_receipt->Vendor_Part_Number}}</span>
-                                        </td>
+                                        <td> <span>{{$good_receipt->Material_Number}}</span></td>
                                         <td> <span>{{$good_receipt->Ref_Doc_No}}</span> </td>
                                         <td> <span>{{$good_receipt->Mat_Desc}}</span> </td>
                                         <td> <span>{{$good_receipt->jumlah}}</span>&nbsp;<span>{{$good_receipt->UOM}}</span> </td>
@@ -128,9 +137,7 @@
                                     </select>
                                 </tbody>
                             </table>
-                           &nbsp;&nbsp;<button type="submit" value="Update" name="action"
-                                class="btn btn-success">Update Data</button>
-                        </form>
+                           </form>
                     </div> <!-- /.table-stats -->
                 </div>
             </div>
@@ -185,10 +192,10 @@
     
         // Create date inputs
         minDate = new DateTime($('#min'), {
-            format: 'MMMM Do YYYY'
+            format: 'DD MM YYYY'
         });
         maxDate = new DateTime($('#max'), {
-            format: 'MMMM Do YYYY'
+            format: 'DD MM YYYY'
         });
     
         // DataTables initialisation

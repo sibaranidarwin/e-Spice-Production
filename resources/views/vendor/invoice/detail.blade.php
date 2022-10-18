@@ -1,7 +1,14 @@
 @extends('vendor.layouts.sidebar')
 @section('content')
-
 <link rel="stylesheet" href="{{asset('assets/css/argon-dashboard.css')}}">
+<style>
+    .table td,
+    .table th,
+    label {
+        font-size: 11.4px;
+    }
+    </style>
+    
 <div class="breadcrumbs">
     <div class="breadcrumbs-inner">
         <div class="row m-0">
@@ -36,11 +43,11 @@
                         <strong class="card-header">Data Invoice Proposal</strong>
                     </div>
                     <div class="card-body">
-                        <form autocomplete="off" action="{{ route('update-datagr-vendor/{id}') }}" method="post"
+                        <form autocomplete="off" action="" method="post"
                             enctype="multipart/form-data">
                             @foreach ($invoices as $invoice)
                             @csrf
-                            <input type="hidden" name="id[]" value="{{$invoice->id}}">
+                            <input type="hidden" name="id[]" value="{{$invoice->id_inv}}">
                             @endforeach
                             {{-- <b class="mb-4">
                                     {{ $invoice->id }}
@@ -125,39 +132,24 @@
                                 <th>PO Item</th>
                                 <th>GR Slip Date</th>
                                 <th>Material Number</th>
-                                <!-- <th class="text-center">Reference</th> -->
-                                <!-- <th class="text-center">Vendor Part Number</th>
-                                        <th class="text-center">Item Description</th>
-                                        <th class="text-center">UoM</th>
-                                        <th class="text-center">Currency</th>
-                                        <th class="text-center">Harga Satuan</th>
-                                        <th class="text-center">Jumlah</th> -->
-                                <!-- <th class="text-center">Jumlah Harga</th> -->
+                                <th>Harga Satuan</th>
+                                <th>Jumlah</th>
                                 <th>Tax Code</th>
-                                <!-- <th class="text-center">Valuation Type</th> -->
                                 <th>Status</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach($invoices as $invoice)
                             <tr>   
-                            <td><span class="name">{{$invoice->id}}</span> </td>
                             <td> <span class="">{{$invoice->no_po}}</span> </td>
+                            <td> <span class="">{{$invoice->GR_Number}}</span> </td>
                             <td> <span class="">{{$invoice->po_item}}</span> </td>
-                            <td> <span class="">{{$invoice->GR_Date}}</span> </td>
+                            <td> <span class="">{{$invoice->GR_Date}}</span>
                             <td> <span class="">{{$invoice->Material_Number}}</span>
-                            </td>
-                            <!-- <td class="text-center"> <span class="">{{$invoice->Ref_Doc_No}}</span> </td> -->
-                            <!-- <td class="text-center"> <span class="">{{$invoice->Vendor_Part_Number}}</span> </td>
-                                        <td class="text-center"> <span class="">{{$invoice->Mat_Desc}}</span> </td>
-                                        <td class="text-center"> <span class="">{{$invoice->UOM}}</span> </td>
-                                        <td class="text-center"> <span class="">{{$invoice->Currency}}</span> </td>
-                                        <td class="text-center"> <span class="">{{$invoice->harga_satuan}}</span> </td>
-                                        <td class="text-center"> <span class="">{{$invoice->jumlah}}</span> </td> -->
-                            <!-- <td class="text-center"> <span class="">{{$invoice->jumlah_harga}}</span> </td> -->
-                            <td> <span class="">{{$invoice->Tax_Code}}</span> </td>
-                            <!-- <td class="text-center"> <span class=""></span> </td> -->
-                            <td>{{ $invoice->Status }}</td>
+                            <td> <span class="">{{$invoice->harga_satuan}}</span>
+                            <td> <span class="">{{$invoice->jumlah}}</span></td>
+                            <td> <span class="">{{$invoice->Tax_Code}}</span></td>
+                            <td> <span class="">{{ $invoice->Status }}</span></td>
                             </tr>
                             @endforeach
                         </select>

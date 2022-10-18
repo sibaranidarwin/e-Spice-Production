@@ -1,0 +1,51 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class CreateBaTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('ba_reconcile', function (Blueprint $table) {
+            $table->bigIncrements('id_ba');
+            $table->bigInteger('id_draft_ba')->unsigned();
+            $table->foreign('id_draft_ba')->references('id_draft_ba')->on('draft_ba');
+            $table->string('no_ba');
+            $table->date('gr_date');
+            $table->integer('po_number');
+            $table->integer('cis_no');
+            $table->integer('po_mkp');
+            $table->string('sales_name');
+            $table->string('sales_order');
+            $table->integer('item');
+            $table->string('material_bp');
+            $table->string('material_description');
+            $table->string('reference');
+            $table->integer('qty');
+            $table->integer('amount_vendor');
+            $table->string('material_mkp');
+            $table->date('gr_date_mkp');
+            $table->integer('amount_mkp');
+            $table->string('confirm_price');
+            $table->string('status_ba');
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('ba');
+    }
+}
