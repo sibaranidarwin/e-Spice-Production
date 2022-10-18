@@ -18,26 +18,60 @@ class PoController extends Controller
         return view('admin.po.index',compact('good_receipts'))
                 ->with('i',(request()->input('page', 1) -1) *5);
     }
-
- 
     public function edit(Request $request) {
-        $recordIds = $request->get('ids');
-        $newStatus = $request->get('Status');
-
-        $good_receipts = [];
-        foreach($recordIds as $record) {
-            $good_receipt = good_receipt::find($record);
-            array_push($good_receipts, $good_receipt);
-        }
-        return view('warehouse.po.edit', compact('good_receipts'));
-     }
+        switch ($request->input('action')) {
+            case 'Upload':
+                $recordIds = $request->get('ids');
+                $newStatus = $request->get('Status');
+                
+                $good_receipts = [];
+                foreach($recordIds as $record) {
+                    $good_receipt = good_receipt::find($record);
+                    array_push($good_receipts, $good_receipt);
+                }
+                return view('warehouse.po.upload', compact('good_receipts'));
+                break;
     
+            case 'Update':
+                $recordIds = $request->get('ids');
+                $newStatus = $request->get('Status');
+        
+                $good_receipts = [];
+                foreach($recordIds as $record) {
+                    $good_receipt = good_receipt::find($record);
+                    array_push($good_receipts, $good_receipt);
+                }
+                return view('warehouse.po.edit', compact('good_receipts'));
+                break;
+        }
+     }
     public function update(Request $request)
      {
+        $arrName = [];
+        if ($request->hasFile("lampiran")) {
+
+            $allowedfileExtension = ['pdf', 'jpg', 'png', 'docx'];
+            $files = $request->file('lampiran');
+            foreach ($files as $file) {
+                $extension = $file->getClientOriginalExtension();
+
+                if (in_array($extension, $allowedfileExtension)) {
+                    $str = rand();
+                    $result = md5($str);
+                    $filename = pathinfo($extension, PATHINFO_FILENAME);
+                    $name = time() . "-" . $result . '.' . $extension;
+                    $file->move(public_path() . '/lampiran/spb/', $name);
+                    array_push($arrName, '/lampiran/spb/' . $name);
+                }
+            }
+        }
+        $fileName = join("#", $arrName);
+
          foreach($request->id as $id) {
              $good_receipt = good_receipt::find($id);
              $good_receipt->update([
                  'Status' => $request->Status,
+                 'lampiran' => $fileName
              ]);
              $good_receipt->save();
          }
@@ -53,6 +87,6 @@ class PoController extends Controller
 
     public function disputed()
     {
-        return view('admin.po.disputed');
+        return view('admin.po.dispsuted');
     }
 }

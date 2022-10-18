@@ -43,7 +43,7 @@ label {
                     <div class="page-title">
                         <ol class="breadcrumb text-right">
                             <li><a href="#">Dashboard</a></li>
-                            <li><a href="#">Good Receipt List</a></li>
+                            <li><a href="#">BA List</a></li>
                             <li class="active">Show</li>
                         </ol>
                     </div>
@@ -81,35 +81,21 @@ label {
                     </div>
                     @endif
                     <div class="card-header">
-                        <strong class="card-title">Good Receipt List</strong>
+                        <strong class="card-title">BA List</strong>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive text-nowrap">
                             <div class="row">
                                 <div class="form-group col-3 bg-white mb-2">
-                                    <label for="">GR Date From: </label>
+                                    <label for="">BA Date From: </label>
                                     <input class="form-group" type="text" id="min" name="min">
                                 </div>
-                                <div class=" form-group col-2 bg-white mb-2">
+                                <div class=" form-group col-3 bg-white mb-2">
                                     <label for="">To: </label>
                                     <input class="form-group" type="text" id="max" name="max">
                                 </div>
-                                <div class="col-4">
-                                    <label for=""> </label>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="form-group col-3 bg-white">
-                                    <label for="" >No PO From: &nbsp;&nbsp;</label>
-                                    <input class="form-group" type="text" id="min" name="min">
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;----
-                                </div>
-                                <div class=" form-group col-2 bg-white">
-                                    <label for="">To: </label>
-                                    <input class="form-group" type="text" id="max" name="max">
-                                </div>
-                                <div class="col-4">
-                                    <label for=""> </label>
+                                <div class="col-3 mb-2">
+                                    <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#modal-import"><i class="fa fa-plus"></i> Import Drat BA</button>
                                 </div>
                             </div>
                             <form action="{{ route('update-datagr-vendor/{id_gr}') }}" method="POST">
@@ -118,50 +104,32 @@ label {
                                     <thead>
                                         <tr>
                                             <th>No</th>
-                                            <th>Status</th>
-                                            <th>GR Number</th>
+                                            <th>No Draft</th>
+                                            <th>Date</th>
                                             <th>No PO</th>
-                                            <th>PO Item</th>
-                                            <th>GR Date</th>
-                                            <th>Part Number</th>
-                                            <th>Reference</th>
-                                            <th>Material Description</th>
-                                            <th>QTY UOM</th>
-                                            <th>Curr</th>
-                                            <th>Unit Price</th>
-                                            <th>Tax Code</th>
+                                            <th>Material</th>
+                                            <th>Status BA</th>
                                             <th>Keterangan</th>
-                                            <th hidden>Status Invoice Proposal</th>
                                         </tr>
                                     </thead>
                                     <tbody style="font-size: 11px;">
-                                        @foreach($good_receipts as $good_receipt)
+                                        @php $i = 1 @endphp
+                                        @foreach($draft as $item)
                                         <tr>
-                                            <td>{{++$i}}</td>
-                                            <td>{{ $good_receipt->Status }}</td>
-                                            <td><span>{{$good_receipt->GR_Number}}</span></td>
-                                            <td><span>{{$good_receipt->no_po}}</span></td>
-                                            <td><span>{{$good_receipt->po_item}}</span></td>
-                                            <td><span>{{$good_receipt->GR_Date}}</span></td>
-                                            <td> <span>{{$good_receipt->Material_Number}}</span></td>
-                                            <td> <span>{{$good_receipt->Ref_Doc_No}}</span> </td>
-                                            <td> <span>{{$good_receipt->Mat_Desc}}</span> </td>
-                                            <td> <span>{{$good_receipt->jumlah}}</span>&nbsp;<span>{{$good_receipt->UOM}}</span>
-                                            </td>
-                                            <td> <span>{{$good_receipt->Currency}}</span> </td>
-                                            <td> <span>{{$good_receipt->harga_satuan}}</span> </td>
-                                            <td> <span>{{$good_receipt->Tax_Code}}</span> </td>
-                                            <td> <span>{{$good_receipt->alasan_disp}}</span> </td>
-                                            <td hidden><span>{{$good_receipt->status_invoice}}</span></td>
+                                            <td>{{$i++}}</td>
+                                            <td>{{ $item->no_draft}}</td>
+                                            <td><span>{{$item->date_draft}}</span></td>
+                                            <td><span>{{$item->po_number}}</span></td>
+                                            <td><span>{{$item->material}}</span></td>
+                                            <td><span>{{$item->status_draft}}</span></td>
+                                            <td><span>{{$item->reason}}</span></td>
                                         </tr>
                                         @endforeach
                                         </select>
                                     </tbody>
                                 </table>
-                                &nbsp;&nbsp;&nbsp;&nbsp;<button type="submit" name="action" value="Update"
-                                    class="btn btn-success btn-sm" disabled>Create Invoice</button>
-                                &nbsp;&nbsp;&nbsp;&nbsp;<button type="submit" name="action" value="ba"
-                                    class="btn btn-info btn-sm" disabled>Generate Draft BA</button>
+                                &nbsp;&nbsp;<button type="submit" name="action" value="Dispute"
+                                    class="btn btn-warning btn-sm-3">Dispute</button>
                             </form>
                         </div> <!-- /.table-stats -->
                     </div>
@@ -190,7 +158,35 @@ label {
 </footer>
 
 </div><!-- /#right-panel -->
-
+<div class="modal fade" id="modal-import">
+    <div class="modal-dialog modal-lg">
+      <form method="post" id="form-import" action="{{url('vendor/draft')}}" enctype="multipart/form-data" class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Import Data Draft BA</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          {{method_field('PUT')}}
+          {{csrf_field()}}
+          <div class="row">
+            <div class="col-md-12">
+              <p>Import data Draft BA sesuai format contoh berikut.<br/><a href="{{url('')}}/excel-karyawan.xlsx"><i class="fa fa-download"></i> File Contoh Draft BA</a></p>
+            </div>
+            <div class="col-md-12">
+              <label>File Excel Draft BA</label>
+              <input type="file" name="excel-draft" required>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer justify-content-between">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+          <button type="submit" class="btn btn-primary">Simpan</button>
+        </div>
+      </form>
+    </div>
+  </div>
 <script type="text/javascript">
 var minDate, maxDate;
 
@@ -199,7 +195,7 @@ $.fn.dataTable.ext.search.push(
     function(settings, data, dataIndex) {
         var min = minDate.val();
         var max = maxDate.val();
-        var date = new Date(data[6]);
+        var date = new Date(data[2]);
 
         if (
             (min === null && max === null) ||

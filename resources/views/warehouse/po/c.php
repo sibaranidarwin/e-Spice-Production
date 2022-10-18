@@ -7,12 +7,10 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.html5.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.print.min.js"></script>
-@extends('warehouse.layouts.sidebar')
+@extends('vendor.layouts.sidebar')
 @section('content')
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.6/css/buttons.dataTables.min.css">
-<link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
-<link rel="stylesheet" href="https://cdn.datatables.net/datetime/1.1.2/css/dataTables.dateTime.min.css">
 <link rel="stylesheet" href="{{asset('assets/css/argon-dashboard.css')}}">
 <style>
 .table td,
@@ -78,6 +76,7 @@ label {
                     </div>
                     <div class="card-body">
                         <div class="table-responsive text-nowrap">
+                            <form action="{{ route('update-datagr-vendor/{id_gr}') }}" method="POST">
                                 @csrf
                                 <table id="list" class="table table-striped" style="font-size: 10px;">
                                     <thead>
@@ -108,7 +107,7 @@ label {
                                         @foreach($invoice as $item)
                                         <tr>
                                             <td class="serial">{{++$i}}</td>
-                                            <td>{{$item['GR_Number'] }}</td>
+                                            <td>{{$item['id_gr'] }}</td>
                                             <td>{{$item['posting_date'] }}</td>
                                             <td>{{$item['vendor_invoice_number'] }}</td>
                                             {{-- <td>{{$item['everify_number'] }}</td> --}}
@@ -116,13 +115,19 @@ label {
                                             <td>{{$item['total_harga_everify'] }}</td>
                                             <td>{{$item['status']}}</td>
                                             <td>
-                                                <a href="/warehouse/detail-invoice/{{$item->id_inv}}"
+                                                <a href="/vendor/detail-invoice/{{$item->id_inv}}"
                                                     class="btn btn-info">Detail</a>
                                             </td>
                                         </tr>
                                         @endforeach
                                     </tbody>
                                 </table>
+                                &nbsp;&nbsp;&nbsp;<a href="" class="btn btn-success mb-2">Upload SAP</a>
+                                {{-- <div class="row">
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<div class="col-md-1 mb-2"><a href=""
+                                    class="btn btn-primary">Upload SAP</a></div>
+                        </div> --}}
+                            </form>
                         </div>
                     </div>
                 </div> <!-- /.table-stats -->

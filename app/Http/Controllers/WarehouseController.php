@@ -21,7 +21,7 @@ class WarehouseController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function __construct()
-    {
+    {   
         $this->middleware('auth');
     }
     public function index()
@@ -32,14 +32,28 @@ class WarehouseController extends Controller
     }
     public function index2()
     {
-       
-        return view('warehouse.dashboard');
+        $good_receipt = good_receipt::count();
+        $invoice = Invoice::count();
+        $dispute = good_receipt::all()->where("Status", "Dispute")->count();
+        $vendor = User::all()->where("level", "vendor")->count();
+
+        return view('warehouse.dashboard',['good_receipt'=>$good_receipt, 'invoice'=>$invoice, 'dispute'=>$dispute, 'vendor'=>$vendor]);
     }
     public function po()
     {   
-        $good_receipts = good_receipt::where("Status","Not Verified")->orWhere("Status"," ")->orWhere("Status","Reject")->get();
+        $good_receipts = good_receipt::where("Status","Not Verified")->orWhere("Status"," ")->get();
         return view('warehouse.po.index',compact('good_receipts'))
                 ->with('i',(request()->input('page', 1) -1) *5);
+    }
+    public function pover(){
+        $good_receipts = good_receipt::where("Status","Verified")->get();
+        return view('warehouse.po.verified',compact('good_receipts'))
+        ->with('i',(request()->input('page', 1) -1) *5);
+    }
+    public function poreject(){
+        $good_receipts = good_receipt::where("Status","Reject")->get();
+        return view('warehouse.po.reject',compact('good_receipts'))
+        ->with('i',(request()->input('page', 1) -1) *5);
     }
     public function invoice()
     {
@@ -48,28 +62,35 @@ class WarehouseController extends Controller
              ->with('i',(request()->input('page', 1) -1) *5);
     }
     public function detailinvoice(Request $request, $id){
-
-        $invoices = Invoice::select("invoice.id", 
+        $invoices = good_receipt::select("goods_receipt.id_gr",
+                                    "goods_receipt.no_po",
+                                    "goods_receipt.GR_Number",
+                                    "goods_receipt.po_item",
+                                    "goods_receipt.GR_Date",
+                                    "goods_receipt.Material_Number",
+                                    "goods_receipt.harga_satuan",
+                                    "goods_receipt.jumlah",
+                                    "goods_receipt.Tax_Code",
+                                    "goods_receipt.Status",
+                                    "invoice.id_inv", 
                                     "invoice.posting_date", 
                                     "invoice.baselinedate",
                                     "invoice.vendor_invoice_number",
                                     "invoice.faktur_pajak_number",
                                     "invoice.total_harga_everify",
                                     "invoice.ppn",
-                                    "invoice.total_harga_gross",
-                                    "goods_receipt.id",
-                                    "goods_receipt.no_po",
-                                    "goods_receipt.po_item",
-                                    "goods_receipt.GR_Date",
-                                    "goods_receipt.Material_Number",
-                                    "goods_receipt.Tax_Code",
-                                    "goods_receipt.Status"
+                                    "invoice.total_harga_gross"
                                     )
-                                    ->join("goods_receipt", "goods_receipt.id", "=", "invoice.id_gr")
+                                    ->JOIN("invoice", "goods_receipt.id_inv", "=", "invoice.id_inv")
                                     ->get();
         return view('warehouse.invoice.detail', compact('invoices'))->with('i',(request()->input('page', 1) -1) *5);
     }
-
+    public function disputed()
+    {
+        $good_receipts = good_receipt::where("Status", "Dispute")->get();
+        return view('warehouse.dispute.index',compact('good_receipts'))
+                ->with('i',(request()->input('page', 1) -1) *5);
+    }
     /**
      * Show the form for creating a new resource.
      *

@@ -94,23 +94,21 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
                         aria-expanded="false"> <i class="menu-icon fa fa-list-ul"></i>Good Receipt</a>
                     <ul class="sub-menu children dropdown-menu">
-                        <li><i class="fa fa-table"></i><a href="{{url('vendor/purchaseorder')}}">Show</a></li>
-                        <!-- <li><i class="fa fa-pencil-square-o"></i><a href="{{url('vendor/createpo')}}">Tambah PO</a> -->
+                        <li><i class="fa fa-check"></i><a href="{{url('vendor/purchaseorder')}}">Verified</a></li>
+                        <li><i class="fa fa-warning"></i><a href="{{url('vendor/puchaseorderreject')}}">Reject</a></li>
                         </li>
                     </ul>
                 </li>
 
-                <!-- <li class="menu-item-has-children dropdown">
+                <li class="menu-item-has-children dropdown ">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                        aria-expanded="false"> <i class="menu-icon fa fa-list"></i>Data Product</a>
-                    <ul class="sub-menu children dropdown-menu">
-                        <li><i class="fa fa-tags"></i><a href="{{url ('vendor/product') }}">Show</a></li>
-                        <li><i class="fa fa-pencil-square-o"></i><a href="{{url('vendor/createproduct')}}">Tambah
-                                Product</a>
-                        </li>
-                    </ul>
-                </li> -->
+                        aria-expanded="false"> <i class="menu-icon fa fa-newspaper-o"></i>BA</a>
+                    <ul class="sub-menu children dropdown-menu ">
+                        <li><i class="fa fa-table "></i><a href="{{url('vendor/ba')}}">Show</a></li>
 
+
+                    </ul>
+                </li>
                 <li class="menu-item-has-children dropdown ">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
                         aria-expanded="false"> <i class="menu-icon fa fa-money"></i>Invoice</a>
