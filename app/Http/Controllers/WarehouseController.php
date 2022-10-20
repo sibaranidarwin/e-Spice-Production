@@ -42,26 +42,35 @@ class WarehouseController extends Controller
     public function po()
     {   
         $good_receipts = good_receipt::where("Status","Not Verified")->orWhere("Status"," ")->get();
-        return view('warehouse.po.index',compact('good_receipts'))
+        $dispute = good_receipt::all()->where("Status", "Dispute")->count();
+
+        return view('warehouse.po.index',compact('good_receipts', 'dispute'))
                 ->with('i',(request()->input('page', 1) -1) *5);
     }
     public function pover(){
         $good_receipts = good_receipt::where("Status","Verified")->get();
-        return view('warehouse.po.verified',compact('good_receipts'))
+        $dispute = good_receipt::all()->where("Status", "Dispute")->count();
+
+        return view('warehouse.po.verified',compact('good_receipts', 'dispute'))
         ->with('i',(request()->input('page', 1) -1) *5);
     }
     public function poreject(){
         $good_receipts = good_receipt::where("Status","Reject")->get();
-        return view('warehouse.po.reject',compact('good_receipts'))
+        $dispute = good_receipt::all()->where("Status", "Dispute")->count();
+
+        return view('warehouse.po.reject',compact('good_receipts', 'dispute'))
         ->with('i',(request()->input('page', 1) -1) *5);
     }
     public function invoice()
     {
      $invoice = Invoice::latest()->get();
-     return view('warehouse.invoice.index',compact('invoice'))
+     $dispute = good_receipt::all()->where("Status", "Dispute")->count();
+
+     return view('warehouse.invoice.index',compact('invoice','dispute'))
              ->with('i',(request()->input('page', 1) -1) *5);
     }
     public function detailinvoice(Request $request, $id){
+        $dispute = good_receipt::all()->where("Status", "Dispute")->count();
         $invoices = good_receipt::select("goods_receipt.id_gr",
                                     "goods_receipt.no_po",
                                     "goods_receipt.GR_Number",
@@ -79,16 +88,19 @@ class WarehouseController extends Controller
                                     "invoice.faktur_pajak_number",
                                     "invoice.total_harga_everify",
                                     "invoice.ppn",
+                                    "invoice.DEL_COSTS",
                                     "invoice.total_harga_gross"
                                     )
                                     ->JOIN("invoice", "goods_receipt.id_inv", "=", "invoice.id_inv")
                                     ->get();
-        return view('warehouse.invoice.detail', compact('invoices'))->with('i',(request()->input('page', 1) -1) *5);
+        return view('warehouse.invoice.detail', compact('invoices', 'dispute'))->with('i',(request()->input('page', 1) -1) *5);
     }
     public function disputed()
     {
         $good_receipts = good_receipt::where("Status", "Dispute")->get();
-        return view('warehouse.dispute.index',compact('good_receipts'))
+        $dispute = good_receipt::all()->where("Status", "Dispute")->count();
+
+        return view('warehouse.dispute.index',compact('good_receipts', 'dispute'))
                 ->with('i',(request()->input('page', 1) -1) *5);
     }
     /**

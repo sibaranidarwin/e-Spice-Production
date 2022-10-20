@@ -61,63 +61,50 @@
                     <div class="form-group col-md-6">
                         <label class="form-control-label" for="posting_date[]">Posting Date</label>
                         <input type="date" class="form-control @error('posting_date[]') is-invalid @enderror"
-                            name="posting_date[]" placeholder="Masukkan Tanggal ..." value="{{ $invoice->posting_date }}">
+                            name="posting_date[]" placeholder="Masukkan Tanggal ..." value="{{ $invoice->posting_date }}" readonly>
                         @error('posting_date[]')<span
                             class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                     </div>
                     <div class="form-group col-md-6">
-                        <label class="form-control-label" for="baselinedate[]">Baseline Date</label>
-                        <input type="date" class="form-control @error('baselinedate[]') is-invalid @enderror" name="baselinedate[]"
-                            placeholder="Masukkan Tanggal ..." value="{{ $invoice->baselinedate }}">
-                        @error('baselinedate[]')<span class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
-                    </div>
-                    <div class="form-group col-md-6">
                         <label class="form-control-label" for="vendor_invoice_number[]">No Invoice</label>
-                        <input type="number" class="form-control @error('vendor_invoice_number[]') is-invalid @enderror"
-                            name="vendor_invoice_number[]" placeholder="Masukkan Tanggal ...">
+                        <input type="text" class="form-control @error('vendor_invoice_number[]') is-invalid @enderror"
+                            name="vendor_invoice_number[]" placeholder="Masukkan Tanggal ..." value="{{ $invoice->vendor_invoice_number }}" readonly>
                         @error('vendor_invoice_number[]')<span
                             class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                     </div>
                     <div class="form-group col-md-6">
-                        <label class="form-control-label" for="faktur_pajak_number[]">No Tax Invoice</label>
-                        <input type="date" class="form-control @error('faktur_pajak_number[]') is-invalid @enderror"
-                            name="faktur_pajak_number[]" placeholder="Masukkan Tanggal ..." value="{{ $invoice->faktur_pajak_number }}">
-                        @error('faktur_pajak_number[]')<span
-                            class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label class="form-control-label" for="total_harga_everify[]">No Invoice Proposal</label>
+                        <label class="form-control-label" for="total_harga_everify[]">No Faktur Pajak</label>
                         <input type="number" class="form-control @error('total_harga_everify[]') is-invalid @enderror"
-                            name="total_harga_everify[]" placeholder="Masukkan Tanggal ..." value="{{ $invoice->total_harga_everify }}">
+                            name="total_harga_everify[]" placeholder="Masukkan Tanggal ..." value="{{ $invoice->faktur_pajak_number }}" readonly>
                         @error('total_harga_everify[]')<span
                             class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                     </div>
                     <div class="form-group col-md-6">
-                        <label class="form-control-label" for="Material_Number[]">Amount DDP</label>
+                        <label class="form-control-label" for="Material_Number[]">Total DDP</label>
                         <input type="text" class="form-control @error('Material_Number[]') is-invalid @enderror"
                             name="Material_Number[]" placeholder="Masukkan Tanggal ..."
-                            value="{{ $invoice->Material_Number }}">
+                            value="{{ $invoice->total_harga_gross }}" readonly>
                         @error('Material_Number[]')<span
                             class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                     </div>
                     <div class="form-group col-md-6">
-                        <label class="form-control-label" for="ppn[]">PPN</label>
+                        <label class="form-control-label" for="ppn[]">Total PPN</label>
                         <input type="text" class="form-control @error('ppn[]') is-invalid @enderror"
-                            name="ppn[]" placeholder="Masukkan Tanggal ..." value="{{ $invoice->ppn }}">
+                            name="ppn[]" placeholder="Masukkan Tanggal ..." value="{{ $invoice->ppn }}" readonly>
                         @error('ppn[]')<span
                             class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                     </div>
                     <div class="form-group col-md-6">
-                        <label class="form-control-label" for="total_harga_gross[]">Amount Price</label> <br>
-                        <input type="number" class="form-control @error('total_harga_gross[]') is-invalid @enderror"
-                            name="total_harga_gross[]" placeholder="Masukkan Tanggal ..." value="{{ $invoice->total_harga_gross }}">
+                        <label class="form-control-label" for="total_harga_gross[]">Total Harga</label> <br>
+                        <input type="text" class="form-control @error('total_harga_gross[]') is-invalid @enderror"
+                            name="total_harga_gross[]" placeholder="Masukkan Tanggal ..." value="{{ $invoice->total_harga_everify }}" readonly>
                         @error('total_harga_gross[]')<span
                             class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                     </div>
                     <div class="form-group col-md-6">
-                        <label class="form-control-label" for="Status[]">Invoice Difference</label> <br>
+                        <label class="form-control-label" for="Status[]">Selisih Harga</label> <br>
                         <input type="text" class="form-control @error('Tax_Code[]') is-invalid @enderror"
-                            name="Tax_Code[]" placeholder="Masukkan Tanggal ..." value="{{ $invoice->Tax_Code }}">
+                            name="Tax_Code[]" placeholder=" ..." value="{{ $invoice->DEL_COSTS}}" readonly>
                         @error('Tax_Code[]')<span
                             class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                     </div>

@@ -63,46 +63,24 @@
                         <table id="list" class="table table-striped" style="font-size: 10px;">
                             <thead>
                                 <tr>
-                                    <th></th>
-                                    <th>No</th>
+                                    <th>No Draft</th>
+                                    <th>Date</th>
+                                    <th>No Po</th>
+                                    <th>Material</th>
                                     <th>Status</th>
-                                    <th>GR Number</th>
-                                    <th>No PO</th>
-                                    <th>PO Item</th>
-                                    <th>GR Date</th>
-                                    <th>Part Number</th>
-                                    <th>Reference</th>
-                                    <th>Material Description</th>
-                                    <th>QTY UOM</th>
-                                    <th>Curr</th>
-                                    <th>Unit Price</th>
-                                    <th>Tax Code</th>
-                                    <th hidden>Status Invoice Proposal</th>
+                                    <th>Keterangan</th>
                                 </tr>
                             </thead>
                             <tbody style="font-size: 11px;">
                                 @php $i = 1 @endphp
-                                @foreach($good_receipts as $good_receipt)
                                 <tr>
-                                    <td><input type="checkbox" name="ids[]" value="{{$good_receipt->id_gr}}">
-                                    </td>
-                                    <td>{{$i++}}</td>
-                                    <td>{{ $good_receipt->Status }}</td>
-                                    <td><span>{{$good_receipt->GR_Number}}</span></td>
-                                    <td><span>{{$good_receipt->no_po}}</span></td>
-                                    <td><span>{{$good_receipt->po_item}}</span></td>
-                                    <td><span>{{$good_receipt->GR_Date}}</span></td>
-                                    <td> <span>{{$good_receipt->Material_Number}}</span></td>
-                                    <td> <span>{{$good_receipt->Ref_Doc_No}}</span> </td>
-                                    <td> <span>{{$good_receipt->Mat_Desc}}</span> </td>
-                                    <td> <span>{{$good_receipt->jumlah}}</span>&nbsp;<span>{{$good_receipt->UOM}}</span>
-                                    </td>
-                                    <td> <span>{{$good_receipt->Currency}}</span> </td>
-                                    <td> <span>{{$good_receipt->harga_satuan}}</span> </td>
-                                    <td> <span>{{$good_receipt->Tax_Code}}</span> </td>
-                                    <td hidden><span>{{$good_receipt->status_invoice}}</span></td>
+                                    <td>{{$draft->id_gr}}</td>
+                                    <td>{{$draft->date_draft}}</td>
+                                    <td>{{$draft->po_number}}</td>
+                                    <td>{{$draft->material}}</td>
+                                    <td>{{$draft->status_draft}}</td>
+                                    <td>{{$draft->reason}}</td>
                                 </tr>
-                                @endforeach
                                 </select>
                             </tbody>
                         </table>

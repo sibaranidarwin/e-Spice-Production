@@ -2,6 +2,13 @@
 @section('content')
 
 <link rel="stylesheet" href="{{asset('assets/css/argon-dashboard.css')}}">
+<style>
+    .table td,
+    .table th,
+    label{
+        font-size: 11.4px;
+    }
+    </style>
 <div class="breadcrumbs">
     <div class="breadcrumbs-inner">
         <div class="row m-0">

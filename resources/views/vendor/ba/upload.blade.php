@@ -43,7 +43,7 @@ label {
                     <div class="page-title">
                         <ol class="breadcrumb text-right">
                             <li><a href="#">Dashboard</a></li>
-                            <li><a href="#">BA List</a></li>
+                            <li><a href="#">BA Reconcile</a></li>
                             <li class="active">Show</li>
                         </ol>
                     </div>
@@ -81,7 +81,7 @@ label {
                     </div>
                     @endif
                     <div class="card-header">
-                        <strong class="card-title">BA List</strong>
+                        <strong class="card-title">BA Reconcile List</strong>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive text-nowrap">
@@ -128,8 +128,8 @@ label {
                                         </select>
                                     </tbody>
                                 </table>
-                                &nbsp;&nbsp;<button type="submit" name="action" value="Dispute"
-                                    class="btn btn-warning btn-sm-3">Dispute</button>
+                                {{-- &nbsp;&nbsp;<button type="submit" name="action" value="Dispute"
+                                    class="btn btn-warning btn-sm-3">Dispute</button> --}}
                             </form>
                         </div> <!-- /.table-stats -->
                     </div>

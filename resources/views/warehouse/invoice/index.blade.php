@@ -83,10 +83,10 @@ label {
                                     <thead>
                                         <tr>
                                             <th class="serial">No</th>
-                                            <th>GR Number</th>
+                                            <th>No GR</th>
                                             <th>Invoice date</th>
-                                            <th>Invoice number</th>
-                                            <th>tax invoice number</th>
+                                            <th>No Invoice</th>
+                                            <th>No tax invoice </th>
                                             {{-- <th>e-verify number</th> --}}
                                             <th>Total price</th>
                                             <th>status sap</th>
@@ -117,7 +117,7 @@ label {
                                             <td>{{$item['status']}}</td>
                                             <td>
                                                 <a href="/warehouse/detail-invoice/{{$item->id_inv}}"
-                                                    class="btn btn-info">Detail</a>
+                                                    class="btn btn-info btn-sm">Detail</a>
                                             </td>
                                         </tr>
                                         @endforeach

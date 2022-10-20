@@ -14,6 +14,7 @@
 <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/datetime/1.1.2/css/dataTables.dateTime.min.css">
 <link rel="stylesheet" href="{{asset('assets/css/argon-dashboard.css')}}">
+
 <style>
 .table td,
 .table th,

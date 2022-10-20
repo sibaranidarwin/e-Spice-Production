@@ -23,25 +23,28 @@ class PoController extends Controller
             case 'Upload':
                 $recordIds = $request->get('ids');
                 $newStatus = $request->get('Status');
+                $dispute = good_receipt::all()->where("Status", "Dispute")->count();
+
                 
                 $good_receipts = [];
                 foreach($recordIds as $record) {
                     $good_receipt = good_receipt::find($record);
                     array_push($good_receipts, $good_receipt);
                 }
-                return view('warehouse.po.upload', compact('good_receipts'));
+                return view('warehouse.po.upload', compact('good_receipts', 'dispute'));
                 break;
     
             case 'Update':
                 $recordIds = $request->get('ids');
                 $newStatus = $request->get('Status');
-        
+                $dispute = good_receipt::all()->where("Status", "Dispute")->count();
+
                 $good_receipts = [];
                 foreach($recordIds as $record) {
                     $good_receipt = good_receipt::find($record);
                     array_push($good_receipts, $good_receipt);
                 }
-                return view('warehouse.po.edit', compact('good_receipts'));
+                return view('warehouse.po.edit', compact('good_receipts','dispute'));
                 break;
         }
      }
