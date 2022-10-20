@@ -95,14 +95,14 @@
                         aria-expanded="false"> <i class="menu-icon fa fa-list-ul"></i>Good Receipt</a>
                     <ul class="sub-menu children dropdown-menu">
                         <li><i class="fa fa-check"></i><a href="{{url('vendor/purchaseorder')}}">Verified</a></li>
-                        <li><i class="fa fa-warning"></i><a href="{{url('vendor/puchaseorderreject')}}">Reject</a></li>
+                        <li><i class="fa fa-info"></i><a href="{{url('vendor/puchaseorderreject')}}">Reject</a></li>
                         </li>
                     </ul>
                 </li>
 
                 <li class="menu-item-has-children dropdown ">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                        aria-expanded="false"> <i class="menu-icon fa fa-newspaper-o"></i>BA</a>
+                        aria-expanded="false"> <i class="menu-icon fa fa-newspaper-o"></i>BA Reconcile</a>
                     <ul class="sub-menu children dropdown-menu ">
                         <li><i class="fa fa-table "></i><a href="{{url('vendor/ba')}}">Show</a></li>
 
@@ -111,16 +111,14 @@
                 </li>
                 <li class="menu-item-has-children dropdown ">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                        aria-expanded="false"> <i class="menu-icon fa fa-money"></i>Invoice</a>
+                        aria-expanded="false"> <i class="menu-icon fa fa-file"></i>Invoice</a>
                     <ul class="sub-menu children dropdown-menu ">
                         <li><i class="fa fa-table "></i><a href="{{url('vendor/invoice')}}">Show</a></li>
-
-
                     </ul>
                 </li>
                 <li class="menu-item-has-children dropdown ">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                        aria-expanded="false"> <i class="menu-icon fa fa-list-ol"></i>Disputed Purchase</a>
+                        aria-expanded="false"> <i class="menu-icon fa fa-warning"></i>Disputed Purchase</a>
                     <ul class="sub-menu children dropdown-menu ">
                         <li><i class="fa fa-table "></i><a href="{{url('vendor/disputed')}}">Show</a></li>
 
@@ -160,8 +158,8 @@
                         <a class="nav-link" href="{{route('vendor-user.show',auth()->user()->id)}}"><i
                                 class="fa fa- user"></i>My Profile</a>
 
-                        <a class="nav-link" href="{{url('admin/pengaduan')}}"><i class="fa fa- user"></i>Notifications
-                            <span class="count">13</span></a>
+                        <a class="nav-link" href="{{url('')}}"><i class="fa fa- user"></i>Notifications
+                            <span class="count"></span></a>
 
                         <a class="nav-link" href="{{route('user.showing',auth()->user()->id)}}"><i
                                 class="fa fa -cog"></i>Settings</a>

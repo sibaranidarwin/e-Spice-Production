@@ -44,7 +44,7 @@ class VendorController extends Controller
     }
     public function po()
     {   
-        $good_receipts = good_receipt::where("Status", "Verified")->get();
+        $good_receipts = good_receipt::where("Status", "Verified")->orWhere("Status", "")->get();
         return view('vendor.po.index',compact('good_receipts'))
                 ->with('i',(request()->input('page', 1) -1) *5);
     }
@@ -93,8 +93,18 @@ class VendorController extends Controller
                 foreach($recordIds as $record) {
                     $good_receipt = good_receipt::find($record);
                     array_push($good_receipts, $good_receipt);
+
+                    $draft = Draft_BA::create([
+                        'id_gr' =>$good_receipt->id_gr,
+                        'no_draft' => $good_receipt->vendor_id,
+                        'date_draft' => $good_receipt->GR_Date,
+                        'po_number' => $good_receipt->no_po,
+                        'material' => $good_receipt->Material_Number,
+                        'status_draft' => 'Not Yet Verified -Draft',
+                    ]);
                 }
-                return view('vendor.po.ba', compact('good_receipts'));
+
+                return view('Vendor.po.ba',compact('draft'));
                 break;
     }
     }
@@ -128,16 +138,29 @@ class VendorController extends Controller
         'total_harga_gross' => 'required',
         'DEL_COSTS' => 'required'
     ]);
-    
-    $invoice=Invoice::create($request->all());
-     if($invoice){
-        //redirect dengan pesan sukses
-        return redirect('vendor/invoice')->with('success','Invoice Proposal Telah Berhasil Disimpan.');
-      }else{
-        //redirect dengan pesan error
-        return redirect('vendor/purchaseorder')->with(['error' => 'Data Gagal Disimpan!']);
-      }
+
+    $Invoice = Invoice::create($request->all());
+    // dd($Invoice);
+    foreach($request->id as $id) {
+        $good_receipt = good_receipt::find($id);
+        $good_receipt->update([
+            'id_inv' => $Invoice->id_inv
+        ]);
+        $good_receipt->save();
     }
+    // $good_receipt = good_receipt::find($request->id_gr);
+    // dd($good_receipt);
+    // $good_receipt -> update($Invoice);
+
+        if($good_receipt){
+            //redirect dengan pesan sukses
+            return redirect('vendor/invoice')->with('success','Invoice Proposal Telah Berhasil Disimpan.');
+        }else{
+            //redirect dengan pesan error
+            return redirect('vendor/purchaseorder')->with(['error' => 'Data Gagal Disimpan!']);
+            }
+            }
+    
 
     public function ba()
     {
@@ -179,6 +202,7 @@ class VendorController extends Controller
                                     "invoice.faktur_pajak_number",
                                     "invoice.total_harga_everify",
                                     "invoice.ppn",
+                                    "invoice.DEL_COSTS",
                                     "invoice.total_harga_gross"
                                     )
                                     ->JOIN("invoice", "goods_receipt.id_inv", "=", "invoice.id_inv")
@@ -209,18 +233,11 @@ class VendorController extends Controller
                     )
                     ->JOIN("invoice", "goods_receipt.id_inv", "=", "invoice.id_inv")
                     ->get();
-
-                    // $pdf = PDF::loadView('reports.today', ['Data' => $Data])->setOptions(['defaultFont' => 'sans-serif']);
-
-
-                    // return $pdf->download('invoice.pdf');
                     
-        $pdf = PDF::loadView('vendor.invoice.print',compact('invoices'))->setOptions(['defaultFont' => 'sans-serif'])->setPaper('a4', 'landscape');
-        $pdf->save(storage_path().'invoice.pdf');
-        return $pdf->stream();
-
-        // return view("vendor.invoice.print");
-    }
+                        $pdf = PDF::loadView('vendor.invoice.print',compact('invoices'))->setOptions(['defaultFont' => 'sans-serif'])->setPaper('a4', 'landscape');
+                        $pdf->save(storage_path().'invoice.pdf');
+                        return $pdf->stream();
+                    }   
 
     public function disputed()
     {

@@ -18,9 +18,9 @@
 
     .container {
         margin: 0 auto;
-        margin-top: 35px;
-        padding: 40px;
-        width: 750px;
+        margin-top: 0px;
+        /* padding: 40px;
+        width: 750px; */
         height: auto;
         background-color: #fff;
     }
@@ -33,17 +33,16 @@
     table {
         border: none;
         border-collapse: collapse;
-        margin: 0 auto;
-        width: 790px;
+        /* margin: 0 auto;
+        width: 790px; */
     }
 
     td,
     tr,
     th {
-        padding: 6px;
         border: none;
         font-size: 13px;
-        width: 185px;
+        width: 109px;
     }
 
     th {
@@ -54,6 +53,7 @@
     p {
         margin: 0px;
     }
+    
     </style>
 </head>
 
@@ -73,39 +73,68 @@
         </p>
         <table>
             <tr>
-                <td>Nomor Pelanggan (Account No) : 12278</td>
+                <td colspan="3">Nomor Pelanggan (Account No) : 12278</td>
+                <td colspan="1"></td>
                 <td></td>
                 <td>Nomor Faktur (Invoice Number) : 9142</td>
             </tr>
             <tr>
                 <td>Nomor Pesanan (Order Reff) : 4020071510</td>
+                <td colspan="3"></td>
                 <td></td>
                 <td>Tanggal Pesanan (Order Date) : 19 Januari 2022</td>
             </tr>
             <tr>
                 <td>Mata uang (Currency) : IDR</td>
+                <td colspan="3"></td>
                 <td></td>
                 <td>Sales Order (Sales Order No.) : 0230960070</td>
             </tr>
             <tr>
                 <td>Tanggal Faktur (invoice Date) : 2 Februari 2022</td>
                 <td></td>
+                <td colspan="3"></td>
                 <td>Tanggal Jatuh Tempo (Payment Due Date) : 3 April 2022</td>
             </tr>
             <tr>
                 <td>Nomor Faktur Pajak (VAT No.) : 010.001-22.66960371</td>
             </tr>
         </table>
-        <table>
+        <br><br>
+        <h4>Data GR Invoice Proposal:</h4>
+        <br>
+        <table class="table">
             <thead>
-                <th>No</th>
-                <th>Nama Barang</th>
-                <th>Jumlah</th>
-                <th>Harga Satuan</th>
+                <tr style="text-align: center;">
+                    <th>GR Number</th>
+                    <th>No PO</th>
+                    <th>PO Item</th>
+                    <th>GR Slip Date</th>
+                    <th>Material Number</th>
+                    <th>Harga Satuan</th>
+                    <th>Jumlah</th>
+                    <th>Tax Code</th>
+                    <th>Status</th>
+                </tr>
             </thead>
+            <tbody>
+                @foreach($invoices as $invoice)
+                <tr style="text-align: center;">
+                    <td>{{$invoice->no_po}}</td>
+                    <td>{{$invoice->GR_Number}}</td>
+                    <td>{{$invoice->po_item}}</td>
+                    <td>{{$invoice->GR_Date}}</td>
+                    <td>{{$invoice->Material_Number}}</td>
+                    <td>{{$invoice->harga_satuan}}</td>
+                    <td>{{$invoice->jumlah}}</td>
+                    <td>{{$invoice->Tax_Code}}</td>
+                    <td>{{ $invoice->Status }}</td>
+                </tr>
+                @endforeach
+                </select>
+            </tbody>
         </table>
 
-     
     </div>
 </body>
 

@@ -21,7 +21,7 @@
 <link rel="stylesheet" href="{{asset('assets/css/argon-dashboard.css')}}">
 
 <style>
-    .table td, .table th {
+    .table td, .table th,label {
         font-size: 11.4px;
     }
 </style>
@@ -78,7 +78,7 @@
                     </div>
                     @endif
                     <div class="card-header">
-                        <strong class="card-title">Good Receipt List</strong>
+                        <strong class="card-title">Good Receipt Not Verified List</strong>
                     </div>
                     <div class="card-body">
                     <div class="table-responsive text-nowrap">

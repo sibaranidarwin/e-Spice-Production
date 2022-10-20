@@ -47,25 +47,25 @@ label {
                             enctype="multipart/form-data">
                             @csrf
                             @foreach ($good_receipts as $good)
-                            <input type="hidden" name="id" value="{{$good->id_gr}}">
+                            <input type="hidden" name="id[]" value="{{$good->id_gr}}">
                             @endforeach
                             <div class="row">
                                 <div class="form-group col-md-6">
                                     <label class="form-control-label" for="posting_date">Posting Date</label>
                                     <input type="date"
-                                        class="form-control @error('posting_date[]') is-invalid @enderror"
+                                        class="form-control @error('posting_date') is-invalid @enderror"
                                         name="posting_date" placeholder="Masukkan Posting Date ..."
-                                        >
-                                    @error('posting_date[]')<span
+                                        required>
+                                    @error('posting_date')<span
                                         class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                                 </div>
                             <div class="form-group col-md-6">
                                 <label class="form-control-label" for="vendor_invoice_number">Nomor Invoice</label>
                                 <input type="number"
-                                    class="form-control @error('vendor_invoice_number[]') is-invalid @enderror"
+                                    class="form-control @error('vendor_invoice_number') is-invalid @enderror"
                                     name="vendor_invoice_number" placeholder="Masukkan No Invoice ..."
-                                    value="{{ $good->vendor_invoice_number }}">
-                                @error('vendor_invoice_number[]')<span
+                                    value="{{ $good->vendor_invoice_number }}" required>
+                                @error('vendor_invoice_number')<span
                                     class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                             </div>
                             <div class="form-group col-md-6">
@@ -73,7 +73,7 @@ label {
                                 <input type="number"
                                     class="form-control @error('faktur_pajak_number[]') is-invalid @enderror"
                                     name="faktur_pajak_number" placeholder="Masukkan No Tax Invoice ..."
-                                    value="{{ $good->faktur_pajak_number }}">
+                                    value="{{ $good->faktur_pajak_number }}" required>
                                 @error('faktur_pajak_number[]')<span
                                     class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                             </div>
@@ -105,7 +105,7 @@ label {
                             <div class="form-group col-md-6">
                                 <label class="form-control-label" for="DEL_COSTS">Selisih Invoice</label> <br>
                                 <input type="number" class="form-control @error('DEL_COSTS[]') is-invalid @enderror"
-                                    name="DEL_COSTS" placeholder="Masukkan Invoice Difference ...">
+                                    name="DEL_COSTS" placeholder="Masukkan Invoice Difference ..." required>
                                 @error('DEL_COSTS[]')<span
                                     class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                             </div>

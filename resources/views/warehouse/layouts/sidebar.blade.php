@@ -53,13 +53,13 @@
                     <ul class="sub-menu children dropdown-menu">
                         <li><i class="fa fa-close"></i><a href="{{url('warehouse/po')}}">Not Verified</a></li>
                         <li><i class="fa fa-check"></i><a href="{{url('warehouse/pover')}}">Verified</a></li>
-                        <li><i class="fa fa-warning"></i><a href="{{url('warehouse/poreject')}}">Reject</a></li>
+                        <li><i class="fa fa-info"></i><a href="{{url('warehouse/poreject')}}">Reject</a></li>
                 </li>
             </ul>
             </li>
             <li class="menu-item-has-children dropdown ">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="menu-icon fa fa-money"></i>Invoice</a>
+                    <i class="menu-icon fa fa-file"></i>Invoice</a>
                 <ul class="sub-menu children dropdown-menu ">
                     <li><i class="fa fa-table "></i><a href="{{url('warehouse/invoice')}}">Show</a></li>
 
@@ -68,7 +68,7 @@
             </li>
             <li class="menu-item-has-children dropdown ">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="menu-icon fa fa-list-ol"></i>Disputed Purchase</a>
+                    <i class="menu-icon fa fa-warning"></i>Disputed Purchase</a>
                 <ul class="sub-menu children dropdown-menu ">
                     <li><i class="fa fa-table "></i><a href="{{url('warehouse/disputed')}}">Show</a></li>
 
@@ -108,11 +108,11 @@
                         <a class="nav-link" href="{{route('warehouse-user.show',auth()->user()->id)}}"><i
                                 class="fa fa- user"></i>My Profile</a>
 
-                        <a class="nav-link" href="{{url('admin/pengaduan')}}"><i class="fa fa- user"></i>Notifications
-                            <span class="count">13</span></a>
+                        <a class="nav-link" href="{{url('warehouse/disputed')}}"><i class="fa fa- user"></i>Notifications
+                            <span class="count">{{$dispute}}</span></a>
 
-                        <a class="nav-link" href="{{route('user.showing',auth()->user()->id)}}"><i
-                                class="fa fa -cog"></i>Settings</a>
+                        {{-- <a class="nav-link" href="{{route('user.showing',auth()->user()->id)}}"><i
+                                class="fa fa -cog"></i>Settings</a> --}}
 
                         <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();" >
                             <i class="fa "></i>
