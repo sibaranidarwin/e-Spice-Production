@@ -144,6 +144,7 @@ Route::post('vendor/edit-datagr','VendorController@edit')->name('update-datagr-v
 Route::post('vendor/update-datagr','VendorController@update')->name('dispute_datagr');
 Route::post('vendor/create_invoice','VendorController@store')->name('create-invoice');
 
+Route::get('vendor/draft', 'VendorController@draft')->name('vendor/draft');
 Route::get('vendor/ba', 'VendorController@ba')->name('vendor/ba');
 Route::put('vendor/draft','VendorController@uploaddraft');
 

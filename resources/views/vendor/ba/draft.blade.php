@@ -94,9 +94,7 @@ label {
                                     <label for="">To: </label>
                                     <input class="form-group" type="text" id="max" name="max">
                                 </div>
-                                <div class="col-3 mb-2">
-                                    <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#modal-import"><i class="fa fa-plus"></i> Import Drat BA</button>
-                                </div>
+                               
                             </div>
                             <form action="{{ route('update-datagr-vendor/{id_gr}') }}" method="POST">
                                 @csrf
@@ -104,25 +102,25 @@ label {
                                     <thead>
                                         <tr>
                                             <th>No</th>
-                                            <th>No BA</th>
+                                            <th>No Draft</th>
                                             <th>Date</th>
                                             <th>No PO</th>
-                                            <th>PO MKP</th>
                                             <th>Material</th>
                                             <th>Status BA</th>
+                                            <th>Keterangan</th>
                                         </tr>
                                     </thead>
                                     <tbody style="font-size: 11px;">
                                         @php $i = 1 @endphp
-                                        @foreach($ba as $item)
+                                        @foreach($draft as $item)
                                         <tr>
                                             <td>{{$i++}}</td>
-                                            <td>{{ $item->no_ba}}</td>
-                                            <td><span>{{$item->gr_date}}</span></td>
+                                            <td>{{ $item->no_draft}}</td>
+                                            <td><span>{{$item->date_draft}}</span></td>
                                             <td><span>{{$item->po_number}}</span></td>
-                                            <td><span>{{$item->po_mkp}}</span></td>
-                                            <td><span>{{$item->material_bp}}</span></td>
-                                            <td><span>{{$item->status_ba}}</span></td>
+                                            <td><span>{{$item->material}}</span></td>
+                                            <td><span>{{$item->status_draft}}</span></td>
+                                            <td><span>{{$item->reason}}</span></td>
                                         </tr>
                                         @endforeach
                                         </select>
@@ -176,7 +174,7 @@ label {
             </div>
             <div class="col-md-12">
               <label>File Excel Draft BA</label>
-              <input type="file" name="excel-ba" required>
+              <input type="file" name="excel-draft" required>
             </div>
           </div>
         </div>

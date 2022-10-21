@@ -104,7 +104,8 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
                         aria-expanded="false"> <i class="menu-icon fa fa-newspaper-o"></i>BA Reconcile</a>
                     <ul class="sub-menu children dropdown-menu ">
-                        <li><i class="fa fa-table "></i><a href="{{url('vendor/ba')}}">Show</a></li>
+                        <li><i class="fa fa-close "></i><a href="{{url('vendor/draft')}}">Draft BA</a></li>
+                        <li><i class="fa fa-check "></i><a href="{{url('vendor/ba')}}">BA</a></li>
 
 
                     </ul>
