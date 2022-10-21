@@ -2,6 +2,7 @@
 
 namespace App\Imports;
 
+use App\BA_Reconcile;
 use App\Draft_BA;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
@@ -16,13 +17,13 @@ class Draft_BAImport implements ToModel, WithHeadingRow
     public function model(array $row)
     {
         $now = date('Y-m-d H:i:s');
-        return new Draft_BA([
-            'no_draft'=>$row['no_draft'],
-            'date_draft'=>$row['date_draft'],
+        return new BA_Reconcile([
+            'no_ba'=>$row['no_ba'],
+            'gr_date'=>$row['gr_date'],
             'po_number'=>$row['po_number'],
-            'material'=>$row['material'],
-            'status_draft'=>$row['status_draft'],
-            'reason'=>$row['reason'],
+            'po_mkp'=>$row['po_mkp'],
+            'material_bp'=>$row['material_bp'],
+            'status_ba'=>$row['status_ba'],
             'created_at'=>$now
         ]);
     }

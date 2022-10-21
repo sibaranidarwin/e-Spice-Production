@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\BA_Reconcile;
 use App\Draft_BA;
 use App\User;
 use App\Imports\Draft_BAImport;
@@ -102,9 +103,16 @@ class VendorController extends Controller
                         'material' => $good_receipt->Material_Number,
                         'status_draft' => 'Not Yet Verified -Draft',
                     ]);
-                }
+                }   
+                if($draft){
+                    //redirect dengan pesan sukses
+                    return redirect('vendor/draft')->with('success','Data Telah berhasil Di Create Menjadi Draft Ba.');
+                    }
+                    else{
+                    //redirect dengan pesan error
+                    return redirect('vendor/draft')->with(['error' => 'Data Gagal Di Create Draft Ba!']);
+                  }
 
-                return view('Vendor.po.ba',compact('draft'));
                 break;
     }
     }
@@ -161,20 +169,25 @@ class VendorController extends Controller
             }
             }
     
+    
+    public function draft()
+        {
+        $draft = Draft_BA::all();
+        return view('Vendor.ba.draft',compact('draft'));
+        }
 
     public function ba()
     {
-        $draft = Draft_BA::all();
+        $ba = BA_Reconcile::all();
         
-        return view('Vendor.ba.upload',compact('draft'));
+        return view('Vendor.ba.upload',compact('ba'));
     }
     
     public function uploaddraft(Request $request)
     {
-        $file = $request->file('excel-draft');
+        $file = $request->file('excel-ba');
         Excel::import(new Draft_BAImport, $file);
         
-
         return back()->with('success', 'Draft BA Imported Successfully');
     }
     public function invoice()
