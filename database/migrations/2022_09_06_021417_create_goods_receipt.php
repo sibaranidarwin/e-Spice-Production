@@ -18,7 +18,8 @@ class CreateGoodsReceipt extends Migration
             $table->bigIncrements('id_gr');
             $table->bigInteger('id_inv')->unsigned();
             $table->foreign('id_inv')->references('id_inv')->on('invoice');
-            $table->string('vendor_id');
+            $table->bigInteger('id_vendor')->unsigned();
+            $table->foreign('id_vendor')->references('id_vendor')->on('vendor');
             $table->string('vendor_name');
             $table->string('no_po');
             $table->integer('po_item');
@@ -38,7 +39,7 @@ class CreateGoodsReceipt extends Migration
             $table->float('total_harga');
             $table->string('Tax_Code')->nullable();
             $table->string('alasan_disp')->nullable();
-            $table->enum('Status',['Not Verified', 'Verified', 'Reject'])->default("Not Verified")->nullable();
+            $table->enum('Status',['Not Verified', 'Verified', 'Reject', 'Dispute'])->default("Not Verified")->nullable();
             $table->enum('status_invoice',['Not Yet Verified-Draft', 'Verified Yet Verified-BA', 'Reject'])->default("Not Yet Verified-Draft")->nullable();
             $table->string('Mat_Doc_IT')->nullable();
             $table->string('Year');

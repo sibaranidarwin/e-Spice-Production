@@ -21,8 +21,8 @@ class CreateDraftBaTable extends Migration
             $table->date('date_draft');
             $table->integer('po_number');
             $table->string('material');
-            $table->string('status_draft');
-            $table->string('reason');
+            $table->enum('status_draft',['Not Yet Verified - Draft', 'Verified - Draft'])->default("Not Yet Verified - Draft")->nullable();
+            $table->string('reason')->nullable();
             $table->timestamps();
         });
     }

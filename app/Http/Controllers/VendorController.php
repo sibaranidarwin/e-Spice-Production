@@ -45,7 +45,7 @@ class VendorController extends Controller
     }
     public function po()
     {   
-        $good_receipts = good_receipt::where("Status", "Verified")->orWhere("Status", "")->get();
+        $good_receipts = good_receipt::where("Status", "Verified")->orWhere("Status", "")->Where("id_vendor", "1")->get();
         return view('vendor.po.index',compact('good_receipts'))
                 ->with('i',(request()->input('page', 1) -1) *5);
     }
@@ -94,14 +94,14 @@ class VendorController extends Controller
                 foreach($recordIds as $record) {
                     $good_receipt = good_receipt::find($record);
                     array_push($good_receipts, $good_receipt);
-
+                    
                     $draft = Draft_BA::create([
                         'id_gr' =>$good_receipt->id_gr,
-                        'no_draft' => $good_receipt->vendor_id,
+                        'no_draft' => $good_receipt->id_vendor,
                         'date_draft' => $good_receipt->GR_Date,
                         'po_number' => $good_receipt->no_po,
                         'material' => $good_receipt->Material_Number,
-                        'status_draft' => 'Not Yet Verified -Draft',
+                        'status_draft' => 'Not Yet Verified - Draft',
                     ]);
                 }   
                 if($draft){
@@ -115,6 +115,22 @@ class VendorController extends Controller
 
                 break;
     }
+    }
+    public function editba(Request $request){
+        $recordIds = $request->get('ids');
+        
+        
+        $bas = [];
+        $total_dpp = 0;
+        foreach($recordIds as $record) {
+            $ba = BA_Reconcile::find($record);
+            $total_dpp += $ba->confirm_price * $ba->amount_vendor;
+            array_push($bas, $ba);
+        }
+        // dd($total_dpp);
+        $total_ppn = $total_dpp * 0.02;
+        $total_harga = $total_dpp + $total_ppn;
+        return view('vendor.po.editba', compact('bas', 'total_dpp', 'total_ppn', 'total_harga'));
     }
 
      public function update(Request $request)
@@ -139,16 +155,18 @@ class VendorController extends Controller
      }
     
     public function store(Request $request){
+        $from = "GR"; 
         $request->validate([
         'posting_date'  => 'required',
         'vendor_invoice_number'  => 'required',
         'faktur_pajak_number'  => 'required',
         'total_harga_gross' => 'required',
-        'DEL_COSTS' => 'required'
+        'DEL_COSTS' => 'required',
+        'data_from' => '',
     ]);
 
     $Invoice = Invoice::create($request->all());
-    // dd($Invoice);
+
     foreach($request->id as $id) {
         $good_receipt = good_receipt::find($id);
         $good_receipt->update([
@@ -156,9 +174,6 @@ class VendorController extends Controller
         ]);
         $good_receipt->save();
     }
-    // $good_receipt = good_receipt::find($request->id_gr);
-    // dd($good_receipt);
-    // $good_receipt -> update($Invoice);
 
         if($good_receipt){
             //redirect dengan pesan sukses
@@ -166,6 +181,37 @@ class VendorController extends Controller
         }else{
             //redirect dengan pesan error
             return redirect('vendor/purchaseorder')->with(['error' => 'Data Gagal Disimpan!']);
+            }
+    }
+
+    public function storeba(Request $request){
+        $from = "BA"; 
+        $request->validate([
+        'posting_date'  => 'required',
+        'vendor_invoice_number'  => 'required',
+        'faktur_pajak_number'  => 'required',
+        'total_harga_gross' => 'required',
+        'DEL_COSTS' => 'required',
+        'data_from' => '',
+    ]);
+
+    $Invoice = Invoice::create($request->all());
+    
+    //  dd($Invoice);
+    foreach($request->id as $id) {
+        $ba = BA_Reconcile::find($id);
+        $ba->update([
+            'id_inv' => $Invoice->id_inv
+        ]);
+        $ba->save();
+    }
+
+        if($ba){
+            //redirect dengan pesan sukses
+            return redirect('vendor/invoiceba')->with('success','Invoice Proposal Telah Berhasil Disimpan.');
+        }else{
+            //redirect dengan pesan error
+            return redirect('vendor/ba')->with(['error' => 'Data Gagal Disimpan!']);
             }
             }
     
@@ -192,7 +238,7 @@ class VendorController extends Controller
     }
     public function invoice()
     {
-         $invoice = Invoice::latest()->get();
+         $invoice = Invoice::latest()->orWhere("data_from", "GR")->get();
          return view('vendor.invoice.index',compact('invoice'))
                  ->with('i',(request()->input('page', 1) -1) *5);
         
@@ -216,10 +262,12 @@ class VendorController extends Controller
                                     "invoice.total_harga_everify",
                                     "invoice.ppn",
                                     "invoice.DEL_COSTS",
-                                    "invoice.total_harga_gross"
+                                    "invoice.total_harga_gross",
+                                    "invoice.created_at"
                                     )
                                     ->JOIN("invoice", "goods_receipt.id_inv", "=", "invoice.id_inv")
                                     ->get();
+
         return view('vendor.invoice.detail', compact('invoices'))->with('i',(request()->input('page', 1) -1) *5);
     }
 
@@ -235,6 +283,7 @@ class VendorController extends Controller
                     "goods_receipt.jumlah",
                     "goods_receipt.Tax_Code",
                     "goods_receipt.Status",
+                    "goods_receipt.Currency",
                     "invoice.id_inv", 
                     "invoice.posting_date", 
                     "invoice.baselinedate",
@@ -242,15 +291,76 @@ class VendorController extends Controller
                     "invoice.faktur_pajak_number",
                     "invoice.total_harga_everify",
                     "invoice.ppn",
-                    "invoice.total_harga_gross"
+                    "invoice.total_harga_gross",
+                    "invoice.created_at"
                     )
                     ->JOIN("invoice", "goods_receipt.id_inv", "=", "invoice.id_inv")
                     ->get();
                     
-                        $pdf = PDF::loadView('vendor.invoice.print',compact('invoices'))->setOptions(['defaultFont' => 'sans-serif'])->setPaper('a4', 'landscape');
-                        $pdf->save(storage_path().'invoice.pdf');
-                        return $pdf->stream();
-                    }   
+                    $pdf = PDF::loadView('vendor.invoice.print',compact('invoices'))->setOptions(['defaultFont' => 'sans-serif'])->setPaper('a4', 'landscape');
+                    $pdf->save(storage_path().'invoice.pdf');
+                    return $pdf->stream();
+    }   
+
+    public function invoiceba()
+    {
+         $invoice = Invoice::latest()->orWhere("data_from", "BA")->get();
+         return view('vendor.invoice.indexba',compact('invoice'))
+                 ->with('i',(request()->input('page', 1) -1) *5);
+        
+    }
+    public function detailinvoiceba(Request $request, $id){
+        $invoices = BA_Reconcile::select("ba_reconcile.id_ba",
+                                    "ba_reconcile.no_ba",
+                                    "ba_reconcile.po_number",
+                                    "ba_reconcile.po_mkp",
+                                    "ba_reconcile.gr_date",
+                                    "ba_reconcile.material_bp",
+                                    "ba_reconcile.status_ba",
+                                    "invoice.id_inv", 
+                                    "invoice.posting_date", 
+                                    "invoice.baselinedate",
+                                    "invoice.vendor_invoice_number",
+                                    "invoice.faktur_pajak_number",
+                                    "invoice.total_harga_everify",
+                                    "invoice.ppn",
+                                    "invoice.DEL_COSTS",
+                                    "invoice.total_harga_gross",
+                                    "invoice.created_at"
+                                    )
+                                    ->JOIN("invoice", "ba_reconcile.id_inv", "=", "invoice.id_inv")
+                                    ->get();
+
+        return view('vendor.invoice.detailba', compact('invoices'))->with('i',(request()->input('page', 1) -1) *5);
+    }
+
+    public function cetak_pdf_ba($id)
+    {
+        $invoices = BA_Reconcile::select("ba_reconcile.id_ba",
+        "ba_reconcile.no_ba",
+        "ba_reconcile.po_number",
+        "ba_reconcile.po_mkp",
+        "ba_reconcile.gr_date",
+        "ba_reconcile.material_bp",
+        "ba_reconcile.status_ba",
+        "invoice.id_inv", 
+        "invoice.posting_date", 
+        "invoice.baselinedate",
+        "invoice.vendor_invoice_number",
+        "invoice.faktur_pajak_number",
+        "invoice.total_harga_everify",
+        "invoice.ppn",
+        "invoice.DEL_COSTS",
+        "invoice.total_harga_gross",
+        "invoice.created_at"
+        )
+        ->JOIN("invoice", "ba_reconcile.id_inv", "=", "invoice.id_inv")
+        ->get();
+                    
+                    $pdf = PDF::loadView('vendor.invoice.printba',compact('invoices'))->setOptions(['defaultFont' => 'sans-serif'])->setPaper('a4', 'landscape');
+                    $pdf->save(storage_path().'invoice.pdf');
+                    return $pdf->stream();
+    }   
 
     public function disputed()
     {

@@ -17,6 +17,8 @@ class CreateBaTable extends Migration
             $table->bigIncrements('id_ba');
             $table->bigInteger('id_draft_ba')->unsigned();
             $table->foreign('id_draft_ba')->references('id_draft_ba')->on('draft_ba');
+            $table->bigInteger('id_inv')->unsigned();
+            $table->foreign('id_inv')->references('id_inv')->on('invoice');
             $table->string('no_ba');
             $table->date('gr_date');
             $table->integer('po_number');
@@ -34,7 +36,7 @@ class CreateBaTable extends Migration
             $table->date('gr_date_mkp');
             $table->integer('amount_mkp');
             $table->string('confirm_price');
-            $table->string('status_ba');
+            $table->enum('status_ba',['Not Yet Verified - BA', 'Verified - BA'])->default("Not Yet Verified - BA")->nullable();
             $table->timestamps();
         });
     }
