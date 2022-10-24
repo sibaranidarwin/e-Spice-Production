@@ -42,7 +42,7 @@
     th {
         border: none;
         font-size: 13px;
-        width: 109px;
+        width: 159px;
     }
 
     th {
@@ -103,32 +103,38 @@
         </table>
         @endforeach
         <br><br>
-        <h4>Data GR Invoice Proposal:</h4>
+        <h4>Data BA Invoice Proposal:</h4>
         <br>
         <table class="table">
             <thead>
                 <tr style="text-align: center;">
-                    <th>GR Number</th>
-                    <th>No PO</th>
-                    <th>PO Item</th>
-                    <th>GR Slip Date</th>
-                    <th>Material Number</th>
-                    <th>Harga Satuan</th>
-                    <th>Jumlah</th>
-                    <th>Tax Code</th>
+                    <th>BA Number</th>
+                    <th>PO Number</th>
+                    <th>PO MKP</th>
+                    <th>GR Date</th>
+                    <th>Material</th>
+                    <!-- <th class="text-center">Reference</th> -->
+                    <!-- <th class="text-center">Vendor Part Number</th>
+                            <th class="text-center">Item Description</th>
+                            <th class="text-center">UoM</th>
+                            <th class="text-center">Currency</th>
+                            <th class="text-center">Harga Satuan</th>
+                            <th class="text-center">Jumlah</th> -->
+                    <!-- <th class="text-center">Jumlah Harga</th> -->
+                    {{-- <th>Tax Code</th> --}}
+                    <!-- <th class="text-center">Valuation Type</th> -->
+                    <th>Status</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach($invoices as $invoice)
+                @foreach($invoices as $ba)
                 <tr style="text-align: center;">
-                    <td>{{$invoice->no_po}}</td>
-                    <td>{{$invoice->GR_Number}}</td>
-                    <td>{{$invoice->po_item}}</td>
-                    <td>{{$invoice->GR_Date}}</td>
-                    <td>{{$invoice->Material_Number}}</td>
-                    <td>{{$invoice->harga_satuan}}</td>
-                    <td>{{$invoice->jumlah}}</td>
-                    <td>{{$invoice->Tax_Code}}</td>
+                    <td><span class="">{{$ba->no_ba}}</span> </td>
+                    <td> <span class="">{{$ba->po_number}}</span> </td>
+                    <td> <span class="">{{$ba->po_mkp}}</span> </td>
+                    <td> <span class="">{{$ba->gr_date}}</span> </td>
+                    <td> <span class="">{{$ba->material_bp}}</span></td>
+                    <td>{{ $ba->status_ba }}</td>
                 </tr>
                 @endforeach
                 </select>

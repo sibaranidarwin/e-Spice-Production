@@ -17,13 +17,14 @@ class Draft_BAImport implements ToModel, WithHeadingRow
     public function model(array $row)
     {
         $now = date('Y-m-d H:i:s');
+        $status_ba = "Verified - BA"; 
         return new BA_Reconcile([
             'no_ba'=>$row['no_ba'],
             'gr_date'=>$row['gr_date'],
             'po_number'=>$row['po_number'],
             'po_mkp'=>$row['po_mkp'],
             'material_bp'=>$row['material_bp'],
-            'status_ba'=>$row['status_ba'],
+            'status_ba'=>$status_ba,
             'created_at'=>$now
         ]);
     }

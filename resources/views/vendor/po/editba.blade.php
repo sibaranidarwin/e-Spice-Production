@@ -15,7 +15,7 @@ label {
             <div class="col-sm-4">
                 <div class="page-header float-left">
                     <div class="page-title">
-                        <!-- <h1>Data Purchase Order</h1> -->
+                        <h1>Dashboard</h1>
                     </div>
                 </div>
             </div>
@@ -24,7 +24,7 @@ label {
                     <div class="page-title">
                         <ol class="breadcrumb text-right">
                             <li><a href="#">Dashboard</a></li>
-                            <li><a href="#">Invoice Proposal</a></li>
+                            <li><a href="#">Invoice Proposal Ba</a></li>
                             <li class="active">Create</li>
                         </ol>
                     </div>
@@ -40,14 +40,14 @@ label {
             <div class="col">
                 <div class="card  shadow h-100">
                     <div class="card-header">
-                        <strong class="card-header">Data Invoice Proposal</strong>
+                        <strong class="card-header">Data Invoice Proposal BA</strong>
                     </div>
                     <div class="card-body">
-                        <form autocomplete="off" action="{{ route('create-invoice') }}" method="POST"
+                        <form autocomplete="off" action="{{ route('create-invoice-ba') }}" method="POST"
                             enctype="multipart/form-data">
                             @csrf
-                            @foreach ($good_receipts as $good)
-                            <input type="hidden" name="id[]" value="{{$good->id_gr}}">
+                            @foreach ($bas as $good)
+                            <input type="hidden" name="id[]" value="{{$good->id_ba}}">
                             @endforeach
                             <div class="row">
                                 <div class="form-group col-md-6">
@@ -111,7 +111,7 @@ label {
                             </div>
                             <div hidden class="form-group col-md-6">
                                 <input type="text" class="form-control @error('data_from') is-invalid @enderror"
-                                    name="data_from" value="GR" >
+                                    name="data_from" value="BA">
                                 @error('data_from')<span
                                     class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                             </div>
@@ -121,15 +121,15 @@ label {
                         class="btn btn-danger mb-2" id="simpan">Return</a>
                     </form>
                     <br>
-                    <strong class="card-header">Good Receipt Data to be Update</strong>
+                    <strong class="card-header">BA Data to be Update</strong>
                     <table id="list" class="table table-stats order-table ov-h">
                         <thead>
                             <tr>
-                                <th>GR Number</th>
-                                <th>No PO</th>
-                                <th>PO Item</th>
-                                <th>GR Slip Date</th>
-                                <th>Material Number</th>
+                                <th>BA Number</th>
+                                <th>PO Number</th>
+                                <th>PO MKP</th>
+                                <th>GR Date</th>
+                                <th>Material</th>
                                 <!-- <th class="text-center">Reference</th> -->
                                 <!-- <th class="text-center">Vendor Part Number</th>
                                         <th class="text-center">Item Description</th>
@@ -138,31 +138,20 @@ label {
                                         <th class="text-center">Harga Satuan</th>
                                         <th class="text-center">Jumlah</th> -->
                                 <!-- <th class="text-center">Jumlah Harga</th> -->
-                                <th>Tax Code</th>
+                                {{-- <th>Tax Code</th> --}}
                                 <!-- <th class="text-center">Valuation Type</th> -->
                                 <th>Status</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($good_receipts as $good_receipt)
+                            @foreach($bas as $ba)
                             <tr>
-                                <td><span class="name">{{$good_receipt->GR_Number}}</span> </td>
-                                <td> <span class="">{{$good_receipt->no_po}}</span> </td>
-                                <td> <span class="">{{$good_receipt->po_item}}</span> </td>
-                                <td> <span class="">{{$good_receipt->GR_Date}}</span> </td>
-                                <td> <span class="">{{$good_receipt->Material_Number}}</span>
-                                </td>
-                                <!-- <td class="text-center"> <span class="">{{$good_receipt->Ref_Doc_No}}</span> </td> -->
-                                <!-- <td class="text-center"> <span class="">{{$good_receipt->Vendor_Part_Number}}</span> </td>
-                                        <td class="text-center"> <span class="">{{$good_receipt->Mat_Desc}}</span> </td>
-                                        <td class="text-center"> <span class="">{{$good_receipt->UOM}}</span> </td>
-                                        <td class="text-center"> <span class="">{{$good_receipt->Currency}}</span> </td>
-                                        <td class="text-center"> <span class="">{{$good_receipt->harga_satuan}}</span> </td>
-                                        <td class="text-center"> <span class="">{{$good_receipt->jumlah}}</span> </td> -->
-                                <!-- <td class="text-center"> <span class="">{{$good_receipt->jumlah_harga}}</span> </td> -->
-                                <td> <span class="">{{$good_receipt->Tax_Code}}</span> </td>
-                                <!-- <td class="text-center"> <span class=""></span> </td> -->
-                                <td>{{ $good_receipt->Status }}</td>
+                                <td><span class="name">{{$ba->no_ba}}</span> </td>
+                                <td> <span class="">{{$ba->po_number}}</span> </td>
+                                <td> <span class="">{{$ba->po_mkp}}</span> </td>
+                                <td> <span class="">{{$ba->gr_date}}</span> </td>
+                                <td> <span class="">{{$ba->material_bp}}</span></td>
+                                <td>{{ $ba->status_ba }}</td>
                             </tr>
                             @endforeach
                             </select>

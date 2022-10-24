@@ -75,7 +75,7 @@ label {
                     </div>
                     @endif
                     <div class="card-header">
-                        <strong class="card-title">Invoice List</strong>
+                        <strong class="card-title">Invoice Proposal GR List</strong>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive text-nowrap">
@@ -114,7 +114,7 @@ label {
                                             <td>{{$item['vendor_invoice_number'] }}</td>
                                             <td>{{$item['faktur_pajak_number'] }}</td>
                                             <td>{{$item['everify_number'] }}</td>
-                                            <td>{{$item[''] }}</td>
+                                            <td>{{$item['ppn']}}</td>
                                             <td>{{$item['total_harga_everify'] }}</td>
                                             <td>{{$item['status']}}</td>
                                             <td>

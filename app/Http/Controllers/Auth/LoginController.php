@@ -27,7 +27,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/login-user';
 
     /**
      * Create a new controller instance.
@@ -51,6 +51,7 @@ class LoginController extends Controller
         {
             if (auth()->user()->level == "accounting") {
                 return redirect()->route('accounting/dashboard');
+
             }elseif(auth()->user()->level == "admin"){
                 return redirect()->route('admin/dashboard');
             }

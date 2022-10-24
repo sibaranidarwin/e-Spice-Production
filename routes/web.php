@@ -148,9 +148,16 @@ Route::get('vendor/draft', 'VendorController@draft')->name('vendor/draft');
 Route::get('vendor/ba', 'VendorController@ba')->name('vendor/ba');
 Route::put('vendor/draft','VendorController@uploaddraft');
 
+Route::post('vendor/edit-ba','VendorController@editba')->name('update-ba-vendor/{id_gr}');
+Route::post('vendor/create_invoice_ba','VendorController@storeba')->name('create-invoice-ba');
+
 Route::get('vendor/invoice', 'VendorController@invoice')->name('vendor/invoice');
 Route::get('vendor/detail-invoice/{id}', 'VendorController@detailinvoice')->name('detail-invoice');
 Route::get('vendor/cetak_pdf/{id}', 'VendorController@cetak_pdf')->name('cetak-laporan');
+
+Route::get('vendor/invoiceba', 'VendorController@invoiceba')->name('vendor/invoiceba');
+Route::get('vendor/detail-invoice-ba/{id}', 'VendorController@detailinvoiceba')->name('detail-invoice-ba');
+Route::get('vendor/cetak_pdf_ba/{id}', 'VendorController@cetak_pdf_ba')->name('cetak-laporan-ba');
 
 Route::get('vendor/disputed', 'VendorController@disputed')->name('vendor/disputed');
 

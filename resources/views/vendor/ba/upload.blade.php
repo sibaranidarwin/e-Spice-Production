@@ -95,14 +95,15 @@ label {
                                     <input class="form-group" type="text" id="max" name="max">
                                 </div>
                                 <div class="col-3 mb-2">
-                                    <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#modal-import"><i class="fa fa-plus"></i> Import Drat BA</button>
+                                    <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal-import"><i class="fa fa-plus"></i> Import Data BA</button>
                                 </div>
                             </div>
-                            <form action="{{ route('update-datagr-vendor/{id_gr}') }}" method="POST">
+                            <form action="{{ route('update-ba-vendor/{id_gr}') }}" method="POST">
                                 @csrf
                                 <table id="list" class="table table-striped" style="font-size: 10px;">
                                     <thead>
                                         <tr>
+                                            <th><input type="checkbox" onchange="checkAll(this)"></th>
                                             <th>No</th>
                                             <th>No BA</th>
                                             <th>Date</th>
@@ -116,6 +117,7 @@ label {
                                         @php $i = 1 @endphp
                                         @foreach($ba as $item)
                                         <tr>
+                                            <td><input type="checkbox" name="ids[]" value="{{$item->id_ba}}"></td>
                                             <td>{{$i++}}</td>
                                             <td>{{ $item->no_ba}}</td>
                                             <td><span>{{$item->gr_date}}</span></td>
@@ -130,6 +132,8 @@ label {
                                 </table>
                                 {{-- &nbsp;&nbsp;<button type="submit" name="action" value="Dispute"
                                     class="btn btn-warning btn-sm-3">Dispute</button> --}}
+                                    &nbsp;&nbsp;<button type="submit" name="action" value="Update"
+                                    class="btn btn-success btn-sm-3">Create Invoice</button>
                             </form>
                         </div> <!-- /.table-stats -->
                     </div>
@@ -162,7 +166,7 @@ label {
     <div class="modal-dialog modal-lg">
       <form method="post" id="form-import" action="{{url('vendor/draft')}}" enctype="multipart/form-data" class="modal-content">
         <div class="modal-header">
-          <h4 class="modal-title">Import Data Draft BA</h4>
+          <h4 class="modal-title">Import Data BA</h4>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -172,10 +176,10 @@ label {
           {{csrf_field()}}
           <div class="row">
             <div class="col-md-12">
-              <p>Import data Draft BA sesuai format contoh berikut.<br/><a href="{{url('')}}/excel-karyawan.xlsx"><i class="fa fa-download"></i> File Contoh Draft BA</a></p>
+              <p>Import data BA sesuai format contoh berikut.<br/><a href="{{url('')}}/excel-karyawan.xlsx"><i class="fa fa-download"></i> File Contoh BA</a></p>
             </div>
             <div class="col-md-12">
-              <label>File Excel Draft BA</label>
+              <label>File Excel BA</label>
               <input type="file" name="excel-ba" required>
             </div>
           </div>

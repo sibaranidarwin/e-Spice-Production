@@ -81,7 +81,7 @@ label {
                     </div>
                     @endif
                     <div class="card-header">
-                        <strong class="card-title">BA Reconcile List</strong>
+                        <strong class="card-title">Draft BA Reconcile List</strong>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive text-nowrap">
@@ -218,7 +218,18 @@ $(document).ready(function() {
     });
 
     // DataTables initialisation
-    var table = $('#list').DataTable();
+    var table = $('#list').DataTable(
+        {
+            dom: "<'row'<'col-md-2 bg-white'l><'col-md-5 bg-white'B><'col-md-5 bg-white'f>>" +
+                "<'row'<'col-md-12'tr>>" +
+                "<'row'<'col-md-6'i><'col-md-6'p>>",
+            buttons: [{
+                extend: 'excelHtml5',
+                autoFilter: true,
+                sheetName: 'Exported data'
+            }]
+        }
+    );
 
     // Refilter the table
     $('#min, #max').on('change', function() {

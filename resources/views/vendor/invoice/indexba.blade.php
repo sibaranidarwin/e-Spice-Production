@@ -7,13 +7,14 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.html5.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.print.min.js"></script>
-@extends('warehouse.layouts.sidebar')
+@extends('vendor.layouts.sidebar')
 @section('content')
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.6/css/buttons.dataTables.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/datetime/1.1.2/css/dataTables.dateTime.min.css">
 <link rel="stylesheet" href="{{asset('assets/css/argon-dashboard.css')}}">
+
 <style>
 .table td,
 .table th,
@@ -74,22 +75,23 @@ label {
                     </div>
                     @endif
                     <div class="card-header">
-                        <strong class="card-title">Invoice List</strong>
+                        <strong class="card-title">Invoice Proposal BA List</strong>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive text-nowrap">
+                            <form action="{{ route('update-datagr-vendor/{id_gr}') }}" method="POST">
                                 @csrf
                                 <table id="list" class="table table-striped" style="font-size: 10px;">
                                     <thead>
                                         <tr>
                                             <th class="serial">No</th>
-                                            <th>No GR</th>
-                                            <th>Invoice date</th>
+                                            <th>Tanggal Invoice</th>
                                             <th>No Invoice</th>
-                                            <th>No tax invoice </th>
-                                            {{-- <th>e-verify number</th> --}}
-                                            <th>Total price</th>
-                                            <th>status sap</th>
+                                            <th>No Faktur Pajak</th>
+                                            <th>No E-Verify</th>
+                                            <th>Total PPN</th>
+                                            <th>Total Harga</th>
+                                            <th>Status Upload Sap</th>
 
                                             <!-- <th class="text-center">Reference</th> -->
                                             <!-- <th class="text-center">Vendor Part Number</th>
@@ -108,26 +110,28 @@ label {
                                         @foreach($invoice as $item)
                                         <tr>
                                             <td class="serial">{{++$i}}</td>
-                                            <td>{{$item['GR_Number'] }}</td>
                                             <td>{{$item['posting_date'] }}</td>
                                             <td>{{$item['vendor_invoice_number'] }}</td>
-                                            {{-- <td>{{$item['everify_number'] }}</td> --}}
                                             <td>{{$item['faktur_pajak_number'] }}</td>
+                                            <td>{{$item['everify_number'] }}</td>
+                                            <td>{{$item['ppn']}}</td>
                                             <td>{{$item['total_harga_everify'] }}</td>
                                             <td>{{$item['status']}}</td>
                                             <td>
-                                                @if ({{$data_from = "GR"}})
-                                                <a href="/warehouse/detail-invoice/{{$item->id_inv}}"
-                                                    class="btn btn-info btn-sm">Detail</a>
-                                                @else
-                                                <a href="/warehouse/detail-invoice/{{$item->id_inv}}"
-                                                    class="btn btn-info btn-sm">Detail</a>
-                                                @endif
+                                                <a href="/vendor/detail-invoice-ba/{{$item->id_inv}}"
+                                                    class="btn btn-info btn-sm">Detail</a> 
+                                                <a href="/vendor/cetak_pdf_ba/{{$item->id_inv}}" class="btn btn-secondary btn-sm">Print</a>
                                             </td>
                                         </tr>
                                         @endforeach
                                     </tbody>
                                 </table>
+                                &nbsp;&nbsp;&nbsp;<a href="" class="btn btn-success mb-2">Upload SAP</a>
+                                {{-- <div class="row">
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<div class="col-md-1 mb-2"><a href=""
+                                    class="btn btn-primary">Upload SAP</a></div>
+                        </div> --}}
+                            </form>
                         </div>
                     </div>
                 </div> <!-- /.table-stats -->

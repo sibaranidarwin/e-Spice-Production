@@ -104,17 +104,16 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
                         aria-expanded="false"> <i class="menu-icon fa fa-newspaper-o"></i>BA Reconcile</a>
                     <ul class="sub-menu children dropdown-menu ">
-                        <li><i class="fa fa-close "></i><a href="{{url('vendor/draft')}}">Draft BA</a></li>
-                        <li><i class="fa fa-check "></i><a href="{{url('vendor/ba')}}">BA</a></li>
-
-
+                        <li><i class="fa fa-table "></i><a href="{{url('vendor/draft')}}">Draft BA</a></li>
+                        <li><i class="fa fa-table "></i><a href="{{url('vendor/ba')}}">BA</a></li>
                     </ul>
                 </li>
                 <li class="menu-item-has-children dropdown ">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                        aria-expanded="false"> <i class="menu-icon fa fa-file"></i>Invoice</a>
+                        aria-expanded="false"> <i class="menu-icon fa fa-file"></i>Invoice Proposal</a>
                     <ul class="sub-menu children dropdown-menu ">
-                        <li><i class="fa fa-table "></i><a href="{{url('vendor/invoice')}}">Show</a></li>
+                        <li><i class="fa fa-table "></i><a href="{{url('vendor/invoice')}}">Invoice GR</a></li>
+                        <li><i class="fa fa-table "></i><a href="{{url('vendor/invoiceba')}}">Invoice BA</a></li>
                     </ul>
                 </li>
                 <li class="menu-item-has-children dropdown ">
