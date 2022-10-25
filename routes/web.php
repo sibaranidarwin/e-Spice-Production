@@ -126,6 +126,8 @@ Route::get('warehouse/user/{id}/show', 'WarehouseController@showing')->name('war
 
 Route::get('warehouse/invoice', 'WarehouseController@invoice')->name('warehouse/invoice');
 Route::get('warehouse/detail-invoice/{id}', 'WarehouseController@detailinvoice')->name('detail-invoice');
+Route::get('warehouse/invoiceba', 'WarehouseController@invoiceba')->name('warehouse/invoiceba');
+Route::get('warehouse/detail-invoice-ba/{id}', 'WarehouseController@detailinvoiceba')->name('detail-invoice-ba');
 
 Route::get('warehouse/disputed', 'WarehouseController@disputed')->name('warehouse/disputed');
 

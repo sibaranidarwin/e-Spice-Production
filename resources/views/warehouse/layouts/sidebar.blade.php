@@ -58,12 +58,11 @@
             </ul>
             </li>
             <li class="menu-item-has-children dropdown ">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="menu-icon fa fa-file"></i>Invoice</a>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                    aria-expanded="false"> <i class="menu-icon fa fa-file"></i>Invoice Proposal</a>
                 <ul class="sub-menu children dropdown-menu ">
-                    <li><i class="fa fa-table "></i><a href="{{url('warehouse/invoice')}}">Show</a></li>
-
-
+                    <li><i class="fa fa-table "></i><a href="{{url('warehouse/invoice')}}">Invoice GR</a></li>
+                    <li><i class="fa fa-table "></i><a href="{{url('warehouse/invoiceba')}}">Invoice BA</a></li>
                 </ul>
             </li>
             <li class="menu-item-has-children dropdown ">

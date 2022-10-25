@@ -98,7 +98,7 @@
                         </div>
                         <div class="row">
                             <div class="col-4 bg-white mb-3">
-                                <label for="">No PO From : </label>
+                                <label for="">No PO From :  &nbsp;&nbsp;</label>
                                 <input type="text" id="minpo" name="minpo"> 
                             </div> 
                             <div class="col-2 bg-white mb-4">
@@ -237,14 +237,6 @@
         maxDate = new DateTime($('#max'), {
             format: 'DD MM YYYY'
         });
-
-        minpo = new DateTime($('#minpo'), {
-            format: 'DD MM YYYY'
-        });
-        maxpo = new DateTime($('#maxpo'), {
-            format: 'DD MM YYYY'
-        });
-    
         // DataTables initialisation
         var table = $('#list').DataTable({
             dom: "<'row'<'col-md-2 bg-white'l><'col-md-5 bg-white'B><'col-md-5 bg-white'f>>" +

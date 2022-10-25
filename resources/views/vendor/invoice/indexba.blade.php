@@ -37,7 +37,7 @@ label {
                     <div class="page-title">
                         <ol class="breadcrumb text-right">
                             <li><a href="#">Dashboard</a></li>
-                            <li><a href="#">Invoice List</a></li>
+                            <li><a href="#">Invoice BA</a></li>
                             <li class="active">Show</li>
                         </ol>
                     </div>
@@ -163,16 +163,7 @@ label {
 
 <script type="text/javascript">
 $(document).ready(function() {
-    $('#list').DataTable({
-        buttons: ['excel'],
-        dom: "<'row'<'col-md-2 bg-white'l><'col-md-5 bg-white'B><'col-md-5 bg-white'f>>" +
-            "<'row'<'col-md-12'tr>>" +
-            "<'row'<'col-md-6'i><'col-md-6'p>>",
-        lengthMenu: [
-            [10, 25, 50, 100, -1],
-            [10, 25, 50, 100, "All"]
-        ]
-    });
+    $('#list').DataTable();
 
 });
 
