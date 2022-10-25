@@ -37,11 +37,14 @@ class VendorController extends Controller
     public function index2()
     {
         $good_receipt = good_receipt::count();
-        $invoice = Invoice::count();
+        $invoicegr = Invoice::all()->where("data_from", "GR")->count();
+        $invoiceba = Invoice::all()->where("data_from", "BA")->count();
         $dispute = good_receipt::all()->where("Status", "Dispute")->count();
         $vendor = User::all()->where("level", "vendor")->count();
+        $draft = Draft_BA::count();
+        $ba = BA_Reconcile::count();
 
-        return view('vendor.dashboard',['good_receipt'=>$good_receipt, 'invoice'=>$invoice, 'dispute'=>$dispute, 'vendor'=>$vendor]);
+        return view('vendor.dashboard',['good_receipt'=>$good_receipt,'draft'=>$draft, 'ba'=>$ba , 'invoicegr'=>$invoicegr, 'invoiceba'=>$invoiceba, 'dispute'=>$dispute, 'vendor'=>$vendor]);
     }
     public function po()
     {   
@@ -124,7 +127,7 @@ class VendorController extends Controller
         $total_dpp = 0;
         foreach($recordIds as $record) {
             $ba = BA_Reconcile::find($record);
-            $total_dpp += $ba->confirm_price * $ba->amount_vendor;
+            $total_dpp += $ba->amount_vendor * $ba->qty;
             array_push($bas, $ba);
         }
         // dd($total_dpp);
@@ -231,7 +234,7 @@ class VendorController extends Controller
     
     public function uploaddraft(Request $request)
     {
-        $file = $request->file('excel-ba');
+        $file = $request->file('excel-vendor-ba');
         Excel::import(new Draft_BAImport, $file);
         
         return back()->with('success', 'Draft BA Imported Successfully');
@@ -244,6 +247,7 @@ class VendorController extends Controller
         
     }
     public function detailinvoice(Request $request, $id){
+        $detail = Invoice::find($id);
         $invoices = good_receipt::select("goods_receipt.id_gr",
                                     "goods_receipt.no_po",
                                     "goods_receipt.GR_Number",
@@ -266,6 +270,7 @@ class VendorController extends Controller
                                     "invoice.created_at"
                                     )
                                     ->JOIN("invoice", "goods_receipt.id_inv", "=", "invoice.id_inv")
+                                    ->where("invoice.id_inv", "=", "$detail->id_inv")
                                     ->get();
 
         return view('vendor.invoice.detail', compact('invoices'))->with('i',(request()->input('page', 1) -1) *5);
@@ -273,6 +278,7 @@ class VendorController extends Controller
 
     public function cetak_pdf($id)
     {
+                    $detail = Invoice::find($id);
                     $invoices = good_receipt::select("goods_receipt.id_gr",
                     "goods_receipt.no_po",
                     "goods_receipt.GR_Number",
@@ -295,6 +301,7 @@ class VendorController extends Controller
                     "invoice.created_at"
                     )
                     ->JOIN("invoice", "goods_receipt.id_inv", "=", "invoice.id_inv")
+                    ->where("invoice.id_inv", "=", "$detail->id_inv")
                     ->get();
                     
                     $pdf = PDF::loadView('vendor.invoice.print',compact('invoices'))->setOptions(['defaultFont' => 'sans-serif'])->setPaper('a4', 'landscape');
@@ -310,6 +317,8 @@ class VendorController extends Controller
         
     }
     public function detailinvoiceba(Request $request, $id){
+        $detail = Invoice::find($id);
+        // dd($detail->id_inv);
         $invoices = BA_Reconcile::select("ba_reconcile.id_ba",
                                     "ba_reconcile.no_ba",
                                     "ba_reconcile.po_number",
@@ -329,6 +338,7 @@ class VendorController extends Controller
                                     "invoice.created_at"
                                     )
                                     ->JOIN("invoice", "ba_reconcile.id_inv", "=", "invoice.id_inv")
+                                    ->where("invoice.id_inv", "=", "$detail->id_inv")
                                     ->get();
 
         return view('vendor.invoice.detailba', compact('invoices'))->with('i',(request()->input('page', 1) -1) *5);
@@ -336,6 +346,7 @@ class VendorController extends Controller
 
     public function cetak_pdf_ba($id)
     {
+        $detail = Invoice::find($id);
         $invoices = BA_Reconcile::select("ba_reconcile.id_ba",
         "ba_reconcile.no_ba",
         "ba_reconcile.po_number",
@@ -355,6 +366,7 @@ class VendorController extends Controller
         "invoice.created_at"
         )
         ->JOIN("invoice", "ba_reconcile.id_inv", "=", "invoice.id_inv")
+        ->where("invoice.id_inv", "=", "$detail->id_inv")
         ->get();
                     
                     $pdf = PDF::loadView('vendor.invoice.printba',compact('invoices'))->setOptions(['defaultFont' => 'sans-serif'])->setPaper('a4', 'landscape');

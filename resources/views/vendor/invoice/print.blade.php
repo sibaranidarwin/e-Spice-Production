@@ -72,6 +72,7 @@
             &nbsp;&nbsp;NPWP : 02.415.351.2-036.000 <br><br>
         </p>
         @foreach($invoices as $invoice)
+        @endforeach
         <table>
             <tr>
                 <td colspan="3">Nomor Pelanggan (Account No) : 12278</td>
@@ -101,7 +102,7 @@
                 <td>Nomor Faktur Pajak (VAT No.) : 010.001-22.66960371</td>
             </tr>
         </table>
-        @endforeach
+        {{-- @endforeach --}}
         <br><br>
         <h4>Data GR Invoice Proposal:</h4>
         <br>

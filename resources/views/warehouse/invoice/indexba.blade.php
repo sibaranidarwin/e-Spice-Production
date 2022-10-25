@@ -7,7 +7,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.html5.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.print.min.js"></script>
-@extends('vendor.layouts.sidebar')
+@extends('warehouse.layouts.sidebar')
 @section('content')
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.6/css/buttons.dataTables.min.css">
@@ -37,7 +37,7 @@ label {
                     <div class="page-title">
                         <ol class="breadcrumb text-right">
                             <li><a href="#">Dashboard</a></li>
-                            <li><a href="#">Invoice GR</a></li>
+                            <li><a href="#">Invoice BA</a></li>
                             <li class="active">Show</li>
                         </ol>
                     </div>
@@ -75,7 +75,7 @@ label {
                     </div>
                     @endif
                     <div class="card-header">
-                        <strong class="card-title">Invoice Proposal GR List</strong>
+                        <strong class="card-title">Invoice Proposal BA List</strong>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive text-nowrap">
@@ -118,11 +118,9 @@ label {
                                             <td>{{$item['total_harga_everify'] }}</td>
                                             <td>{{$item['status']}}</td>
                                             <td>
-                                                <a href="/vendor/detail-invoice/{{$item->id_inv}}"
-                                                    class="btn btn-info btn-sm">Detail</a>
-                                                <a href="/vendor/cetak_pdf/{{$item->id_inv}}"
-                                                    class="btn btn-secondary btn-sm">Print</a>
-                                            </td>
+                                                <a href="/warehouse/detail-invoice-ba/{{$item->id_inv}}"
+                                                    class="btn btn-info btn-sm">Detail</a> 
+                                                </td>
                                         </tr>
                                         @endforeach
                                     </tbody>

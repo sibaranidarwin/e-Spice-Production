@@ -74,7 +74,7 @@ label {
                     </div>
                     @endif
                     <div class="card-header">
-                        <strong class="card-title">Invoice List</strong>
+                        <strong class="card-title">Invoice Proposal GR List</strong>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive text-nowrap">
@@ -89,7 +89,7 @@ label {
                                             <th>No tax invoice </th>
                                             {{-- <th>e-verify number</th> --}}
                                             <th>Total price</th>
-                                            <th>status sap</th>
+                                            <th>Status sap</th>
 
                                             <!-- <th class="text-center">Reference</th> -->
                                             <!-- <th class="text-center">Vendor Part Number</th>
@@ -116,13 +116,8 @@ label {
                                             <td>{{$item['total_harga_everify'] }}</td>
                                             <td>{{$item['status']}}</td>
                                             <td>
-                                                @if ({{$data_from = "GR"}})
                                                 <a href="/warehouse/detail-invoice/{{$item->id_inv}}"
                                                     class="btn btn-info btn-sm">Detail</a>
-                                                @else
-                                                <a href="/warehouse/detail-invoice/{{$item->id_inv}}"
-                                                    class="btn btn-info btn-sm">Detail</a>
-                                                @endif
                                             </td>
                                         </tr>
                                         @endforeach

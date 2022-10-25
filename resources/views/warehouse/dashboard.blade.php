@@ -5,7 +5,7 @@
             <!-- Animated -->
             <div class="animated fadeIn">
                 <!-- Widgets  -->
-                <div class="row">
+                <div class="row mt-4">
                     <div class="col-lg-3 col-md-6">
                         <div class="card">
                             <div class="card-body">
@@ -34,8 +34,27 @@
                                     </div>
                                     <div class="stat-content">
                                         <div class="text-left dib">
-                                            <div class="stat-heading"><strong> Invoice</strong></div>
+                                            <div class="stat-heading"><strong> Invoice From GR</strong></div>
                                             <div class="stat-text"><strong class="count">{{ $invoice}}</strong></div>
+                                            {{-- <div class="stat-heading">Invoice</div> --}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="stat-widget-five">
+                                    <div class="stat-icon dib flat-color-3">
+                                        <i class='fa fa-file'></i>
+                                    </div>
+                                    <div class="stat-content">
+                                        <div class="text-left dib">
+                                            <div class="stat-heading"><strong> Invoice From BA</strong></div>
+                                            <div class="stat-text"><strong class="count">{{ $invoiceba}}</strong></div>
                                             {{-- <div class="stat-heading">Invoice</div> --}}
                                         </div>
                                     </div>
@@ -65,7 +84,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="stat-widget-five">
-                                    <div class="stat-icon dib flat-color-7">
+                                    <div class="stat-icon dib flat-color-6">
                                         <i class='fa fa-users'></i>
                                     </div>
                                     <div class="stat-content">

@@ -176,11 +176,11 @@ label {
           {{csrf_field()}}
           <div class="row">
             <div class="col-md-12">
-              <p>Import data BA sesuai format contoh berikut.<br/><a href="{{url('')}}/excel-karyawan.xlsx"><i class="fa fa-download"></i> File Contoh BA</a></p>
+              <p>Import data BA sesuai format contoh berikut.<br/><a href="{{url('')}}/vendor-ba.xlsx"><i class="fa fa-download"></i> File Contoh BA</a></p>
             </div>
             <div class="col-md-12">
               <label>File Excel BA</label>
-              <input type="file" name="excel-ba" required>
+              <input type="file" name="excel-vendor-ba" required>
             </div>
           </div>
         </div>

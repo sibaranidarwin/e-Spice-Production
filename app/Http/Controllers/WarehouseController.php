@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Invoice;
 use App\Profile;
+use App\BA_Reconcile;
+use App\Draft_BA;
 use App\good_receipt;
 
 use Auth;
@@ -33,11 +35,13 @@ class WarehouseController extends Controller
     public function index2()
     {
         $good_receipt = good_receipt::count();
-        $invoice = Invoice::count();
+        $invoice = Invoice::all()->where("data_from", "GR")->count();
+        $invoiceba = Invoice::all()->where("data_from", "BA")->count();
         $dispute = good_receipt::all()->where("Status", "Dispute")->count();
         $vendor = User::all()->where("level", "vendor")->count();
-
-        return view('warehouse.dashboard',['good_receipt'=>$good_receipt, 'invoice'=>$invoice, 'dispute'=>$dispute, 'vendor'=>$vendor]);
+        $draft = Draft_BA::count();
+        $ba = BA_Reconcile::count();
+        return view('warehouse.dashboard',['good_receipt'=>$good_receipt, 'invoice'=>$invoice,'invoiceba'=>$invoiceba, 'dispute'=>$dispute, 'vendor'=>$vendor]);
     }
     public function po()
     {   
@@ -63,7 +67,7 @@ class WarehouseController extends Controller
     }
     public function invoice()
     {
-     $invoice = Invoice::latest()->get();
+     $invoice = Invoice::latest()->orWhere("data_from", "GR")->get();
      $dispute = good_receipt::all()->where("Status", "Dispute")->count();
 
      return view('warehouse.invoice.index',compact('invoice','dispute'))
@@ -71,6 +75,7 @@ class WarehouseController extends Controller
     }
     public function detailinvoice(Request $request, $id){
         $dispute = good_receipt::all()->where("Status", "Dispute")->count();
+        $detail = Invoice::find($id);
         $invoices = good_receipt::select("goods_receipt.id_gr",
                                     "goods_receipt.no_po",
                                     "goods_receipt.GR_Number",
@@ -92,8 +97,48 @@ class WarehouseController extends Controller
                                     "invoice.total_harga_gross"
                                     )
                                     ->JOIN("invoice", "goods_receipt.id_inv", "=", "invoice.id_inv")
+                                    ->where("invoice.id_inv", "=", "$detail->id_inv")
                                     ->get();
         return view('warehouse.invoice.detail', compact('invoices', 'dispute'))->with('i',(request()->input('page', 1) -1) *5);
+    }
+
+    public function invoiceba()
+    {
+     $invoice = Invoice::latest()->orWhere("data_from", "BA")->get();
+     $dispute = good_receipt::all()->where("Status", "Dispute")->count();
+
+     return view('warehouse.invoice.indexba',compact('invoice','dispute'))
+             ->with('i',(request()->input('page', 1) -1) *5);
+    }
+
+    public function detailinvoiceba(Request $request, $id){
+        $detail = Invoice::find($id);
+        $dispute = good_receipt::all()->where("Status", "Dispute")->count();
+
+        // dd($detail->id_inv);
+        $invoices = BA_Reconcile::select("ba_reconcile.id_ba",
+                                    "ba_reconcile.no_ba",
+                                    "ba_reconcile.po_number",
+                                    "ba_reconcile.po_mkp",
+                                    "ba_reconcile.gr_date",
+                                    "ba_reconcile.material_bp",
+                                    "ba_reconcile.status_ba",
+                                    "invoice.id_inv", 
+                                    "invoice.posting_date", 
+                                    "invoice.baselinedate",
+                                    "invoice.vendor_invoice_number",
+                                    "invoice.faktur_pajak_number",
+                                    "invoice.total_harga_everify",
+                                    "invoice.ppn",
+                                    "invoice.DEL_COSTS",
+                                    "invoice.total_harga_gross",
+                                    "invoice.created_at"
+                                    )
+                                    ->JOIN("invoice", "ba_reconcile.id_inv", "=", "invoice.id_inv")
+                                    ->where("invoice.id_inv", "=", "$detail->id_inv")
+                                    ->get();
+
+        return view('warehouse.invoice.detailba', compact('invoices','dispute'))->with('i',(request()->input('page', 1) -1) *5);
     }
     public function disputed()
     {
@@ -191,9 +236,5 @@ class WarehouseController extends Controller
     public function showing($id){
         $user = \App\User::find($id);
         return view('warehouse.user.profile',compact('user'));  
-    }
-     public function profile($id){
-        $user = \App\Masyarakat::find($id);
-        return view('admin.masyarakat.ubah-masyarakat',compact('user'));  
     }
 }

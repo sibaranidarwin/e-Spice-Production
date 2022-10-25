@@ -51,7 +51,7 @@ label {
                             @endforeach
                             <div class="row">
                                 <div class="form-group col-md-6">
-                                    <label class="form-control-label" for="posting_date">Posting Date</label>
+                                    <label class="form-control-label" for="posting_date">Invoice Date</label>
                                     <input type="date"
                                         class="form-control @error('posting_date') is-invalid @enderror"
                                         name="posting_date" placeholder="Masukkan Posting Date ..."

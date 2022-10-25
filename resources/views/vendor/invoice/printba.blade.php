@@ -53,7 +53,6 @@
     p {
         margin: 0px;
     }
-    
     </style>
 </head>
 
@@ -72,38 +71,40 @@
             &nbsp;&nbsp;NPWP : 02.415.351.2-036.000 <br><br>
         </p>
         @foreach($invoices as $invoice)
+        @endforeach
         <table>
             <tr>
-                <td colspan="3">Nomor Pelanggan (Account No) : 12278</td>
+                <td colspan="3"> &nbsp;&nbsp;Nomor Pelanggan (Account No) : 12278</td>
                 <td colspan="1"></td>
                 <td></td>
-                <td>Nomor Faktur (Invoice Number) : 9142</td>
+                <td> &nbsp;&nbsp;Nomor Faktur (Invoice Number) : 9142</td>
             </tr>
             <tr>
-                <td>Nomor Pesanan (Order Reff) : 4020071510</td>
+                <td> &nbsp;&nbsp;Nomor Pesanan (Order Reff) : 4020071510</td>
                 <td colspan="3"></td>
                 <td></td>
-                <td>Tanggal Pesanan (Order Date) : 19 Januari 2022</td>
+                <td> &nbsp;&nbsp;Tanggal Pesanan (Order Date) :
+                    {{ Carbon\Carbon::parse($invoice->gr_date)->format('d F Y')}}</td>
             </tr>
             <tr>
-                <td>Mata uang (Currency) : {{$invoice->Currency}}</td>
+                <td> &nbsp;&nbsp;Mata uang (Currency) : {{$invoice->Currency}}</td>
                 <td colspan="3"></td>
                 <td></td>
-                <td>Sales Order (Sales Order No.) : 0230960070</td>
+                <td> &nbsp;&nbsp;Sales Order (Sales Order No.) : 0230960070</td>
             </tr>
             <tr>
-                <td>Tanggal Faktur (invoice Date) : {{ Carbon\Carbon::parse($invoice->created_at)->format('d F Y') }}</td>
+                <td> &nbsp;&nbsp;Tanggal Faktur (invoice Date) :
+                    {{ Carbon\Carbon::parse($invoice->created_at)->format('d F Y') }}</td>
                 <td></td>
                 <td colspan="3"></td>
-                <td>Tanggal Jatuh Tempo (Payment Due Date) : 3 April 2022</td>
+                <td> &nbsp;&nbsp;Tanggal Jatuh Tempo (Payment Due Date) : 3 April 2023</td>
             </tr>
             <tr>
-                <td>Nomor Faktur Pajak (VAT No.) : 010.001-22.66960371</td>
+                <td> &nbsp;&nbsp;Nomor Faktur Pajak (VAT No.) : 010.001-22.66960371</td>
             </tr>
         </table>
-        @endforeach
         <br><br>
-        <h4>Data BA Invoice Proposal:</h4>
+        <h4>&nbsp;&nbsp;Data BA Invoice Proposal:</h4>
         <br>
         <table class="table">
             <thead>
