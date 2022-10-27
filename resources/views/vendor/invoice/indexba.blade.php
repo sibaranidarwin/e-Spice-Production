@@ -1,3 +1,6 @@
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.2/moment.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.5.6/js/dataTables.buttons.min.js"></script>
@@ -7,12 +10,15 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.html5.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.print.min.js"></script>
+<script src="https://cdn.datatables.net/datetime/1.1.2/js/dataTables.dateTime.min.js"></script>
+
 @extends('vendor.layouts.sidebar')
 @section('content')
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.6/css/buttons.dataTables.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/datetime/1.1.2/css/dataTables.dateTime.min.css">
+
 <link rel="stylesheet" href="{{asset('assets/css/argon-dashboard.css')}}">
 
 <style>
@@ -79,6 +85,16 @@ label {
                     </div>
                     <div class="card-body">
                         <div class="table-responsive text-nowrap">
+                            <div class="row">
+                                <div class="form-group col-4 bg-white mb-2">
+                                    <label for="">Tanggal Invoice From: </label>
+                                    <input class="form-group" type="text" id="min" name="min">
+                                </div>
+                                <div class=" form-group col-3 bg-white mb-2">
+                                    <label for="">To: </label>
+                                    <input class="form-group" type="text" id="max" name="max">
+                                </div>
+                            </div>
                             <form action="{{ route('update-datagr-vendor/{id_gr}') }}" method="POST">
                                 @csrf
                                 <table id="list" class="table table-striped" style="font-size: 10px;">
@@ -161,11 +177,61 @@ label {
 
 </div><!-- /#right-panel -->
 
-<script type="text/javascript">
-$(document).ready(function() {
-    $('#list').DataTable();
 
-});
+<script type="text/javascript">
+    var minDate, maxDate;
+    
+    // Custom filtering function which will search data in column four between two values
+    $.fn.dataTable.ext.search.push(
+        function(settings, data, dataIndex) {
+            var min = minDate.val();
+            var max = maxDate.val();
+            var date = new Date(data[1]);
+    
+            if (
+                (min === null && max === null) ||
+                (min === null && date <= max) ||
+                (min <= date && max === null) ||
+                (min <= date && date <= max)
+            ) {
+                return true;
+            }
+            return false;
+        }
+    );
+    
+    $(document).ready(function() {
+    
+        // Create date inputs
+        minDate = new DateTime($('#min'), {
+            format: 'DD MM YYYY'
+        });
+        maxDate = new DateTime($('#max'), {
+            format: 'DD MM YYYY'
+        });
+    
+        // DataTables initialisation
+        var table = $('#list').DataTable(
+            {
+                dom: "<'row'<'col-md-2 bg-white'l><'col-md-5 bg-white'B><'col-md-5 bg-white'f>>" +
+                    "<'row'<'col-md-12'tr>>" +
+                    "<'row'<'col-md-6'i><'col-md-6'p>>",
+                buttons: [{
+                    extend: 'excelHtml5',
+                    autoFilter: true,
+                    sheetName: 'Exported data'
+                }]
+            }
+        );
+    
+        // Refilter the table
+        $('#min, #max').on('change', function() {
+            table.draw();
+        });
+    
+    
+    });
+
 
 function checkAll(box) {
     let checkboxes = document.getElementsByTagName('input');

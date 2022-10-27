@@ -148,93 +148,63 @@ class WarehouseController extends Controller
         return view('warehouse.dispute.index',compact('good_receipts', 'dispute'))
                 ->with('i',(request()->input('page', 1) -1) *5);
     }
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+    public function showing($id){
+        $user = \App\User::find($id);
+        $dispute = good_receipt::all()->where("Status", "Dispute")->count();
+
+        return view('warehouse.user.profile',compact('user', 'dispute'));  
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function heyupdate(Request $request, User $user)
     {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function show(User $user)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(User $user)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Masyarakat $user)
-    {
-        $fotoLama = $request->fotoLama;
+  
+            $fotoLama = $request->fotoLama;
             $foto = $request->file('foto');
             if(!empty($foto)){
                 $foto = $request->file('foto');
                 $namaBaru = Carbon::now()->timestamp . '_' . '.' . $foto->getClientOriginalExtension();
                 $foto->move(public_path('upload/'),$namaBaru);
-            }else{
+            }
+            else{
                 $foto = $fotoLama;
                 $namaBaru = $foto;
             }
-
-               Profile::whereId($user->id)->update([
-                "nik"     => $request->nike,
+               User::whereId(auth()->user()->id)->update([
                 "name"     => $request->name,
-                "telp"     => $request->telp,
                 'email'     => $request->email,
                 "foto"        => $namaBaru,
                 ]);  
-       return redirect ('admin/masyarakat')->with('success','Data Has Been Update');
+        return back()->with('success','Data Telah di ubah.');
     }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(User $user)
-    {
-        $user->delete();
-        return back()
-                ->with('destroy','1 User Telah Di Hapus.');
-    }
-    public function showing($id){
+    public function show($id){
         $user = \App\User::find($id);
-        return view('warehouse.user.profile',compact('user'));  
+        $dispute = good_receipt::all()->where("Status", "Dispute")->count();
+
+        return view('warehouse.user.password',compact('user', 'dispute'));  
+    }
+    public function editpass(Request $request, $id){
+        $password1 = $request->current_password;
+        
+        $user = User::where("id", $id)->first();
+        // dd($user);
+        if (password_verify($password1, $user->password)) {
+            
+                //Change Password
+                $user =  User::whereId(auth()->user()->id)->update([
+                
+                    
+                    'password' => Hash::make($request->get('new_password'))
+                    
+                ]);
+                 
+                return redirect()->back()->with("success","Kata Sandi Berhasil Di Ubah !");
+        
+        }
+        
+        else{
+            // The passwords matches
+        return redirect()->back()->with("error","Kata Sandi yang dimasukkan tidak sesuai. Coba Lagi.");
+
+        }
     }
 }

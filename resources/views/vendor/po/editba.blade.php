@@ -51,7 +51,7 @@ label {
                             @endforeach
                             <div class="row">
                                 <div class="form-group col-md-6">
-                                    <label class="form-control-label" for="posting_date">Invoice Date</label>
+                                    <label class="form-control-label" for="posting_date">Invoice Date <span style="color: red">*</span></label>
                                     <input type="date"
                                         class="form-control @error('posting_date') is-invalid @enderror"
                                         name="posting_date" placeholder="Masukkan Posting Date ..."
@@ -60,7 +60,7 @@ label {
                                         class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                                 </div>
                             <div class="form-group col-md-6">
-                                <label class="form-control-label" for="vendor_invoice_number">Nomor Invoice</label>
+                                <label class="form-control-label" for="vendor_invoice_number">Nomor Invoice <span style="color: red">*</span></label>
                                 <input type="number"
                                     class="form-control @error('vendor_invoice_number') is-invalid @enderror"
                                     name="vendor_invoice_number" placeholder="Masukkan No Invoice ..."
@@ -69,7 +69,7 @@ label {
                                     class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                             </div>
                             <div class="form-group col-md-6">
-                                <label class="form-control-label" for="faktur_pajak_number">Nomor Faktur Pajak</label>
+                                <label class="form-control-label" for="faktur_pajak_number">Nomor Faktur Pajak <span style="color: red">*</span></label>
                                 <input type="number"
                                     class="form-control @error('faktur_pajak_number[]') is-invalid @enderror"
                                     name="faktur_pajak_number" placeholder="Masukkan No Tax Invoice ..."
@@ -103,7 +103,7 @@ label {
                                     class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                             </div>
                             <div class="form-group col-md-6">
-                                <label class="form-control-label" for="DEL_COSTS">Selisih Invoice</label> <br>
+                                <label class="form-control-label" for="DEL_COSTS">Selisih Invoice <span style="color: red">*</span></label> <br>
                                 <input type="number" class="form-control @error('DEL_COSTS[]') is-invalid @enderror"
                                     name="DEL_COSTS" placeholder="Masukkan Invoice Difference ..." required>
                                 @error('DEL_COSTS[]')<span
@@ -116,9 +116,9 @@ label {
                                     class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                             </div>
                     </div>
-                    <button type="submit" class="btn btn-success mb-2" id="simpan">Submit</button>
+                    <button type="submit" class="btn btn-success mb-2" id="simpan" onclick="return confirm('Are you sure?')">Submit</button>
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="{{url('vendor/purchaseorder')}}" type="submit"
-                        class="btn btn-danger mb-2" id="simpan">Return</a>
+                        class="btn btn-danger mb-2" id="simpan" onclick="return confirm('Are you sure?')">Return</a>
                     </form>
                     <br>
                     <strong class="card-header">BA Data to be Update</strong>

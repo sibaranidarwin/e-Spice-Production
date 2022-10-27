@@ -9,11 +9,12 @@ use App\Imports\Draft_BAImport;
 use App\good_receipt;
 use App\Invoice;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\DB;
 
 use PDF; //library pdf
 use Auth;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
 
 class VendorController extends Controller
@@ -237,8 +238,9 @@ class VendorController extends Controller
         $file = $request->file('excel-vendor-ba');
         Excel::import(new Draft_BAImport, $file);
         
-        return back()->with('success', 'Draft BA Imported Successfully');
+        return back()->with('success', 'BA Imported Successfully');
     }
+    
     public function invoice()
     {
          $invoice = Invoice::latest()->orWhere("data_from", "GR")->get();
@@ -399,20 +401,60 @@ class VendorController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\good_receipt  $good_receipts
-     * @return \Illuminate\Http\Response
-     */
-    public function delete(good_receipt $id_gr){
-       
-        $good_receipts->delete();
-        return back()->with('destroy','PurchaseOrder Berhasil Di Hapus');
-    }
     public function showing($id){
         $user = \App\User::find($id);
         return view('vendor.user.profile',compact('user'));  
     }
-    
+
+    public function heyupdate(Request $request, User $user)
+    {
+  
+            $fotoLama = $request->fotoLama;
+            $foto = $request->file('foto');
+            if(!empty($foto)){
+                $foto = $request->file('foto');
+                $namaBaru = Carbon::now()->timestamp . '_' . '.' . $foto->getClientOriginalExtension();
+                $foto->move(public_path('upload/'),$namaBaru);
+            }
+            else{
+                $foto = $fotoLama;
+                $namaBaru = $foto;
+            }
+               User::whereId(auth()->user()->id)->update([
+                "name"     => $request->name,
+                'email'     => $request->email,
+                "foto"        => $namaBaru,
+                ]);  
+        return back()->with('success','Data Telah di ubah.');
+    }
+    public function show($id){
+        $user = \App\User::find($id);
+
+        return view('vendor.user.password',compact('user'));  
+    }
+    public function editpass(Request $request, $id){
+        $password1 = $request->current_password;
+        
+        $user = User::where("id", $id)->first();
+        // dd($user);
+        if (password_verify($password1, $user->password)) {
+            
+                //Change Password
+                $user =  User::whereId(auth()->user()->id)->update([
+                
+                    
+                    'password' => Hash::make($request->get('new_password'))
+                    
+                ]);
+                 
+                return redirect()->back()->with("success","Kata Sandi Berhasil Di Ubah !");
+        
+        }
+        
+        else{
+            // The passwords matches
+        return redirect()->back()->with("error","Kata Sandi yang dimasukkan tidak sesuai. Coba Lagi.");
+
+        }
+    }
 }

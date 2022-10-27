@@ -11,7 +11,7 @@
                             <div class="card-body">
                                 <div class="stat-widget-five">
                                     <div class="stat-icon dib flat-color-2">
-                                        <i class="fa fa-check"></i>
+                                        <i class="fa fa-file"></i>
                                     </div>
                                     <div class="stat-content">
                                         <div class="text-left dib">
@@ -29,7 +29,7 @@
                             <div class="card-body">
                                 <div class="stat-widget-five">
                                     <div class="stat-icon dib flat-color-1">
-                                        <i class="fa fa-check"></i>
+                                        <i class="fa fa-newspaper-o"></i>
                                     </div>
                                     <div class="stat-content">
                                         <div class="text-left dib">
@@ -48,7 +48,7 @@
                             <div class="card-body">
                                 <div class="stat-widget-five">
                                     <div class="stat-icon dib flat-color-5">
-                                        <i class="fa fa-check"></i>
+                                        <i class="fa fa-newspaper-o"></i>
                                     </div>
                                     <div class="stat-content">
                                         <div class="text-left dib">
@@ -67,7 +67,7 @@
                             <div class="card-body">
                                 <div class="stat-widget-five">
                                     <div class="stat-icon dib flat-color-3">
-                                        <i class='fa fa-file'></i>
+                                        <i class='fa fa-file-pdf-o'></i>
                                     </div>
                                     <div class="stat-content">
                                         <div class="text-left dib">
@@ -86,7 +86,7 @@
                             <div class="card-body">
                                 <div class="stat-widget-five">
                                     <div class="stat-icon dib flat-color-3">
-                                        <i class='fa fa-file'></i>
+                                        <i class='fa fa-file-pdf-o'></i>
                                     </div>
                                     <div class="stat-content">
                                         <div class="text-left dib">

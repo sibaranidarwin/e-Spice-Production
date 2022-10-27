@@ -93,7 +93,7 @@
                 <li class="menu-title">DATA GOOD RECEIPT</li><!-- /.menu-title -->
                 <li class="menu-item-has-children dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                        aria-expanded="false"> <i class="menu-icon fa fa-list-ul"></i>Good Receipt</a>
+                        aria-expanded="false"> <i class="menu-icon fa fa-file"></i>Good Receipt</a>
                     <ul class="sub-menu children dropdown-menu">
                         <li><i class="fa fa-check"></i><a href="{{url('vendor/purchaseorder')}}">Verified</a></li>
                         <li><i class="fa fa-info"></i><a href="{{url('vendor/puchaseorderreject')}}">Reject</a></li>
@@ -109,20 +109,21 @@
                         <li><i class="fa fa-table "></i><a href="{{url('vendor/ba')}}">BA</a></li>
                     </ul>
                 </li>
-                <li class="menu-item-has-children dropdown ">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                        aria-expanded="false"> <i class="menu-icon fa fa-file"></i>Invoice Proposal</a>
-                    <ul class="sub-menu children dropdown-menu ">
-                        <li><i class="fa fa-table "></i><a href="{{url('vendor/invoice')}}">Invoice GR</a></li>
-                        <li><i class="fa fa-table "></i><a href="{{url('vendor/invoiceba')}}">Invoice BA</a></li>
-                    </ul>
-                </li>
-                <li class="menu-item-has-children dropdown ">
+                  <li class="menu-item-has-children dropdown ">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
                         aria-expanded="false"> <i class="menu-icon fa fa-warning"></i>Disputed Purchase</a>
                     <ul class="sub-menu children dropdown-menu ">
                         <li><i class="fa fa-table "></i><a href="{{url('vendor/disputed')}}">Show</a></li>
 
+                    </ul>
+                </li>
+                <li class="menu-title">DATA Invoice</li><!-- /.menu-title -->
+                <li class="menu-item-has-children dropdown ">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false"> <i class="menu-icon fa fa-file-pdf-o"></i>Invoice Proposal</a>
+                    <ul class="sub-menu children dropdown-menu ">
+                        <li><i class="fa fa-table "></i><a href="{{url('vendor/invoice')}}">Invoice GR</a></li>
+                        <li><i class="fa fa-table "></i><a href="{{url('vendor/invoiceba')}}">Invoice BA</a></li>
                     </ul>
                 </li>
 
@@ -157,12 +158,12 @@
 
                     <div class="user-menu dropdown-menu">
                         <a class="nav-link" href="{{route('vendor-user.show',auth()->user()->id)}}"><i
-                                class="fa fa- user"></i>My Profile</a>
+                                class="fa fa- user"></i>Profile</a>
 
                         <a class="nav-link" href="{{url('')}}"><i class="fa fa- user"></i>Notifications
                             <span class="count"></span></a>
 
-                        <a class="nav-link" href="{{route('user.showing',auth()->user()->id)}}"><i
+                        <a class="nav-link" href="{{route('vendor-user.showing',auth()->user()->id)}}"><i
                                 class="fa fa -cog"></i>Settings</a>
 
                         <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault();

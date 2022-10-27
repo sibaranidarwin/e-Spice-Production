@@ -38,23 +38,28 @@ Route::get('about', 'IndexController@about')->name('about');
 // DASHBOARD ADMIN
 Route::resource('admin/dashboard','AdminController')->middleware('admin');
 Route::get('admin/dashboard', 'AdminController@index')->name('admin/dashboard')->middleware('admin');
-// PENGADUAN - TANGGAPAN
-Route::resource('admin/pengaduan','TanggapanController')->middleware('admin');
-Route::post('admin/pengaduan/{id}/show/', 'TanggapanController@updateyeh')->name('tanggapan-update')->middleware('admin');
-Route::get('admin/pengaduan/{id}/show/', 'TanggapanController@showing')->name('tanggapan.showing')->middleware('admin');
-Route::get('admin/pengaduan/cari','TanggapanController@cari')->name('cari-pengaduan')->middleware('admin');
-// KOMENTAR
-Route::resource('admin/komentar','KomentarController')->middleware('admin');
+
 // Purchase Order
-Route::resource('admin/po', 'PoController')->middleware('admin');
-Route::get('admin/po/{id}/show/', 'PoController@showing')->name('pengumuman.showing')->middleware('admin');
+Route::get('admin/po', 'AdminController@po')->name('admin/po')->middleware('admin');
+Route::get('admin/pover', 'AdminController@pover')->name('admin/pover')->middleware('admin');
+Route::get('admin/poreject', 'AdminController@poreject')->name('admin/poreject')->middleware('admin');
+
+//BA
+Route::get('admin/draft', 'AdminController@draft')->name('admin/draft');
+Route::get('admin/ba', 'AdminController@ba')->name('admin/ba');
+Route::put('admin/draft','AdminController@uploaddraft');
+
 // Invoice 
-Route::get('admin/invoice', 'InvoiceController@showing')->middleware('admin');
-//Purcahse order disputed
-Route::get('admin/disputed', 'PoController@disputed')->middleware('admin');
-// PENGUMUMAN
-Route::resource('admin/pengumuman', 'PengumumanController')->middleware('admin');
-Route::get('admin/pengumuman/{id}/show/', 'PengumumanController@showing')->name('pengumuman.showing')->middleware('admin');
+Route::get('admin/invoice', 'AdminController@invoice')->middleware('admin');
+Route::get('admin/detail-invoice/{id}', 'AdminController@detailinvoice')->name('detail-invoice');
+Route::get('admin/cetak_pdf/{id}', 'AdminController@cetak_pdf')->name('cetak-laporan');
+
+Route::get('admin/invoiceba', 'AdminController@invoiceba')->name('admin/invoiceba');
+Route::get('admin/detail-invoice-ba/{id}', 'AdminController@detailinvoiceba')->name('detail-invoice');
+Route::get('admin/cetak_pdf/{id}', 'AdminController@cetak_pdf')->name('cetak-laporan');
+
+//Pruchase order disputed
+Route::get('admin/disputed', 'AdminController@disputed')->middleware('admin');
 
 // USER
 Route::resource('admin/user', 'UserController')->middleware('admin');
@@ -122,7 +127,6 @@ Route::get('warehouse/po', 'WarehouseController@po');
 Route::get('warehouse/pover', 'WarehouseController@pover');
 Route::get('warehouse/poreject', 'WarehouseController@poreject');
 
-Route::get('warehouse/user/{id}/show', 'WarehouseController@showing')->name('warehouse-user.show');
 
 Route::get('warehouse/invoice', 'WarehouseController@invoice')->name('warehouse/invoice');
 Route::get('warehouse/detail-invoice/{id}', 'WarehouseController@detailinvoice')->name('detail-invoice');
@@ -133,6 +137,11 @@ Route::get('warehouse/disputed', 'WarehouseController@disputed')->name('warehous
 
 Route::post('warehouse/edit-datagr','PoController@edit')->name('update-datagr/{id}');
 Route::post('warehouse/updated-datagr','PoController@update')->name('update-datagr');
+
+Route::get('warehouse/user/{id}/show', 'WarehouseController@showing')->name('warehouse-user.show');
+Route::get('warehouse/user/{id}/profile', 'WarehouseController@show')->name('warehouse-user.showing');
+Route::put('warehouse/{id}/profile','WarehouseController@heyupdate')->name('update-warehouse');
+Route::post('warehouse/{id}/password','WarehouseController@editpass')->name('update-pass-warehouse');
 
 
 // // INI MIDDLEWARE Vendor
@@ -165,4 +174,5 @@ Route::get('vendor/disputed', 'VendorController@disputed')->name('vendor/dispute
 
 Route::get('vendor/user/{id}/show', 'VendorController@showing')->name('vendor-user.show');
 Route::get('vendor/user/{id}/profile', 'VendorController@show')->name('vendor-user.showing');
-Route::post('vendor/{id}/profile','VendorController@heyupdate')->name('update-vendor');
+Route::put('vendor/{id}/profile','VendorController@heyupdate')->name('update-vendor');
+Route::post('vendor/{id}/password','VendorController@editpass')->name('update-pass-vendor');

@@ -1,5 +1,6 @@
 @extends('admin.layouts.app')
 @section('content')
+<link rel="stylesheet" href="{{asset('assets/css/argon-dashboard.css')}}">
 
 <div class="breadcrumbs">
     <div class="breadcrumbs-inner">
@@ -61,7 +62,7 @@
                             <thead>
                                 <tr>
                                     <th class="serial">#</th>
-                                    <th class="avatar">Avatar</th>
+                                    <th class="">Avatar</th>
                                     <th>Name</th>
                                     <th>Email</th>
                                     <th class="text-center">Role</th>
@@ -73,7 +74,7 @@
                                 @if($user->level == "procurement")
                                 <tr>
                                     <td class="serial">{{++$i}}</td>
-                                    <td class="avatar">
+                                    <td class="">
                                         <div class="round-img">
                                             <a href="#"><img class="rounded-circle"
                                                     src="{{asset('upload/'.$user->foto)}}" alt=""></a>
@@ -82,7 +83,7 @@
                                     <td> <span class="name">{{$user->name}}</span> </td>
                                     <td class="text-lowercase">{{$user->email}} </td>
                                     <td class="text-center"> <span
-                                            class="badge badge-warning font-weight-bold">Procumerent</span> </td>
+                                            class="btn btn-warning font-weight-bold">Procumerent</span> </td>
                                     <td class="text-center"><span>
                                             <form action="{{route('user.destroy',$user->id)}}" method="POST">
                                                 @csrf

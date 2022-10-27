@@ -90,77 +90,89 @@
                     <li class="active">
                         <a href="{{url('admin/dashboard')}}"><i class="menu-icon fa fa-laptop"></i>Dashboard</a>
                     </li>
-                    <li class="menu-title">MANAGE DATA</li><!-- /.menu-title -->
+                    <li class="menu-title">DATA Good Receipt</li><!-- /.menu-title -->
                     <li class="menu-item-has-children dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
                             aria-expanded="false"> <i class="menu-icon fa fa-list-ul"></i>Good Receipt</a>
                         <ul class="sub-menu children dropdown-menu">
-                            <li><i class="fa fa-table"></i><a href="{{url('admin/po')}}">Show</a></li>
-                        </ul>
+                            <li><i class="fa fa-close"></i><a href="{{url('admin/po')}}">Not Verified</a></li>
+                            <li><i class="fa fa-check"></i><a href="{{url('admin/pover')}}">Verified</a></li>
+                            <li><i class="fa fa-info"></i><a href="{{url('admin/poreject')}}">Reject</a></li>
                     </li>
+                </ul>
+                </li>
 
-                    <li class="menu-item-has-children dropdown ">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                            aria-expanded="false"> <i class="menu-icon fa fa-money"></i>Invoice</a>
-                        <ul class="sub-menu children dropdown-menu ">
-                            <li><i class="fa fa-table "></i><a href="{{url('admin/invoice')}}">Show</a></li>
+                <li class="menu-item-has-children dropdown ">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false"> <i class="menu-icon fa fa-newspaper-o"></i>BA Reconcile</a>
+                    <ul class="sub-menu children dropdown-menu ">
+                        <li><i class="fa fa-table "></i><a href="{{url('admin/draft')}}">Draft BA</a></li>
+                        <li><i class="fa fa-table "></i><a href="{{url('admin/ba')}}">BA</a></li>
+                    </ul>
+                </li>
+                
+                <li class="menu-item-has-children dropdown ">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false"> <i class="menu-icon fa fa-warning"></i>Dispute Purchase</a>
+                    <ul class="sub-menu children dropdown-menu ">
+                        <li><i class="fa fa-table "></i><a href="{{url('admin/disputed')}}">Show</a></li>
 
-
-                        </ul>
-                    </li>
-                    <li class="menu-item-has-children dropdown ">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                            aria-expanded="false"> <i class="menu-icon fa fa-list-ol"></i>Disputed Purchase</a>
-                        <ul class="sub-menu children dropdown-menu ">
-                            <li><i class="fa fa-table "></i><a href="{{url('admin/disputed')}}">Show</a></li>
-
-                        </ul>
-                    </li>
-                    <li class="menu-title">User</li><!-- /.menu-title -->
-                    <li class="menu-item-has-children dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                            aria-expanded="false"> <i class="menu-icon fa fa-user"></i>Admin</a>
-                        <ul class="sub-menu children dropdown-menu">
-                            <li><i class="menu-icon fa fa-users"></i><a href="{{url('admin/user')}}">All User</a></li>
-                            <li><i class="menu-icon fa fa-unlock-alt"></i><a
-                                    href="{{route('user.showing',auth()->user()->id)}}">Edit Profile</a></li>
-                        </ul>
-                    </li>
-                    <li class="menu-item-has-children dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                            aria-expanded="false"> <i class="menu-icon fa fa-user"></i>Accounting</a>
-                        <ul class="sub-menu children dropdown-menu">
-                            <li><i class="menu-icon fa fa-share"></i><a href="{{url('admin/accounting')}}">All
-                                    Accounting</a></li>
-                        </ul>
-                    </li>
-                    <li class="menu-item-has-children dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                            aria-expanded="false"> <i class="menu-icon fa fa-user"></i>Warehouse</a>
-                        <ul class="sub-menu children dropdown-menu">
-                            <li><i class="menu-icon fa fa-share"></i><a href="{{url('admin/warehouse')}}">All
-                                    Warehouse</a></li>
-                        </ul>
-                    </li>
-                    <li class="menu-item-has-children dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                            aria-expanded="false"> <i class="menu-icon fa fa-user"></i>Procumerent</a>
-                        <ul class="sub-menu children dropdown-menu">
-                            <li><i class="menu-icon fa fa-share"></i><a href="{{url('admin/procumerent')}}">All
-                                    Procumerent</a></li>
-                        </ul>
-                    </li>
-                    <li class="menu-item-has-children dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                            aria-expanded="false"> <i class="menu-icon fa fa-users"></i>Vendor</a>
-                        <ul class="sub-menu children dropdown-menu">
-                            <li><i class="menu-icon fa fa-share"></i><a href="{{url('admin/vendor')}}">All Vendor</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <!-- <li class="menu-title">Laporan</li> -->
-                    <!-- /.menu-title -->
-                    <!-- <li class="menu-item-has-children dropdown">
+                    </ul>
+                </li>
+                <li class="menu-title">DATA Invoice</li><!-- /.menu-title -->
+                <li class="menu-item-has-children dropdown ">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false"> <i class="menu-icon fa fa-file"></i>Invoice Proposal</a>
+                    <ul class="sub-menu children dropdown-menu ">
+                        <li><i class="fa fa-table "></i><a href="{{url('admin/invoiceba')}}">Invoice BA</a></li>
+                        <li><i class="fa fa-table "></i><a href="{{url('admin/invoice')}}">Invoice GR</a></li>
+                    </ul>
+                </li>
+                <li class="menu-title">DATA USER</li><!-- /.menu-title -->
+                <li class="menu-item-has-children dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false"> <i class="menu-icon fa fa-user"></i>Admin</a>
+                    <ul class="sub-menu children dropdown-menu">
+                        <li><i class="menu-icon fa fa-users"></i><a href="{{url('admin/user')}}">All User</a></li>
+                        <li><i class="menu-icon fa fa-unlock-alt"></i><a
+                                href="{{route('user.showing',auth()->user()->id)}}">Edit Profile</a></li>
+                    </ul>
+                </li>
+                <li class="menu-item-has-children dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false"> <i class="menu-icon fa fa-user"></i>Accounting</a>
+                    <ul class="sub-menu children dropdown-menu">
+                        <li><i class="menu-icon fa fa-share"></i><a href="{{url('admin/accounting')}}">All
+                                Accounting</a></li>
+                    </ul>
+                </li>
+                <li class="menu-item-has-children dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false"> <i class="menu-icon fa fa-user"></i>Warehouse</a>
+                    <ul class="sub-menu children dropdown-menu">
+                        <li><i class="menu-icon fa fa-share"></i><a href="{{url('admin/warehouse')}}">All
+                                Warehouse</a></li>
+                    </ul>
+                </li>
+                <li class="menu-item-has-children dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false"> <i class="menu-icon fa fa-user"></i>Procumerent</a>
+                    <ul class="sub-menu children dropdown-menu">
+                        <li><i class="menu-icon fa fa-share"></i><a href="{{url('admin/procumerent')}}">All
+                                Procumerent</a></li>
+                    </ul>
+                </li>
+                <li class="menu-item-has-children dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false"> <i class="menu-icon fa fa-users"></i>Vendor</a>
+                    <ul class="sub-menu children dropdown-menu">
+                        <li><i class="menu-icon fa fa-share"></i><a href="{{url('admin/vendor')}}">All Vendor</a>
+                        </li>
+                    </ul>
+                </li>
+                <!-- <li class="menu-title">Laporan</li> -->
+                <!-- /.menu-title -->
+                <!-- <li class="menu-item-has-children dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
                             aria-expanded="false"> <i class="menu-icon fa fa-paste"></i>Laporan</a>
                         <ul class="sub-menu children dropdown-menu">
