@@ -12,7 +12,7 @@
 <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.print.min.js"></script>
 <script src="https://cdn.datatables.net/datetime/1.1.2/js/dataTables.dateTime.min.js"></script>
 
-@extends('vendor.layouts.sidebar')
+@extends('admin.layouts.app')
 @section('content')
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.6/css/buttons.dataTables.min.css">
@@ -133,7 +133,7 @@ label {
                                 {{-- &nbsp;&nbsp;<button type="submit" name="action" value="Dispute"
                                     class="btn btn-warning btn-sm-3">Dispute</button> --}}
                                     &nbsp;&nbsp;<button type="submit" name="action" value="Update"
-                                    class="btn btn-success btn-sm-3" onclick="return confirm('Are you sure?')">Create Invoice</button>
+                                    class="btn btn-success btn-sm-3">Create Invoice</button>
                             </form>
                         </div> <!-- /.table-stats -->
                     </div>
@@ -199,7 +199,7 @@ $.fn.dataTable.ext.search.push(
     function(settings, data, dataIndex) {
         var min = minDate.val();
         var max = maxDate.val();
-        var date = new Date(data[3]);
+        var date = new Date(data[2]);
 
         if (
             (min === null && max === null) ||

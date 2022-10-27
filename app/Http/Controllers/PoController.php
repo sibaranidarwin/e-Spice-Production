@@ -12,12 +12,7 @@ class PoController extends Controller
     {
         $this->middleware('auth');
     }
-    public function index()
-    {   
-        $good_receipts = good_receipt::latest()->get();
-        return view('admin.po.index',compact('good_receipts'))
-                ->with('i',(request()->input('page', 1) -1) *5);
-    }
+  
     public function edit(Request $request) {
         switch ($request->input('action')) {
             case 'Upload':

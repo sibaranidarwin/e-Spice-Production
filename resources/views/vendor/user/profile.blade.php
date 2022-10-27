@@ -31,13 +31,35 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="card">
+                    @if($message = Session::get('destroy'))
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <strong>Success!</strong> {{$message}}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    @elseif($message = Session::get('success'))
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <strong>Success!</strong> {{$message}}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    @elseif($message = Session::get('warning'))
+                    <div class="alert alert-primary alert-dismissible fade show" role="alert">
+                        <strong>Success!</strong> {{$message}}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    @endif
                     <div class="col-md-6 offset-3"><br>
                         <div class="card">
-                            <div class="card-header">
-                                <i class="fa fa-user"></i><strong class="card-title pl-2">Profile Card</strong>
+                            <div class="card-header" style="text-align: center;">
+                                <i class="fa fa-user"></i><strong class="card-title pl-3">Profile Card</strong>
                             </div>
                             <div class="card-body">
-                                <form class="form-horizontal" action="{{ route('user.update', $user->id) }}"
+                                <form class="form-horizontal" action="{{ route('update-vendor', $user->id) }}"
                                     method="post" enctype="multipart/form-data">
                                     @csrf
                                     @method('PUT')
@@ -74,8 +96,8 @@
                                     <input type="text" class="form-control" name="email" value="{{$user->email}}">
                                 </div>
                                 <div class="form-group">
-                                    <label for="">Password</label>
-                                    <input type="password" class="form-control" value="{{$user->password}}" disabled="">
+                                    <label for="new_password">Password Lama</label>
+                                    <input type="password" class="form-control" id="password" name="password"  value="{{$user->password}}">
                                     <input type="hidden" name="fotoLama" value="{{$user->foto}}">
 
                                 </div>

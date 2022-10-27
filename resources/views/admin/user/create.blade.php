@@ -1,5 +1,6 @@
 @extends('admin.layouts.app')
 @section('content')
+<link rel="stylesheet" href="{{asset('assets/css/argon-dashboard.css')}}">
 
 <div class="breadcrumbs">
     <div class="breadcrumbs-inner">
@@ -63,13 +64,29 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label for="">Name</label>
+                                    <label for="">Name <span style="color: red">*</span></label>
                                     <input type="text" name="name" value="{{ old('name') }}" autocomplete="off"
                                         required="" class="form-control">
                                     <input type="text" name="foto" value="avatar.png" hidden="">
                                 </div>
+                                
                                 <div class="form-group">
-                                    <label for="">Email</label>
+                                    <label for="id_vendor">Vendor ID </label>
+                                    <select name="id_vendor" id="id_vendor" class="form-control">
+                                        <option disabled selected>Pilih Nomor Vendor</option>
+                                        @foreach ($vendor as $id_vendor)
+                                            <option value="{{ $id_vendor['id_vendor'] }}">{{ $id_vendor['id_vendor'] }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('id_vendor')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="">Email <span style="color: red">*</span></label>
                                     <input type="text" id="email" type="email"
                                         class="form-control @error('email') is-invalid @enderror" name="email"
                                         value="{{ old('email') }}" required>
@@ -80,7 +97,7 @@
                                     @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label for="">Password</label>
+                                    <label for="">Password <span style="color: red">*</span></label>
                                     <input type="password" required=""
                                         class="form-control @error('password') is-invalid @enderror" name="password">
                                     @error('password')
@@ -91,7 +108,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="">Password Confirmation</label>
+                                    <label for="">Password Confirmation <span style="color: red">*</span></label>
                                     <input id="password-confirm" type="password" class="form-control"
                                         name="password_confirmation" required autocomplete="new-password">
                                     @error('password')
@@ -101,7 +118,7 @@
                                     @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label for="">Level</label>
+                                    <label for="">Level <span style="color: red">*</span></label>
                                     <select name="level" required="" id="" class="form-control">
                                         <option value="admin">Admin</option>
                                         <option value="warehouse">Warehouse</option>

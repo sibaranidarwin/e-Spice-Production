@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use App\vendorID;
 use Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
@@ -33,7 +34,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('admin/user/create');
+        $vendor = vendorID::all();
+        return view('admin/user/create', compact('vendor'));
     }
 
     /**
@@ -49,15 +51,18 @@ class UserController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
-        User::create([
-            'name' => $request['name'],
+
+        $user=User::create([
+            'name' => $request['name'], 
             'id_vendor' => $request['id_vendor'],
             'companycode' => $request['companycode'],
             'username' => $request['username'],
             'email' => $request['email'],
             'password' => Hash::make($request['password']),
             'level' => $request['level'],
-        ]);return redirect ('admin/user')->with('success','Data Has Been Saved');
+        ]);
+        dd($user);
+        return redirect ('admin/user')->with('success','Data Has Been Saved');
     }
 
     /**
@@ -106,7 +111,7 @@ class UserController extends Controller
                 'email'     => $request->email,
                 "foto"        => $namaBaru,
                 ]);  
-        return redirect ('admin/user')->with('warning','Data Telah di ubah.');
+        return  redirect()->back()->with('warning','Data Telah di ubah.');
     }
 
     /**

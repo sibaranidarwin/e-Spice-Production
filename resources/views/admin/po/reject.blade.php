@@ -12,13 +12,12 @@
 <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.print.min.js"></script>
 <script src="https://cdn.datatables.net/datetime/1.1.2/js/dataTables.dateTime.min.js"></script>
 
-@extends('vendor.layouts.sidebar')
+@extends('admin.layouts.app')
 @section('content')
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.6/css/buttons.dataTables.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/datetime/1.1.2/css/dataTables.dateTime.min.css">
-
 <link rel="stylesheet" href="{{asset('assets/css/argon-dashboard.css')}}">
 
 <style>
@@ -43,7 +42,7 @@ label {
                     <div class="page-title">
                         <ol class="breadcrumb text-right">
                             <li><a href="#">Dashboard</a></li>
-                            <li><a href="#">Invoice GR</a></li>
+                            <li><a href="#">Good Receipt List</a></li>
                             <li class="active">Show</li>
                         </ol>
                     </div>
@@ -81,82 +80,67 @@ label {
                     </div>
                     @endif
                     <div class="card-header">
-                        <strong class="card-title">Invoice Proposal GR List</strong>
+                        <strong class="card-title">Good Receipt Reject List</strong>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive text-nowrap">
-                            <div class="row">
-                                <div class="form-group col-4 bg-white mb-2">
-                                    <label for="">Tanggal Invoice From: </label>
-                                    <input class="form-group" type="text" id="min" name="min">
-                                </div>
-                                <div class=" form-group col-3 bg-white mb-2">
-                                    <label for="">To: </label>
-                                    <input class="form-group" type="text" id="max" name="max">
-                                </div>
-                               
-                            </div>
-                            <form action="{{ route('update-datagr-vendor/{id_gr}') }}" method="POST">
+                            <form action="{{ route('update-datagr/{id}') }}" method="POST">
                                 @csrf
                                 <table id="list" class="table table-striped" style="font-size: 10px;">
                                     <thead>
                                         <tr>
-                                            <th class="serial">No</th>
-                                            <th>Tanggal Invoice</th>
-                                            <th>No Invoice</th>
-                                            <th>No Faktur Pajak</th>
-                                            <th>No E-Verify</th>
-                                            <th>Total PPN</th>
-                                            <th>Total Harga</th>
-                                            <th>Status Upload Sap</th>
-
-                                            <!-- <th class="text-center">Reference</th> -->
-                                            <!-- <th class="text-center">Vendor Part Number</th>
-                                            <th class="text-center">Item Description</th>
-                                            <th class="text-center">UoM</th>
-                                            <th class="text-center">Currency</th>
-                                            <th class="text-center">Harga Satuan</th>
-                                            <th class="text-center">Jumlah</th> -->
-                                            <!-- <th class="text-center">Jumlah Harga</th> -->
-                                            {{-- <th class="text-center">Tax Code</th> --}}
-                                            <!-- <th class="text-center">Valuation Type</th> -->
-                                            <th>Action</th>
+                                            <th>No</th>
+                                            <th>Status</th>
+                                            <th>GR Number</th>
+                                            <th>No PO</th>
+                                            <th>PO Item</th>
+                                            <th>GR Date</th>
+                                            <th>Part Number</th>
+                                            <th>Reference</th>
+                                            <th>Material Description</th>
+                                            <th>QTY UOM</th>
+                                            <th>Curr</th>
+                                            <th>Unit Price</th>
+                                            <th>Tax Code</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        @foreach($invoice as $item)
+                                    <tbody style="font-size: 11px;">
+                                        @foreach($good_receipts as $good_receipt)
                                         <tr>
                                             <td class="serial">{{++$i}}</td>
-                                            <td>{{$item['posting_date'] }}</td>
-                                            <td>{{$item['vendor_invoice_number'] }}</td>
-                                            <td>{{$item['faktur_pajak_number'] }}</td>
-                                            <td>{{$item['everify_number'] }}</td>
-                                            <td>{{$item['ppn']}}</td>
-                                            <td>{{$item['total_harga_everify'] }}</td>
-                                            <td>{{$item['status']}}</td>
-                                            <td>
-                                                <a href="/vendor/detail-invoice/{{$item->id_inv}}"
-                                                    class="btn btn-info btn-sm">Detail</a>
-                                                <a href="/vendor/cetak_pdf/{{$item->id_inv}}"
-                                                    class="btn btn-secondary btn-sm">Print</a>
+                                            <td>{{ $good_receipt->Status }}</td>
+                                            <td><span class="name">{{$good_receipt->GR_Number}}</span> </td>
+                                            <td><span>{{$good_receipt->no_po}}</span> <br><span
+                                                    style="font-style: italic;">Item No:
+                                                    {{$good_receipt->po_item}}</span></td>
+                                            <td><span>{{$good_receipt->po_item}}</span></td>
+                                            <td><span>{{$good_receipt->GR_Date}}</span></td>
+                                            <td> <span>{{$good_receipt->Material_Number}}</span>
+                                                <br>
+                                                <span class="name"
+                                                    style="font-style: italic;">{{$good_receipt->Vendor_Part_Number}}</span>
                                             </td>
+                                            <td> <span>{{$good_receipt->Ref_Doc_No}}</span> </td>
+                                            <td> <span>{{$good_receipt->Mat_Desc}}</span> </td>
+                                            <td> <span>{{$good_receipt->jumlah}}</span>&nbsp;<span>{{$good_receipt->UOM}}</span>
+                                            </td>
+                                            <td> <span>{{$good_receipt->Currency}}</span> </td>
+                                            <td> <span>{{$good_receipt->harga_satuan}}</span> </td>
+                                            <td> <span>{{$good_receipt->Tax_Code}}</span> </td>
                                         </tr>
                                         @endforeach
+                                        </select>
                                     </tbody>
                                 </table>
-                                &nbsp;&nbsp;&nbsp;<a href="" class="btn btn-success mb-2">Upload SAP</a>
-                                {{-- <div class="row">
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<div class="col-md-1 mb-2"><a href=""
-                                    class="btn btn-primary">Upload SAP</a></div>
-                        </div> --}}
+                                &nbsp;&nbsp;<button type="submit" value="Update" name="action"
+                                    class="btn btn-success">Update Data</button>
                             </form>
-                        </div>
+                        </div> <!-- /.table-stats -->
                     </div>
-                </div> <!-- /.table-stats -->
+                </div>
             </div>
         </div>
     </div>
-</div>
 
 </div>
 </div><!-- .animated -->
@@ -179,60 +163,57 @@ label {
 
 </div><!-- /#right-panel -->
 
-
 <script type="text/javascript">
-    var minDate, maxDate;
-    
-    // Custom filtering function which will search data in column four between two values
-    $.fn.dataTable.ext.search.push(
-        function(settings, data, dataIndex) {
-            var min = minDate.val();
-            var max = maxDate.val();
-            var date = new Date(data[1]);
-    
-            if (
-                (min === null && max === null) ||
-                (min === null && date <= max) ||
-                (min <= date && max === null) ||
-                (min <= date && date <= max)
-            ) {
-                return true;
-            }
-            return false;
+var minDate, maxDate;
+
+// Custom filtering function which will search data in column four between two values
+$.fn.dataTable.ext.search.push(
+    function(settings, data, dataIndex) {
+        var min = minDate.val();
+        var max = maxDate.val();
+        var date = new Date(data[5]);
+
+        if (
+            (min === null && max === null) ||
+            (min === null && date <= max) ||
+            (min <= date && max === null) ||
+            (min <= date && date <= max)
+        ) {
+            return true;
         }
-    );
-    
-    $(document).ready(function() {
-    
-        // Create date inputs
-        minDate = new DateTime($('#min'), {
-            format: 'DD MM YYYY'
-        });
-        maxDate = new DateTime($('#max'), {
-            format: 'DD MM YYYY'
-        });
-    
-        // DataTables initialisation
-        var table = $('#list').DataTable(
-            {
-                dom: "<'row'<'col-md-2 bg-white'l><'col-md-5 bg-white'B><'col-md-5 bg-white'f>>" +
-                    "<'row'<'col-md-12'tr>>" +
-                    "<'row'<'col-md-6'i><'col-md-6'p>>",
-                buttons: [{
-                    extend: 'excelHtml5',
-                    autoFilter: true,
-                    sheetName: 'Exported data'
-                }]
-            }
-        );
-    
-        // Refilter the table
-        $('#min, #max').on('change', function() {
-            table.draw();
-        });
-    
-    
+        return false;
+    }
+);
+
+$(document).ready(function() {
+
+    // Create date inputs
+    minDate = new DateTime($('#min'), {
+        format: 'MMMM Do YYYY'
     });
+    maxDate = new DateTime($('#max'), {
+        format: 'MMMM Do YYYY'
+    });
+
+    // DataTables initialisation
+    var table = $('#list').DataTable({
+        dom: "<'row'<'col-md-2 bg-white'l><'col-md-5 bg-white'B><'col-md-5 bg-white'f>>" +
+            "<'row'<'col-md-12'tr>>" +
+            "<'row'<'col-md-6'i><'col-md-6'p>>",
+        buttons: [{
+            extend: 'excelHtml5',
+            autoFilter: true,
+            sheetName: 'Exported data'
+        }]
+    });
+
+    // Refilter the table
+    $('#min, #max').on('change', function() {
+        table.draw();
+    });
+
+
+});
 
 function checkAll(box) {
     let checkboxes = document.getElementsByTagName('input');
@@ -249,13 +230,6 @@ function checkAll(box) {
                 checkboxes[i].checked = false;
             }
         }
-    }
-}
-
-function showHide(sID) {
-    var el = document.getElementById(sID);
-    if (el) {
-        el.style.display = (el.style.display === '') ? 'none' : '';
     }
 }
 </script>

@@ -1,5 +1,6 @@
 @extends('admin.layouts.app')
 @section('content')
+<link rel="stylesheet" href="{{asset('assets/css/argon-dashboard.css')}}">
 
 <div class="breadcrumbs">
     <div class="breadcrumbs-inner">
@@ -63,7 +64,7 @@
                             <thead>
                                 <tr>
                                     <th class="serial">#</th>
-                                    <th class="avatar">Avatar</th>
+                                    <th >Avatar</th>
                                     <th>Name</th>
                                     <th>Email</th>
                                     <th class="text-center">Role</th>
@@ -75,8 +76,8 @@
                                 @if($user->level == "admin")
                                 <tr>
                                     <td class="serial">{{++$i}}</td>
-                                    <td class="avatar">
-                                        <div class="round-img">
+                                    <td class="name">
+                                        <div class="name">
                                             <a href="#"><img class="rounded-circle"
                                                     src="{{asset('upload/'.$user->foto)}}" alt=""></a>
                                         </div>
@@ -84,7 +85,7 @@
                                     <td> <span class="name">{{$user->name}}</span> </td>
                                     <td class="text-lowercase">{{$user->email}} </td>
                                     <td class="text-center"> <span
-                                            class="badge badge-success font-weight-bold">Administrator</span> </td>
+                                            class="btn btn-success font-weight-bold">Administrator</span> </td>
                                     <td class="text-center"><span>
                                             <a href="{{route('user.show',$user->id)}}" class="btn fa fa-eye"></a>
                                         </span></td>

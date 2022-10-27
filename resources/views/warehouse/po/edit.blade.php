@@ -59,7 +59,7 @@
                             <div class="form-group">
                                 <label class="form-control-label" for="Status">Status</label><br>
                                 <select name="Status" class="form-control">
-                                    <option selected>Silahkan Pilih Status</option>
+                                    <option selected>Silahkan Pilih Status <span style="color: red">*</span></option>
                                     <option value="Verified" {{ $good->Status == "Verified" ? 'selected' : '' }}>
                                         Verified</option>
                                     <option value="Reject" {{ $good->Status == "Reject" ? 'selected' : '' }}>Reject

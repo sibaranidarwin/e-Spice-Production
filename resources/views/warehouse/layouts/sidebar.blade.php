@@ -46,10 +46,10 @@
                 <li class="active">
                     <a href="{{url('warehouse/dashboard')}}"><i class="menu-icon fa fa-laptop"></i>Dashboard</a>
                 </li>
-                <li class="menu-title">MANAGE DATA</li><!-- /.menu-title -->
+                <li class="menu-title">DATA GOOD RECEIPT</li><!-- /.menu-title -->
                 <li class="menu-item-has-children dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                        aria-expanded="false"> <i class="menu-icon fa fa-list-ul"></i>Good Receipt</a>
+                        aria-expanded="false"> <i class="menu-icon fa fa-file"></i>Good Receipt</a>
                     <ul class="sub-menu children dropdown-menu">
                         <li><i class="fa fa-close"></i><a href="{{url('warehouse/po')}}">Not Verified</a></li>
                         <li><i class="fa fa-check"></i><a href="{{url('warehouse/pover')}}">Verified</a></li>
@@ -57,20 +57,21 @@
                 </li>
             </ul>
             </li>
-            <li class="menu-item-has-children dropdown ">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                    aria-expanded="false"> <i class="menu-icon fa fa-file"></i>Invoice Proposal</a>
-                <ul class="sub-menu children dropdown-menu ">
-                    <li><i class="fa fa-table "></i><a href="{{url('warehouse/invoice')}}">Invoice GR</a></li>
-                    <li><i class="fa fa-table "></i><a href="{{url('warehouse/invoiceba')}}">Invoice BA</a></li>
-                </ul>
-            </li>
-            <li class="menu-item-has-children dropdown ">
+             <li class="menu-item-has-children dropdown ">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="menu-icon fa fa-warning"></i>Disputed Purchase</a>
+                    <i class="menu-icon fa fa-warning"></i>Dispute Purchase</a>
                 <ul class="sub-menu children dropdown-menu ">
                     <li><i class="fa fa-table "></i><a href="{{url('warehouse/disputed')}}">Show</a></li>
 
+                </ul>
+            </li>
+            <li class="menu-title">DATA Invoice</li><!-- /.menu-title -->
+            <li class="menu-item-has-children dropdown ">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                    aria-expanded="false"> <i class="menu-icon fa fa-file-pdf-o"></i>Invoice Proposal</a>
+                <ul class="sub-menu children dropdown-menu ">
+                    <li><i class="fa fa-table "></i><a href="{{url('warehouse/invoice')}}">Invoice GR</a></li>
+                    <li><i class="fa fa-table "></i><a href="{{url('warehouse/invoiceba')}}">Invoice BA</a></li>
                 </ul>
             </li>
 
@@ -105,13 +106,13 @@
 
                     <div class="user-menu dropdown-menu">
                         <a class="nav-link" href="{{route('warehouse-user.show',auth()->user()->id)}}"><i
-                                class="fa fa- user"></i>My Profile</a>
+                                class="fa fa- user"></i>Profile</a>
 
                         <a class="nav-link" href="{{url('warehouse/disputed')}}"><i class="fa fa- user"></i>Notifications
                             <span class="count">{{$dispute}}</span></a>
 
-                        {{-- <a class="nav-link" href="{{route('user.showing',auth()->user()->id)}}"><i
-                                class="fa fa -cog"></i>Settings</a> --}}
+                            <a class="nav-link" href="{{route('warehouse-user.showing',auth()->user()->id)}}"><i
+                                class="fa fa -cog"></i>Settings</a>
 
                         <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();" >
                             <i class="fa "></i>
