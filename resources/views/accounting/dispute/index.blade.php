@@ -18,10 +18,11 @@
 <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.6/css/buttons.dataTables.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/datetime/1.1.2/css/dataTables.dateTime.min.css">
+
 <link rel="stylesheet" href="{{asset('assets/css/argon-dashboard.css')}}">
 
 <style>
-    .table td, .table th,label {
+    .table td, .table th,  label{
         font-size: 11.4px;
     }
 </style>
@@ -78,54 +79,67 @@
                     </div>
                     @endif
                     <div class="card-header">
-                        <strong class="card-title">Good Receipt Not Verified List</strong>
+                        <strong class="card-title">Good Receipt Disputed List</strong>
                     </div>
                     <div class="card-body">
                     <div class="table-responsive text-nowrap">
-                        <form action="{{ route('update-datagr/{id}') }}" method="POST">
+                        <div class="row">
+                            <div class="col-4 bg-white mb-3">
+                                <label for="">GR Date: </label>
+                                <input type="text" id="min" name="min"> 
+                            </div> 
+                            <div class="col-2 bg-white mb-4">
+                                <label for="">To date: </label>
+                                <input type="text" id="max" name="max">
+                            </div>
+                            <div class="col-4">
+                                <label for=""> </label>
+                            </div>
+                        </div>
+                        <form action="{{ route('update-datagr-vendor/{id_gr}') }}" method="POST">
                             @csrf
                             <table id="list" class="table table-striped" style="font-size: 10px;">
                                 <thead>
                                     <tr>
-                                    <th><input type="checkbox" onchange="checkAll(this)"></th>
-                                    <th>No</th>
-                                    <th>Status</th>
-                                    <th>GR Number</th>
-                                    <th>No PO</th>
-                                    <th>PO Item</th>
-                                    <th>GR Date</th>
-                                    <th>Part Number</th>
-                                    <th>Reference</th>
-                                    <th>Material Description</th>
-                                    <th>QTY UOM</th>
-                                    <th>Curr</th>
-                                    <th>Unit Price</th>
-                                    <th>Tax Code</th>
+                                        <th>No</th>
+                                        <th>Status</th>
+                                        <th>GR Number</th>
+                                        <th>No PO</th>
+                                        <th>PO Item</th>
+                                        <th>GR Date</th>
+                                        <th>Part Number</th>
+                                        <th>Reference</th>
+                                        <th>Material Description</th>
+                                        <th>QTY UOM</th>
+                                        <th>Curr</th>
+                                        <th>Unit Price</th>
+                                        <th>Tax Code</th>
+                                        <th>Keterengan</th>
                                     </tr>
                                 </thead>
                                 <tbody style="font-size: 11px;">
                                     @foreach($good_receipts as $good_receipt)
                                     <tr>
-                                        <td><input type="checkbox" name="ids[]" value="{{$good_receipt->id_gr}}"></td>
                                         <td>{{++$i}}</td>
-                                        <td >{{ $good_receipt->status }}</td>
-                                        <td ><span>{{$good_receipt->gr_number}}</span></td>
+                                        <td >{{ $good_receipt->Status }}</td>
+                                        <td ><span>{{$good_receipt->GR_Number}}</span></td>
                                         <td ><span>{{$good_receipt->no_po}}</span></td>
                                         <td><span>{{$good_receipt->po_item}}</span></td>
-                                        <td><span>{{$good_receipt->gr_date}}</span></td>
-                                        <td> <span>{{$good_receipt->material_number}}</span></td>
-                                        <td> <span>{{$good_receipt->ref_doc_no}}</span> </td>
-                                        <td> <span>{{$good_receipt->mat_desc}}</span> </td>
-                                        <td> <span>{{$good_receipt->jumlah}}</span>&nbsp;<span>{{$good_receipt->uom}}</span> </td>
-                                        <td> <span>{{$good_receipt->currency}}</span> </td>
+                                        <td><span>{{$good_receipt->GR_Date}}</span></td>
+                                        <td> <span>{{$good_receipt->Material_Number}}</span></td>
+                                        <td> <span>{{$good_receipt->Ref_Doc_No}}</span> </td>
+                                        <td> <span>{{$good_receipt->Mat_Desc}}</span> </td>
+                                        <td> <span>{{$good_receipt->jumlah}}</span>&nbsp;<span>{{$good_receipt->UOM}}</span> </td>
+                                        <td> <span>{{$good_receipt->Currency}}</span> </td>
                                         <td> <span>{{$good_receipt->harga_satuan}}</span> </td>
-                                        <td> <span>{{$good_receipt->tax_code}}</span> </td>
+                                        <td> <span>{{$good_receipt->Tax_Code}}</span> </td>
+                                        <td><span>{{$good_receipt->alasan_disp}}</span></td>
                                     </tr>
                                     @endforeach
                                     </select>
                                 </tbody>
                             </table>
-                        </form>
+                           </form>
                     </div> <!-- /.table-stats -->
                 </div>
             </div>
@@ -180,10 +194,10 @@
     
         // Create date inputs
         minDate = new DateTime($('#min'), {
-            format: 'MMMM Do YYYY'
+            format: 'DD MM YYYY'
         });
         maxDate = new DateTime($('#max'), {
-            format: 'MMMM Do YYYY'
+            format: 'DD MM YYYY'
         });
     
         // DataTables initialisation

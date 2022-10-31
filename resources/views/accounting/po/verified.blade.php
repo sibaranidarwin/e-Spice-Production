@@ -21,9 +21,11 @@
 <link rel="stylesheet" href="{{asset('assets/css/argon-dashboard.css')}}">
 
 <style>
-    .table td, .table th,label {
-        font-size: 11.4px;
-    }
+.table td,
+.table th,
+label{
+    font-size: 11.4px;
+}
 </style>
 <div class="breadcrumbs">
     <div class="breadcrumbs-inner">
@@ -78,35 +80,34 @@
                     </div>
                     @endif
                     <div class="card-header">
-                        <strong class="card-title">Good Receipt Not Verified List</strong>
+                        <strong class="card-title">Good Receipt Verified List</strong>
                     </div>
                     <div class="card-body">
-                    <div class="table-responsive text-nowrap">
-                        <form action="{{ route('update-datagr/{id}') }}" method="POST">
-                            @csrf
-                            <table id="list" class="table table-striped" style="font-size: 10px;">
-                                <thead>
-                                    <tr>
-                                    <th><input type="checkbox" onchange="checkAll(this)"></th>
-                                    <th>No</th>
-                                    <th>Status</th>
-                                    <th>GR Number</th>
-                                    <th>No PO</th>
-                                    <th>PO Item</th>
-                                    <th>GR Date</th>
-                                    <th>Part Number</th>
-                                    <th>Reference</th>
-                                    <th>Material Description</th>
-                                    <th>QTY UOM</th>
-                                    <th>Curr</th>
-                                    <th>Unit Price</th>
-                                    <th>Tax Code</th>
-                                    </tr>
-                                </thead>
-                                <tbody style="font-size: 11px;">
-                                    @foreach($good_receipts as $good_receipt)
-                                    <tr>
-                                        <td><input type="checkbox" name="ids[]" value="{{$good_receipt->id_gr}}"></td>
+                        <div class="table-responsive text-nowrap">
+                            <form action="{{ route('update-datagr/{id}') }}" method="POST">
+                                @csrf
+                                <table id="list" class="table table-striped" style="font-size: 10px;">
+                                    <thead>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Status</th>
+                                            <th>GR Number</th>
+                                            <th>No PO</th>
+                                            <th>PO Item</th>
+                                            <th>GR Date</th>
+                                            <th>Part Number</th>
+                                            <th>Reference</th>
+                                            <th>Material Description</th>
+                                            <th>QTY UOM</th>
+                                            <th>Curr</th>
+                                            <th>Unit Price</th>
+                                            <th>Tax Code</th>
+                                            <th>File SPB</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody style="font-size: 11px;">
+                                        @foreach($good_receipts as $good_receipt)
+                                        <tr>
                                         <td>{{++$i}}</td>
                                         <td >{{ $good_receipt->status }}</td>
                                         <td ><span>{{$good_receipt->gr_number}}</span></td>
@@ -120,15 +121,16 @@
                                         <td> <span>{{$good_receipt->currency}}</span> </td>
                                         <td> <span>{{$good_receipt->harga_satuan}}</span> </td>
                                         <td> <span>{{$good_receipt->tax_code}}</span> </td>
-                                    </tr>
-                                    @endforeach
-                                    </select>
-                                </tbody>
-                            </table>
-                        </form>
-                    </div> <!-- /.table-stats -->
+                                            <td><a target="_blank" href="{{ $good_receipt->lampiran}}" class="btn btn-light btn-sm">View File</a></td>
+                                        </tr>
+                                        @endforeach
+                                        </select>
+                                    </tbody>
+                                </table>
+                            </form>
+                        </div> <!-- /.table-stats -->
+                    </div>
                 </div>
-            </div>
             </div>
         </div>
     </div>
@@ -155,73 +157,73 @@
 </div><!-- /#right-panel -->
 
 <script type="text/javascript">
-    var minDate, maxDate;
-    
-    // Custom filtering function which will search data in column four between two values
-    $.fn.dataTable.ext.search.push(
-        function(settings, data, dataIndex) {
-            var min = minDate.val();
-            var max = maxDate.val();
-            var date = new Date(data[5]);
-    
-            if (
-                (min === null && max === null) ||
-                (min === null && date <= max) ||
-                (min <= date && max === null) ||
-                (min <= date && date <= max)
-            ) {
-                return true;
-            }
-            return false;
+var minDate, maxDate;
+
+// Custom filtering function which will search data in column four between two values
+$.fn.dataTable.ext.search.push(
+    function(settings, data, dataIndex) {
+        var min = minDate.val();
+        var max = maxDate.val();
+        var date = new Date(data[5]);
+
+        if (
+            (min === null && max === null) ||
+            (min === null && date <= max) ||
+            (min <= date && max === null) ||
+            (min <= date && date <= max)
+        ) {
+            return true;
         }
-    );
-    
-    $(document).ready(function() {
-    
-        // Create date inputs
-        minDate = new DateTime($('#min'), {
-            format: 'MMMM Do YYYY'
-        });
-        maxDate = new DateTime($('#max'), {
-            format: 'MMMM Do YYYY'
-        });
-    
-        // DataTables initialisation
-        var table = $('#list').DataTable({
-            dom: "<'row'<'col-md-2 bg-white'l><'col-md-5 bg-white'B><'col-md-5 bg-white'f>>" +
-                "<'row'<'col-md-12'tr>>" +
-                "<'row'<'col-md-6'i><'col-md-6'p>>",
-            buttons: [{
-                extend: 'excelHtml5',
-                autoFilter: true,
-                sheetName: 'Exported data'
-            }]
-        });
-    
-        // Refilter the table
-        $('#min, #max').on('change', function() {
-            table.draw();
-        });
-    
-    
+        return false;
+    }
+);
+
+$(document).ready(function() {
+
+    // Create date inputs
+    minDate = new DateTime($('#min'), {
+        format: 'MMMM Do YYYY'
     });
-    
-    function checkAll(box) {
-        let checkboxes = document.getElementsByTagName('input');
-    
-        if (box.checked) { // jika checkbox teratar dipilih maka semua tag input juga dipilih
-            for (let i = 0; i < checkboxes.length; i++) {
-                if (checkboxes[i].type == 'checkbox') {
-                    checkboxes[i].checked = true;
-                }
+    maxDate = new DateTime($('#max'), {
+        format: 'MMMM Do YYYY'
+    });
+
+    // DataTables initialisation
+    var table = $('#list').DataTable({
+        dom: "<'row'<'col-md-2 bg-white'l><'col-md-5 bg-white'B><'col-md-5 bg-white'f>>" +
+            "<'row'<'col-md-12'tr>>" +
+            "<'row'<'col-md-6'i><'col-md-6'p>>",
+        buttons: [{
+            extend: 'excelHtml5',
+            autoFilter: true,
+            sheetName: 'Exported data'
+        }]
+    });
+
+    // Refilter the table
+    $('#min, #max').on('change', function() {
+        table.draw();
+    });
+
+
+});
+
+function checkAll(box) {
+    let checkboxes = document.getElementsByTagName('input');
+
+    if (box.checked) { // jika checkbox teratar dipilih maka semua tag input juga dipilih
+        for (let i = 0; i < checkboxes.length; i++) {
+            if (checkboxes[i].type == 'checkbox') {
+                checkboxes[i].checked = true;
             }
-        } else { // jika checkbox teratas tidak dipilih maka semua tag input juga tidak dipilih
-            for (let i = 0; i < checkboxes.length; i++) {
-                if (checkboxes[i].type == 'checkbox') {
-                    checkboxes[i].checked = false;
-                }
+        }
+    } else { // jika checkbox teratas tidak dipilih maka semua tag input juga tidak dipilih
+        for (let i = 0; i < checkboxes.length; i++) {
+            if (checkboxes[i].type == 'checkbox') {
+                checkboxes[i].checked = false;
             }
         }
     }
-    </script>
+}
+</script>
 @endsection

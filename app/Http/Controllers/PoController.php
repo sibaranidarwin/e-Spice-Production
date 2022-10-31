@@ -68,7 +68,7 @@ class PoController extends Controller
          foreach($request->id as $id) {
              $good_receipt = good_receipt::find($id);
              $good_receipt->update([
-                 'Status' => $request->Status,
+                 'status' => $request->status,
                  'lampiran' => $fileName
              ]);
              $good_receipt->save();

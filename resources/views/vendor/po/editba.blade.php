@@ -103,10 +103,10 @@ label {
                                     class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                             </div>
                             <div class="form-group col-md-6">
-                                <label class="form-control-label" for="DEL_COSTS">Selisih Invoice <span style="color: red">*</span></label> <br>
-                                <input type="number" class="form-control @error('DEL_COSTS[]') is-invalid @enderror"
-                                    name="DEL_COSTS" placeholder="Masukkan Invoice Difference ..." required>
-                                @error('DEL_COSTS[]')<span
+                                <label class="form-control-label" for="del_costs">Selisih Invoice <span style="color: red">*</span></label> <br>
+                                <input type="number" class="form-control @error('del_costs[]') is-invalid @enderror"
+                                    name="del_costs" placeholder="Masukkan Invoice Difference ..." required>
+                                @error('del_costs[]')<span
                                     class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                             </div>
                             <div hidden class="form-group col-md-6">

@@ -57,19 +57,19 @@
                             </div>
 
                             <div class="form-group">
-                                <label class="form-control-label" for="Status">Status</label><br>
-                                <select name="Status" class="form-control">
-                                    <option selected>Silahkan Pilih Status <span style="color: red">*</span></option>
-                                    <option value="Verified" {{ $good->Status == "Verified" ? 'selected' : '' }}>
+                                <label class="form-control-label" for="status">Status  <span style="color: red">*</span></label><br>
+                                <select name="status" class="form-control">
+                                    <option selected>Silahkan Pilih Status</option>
+                                    <option value="Verified" {{ $good->status == "Verified" ? 'selected' : '' }}>
                                         Verified</option>
-                                    <option value="Reject" {{ $good->Status == "Reject" ? 'selected' : '' }}>Reject
+                                    <option value="Reject" {{ $good->status == "Reject" ? 'selected' : '' }}>Reject
                                     </option>
                                 </select>
                             </div>
 
                             <button type="submit" name="action" value="edit" class="btn btn-success"
-                                id="simpan">Save</button>
-                            <a href="{{url('warehouse/po')}}" class="btn btn-danger">Return</a>
+                                id="simpan" onclick="return confirm('Are you sure?')">Save</button>
+                            <a href="{{url('warehouse/po')}}" class="btn btn-danger" onclick="return confirm('Are you sure?')">Return</a>
                         </form>
                         <br>
                         <strong class="card-header">Good Receipt Data to be Edit</strong>
@@ -97,11 +97,11 @@
                             <tbody>
                                 @foreach($good_receipts as $good_receipt)
                                 <tr>
-                                    <td><span class="name">{{$good_receipt->GR_Number}}</span> </td>
+                                    <td><span class="name">{{$good_receipt->gr_number}}</span> </td>
                                     <td> <span class="">{{$good_receipt->no_po}}</span> </td>
                                     <td> <span class="">{{$good_receipt->po_item}}</span> </td>
-                                    <td> <span class="">{{$good_receipt->GR_Date}}</span> </td>
-                                    <td> <span class="">{{$good_receipt->Material_Number}}</span>
+                                    <td> <span class="">{{$good_receipt->gr_date}}</span> </td>
+                                    <td> <span class="">{{$good_receipt->material_number}}</span>
                                     </td>
                                     <!-- <td class="text-center"> <span class="">{{$good_receipt->Ref_Doc_No}}</span> </td> -->
                                     <!-- <td class="text-center"> <span class="">{{$good_receipt->Vendor_Part_Number}}</span> </td>
@@ -111,9 +111,9 @@
                                         <td class="text-center"> <span class="">{{$good_receipt->harga_satuan}}</span> </td>
                                         <td class="text-center"> <span class="">{{$good_receipt->jumlah}}</span> </td> -->
                                     <!-- <td class="text-center"> <span class="">{{$good_receipt->jumlah_harga}}</span> </td> -->
-                                    <td> <span class="">{{$good_receipt->Tax_Code}}</span> </td>
+                                    <td> <span class="">{{$good_receipt->tax_code}}</span> </td>
                                     <!-- <td class="text-center"> <span class=""></span> </td> -->
-                                    <td>{{ $good_receipt->Status }}</td>
+                                    <td>{{ $good_receipt->status }}</td>
                                 </tr>
                                 @endforeach
                                 </select>

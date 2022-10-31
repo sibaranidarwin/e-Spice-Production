@@ -1,4 +1,4 @@
-@extends('vendor.layouts.sidebar')
+@extends('accounting.layouts.sidebar')
 @section('content')
 <link rel="stylesheet" href="{{asset('assets/css/argon-dashboard.css')}}">
 <style>
@@ -153,22 +153,19 @@
                             <tr>
                             <td><input type="hidden" name="ids[]" value="{{$good_receipt->id}}"></td>      
                             
-                            <td><span class="name">{{$good_receipt->gr_number}}</span> </td>
-                            <td> <span class="">{{$good_receipt->no_po}}</span> </td>
-                            <td> <span class="">{{$good_receipt->po_item}}</span> </td>
-                            <td> <span class="">{{$good_receipt->gr_date}}</span> </td>
-                            <td> <span class="">{{$good_receipt->material_number}}</span>
-                            </td>
-                            <!-- <td class="text-center"> <span class="">{{$good_receipt->Ref_Doc_No}}</span> </td> -->
-                            <!-- <td class="text-center"> <span class="">{{$good_receipt->Vendor_Part_Number}}</span> </td>
-                                        <td class="text-center"> <span class="">{{$good_receipt->Mat_Desc}}</span> </td>
-                                        <td class="text-center"> <span class="">{{$good_receipt->UOM}}</span> </td>
-                                        <td class="text-center"> <span class="">{{$good_receipt->Currency}}</span> </td>
-                                        <td class="text-center"> <span class="">{{$good_receipt->harga_satuan}}</span> </td>
-                                        <td class="text-center"> <span class="">{{$good_receipt->jumlah}}</span> </td> -->
-                            <!-- <td class="text-center"> <span class="">{{$good_receipt->jumlah_harga}}</span> </td> -->
-                            <td> <span class="">{{$good_receipt->tax_code}}</span> </td>
-                            <!-- <td class="text-center"> <span class=""></span> </td> -->
+                            <td>{{++$i}}</td>
+                            <td >{{ $good_receipt->status }}</td>
+                            <td ><span>{{$good_receipt->gr_number}}</span></td>
+                            <td ><span>{{$good_receipt->no_po}}</span></td>
+                            <td><span>{{$good_receipt->po_item}}</span></td>
+                            <td><span>{{$good_receipt->gr_date}}</span></td>
+                            <td> <span>{{$good_receipt->material_number}}</span></td>
+                            <td> <span>{{$good_receipt->ref_doc_no}}</span> </td>
+                            <td> <span>{{$good_receipt->mat_desc}}</span> </td>
+                            <td> <span>{{$good_receipt->jumlah}}</span>&nbsp;<span>{{$good_receipt->uom}}</span> </td>
+                            <td> <span>{{$good_receipt->currency}}</span> </td>
+                            <td> <span>{{$good_receipt->harga_satuan}}</span> </td>
+                            <td> <span>{{$good_receipt->tax_code}}</span> </td>
                             <td>{{ $good_receipt->status }}</td>
                             </tr>
                             @endforeach

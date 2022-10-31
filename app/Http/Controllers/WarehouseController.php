@@ -45,22 +45,22 @@ class WarehouseController extends Controller
     }
     public function po()
     {   
-        $good_receipts = good_receipt::where("Status","Not Verified")->orWhere("Status"," ")->get();
-        $dispute = good_receipt::all()->where("Status", "Dispute")->count();
+        $good_receipts = good_receipt::where("status","Not Verified")->orWhere("status"," ")->get();
+        $dispute = good_receipt::all()->where("status", "Dispute")->count();
 
         return view('warehouse.po.index',compact('good_receipts', 'dispute'))
                 ->with('i',(request()->input('page', 1) -1) *5);
     }
     public function pover(){
-        $good_receipts = good_receipt::where("Status","Verified")->get();
-        $dispute = good_receipt::all()->where("Status", "Dispute")->count();
+        $good_receipts = good_receipt::where("status","Verified")->get();
+        $dispute = good_receipt::all()->where("status", "Dispute")->count();
 
         return view('warehouse.po.verified',compact('good_receipts', 'dispute'))
         ->with('i',(request()->input('page', 1) -1) *5);
     }
     public function poreject(){
-        $good_receipts = good_receipt::where("Status","Reject")->get();
-        $dispute = good_receipt::all()->where("Status", "Dispute")->count();
+        $good_receipts = good_receipt::where("status","Reject")->get();
+        $dispute = good_receipt::all()->where("status", "Dispute")->count();
 
         return view('warehouse.po.reject',compact('good_receipts', 'dispute'))
         ->with('i',(request()->input('page', 1) -1) *5);
@@ -68,24 +68,24 @@ class WarehouseController extends Controller
     public function invoice()
     {
      $invoice = Invoice::latest()->orWhere("data_from", "GR")->get();
-     $dispute = good_receipt::all()->where("Status", "Dispute")->count();
+     $dispute = good_receipt::all()->where("status", "Dispute")->count();
 
      return view('warehouse.invoice.index',compact('invoice','dispute'))
              ->with('i',(request()->input('page', 1) -1) *5);
     }
     public function detailinvoice(Request $request, $id){
-        $dispute = good_receipt::all()->where("Status", "Dispute")->count();
+        $dispute = good_receipt::all()->where("status", "Dispute")->count();
         $detail = Invoice::find($id);
         $invoices = good_receipt::select("goods_receipt.id_gr",
                                     "goods_receipt.no_po",
-                                    "goods_receipt.GR_Number",
+                                    "goods_receipt.gr_number",
                                     "goods_receipt.po_item",
-                                    "goods_receipt.GR_Date",
-                                    "goods_receipt.Material_Number",
+                                    "goods_receipt.gr_date",
+                                    "goods_receipt.material_number",
                                     "goods_receipt.harga_satuan",
                                     "goods_receipt.jumlah",
-                                    "goods_receipt.Tax_Code",
-                                    "goods_receipt.Status",
+                                    "goods_receipt.tax_code",
+                                    "goods_receipt.status",
                                     "invoice.id_inv", 
                                     "invoice.posting_date", 
                                     "invoice.baselinedate",
@@ -93,8 +93,9 @@ class WarehouseController extends Controller
                                     "invoice.faktur_pajak_number",
                                     "invoice.total_harga_everify",
                                     "invoice.ppn",
-                                    "invoice.DEL_COSTS",
-                                    "invoice.total_harga_gross"
+                                    "invoice.del_costs",
+                                    "invoice.total_harga_gross",
+                                    "invoice.created_at"
                                     )
                                     ->JOIN("invoice", "goods_receipt.id_inv", "=", "invoice.id_inv")
                                     ->where("invoice.id_inv", "=", "$detail->id_inv")
@@ -130,7 +131,7 @@ class WarehouseController extends Controller
                                     "invoice.faktur_pajak_number",
                                     "invoice.total_harga_everify",
                                     "invoice.ppn",
-                                    "invoice.DEL_COSTS",
+                                    "invoice.del_costs",
                                     "invoice.total_harga_gross",
                                     "invoice.created_at"
                                     )
@@ -142,15 +143,15 @@ class WarehouseController extends Controller
     }
     public function disputed()
     {
-        $good_receipts = good_receipt::where("Status", "Dispute")->get();
-        $dispute = good_receipt::all()->where("Status", "Dispute")->count();
+        $good_receipts = good_receipt::where("status", "Dispute")->get();
+        $dispute = good_receipt::all()->where("status", "Dispute")->count();
 
         return view('warehouse.dispute.index',compact('good_receipts', 'dispute'))
                 ->with('i',(request()->input('page', 1) -1) *5);
     }
     public function showing($id){
         $user = \App\User::find($id);
-        $dispute = good_receipt::all()->where("Status", "Dispute")->count();
+        $dispute = good_receipt::all()->where("status", "Dispute")->count();
 
         return view('warehouse.user.profile',compact('user', 'dispute'));  
     }

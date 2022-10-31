@@ -7,6 +7,7 @@ use App\BA_Reconcile;
 use App\Draft_BA;
 use App\good_receipt;
 use App\Invoice;
+use PDF; //library pdf
 
 use Illuminate\Http\Request;
 
@@ -80,14 +81,14 @@ class AdminController extends Controller
         $detail = Invoice::find($id);
         $invoices = good_receipt::select("goods_receipt.id_gr",
                                     "goods_receipt.no_po",
-                                    "goods_receipt.GR_Number",
+                                    "goods_receipt.gr_number",
                                     "goods_receipt.po_item",
-                                    "goods_receipt.GR_Date",
-                                    "goods_receipt.Material_Number",
+                                    "goods_receipt.gr_date",
+                                    "goods_receipt.material_number",
                                     "goods_receipt.harga_satuan",
                                     "goods_receipt.jumlah",
-                                    "goods_receipt.Tax_Code",
-                                    "goods_receipt.Status",
+                                    "goods_receipt.tax_code",
+                                    "goods_receipt.status",
                                     "invoice.id_inv", 
                                     "invoice.posting_date", 
                                     "invoice.baselinedate",
@@ -95,7 +96,7 @@ class AdminController extends Controller
                                     "invoice.faktur_pajak_number",
                                     "invoice.total_harga_everify",
                                     "invoice.ppn",
-                                    "invoice.DEL_COSTS",
+                                    "invoice.del_costs",
                                     "invoice.total_harga_gross",
                                     "invoice.created_at"
                                     )
@@ -130,7 +131,7 @@ class AdminController extends Controller
                                     "invoice.faktur_pajak_number",
                                     "invoice.total_harga_everify",
                                     "invoice.ppn",
-                                    "invoice.DEL_COSTS",
+                                    "invoice.del_costs",
                                     "invoice.total_harga_gross",
                                     "invoice.created_at"
                                     )
@@ -140,7 +141,67 @@ class AdminController extends Controller
 
         return view('admin.invoice.detailba', compact('invoices'))->with('i',(request()->input('page', 1) -1) *5);
     }
-    
+    public function cetak_pdf($id)
+    {
+                    $detail = Invoice::find($id);
+                    $invoices = good_receipt::select("goods_receipt.id_gr",
+                    "goods_receipt.no_po",
+                    "goods_receipt.gr_number",
+                    "goods_receipt.po_item",
+                    "goods_receipt.gr_date",
+                    "goods_receipt.material_number",
+                    "goods_receipt.harga_satuan",
+                    "goods_receipt.jumlah",
+                    "goods_receipt.tax_code",
+                    "goods_receipt.status",
+                    "invoice.id_inv", 
+                    "invoice.posting_date", 
+                    "invoice.baselinedate",
+                    "invoice.vendor_invoice_number",
+                    "invoice.faktur_pajak_number",
+                    "invoice.total_harga_everify",
+                    "invoice.ppn",
+                    "invoice.del_costs",
+                    "invoice.total_harga_gross",
+                    "invoice.created_at"
+                    )
+                    ->JOIN("invoice", "goods_receipt.id_inv", "=", "invoice.id_inv")
+                    ->where("invoice.id_inv", "=", "$detail->id_inv")
+                    ->get();
+                    
+                    $pdf = PDF::loadView('admin.invoice.print',compact('invoices'))->setOptions(['defaultFont' => 'sans-serif'])->setPaper('a4', 'landscape');
+                    $pdf->save(storage_path().'invoice.pdf');
+                    return $pdf->stream();
+    }   
+    public function cetak_pdf_ba($id)
+    {
+        $detail = Invoice::find($id);
+        $invoices = BA_Reconcile::select("ba_reconcile.id_ba",
+        "ba_reconcile.no_ba",
+        "ba_reconcile.po_number",
+        "ba_reconcile.po_mkp",
+        "ba_reconcile.gr_date",
+        "ba_reconcile.material_bp",
+        "ba_reconcile.status_ba",
+        "invoice.id_inv", 
+        "invoice.posting_date", 
+        "invoice.baselinedate",
+        "invoice.vendor_invoice_number",
+        "invoice.faktur_pajak_number",
+        "invoice.total_harga_everify",
+        "invoice.ppn",
+        "invoice.del_costs",
+        "invoice.total_harga_gross",
+        "invoice.created_at"
+        )
+        ->JOIN("invoice", "ba_reconcile.id_inv", "=", "invoice.id_inv")
+        ->where("invoice.id_inv", "=", "$detail->id_inv")
+        ->get();
+                    
+                    $pdf = PDF::loadView('admin.invoice.printba',compact('invoices'))->setOptions(['defaultFont' => 'sans-serif'])->setPaper('a4', 'landscape');
+                    $pdf->save(storage_path().'invoice.pdf');
+                    return $pdf->stream();
+    }   
     public function disputed()
     {
         $good_receipts = good_receipt::where("Status", "Dispute")->get();

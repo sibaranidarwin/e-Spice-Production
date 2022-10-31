@@ -74,7 +74,7 @@
                                 @if($user->level == "accounting")
                                 <tr>
                                     <td class="serial">{{++$i}}</td>
-                                    <td class="avatar">
+                                    <td class="">
                                         <div class="round-img">
                                             <a href="#"><img class="rounded-circle"
                                                     src="{{asset('upload/'.$user->foto)}}" alt=""></a>

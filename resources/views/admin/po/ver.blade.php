@@ -108,26 +108,19 @@ label{
                                     <tbody style="font-size: 11px;">
                                         @foreach($good_receipts as $good_receipt)
                                         <tr>
-                                            <td class="serial">{{++$i}}</td>
-                                            <td>{{ $good_receipt->Status }}</td>
-                                            <td><span class="name">{{$good_receipt->GR_Number}}</span> </td>
-                                            <td><span>{{$good_receipt->no_po}}</span> <br><span
-                                                    style="font-style: italic;">Item No:
-                                                    {{$good_receipt->po_item}}</span></td>
+                                            <td>{{++$i}}</td>
+                                            <td >{{ $good_receipt->status }}</td>
+                                            <td ><span>{{$good_receipt->gr_number}}</span></td>
+                                            <td ><span>{{$good_receipt->no_po}}</span></td>
                                             <td><span>{{$good_receipt->po_item}}</span></td>
-                                            <td><span>{{$good_receipt->GR_Date}}</span></td>
-                                            <td> <span>{{$good_receipt->Material_Number}}</span>
-                                                <br>
-                                                <span class="name"
-                                                    style="font-style: italic;">{{$good_receipt->Vendor_Part_Number}}</span>
-                                            </td>
-                                            <td> <span>{{$good_receipt->Ref_Doc_No}}</span> </td>
-                                            <td> <span>{{$good_receipt->Mat_Desc}}</span> </td>
-                                            <td> <span>{{$good_receipt->jumlah}}</span>&nbsp;<span>{{$good_receipt->UOM}}</span>
-                                            </td>
-                                            <td> <span>{{$good_receipt->Currency}}</span> </td>
+                                            <td><span>{{$good_receipt->gr_date}}</span></td>
+                                            <td> <span>{{$good_receipt->material_number}}</span></td>
+                                            <td> <span>{{$good_receipt->ref_doc_no}}</span> </td>
+                                            <td> <span>{{$good_receipt->mat_desc}}</span> </td>
+                                            <td> <span>{{$good_receipt->jumlah}}</span>&nbsp;<span>{{$good_receipt->uom}}</span> </td>
+                                            <td> <span>{{$good_receipt->currency}}</span> </td>
                                             <td> <span>{{$good_receipt->harga_satuan}}</span> </td>
-                                            <td> <span>{{$good_receipt->Tax_Code}}</span> </td>
+                                            <td> <span>{{$good_receipt->tax_code}}</span> </td>
                                             <td><a target="_blank" href="{{ $good_receipt->lampiran}}" class="btn btn-light btn-sm">View File</a></td>
                                         </tr>
                                         @endforeach

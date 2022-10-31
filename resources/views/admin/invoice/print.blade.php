@@ -87,7 +87,7 @@
                 <td>Tanggal Pesanan (Order Date) : 19 Januari 2022</td>
             </tr>
             <tr>
-                <td>Mata uang (Currency) : {{$invoice->currency}}</td>
+                <td>Mata uang (Currency) : {{$invoice->Currency}}</td>
                 <td colspan="3"></td>
                 <td></td>
                 <td>Sales Order (Sales Order No.) : 0230960070</td>
@@ -123,13 +123,13 @@
                 @foreach($invoices as $invoice)
                 <tr style="text-align: center;">
                     <td>{{$invoice->no_po}}</td>
-                    <td>{{$invoice->gr_number}}</td>
+                    <td>{{$invoice->GR_Number}}</td>
                     <td>{{$invoice->po_item}}</td>
-                    <td>{{$invoice->gr_date}}</td>
-                    <td>{{$invoice->material_number}}</td>
+                    <td>{{$invoice->GR_Date}}</td>
+                    <td>{{$invoice->Material_Number}}</td>
                     <td>{{$invoice->harga_satuan}}</td>
                     <td>{{$invoice->jumlah}}</td>
-                    <td>{{$invoice->tax_code}}</td>
+                    <td>{{$invoice->Tax_Code}}</td>
                 </tr>
                 @endforeach
                 </select>
