@@ -18,10 +18,11 @@
 <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.6/css/buttons.dataTables.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/datetime/1.1.2/css/dataTables.dateTime.min.css">
+
 <link rel="stylesheet" href="{{asset('assets/css/argon-dashboard.css')}}">
 
 <style>
-    .table td, .table th,label {
+    .table td, .table th,  label{
         font-size: 11.4px;
     }
 </style>
@@ -78,25 +79,37 @@
                     </div>
                     @endif
                     <div class="card-header">
-                        <strong class="card-title">Good Receipt Not Verified List</strong>
+                        <strong class="card-title">Good Receipt Reject List</strong>
                     </div>
                     <div class="card-body">
                     <div class="table-responsive text-nowrap">
-                        <form action="{{ route('update-datagr/{id}') }}" method="POST">
+                        <div class="row">
+                            <div class="col-4 bg-white mb-3">
+                                <label for="">GR Date: </label>
+                                <input type="text" id="min" name="min">
+                            </div> 
+                            <div class="col-2 bg-white mb-4">
+                                <label for="">To : </label>
+                                <input type="text" id="max" name="max">
+                            </div>
+                            <div class="col-4">
+                                <label for=""> </label>
+                            </div>
+                        </div>
+                        <form action="{{ route('update-datagr-vendor/{id_gr}') }}" method="POST">
                             @csrf
                             <table id="list" class="table table-striped" style="font-size: 10px;">
                                 <thead>
                                     <tr>
-                                    <th><input type="checkbox" onchange="checkAll(this)"></th>
-                                    <th>No</th>
-                                    <th>Status</th>
-                                    <th>GR Number</th>
-                                    <th>No PO</th>
-                                    <th>PO Item</th>
-                                    <th>GR Date</th>
-                                    <th>Part Number</th>
-                                    <th>Reference</th>
-                                    <th>Material Description</th>
+                                        <th>No</th>
+                                        <th>Status</th>
+                                        <th>GR Number</th>
+                                        <th>No PO</th>
+                                        <th>PO Item</th>
+                                        <th>GR Date</th>
+                                        <th>Part Number</th>
+                                        <th>Reference</th>
+                                        <th>Material Description</th>
                                     <th>QTY UOM</th>
                                     <th>Curr</th>
                                     <th>Unit Price</th>
@@ -106,7 +119,6 @@
                                 <tbody style="font-size: 11px;">
                                     @foreach($good_receipts as $good_receipt)
                                     <tr>
-                                        <td><input type="checkbox" name="ids[]" value="{{$good_receipt->id_gr}}"></td>
                                         <td>{{++$i}}</td>
                                         <td >{{ $good_receipt->status }}</td>
                                         <td ><span>{{$good_receipt->gr_number}}</span></td>
@@ -125,7 +137,7 @@
                                     </select>
                                 </tbody>
                             </table>
-                        </form>
+                           </form>
                     </div> <!-- /.table-stats -->
                 </div>
             </div>
@@ -180,10 +192,10 @@
     
         // Create date inputs
         minDate = new DateTime($('#min'), {
-            format: 'MMMM Do YYYY'
+            format: 'DD MM YYYY'
         });
         maxDate = new DateTime($('#max'), {
-            format: 'MMMM Do YYYY'
+            format: 'DD MM YYYY'
         });
     
         // DataTables initialisation

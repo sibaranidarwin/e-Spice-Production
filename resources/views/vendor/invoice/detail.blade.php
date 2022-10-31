@@ -104,7 +104,7 @@
                     <div class="form-group col-md-6">
                         <label class="form-control-label" for="Status[]">Selisih Harga</label> <br>
                         <input type="text" class="form-control @error('Tax_Code[]') is-invalid @enderror"
-                            name="Tax_Code[]" placeholder="Masukkan Tanggal ..." value="{{ $invoice->DEL_COSTS}}">
+                            name="Tax_Code[]" value="{{ $invoice->del_costs}}">
                         @error('Tax_Code[]')<span
                             class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                     </div>
@@ -129,14 +129,14 @@
                             @foreach($invoices as $invoice)
                             <tr>   
                             <td> <span class="">{{$invoice->no_po}}</span> </td>
-                            <td> <span class="">{{$invoice->GR_Number}}</span> </td>
+                            <td> <span class="">{{$invoice->gr_number}}</span> </td>
                             <td> <span class="">{{$invoice->po_item}}</span> </td>
-                            <td> <span class="">{{$invoice->GR_Date}}</span>
-                            <td> <span class="">{{$invoice->Material_Number}}</span>
+                            <td> <span class="">{{$invoice->gr_date}}</span>
+                            <td> <span class="">{{$invoice->material_number}}</span>
                             <td> <span class="">{{$invoice->harga_satuan}}</span>
                             <td> <span class="">{{$invoice->jumlah}}</span></td>
-                            <td> <span class="">{{$invoice->Tax_Code}}</span></td>
-                            <td> <span class="">{{ $invoice->Status }}</span></td>
+                            <td> <span class="">{{$invoice->tax_code}}</span></td>
+                            <td> <span class="">{{ $invoice->status }}</span></td>
                             </tr>
                             @endforeach
                         </select>

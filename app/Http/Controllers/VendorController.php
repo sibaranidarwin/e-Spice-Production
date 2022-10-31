@@ -37,7 +37,9 @@ class VendorController extends Controller
     }
     public function index2()
     {
-        $good_receipt = good_receipt::count();
+        $user_vendor = Auth::User()->id_vendor;
+        
+        $good_receipt = good_receipt::Where("id_vendor", $user_vendor)->count();
         $invoicegr = Invoice::all()->where("data_from", "GR")->count();
         $invoiceba = Invoice::all()->where("data_from", "BA")->count();
         $dispute = good_receipt::all()->where("Status", "Dispute")->count();
@@ -49,13 +51,16 @@ class VendorController extends Controller
     }
     public function po()
     {   
-        $good_receipts = good_receipt::where("Status", "Verified")->orWhere("Status", "")->Where("id_vendor", "1")->get();
+        $user_vendor = Auth::User()->id_vendor;
+        //  dd($user_vendor);
+        $good_receipts = good_receipt::Where("id_vendor", $user_vendor)->Where("status", "Verified")->get();
         return view('vendor.po.index',compact('good_receipts'))
                 ->with('i',(request()->input('page', 1) -1) *5);
     }
     public function puchaseorderreject()
     {   
-        $good_receipts = good_receipt::where("Status", "Reject")->get();
+        $user_vendor = Auth::User()->id_vendor;
+        $good_receipts = good_receipt::Where("id_vendor", $user_vendor)->where("Status", "Reject")->get();
         return view('vendor.po.reject',compact('good_receipts'))
                 ->with('i',(request()->input('page', 1) -1) *5);
     }
@@ -165,7 +170,7 @@ class VendorController extends Controller
         'vendor_invoice_number'  => 'required',
         'faktur_pajak_number'  => 'required',
         'total_harga_gross' => 'required',
-        'DEL_COSTS' => 'required',
+        'del_costs' => 'required',
         'data_from' => '',
     ]);
 
@@ -195,7 +200,7 @@ class VendorController extends Controller
         'vendor_invoice_number'  => 'required',
         'faktur_pajak_number'  => 'required',
         'total_harga_gross' => 'required',
-        'DEL_COSTS' => 'required',
+        'del_costs' => 'required',
         'data_from' => '',
     ]);
 
@@ -243,7 +248,10 @@ class VendorController extends Controller
     
     public function invoice()
     {
-         $invoice = Invoice::latest()->orWhere("data_from", "GR")->get();
+        $user_vendor = Auth::User()->id_vendor;
+        // dd($user_vendor);
+        $invoice = Invoice::latest()->Where("id_vendor", $user_vendor)->Where("data_from", "GR")->get();
+
          return view('vendor.invoice.index',compact('invoice'))
                  ->with('i',(request()->input('page', 1) -1) *5);
         
@@ -252,14 +260,14 @@ class VendorController extends Controller
         $detail = Invoice::find($id);
         $invoices = good_receipt::select("goods_receipt.id_gr",
                                     "goods_receipt.no_po",
-                                    "goods_receipt.GR_Number",
+                                    "goods_receipt.gr_number",
                                     "goods_receipt.po_item",
-                                    "goods_receipt.GR_Date",
-                                    "goods_receipt.Material_Number",
+                                    "goods_receipt.gr_date",
+                                    "goods_receipt.material_number",
                                     "goods_receipt.harga_satuan",
                                     "goods_receipt.jumlah",
-                                    "goods_receipt.Tax_Code",
-                                    "goods_receipt.Status",
+                                    "goods_receipt.tax_code",
+                                    "goods_receipt.status",
                                     "invoice.id_inv", 
                                     "invoice.posting_date", 
                                     "invoice.baselinedate",
@@ -267,7 +275,7 @@ class VendorController extends Controller
                                     "invoice.faktur_pajak_number",
                                     "invoice.total_harga_everify",
                                     "invoice.ppn",
-                                    "invoice.DEL_COSTS",
+                                    "invoice.del_costs",
                                     "invoice.total_harga_gross",
                                     "invoice.created_at"
                                     )
@@ -283,15 +291,15 @@ class VendorController extends Controller
                     $detail = Invoice::find($id);
                     $invoices = good_receipt::select("goods_receipt.id_gr",
                     "goods_receipt.no_po",
-                    "goods_receipt.GR_Number",
+                    "goods_receipt.gr_number",
                     "goods_receipt.po_item",
-                    "goods_receipt.GR_Date",
-                    "goods_receipt.Material_Number",
+                    "goods_receipt.gr_date",
+                    "goods_receipt.material_number",
                     "goods_receipt.harga_satuan",
                     "goods_receipt.jumlah",
-                    "goods_receipt.Tax_Code",
-                    "goods_receipt.Status",
-                    "goods_receipt.Currency",
+                    "goods_receipt.tax_code",
+                    "goods_receipt.status",
+                    "goods_receipt.currency",
                     "invoice.id_inv", 
                     "invoice.posting_date", 
                     "invoice.baselinedate",
@@ -335,7 +343,7 @@ class VendorController extends Controller
                                     "invoice.faktur_pajak_number",
                                     "invoice.total_harga_everify",
                                     "invoice.ppn",
-                                    "invoice.DEL_COSTS",
+                                    "invoice.del_costs",
                                     "invoice.total_harga_gross",
                                     "invoice.created_at"
                                     )

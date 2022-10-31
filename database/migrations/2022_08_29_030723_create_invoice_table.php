@@ -21,15 +21,16 @@ class CreateInvoiceTable extends Migration
             $table->string('faktur_pajak_number')->nullable();
             $table->float('total_harga_everify')->nullable();
             $table->float('total_harga_gross')->nullable();
-            $table->float('DEL_COSTS')->nullable();
+            $table->float('del_costs')->nullable();
             $table->float('ppn')->nullable();
             $table->date('baselinedate')->nullable();
-            $table->string('INVOICE_DOC_ITEM')->nullable();
-            $table->string('HEADER_TEXT')->nullable();
-            $table->string('VALUATION_TYPE')->nullable();
+            $table->string('invoice_doc_item')->nullable();
+            $table->string('header_text')->nullable();
+            $table->string('valuation_type')->nullable();
             $table->string('status')->nullable();
+            $table->enum('data_from',['BA', 'GR'])->default("BA")->nullable();
             $table->string('komentar')->nullable();
-            $table->string('Invoice_Park_Document')->nullable();
+            $table->string('invoice_park_document')->nullable();
             $table->timestamps();
         });
     }

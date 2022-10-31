@@ -42,7 +42,7 @@
     th {
         border: none;
         font-size: 13px;
-        width: 109px;
+        width: 159px;
     }
 
     th {
@@ -53,7 +53,6 @@
     p {
         margin: 0px;
     }
-    
     </style>
 </head>
 
@@ -75,61 +74,68 @@
         @endforeach
         <table>
             <tr>
-                <td colspan="3">Nomor Pelanggan (Account No) : 12278</td>
+                <td colspan="3"> &nbsp;&nbsp;Nomor Pelanggan (Account No) : 12278</td>
                 <td colspan="1"></td>
                 <td></td>
-                <td>Nomor Faktur (Invoice Number) : 9142</td>
+                <td> &nbsp;&nbsp;Nomor Faktur (Invoice Number) : 9142</td>
             </tr>
             <tr>
-                <td>Nomor Pesanan (Order Reff) : 4020071510</td>
+                <td> &nbsp;&nbsp;Nomor Pesanan (Order Reff) : 4020071510</td>
                 <td colspan="3"></td>
                 <td></td>
-                <td>Tanggal Pesanan (Order Date) : 19 Januari 2022</td>
+                <td> &nbsp;&nbsp;Tanggal Pesanan (Order Date) :
+                    {{ Carbon\Carbon::parse($invoice->gr_date)->format('d F Y')}}</td>
             </tr>
             <tr>
-                <td>Mata uang (Currency) : {{$invoice->currency}}</td>
+                <td> &nbsp;&nbsp;Mata uang (Currency) : {{$invoice->Currency}}</td>
                 <td colspan="3"></td>
                 <td></td>
-                <td>Sales Order (Sales Order No.) : 0230960070</td>
+                <td> &nbsp;&nbsp;Sales Order (Sales Order No.) : 0230960070</td>
             </tr>
             <tr>
-                <td>Tanggal Faktur (invoice Date) : {{ Carbon\Carbon::parse($invoice->created_at)->format('d F Y') }}</td>
+                <td> &nbsp;&nbsp;Tanggal Faktur (invoice Date) :
+                    {{ Carbon\Carbon::parse($invoice->created_at)->format('d F Y') }}</td>
                 <td></td>
                 <td colspan="3"></td>
-                <td>Tanggal Jatuh Tempo (Payment Due Date) : 3 April 2022</td>
+                <td> &nbsp;&nbsp;Tanggal Jatuh Tempo (Payment Due Date) : 3 April 2023</td>
             </tr>
             <tr>
-                <td>Nomor Faktur Pajak (VAT No.) : 010.001-22.66960371</td>
+                <td> &nbsp;&nbsp;Nomor Faktur Pajak (VAT No.) : 010.001-22.66960371</td>
             </tr>
         </table>
-        {{-- @endforeach --}}
         <br><br>
-        <h4>Data GR Invoice Proposal:</h4>
+        <h4>&nbsp;&nbsp;Data BA Invoice Proposal:</h4>
         <br>
         <table class="table">
             <thead>
                 <tr style="text-align: center;">
-                    <th>GR Number</th>
-                    <th>No PO</th>
-                    <th>PO Item</th>
-                    <th>GR Slip Date</th>
-                    <th>Material Number</th>
-                    <th>Harga Satuan</th>
-                    <th>Jumlah</th>
-                    <th>Tax Code</th>
+                    <th>BA Number</th>
+                    <th>PO Number</th>
+                    <th>PO MKP</th>
+                    <th>GR Date</th>
+                    <th>Material</th>
+                    <!-- <th class="text-center">Reference</th> -->
+                    <!-- <th class="text-center">Vendor Part Number</th>
+                            <th class="text-center">Item Description</th>
+                            <th class="text-center">UoM</th>
+                            <th class="text-center">Currency</th>
+                            <th class="text-center">Harga Satuan</th>
+                            <th class="text-center">Jumlah</th> -->
+                    <!-- <th class="text-center">Jumlah Harga</th> -->
+                    {{-- <th>Tax Code</th> --}}
+                    <!-- <th class="text-center">Valuation Type</th> -->
+                    <th>Status</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach($invoices as $invoice)
+                @foreach($invoices as $ba)
                 <tr style="text-align: center;">
-                    <td>{{$invoice->no_po}}</td>
-                    <td>{{$invoice->gr_number}}</td>
-                    <td>{{$invoice->po_item}}</td>
-                    <td>{{$invoice->gr_date}}</td>
-                    <td>{{$invoice->material_number}}</td>
-                    <td>{{$invoice->harga_satuan}}</td>
-                    <td>{{$invoice->jumlah}}</td>
-                    <td>{{$invoice->tax_code}}</td>
+                    <td><span class="">{{$ba->no_ba}}</span> </td>
+                    <td> <span class="">{{$ba->po_number}}</span> </td>
+                    <td> <span class="">{{$ba->po_mkp}}</span> </td>
+                    <td> <span class="">{{$ba->gr_date}}</span> </td>
+                    <td> <span class="">{{$ba->material_bp}}</span></td>
+                    <td>{{ $ba->status_ba }}</td>
                 </tr>
                 @endforeach
                 </select>

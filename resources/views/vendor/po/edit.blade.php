@@ -103,10 +103,10 @@ label {
                                     class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                             </div>
                             <div class="form-group col-md-6">
-                                <label class="form-control-label" for="DEL_COSTS">Selisih Invoice <span style="color: red">*</span></label> <br>
-                                <input type="number" class="form-control @error('DEL_COSTS[]') is-invalid @enderror"
-                                    name="DEL_COSTS" placeholder="Masukkan Invoice Difference ..." required>
-                                @error('DEL_COSTS[]')<span
+                                <label class="form-control-label" for="del_costs">Selisih Invoice <span style="color: red">*</span></label> <br>
+                                <input type="number" class="form-control @error('del_costs[]') is-invalid @enderror"
+                                    name="del_costs" placeholder="Masukkan Invoice Difference ..." required>
+                                @error('del_costs[]')<span
                                     class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                             </div>
                             <div hidden class="form-group col-md-6">
@@ -146,11 +146,11 @@ label {
                         <tbody>
                             @foreach($good_receipts as $good_receipt)
                             <tr>
-                                <td><span class="name">{{$good_receipt->GR_Number}}</span> </td>
+                                <td><span class="name">{{$good_receipt->gr_number}}</span> </td>
                                 <td> <span class="">{{$good_receipt->no_po}}</span> </td>
                                 <td> <span class="">{{$good_receipt->po_item}}</span> </td>
-                                <td> <span class="">{{$good_receipt->GR_Date}}</span> </td>
-                                <td> <span class="">{{$good_receipt->Material_Number}}</span>
+                                <td> <span class="">{{$good_receipt->gr_date}}</span> </td>
+                                <td> <span class="">{{$good_receipt->material_number}}</span>
                                 </td>
                                 <!-- <td class="text-center"> <span class="">{{$good_receipt->Ref_Doc_No}}</span> </td> -->
                                 <!-- <td class="text-center"> <span class="">{{$good_receipt->Vendor_Part_Number}}</span> </td>
@@ -160,9 +160,9 @@ label {
                                         <td class="text-center"> <span class="">{{$good_receipt->harga_satuan}}</span> </td>
                                         <td class="text-center"> <span class="">{{$good_receipt->jumlah}}</span> </td> -->
                                 <!-- <td class="text-center"> <span class="">{{$good_receipt->jumlah_harga}}</span> </td> -->
-                                <td> <span class="">{{$good_receipt->Tax_Code}}</span> </td>
+                                <td> <span class="">{{$good_receipt->tax_code}}</span> </td>
                                 <!-- <td class="text-center"> <span class=""></span> </td> -->
-                                <td>{{ $good_receipt->Status }}</td>
+                                <td>{{ $good_receipt->status }}</td>
                             </tr>
                             @endforeach
                             </select>

@@ -49,7 +49,7 @@
                             <hr>
                             <button type="submit" name="action" value="Upload SPB" class="btn btn-success"
                                 id="simpan">Save</button>
-                            <a href="{{url('warehouse/po')}}" class="btn btn-danger">Return</a>
+                            <a href="{{url('warehouse/po')}}" onclick="return confirm('Are you sure?')" class="btn btn-danger">Return</a>
                         </form>
                         <br>
                         <strong class="card-header">Good Receipt Data to be Upload SPB</strong>
@@ -77,11 +77,11 @@
                             <tbody>
                                 @foreach($good_receipts as $good_receipt)
                                 <tr>
-                                    <td><span class="name">{{$good_receipt->GR_Number}}</span> </td>
+                                    <td><span class="name">{{$good_receipt->gr_Number}}</span> </td>
                                     <td> <span class="">{{$good_receipt->no_po}}</span> </td>
                                     <td> <span class="">{{$good_receipt->po_item}}</span> </td>
-                                    <td> <span class="">{{$good_receipt->GR_Date}}</span> </td>
-                                    <td> <span class="">{{$good_receipt->Material_Number}}</span>
+                                    <td> <span class="">{{$good_receipt->gr_date}}</span> </td>
+                                    <td> <span class="">{{$good_receipt->material_number}}</span>
                                     </td>
                                     <!-- <td class="text-center"> <span class="">{{$good_receipt->Ref_Doc_No}}</span> </td> -->
                                     <!-- <td class="text-center"> <span class="">{{$good_receipt->Vendor_Part_Number}}</span> </td>
@@ -91,9 +91,9 @@
                                         <td class="text-center"> <span class="">{{$good_receipt->harga_satuan}}</span> </td>
                                         <td class="text-center"> <span class="">{{$good_receipt->jumlah}}</span> </td> -->
                                     <!-- <td class="text-center"> <span class="">{{$good_receipt->jumlah_harga}}</span> </td> -->
-                                    <td> <span class="">{{$good_receipt->Tax_Code}}</span> </td>
+                                    <td> <span class="">{{$good_receipt->tax_code}}</span> </td>
                                     <!-- <td class="text-center"> <span class=""></span> </td> -->
-                                    <td>{{ $good_receipt->Status }}</td>
+                                    <td>{{ $good_receipt->status }}</td>
                                 </tr>
                                 @endforeach
                                 </select>

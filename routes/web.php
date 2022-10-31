@@ -56,7 +56,7 @@ Route::get('admin/cetak_pdf/{id}', 'AdminController@cetak_pdf')->name('cetak-lap
 
 Route::get('admin/invoiceba', 'AdminController@invoiceba')->name('admin/invoiceba');
 Route::get('admin/detail-invoice-ba/{id}', 'AdminController@detailinvoiceba')->name('detail-invoice');
-Route::get('admin/cetak_pdf/{id}', 'AdminController@cetak_pdf')->name('cetak-laporan');
+Route::get('admin/cetak_pdf_ba/{id}', 'AdminController@cetak_pdf_ba')->name('cetak-laporan-ba');
 
 //Pruchase order disputed
 Route::get('admin/disputed', 'AdminController@disputed')->middleware('admin');
@@ -108,6 +108,13 @@ Route::get('pengaduan_pdf/cetak_pdf', 'LaporanController@cetak_pdf')->name('ceta
 // // DASHBOARD
 Route::get('accounting/dashboard', 'AccountingController@index2')->name('accounting/dashboard');
 Route::get('accounting/po', 'AccountingController@po');
+Route::get('accounting/pover', 'AccountingController@pover');
+Route::get('accounting/poreject', 'AccountingController@poreject');
+
+Route::get('accounting/disputed', 'AccountingController@disputed')->name('accounting/disputed');
+
+Route::get('accounting/draft', 'AccountingController@draft')->name('accounting/draft');
+Route::get('accounting/ba', 'AccountingController@ba')->name('accounting/ba');
 
 Route::get('accounting/invoice', 'AccountingController@invoice')->name('accounting/invoice');
 Route::get('accounting/detail-invoice/{id}', 'AccountingController@detailinvoice')->name('accounting-invoice');

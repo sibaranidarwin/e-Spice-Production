@@ -185,8 +185,8 @@ label {
           </div>
         </div>
         <div class="modal-footer justify-content-between">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
-          <button type="submit" class="btn btn-primary">Simpan</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal" onclick="return confirm('Are you sure?')">Tutup</button>
+          <button type="submit" class="btn btn-primary" onclick="return confirm('Are you sure?')">Simpan</button>
         </div>
       </form>
     </div>

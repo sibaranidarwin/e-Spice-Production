@@ -12,7 +12,7 @@
 <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.print.min.js"></script>
 <script src="https://cdn.datatables.net/datetime/1.1.2/js/dataTables.dateTime.min.js"></script>
 
-@extends('warehouse.layouts.sidebar')
+@extends('accounting.layouts.sidebar')
 @section('content')
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.6/css/buttons.dataTables.min.css">
@@ -24,8 +24,7 @@
 <style>
 .table td,
 .table th,
-label
- {
+label {
     font-size: 11.4px;
 }
 </style>
@@ -44,7 +43,7 @@ label
                     <div class="page-title">
                         <ol class="breadcrumb text-right">
                             <li><a href="#">Dashboard</a></li>
-                            <li><a href="#">Dispute Good Receipt</a></li>
+                            <li><a href="#">BA Reconcile</a></li>
                             <li class="active">Show</li>
                         </ol>
                     </div>
@@ -82,22 +81,20 @@ label
                     </div>
                     @endif
                     <div class="card-header">
-                        <strong class="card-title">Dispute Good Receipt List</strong>
+                        <strong class="card-title">Draft BA Reconcile List</strong>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive text-nowrap">
                             <div class="row">
                                 <div class="form-group col-3 bg-white mb-2">
-                                    <label for="">GR Date From: </label>
+                                    <label for="">BA Date From: </label>
                                     <input class="form-group" type="text" id="min" name="min">
                                 </div>
-                                <div class=" form-group col-2 bg-white mb-2">
+                                <div class=" form-group col-3 bg-white mb-2">
                                     <label for="">To: </label>
                                     <input class="form-group" type="text" id="max" name="max">
                                 </div>
-                                <div class="col-4">
-                                    <label for=""> </label>
-                                </div>
+                               
                             </div>
                             <form action="{{ route('update-datagr-vendor/{id_gr}') }}" method="POST">
                                 @csrf
@@ -105,45 +102,32 @@ label
                                     <thead>
                                         <tr>
                                             <th>No</th>
-                                            <th>Status</th>
-                                            <th>GR Number</th>
+                                            <th>No Draft</th>
+                                            <th>Date</th>
                                             <th>No PO</th>
-                                            <th>PO Item</th>
-                                            <th>GR Date</th>
-                                            <th>Part Number</th>
-                                            <th>Reference</th>
-                                            <th>Material Description</th>
-                                            <th>QTY UOM</th>
-                                            <th>Curr</th>
-                                            <th>Unit Price</th>
-                                            <th>Tax Code</th>
+                                            <th>Material</th>
+                                            <th>Status BA</th>
                                             <th>Keterangan</th>
-                                            <th hidden>Status Invoice Proposal</th>
                                         </tr>
                                     </thead>
                                     <tbody style="font-size: 11px;">
-                                        @foreach($good_receipts as $good_receipt)
+                                        @php $i = 1 @endphp
+                                        @foreach($draft as $item)
                                         <tr>
-                                            <td>{{++$i}}</td>
-                                            <td >{{ $good_receipt->status }}</td>
-                                            <td ><span>{{$good_receipt->gr_number}}</span></td>
-                                            <td ><span>{{$good_receipt->no_po}}</span></td>
-                                            <td><span>{{$good_receipt->po_item}}</span></td>
-                                            <td><span>{{$good_receipt->gr_date}}</span></td>
-                                            <td> <span>{{$good_receipt->material_number}}</span></td>
-                                            <td> <span>{{$good_receipt->ref_doc_no}}</span> </td>
-                                            <td> <span>{{$good_receipt->mat_desc}}</span> </td>
-                                            <td> <span>{{$good_receipt->jumlah}}</span>&nbsp;<span>{{$good_receipt->uom}}</span> </td>
-                                            <td> <span>{{$good_receipt->currency}}</span> </td>
-                                            <td> <span>{{$good_receipt->harga_satuan}}</span> </td>
-                                            <td> <span>{{$good_receipt->tax_code}}</span> </td>
-                                            <td> <span>{{$good_receipt->alasan_disp}}</span> </td>
-                                            <td hidden><span>{{$good_receipt->status_invoice}}</span></td>
+                                            <td>{{$i++}}</td>
+                                            <td>{{ $item->no_draft}}</td>
+                                            <td><span>{{$item->date_draft}}</span></td>
+                                            <td><span>{{$item->po_number}}</span></td>
+                                            <td><span>{{$item->material}}</span></td>
+                                            <td><span>{{$item->status_draft}}</span></td>
+                                            <td><span>{{$item->reason}}</span></td>
                                         </tr>
                                         @endforeach
                                         </select>
                                     </tbody>
                                 </table>
+                                {{-- &nbsp;&nbsp;<button type="submit" name="action" value="Dispute"
+                                    class="btn btn-warning btn-sm-3">Dispute</button> --}}
                             </form>
                         </div> <!-- /.table-stats -->
                     </div>
@@ -172,7 +156,35 @@ label
 </footer>
 
 </div><!-- /#right-panel -->
-
+<div class="modal fade" id="modal-import">
+    <div class="modal-dialog modal-lg">
+      <form method="post" id="form-import" action="{{url('vendor/draft')}}" enctype="multipart/form-data" class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Import Data Draft BA</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          {{method_field('PUT')}}
+          {{csrf_field()}}
+          <div class="row">
+            <div class="col-md-12">
+              <p>Import data Draft BA sesuai format contoh berikut.<br/><a href="{{url('')}}/excel-karyawan.xlsx"><i class="fa fa-download"></i> File Contoh Draft BA</a></p>
+            </div>
+            <div class="col-md-12">
+              <label>File Excel Draft BA</label>
+              <input type="file" name="excel-draft" required>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer justify-content-between">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+          <button type="submit" class="btn btn-primary">Simpan</button>
+        </div>
+      </form>
+    </div>
+  </div>
 <script type="text/javascript">
 var minDate, maxDate;
 
@@ -181,7 +193,7 @@ $.fn.dataTable.ext.search.push(
     function(settings, data, dataIndex) {
         var min = minDate.val();
         var max = maxDate.val();
-        var date = new Date(data[6]);
+        var date = new Date(data[2]);
 
         if (
             (min === null && max === null) ||
@@ -206,7 +218,18 @@ $(document).ready(function() {
     });
 
     // DataTables initialisation
-    var table = $('#list').DataTable();
+    var table = $('#list').DataTable(
+        {
+            dom: "<'row'<'col-md-2 bg-white'l><'col-md-5 bg-white'B><'col-md-5 bg-white'f>>" +
+                "<'row'<'col-md-12'tr>>" +
+                "<'row'<'col-md-6'i><'col-md-6'p>>",
+            buttons: [{
+                extend: 'excelHtml5',
+                autoFilter: true,
+                sheetName: 'Exported data'
+            }]
+        }
+    );
 
     // Refilter the table
     $('#min, #max').on('change', function() {

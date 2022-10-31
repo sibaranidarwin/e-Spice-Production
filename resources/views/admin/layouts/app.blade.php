@@ -124,9 +124,9 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
                         aria-expanded="false"> <i class="menu-icon fa fa-file"></i>Invoice Proposal</a>
                     <ul class="sub-menu children dropdown-menu ">
-                        <li><i class="fa fa-table "></i><a href="{{url('admin/invoiceba')}}">Invoice BA</a></li>
                         <li><i class="fa fa-table "></i><a href="{{url('admin/invoice')}}">Invoice GR</a></li>
-                    </ul>
+                        <li><i class="fa fa-table "></i><a href="{{url('admin/invoiceba')}}">Invoice BA</a></li>
+                        </ul>
                 </li>
                 <li class="menu-title">DATA USER</li><!-- /.menu-title -->
                 <li class="menu-item-has-children dropdown">
@@ -214,7 +214,7 @@
 
                         <div class="user-menu dropdown-menu">
                             <a class="nav-link" href="{{route('user.show',auth()->user()->id)}}"><i
-                                    class="fa fa- user"></i>My Profile</a>
+                                    class="fa fa- user"></i>Profile</a>
 
                             <a class="nav-link" href="{{url('admin/pengaduan')}}"><i
                                     class="fa fa- user"></i>Notifications <span class="count">13</span></a>
