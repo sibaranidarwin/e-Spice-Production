@@ -102,10 +102,10 @@
                             class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                     </div>
                     <div class="form-group col-md-6">
-                        <label class="form-control-label" for="Status[]">Selisih Harga</label> <br>
-                        <input type="text" class="form-control @error('Tax_Code[]') is-invalid @enderror"
-                            name="Tax_Code[]" value="{{ $invoice->del_costs}}">
-                        @error('Tax_Code[]')<span
+                        <label class="form-control-label" for="del_costs[]">Selisih Harga</label> <br>
+                        <input type="text" class="form-control @error('del_costs[]') is-invalid @enderror"
+                            name="del_costs[]" value="{{ $invoice->del_costs}}">
+                        @error('del_costs[]')<span
                             class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                     </div>
                 </div>

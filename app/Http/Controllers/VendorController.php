@@ -91,6 +91,7 @@ class VendorController extends Controller
                 }
 
                 $total_ppn = $total_dpp * 0.02;
+                // kondisi TAX code ma = 11%
                 $total_harga = $total_dpp + $total_ppn;
                 return view('vendor.po.edit', compact('good_receipts', 'total_dpp', 'total_ppn', 'total_harga'));
                 break;
@@ -172,6 +173,7 @@ class VendorController extends Controller
         'total_harga_gross' => 'required',
         'del_costs' => 'required',
         'data_from' => '',
+        'id_vendor' => '',
     ]);
 
     $Invoice = Invoice::create($request->all());

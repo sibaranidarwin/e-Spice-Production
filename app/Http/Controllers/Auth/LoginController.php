@@ -43,7 +43,7 @@ class LoginController extends Controller
         $input = $request->all();
   
         $this->validate($request, [
-            'email' => 'required|email',
+            'email' => 'required',
             'password' => 'required',
         ]);
     
@@ -65,10 +65,10 @@ class LoginController extends Controller
                 return redirect()->route('warehouse/dashboard');
             }
             else{
-                return redirect()->route('login-user')->with('error','Email-Address And Password Are Wrong.');
+                return redirect()->route('login-user')->with('destroy','Email And Password Are Wrong!');
             }
         }else{
-            return redirect('login-user')->with('error','Email-Address And Password Are Wrong.');
+            return redirect('login-user')->with('destroy','Email And Password Are Wrong!');
         }
           
     }

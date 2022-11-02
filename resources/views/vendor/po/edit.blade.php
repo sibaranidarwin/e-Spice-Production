@@ -115,6 +115,12 @@ label {
                                 @error('data_from')<span
                                     class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                             </div>
+                            <div hidden class="form-group col-md-6">
+                                <input type="number" class="form-control @error('id_vendor') is-invalid @enderror"
+                                    name="id_vendor" value="{{ $good->id_vendor }}" >
+                                @error('id_vendor')<span
+                                    class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
+                            </div>
                     </div>
                     <button type="submit" class="btn btn-success mb-2" id="simpan" onclick="return confirm('Are you sure?')">Submit</button>
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="{{url('vendor/purchaseorder')}}" type="submit"

@@ -79,7 +79,7 @@
                     </div>
                     @endif
                     <div class="card-header">
-                        <strong class="card-title">Good Receipt Reject List</strong>
+                        <strong class="card-title">Good Receipt Verified List</strong>
                     </div>
                     <div class="card-body">
                     <div class="table-responsive text-nowrap">
