@@ -44,7 +44,7 @@
 					</span>
 					@if($message = Session::get('destroy'))
                                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                  <strong>Success!</strong> {{$message}}
+                                  <strong>Sorry!</strong> {{$message}}
                                   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                   </button>
@@ -64,20 +64,22 @@
                                   </button>
                                 </div>
                               @endif
-					<div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
-						<input class="input100" type="text" name="email" placeholder="Email">
+					<div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz" required>
+						<input class="input100"  @error('email[]') is-invalid @enderror type="email" name="email" placeholder="Email">
 						<span class="focus-input100"></span>
 						<span class="symbol-input100">
 							<i class="fa fa-envelope" aria-hidden="true"></i>
 						</span>
+						@error('email[]')<span class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
 					</div>
 					
 					<div class="wrap-input100 validate-input" data-validate = "Password is required">
-						<input class="input100" type="password" name="password" placeholder="Password" id="myInput">
+						<input class="input100" type="password"  @error('email[]') is-invalid @enderror name="password" placeholder="Password" id="myInput" required>
 						<span class="focus-input100"></span>
 						<span class="symbol-input100">
 							<i class="fa fa-lock" aria-hidden="true"></i>
 						</span>
+						@error('email[]')<span class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
 					</div>
 					&nbsp;&nbsp;&nbsp;<input type="checkbox" onclick="myFunction()" class="mt-2"> Show Password
 

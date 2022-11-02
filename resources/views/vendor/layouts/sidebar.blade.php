@@ -165,9 +165,10 @@
 
                         <a class="nav-link" href="{{route('vendor-user.showing',auth()->user()->id)}}"><i
                                 class="fa fa -cog"></i>Settings</a>
+                                {{-- onclick="return confirm('Are you sure?')" --}}
 
-                        <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                 document.getElementById('logout-form').submit();">
+                        <a class="nav-link" href="{{ route('logout') }}" onclick="if (!confirm('Are you sure?')){return false;}else{event.preventDefault();
+                                 document.getElementById('logout-form').submit();}">
                             <i class="fa "></i>
                             {{ __('Logout') }}
                         </a>

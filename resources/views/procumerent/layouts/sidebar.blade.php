@@ -115,12 +115,12 @@
                             <a class="nav-link" href="{{route('user.showing',auth()->user()->id)}}"><i
                                     class="fa fa -cog"></i>Settings</a>
 
-                            <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                 document.getElementById('logout-form').submit();">
+                            <a class="nav-link" href="{{ route('logout') }}" onclick="if (!confirm('Are you sure?')){return false;}else{event.preventDefault();
+                                        document.getElementById('logout-form').submit();}">
                                 <i class="fa "></i>
                                 {{ __('Logout') }}
                             </a>
-
+                            
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                 @csrf
                             </form>

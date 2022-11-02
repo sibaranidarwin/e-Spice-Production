@@ -9,7 +9,7 @@ class Invoice extends Model
     //
      protected $table = 'invoice';
      protected $primaryKey = 'id_inv'; 
-     protected $fillable = ['id_inv','posting_date','vendor_invoice_number','everify_number','faktur_pajak_number','total_harga_everify','total_harga_gross','del_costs','ppn','baselinedate','invoice_doc_item','header_text','valuation_type','status','data_from','komentar','invoice_park_document'];
+     protected $fillable = ['id_inv','id_vendor','posting_date','vendor_invoice_number','everify_number','faktur_pajak_number','total_harga_everify','total_harga_gross','del_costs','ppn','baselinedate','invoice_doc_item','header_text','valuation_type','status','data_from','komentar','invoice_park_document'];
     
      public function good_receipt()
      {
