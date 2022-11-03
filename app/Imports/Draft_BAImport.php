@@ -4,9 +4,11 @@ namespace App\Imports;
 
 use App\BA_Reconcile;
 use App\Draft_BA;
+use Auth;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
+use Illuminate\Support\Facades\DB;
 class Draft_BAImport implements ToModel, WithHeadingRow
 {
     /**
@@ -16,10 +18,29 @@ class Draft_BAImport implements ToModel, WithHeadingRow
     */
     public function model(array $row)
     {
+        $user_vendor = Auth::User()->id_vendor;
+
+        $q = DB::table('draft_ba')->select(DB::raw('MAX(RIGHT(no_draft, 4)) as kode'));
+        $kd="";
+        if($q->count()>0)
+        {
+            foreach($q->get() as $k)
+            {
+                $tmp = ((int)$k->kode)+1;
+                $kd = date('d-m-Y').'-'.sprintf("%04s", $tmp);
+            }
+        }
+        else
+        {
+            $kd = date('d-m-Y').'-'."0001";
+        }
+
+        
         $now = date('Y-m-d H:i:s');
         $status_ba = "Verified - BA"; 
         return new BA_Reconcile([
-            'no_ba'=>$row['no_ba'],
+            'id_vendor'=>$user_vendor,
+            'no_ba'=>"MKP-BA-".$kd,
             'gr_date'=>$row['gr_date'],
             'po_number'=>$row['po_number'],
             'po_mkp'=>$row['po_mkp'],
