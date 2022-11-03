@@ -104,6 +104,7 @@ label {
                                             <th class="serial">No</th>
                                             <th>Tanggal Invoice</th>
                                             <th>No Invoice</th>
+                                            <th>No Invoice Proposal</th>
                                             <th>No Faktur Pajak</th>
                                             <th>No E-Verify</th>
                                             <th>Total PPN</th>
@@ -129,6 +130,7 @@ label {
                                             <td class="serial">{{++$i}}</td>
                                             <td>{{$item['posting_date'] }}</td>
                                             <td>{{$item['vendor_invoice_number'] }}</td>
+                                            <td>{{$item['no_invoice_proposal'] }}</td>
                                             <td>{{$item['faktur_pajak_number'] }}</td>
                                             <td>{{$item['everify_number'] }}</td>
                                             <td>{{$item['ppn']}}</td>

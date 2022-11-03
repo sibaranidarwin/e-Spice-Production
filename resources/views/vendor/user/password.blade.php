@@ -68,7 +68,7 @@
 
                                         <div class="col-md-8">
                                             <input id="current_password" type="password" class="form-control"
-                                                name="current_password" required>
+                                                name="current_password" placeholder="Masukkan Kata Sandi Lama" required>
 
                                             @if ($errors->has('current_password'))
                                             <span class="help-block">
@@ -83,7 +83,7 @@
 
                                         <div class="col-md-8">
                                             <input id="new_password" type="password" class="form-control"
-                                                name="new_password" required>
+                                                name="new_password" placeholder="Masukkan Kata Sandi Baru" required>
 
                                             @if ($errors->has('new_password'))
                                             <span class="help-block">
@@ -100,7 +100,8 @@
 
                                         <div class="col-md-8">
                                             <input id="new_password_confirm" type="password" class="form-control"
-                                                name="new_password_confirmation" required>
+                                                name="new_password_confirmation" placeholder="Masukkan Kata Sandi Baru"
+                                                required>
                                         </div>
                                     </div>
 

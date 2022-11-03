@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
+use Illuminate\Support\Facades\DB;
+
 class UserController extends Controller
 {
     /**

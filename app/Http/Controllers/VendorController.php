@@ -16,6 +16,7 @@ use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx\Drawing;
 
 class VendorController extends Controller
 {
@@ -40,12 +41,12 @@ class VendorController extends Controller
         $user_vendor = Auth::User()->id_vendor;
         
         $good_receipt = good_receipt::Where("id_vendor", $user_vendor)->count();
-        $invoicegr = Invoice::all()->where("data_from", "GR")->count();
-        $invoiceba = Invoice::all()->where("data_from", "BA")->count();
-        $dispute = good_receipt::all()->where("Status", "Dispute")->count();
+        $invoicegr = Invoice::all()->where("data_from", "GR")->Where("id_vendor", $user_vendor)->count();
+        $invoiceba = Invoice::all()->where("data_from", "BA")->Where("id_vendor", $user_vendor)->count();
+        $dispute = good_receipt::all()->where("status", "Dispute")->Where("id_vendor", $user_vendor)->count();
         $vendor = User::all()->where("level", "vendor")->count();
-        $draft = Draft_BA::count();
-        $ba = BA_Reconcile::count();
+        $draft = Draft_BA::all()->Where("id_vendor", $user_vendor)->count();
+        $ba = BA_Reconcile::all()->Where("id_vendor", $user_vendor)->count();
 
         return view('vendor.dashboard',['good_receipt'=>$good_receipt,'draft'=>$draft, 'ba'=>$ba , 'invoicegr'=>$invoicegr, 'invoiceba'=>$invoiceba, 'dispute'=>$dispute, 'vendor'=>$vendor]);
     }
@@ -81,7 +82,23 @@ class VendorController extends Controller
             case 'Update':
                 $recordIds = $request->get('ids');
                 $newStatus = $request->get('Status');
-        
+                
+                //buat kode otomatis
+                $q = DB::table('invoice')->select(DB::raw('MAX(RIGHT(no_invoice_proposal, 4)) as kode'));
+                $kd="";
+                if($q->count()>0)
+                {
+                    foreach($q->get() as $k)
+                    {
+                        $tmp = ((int)$k->kode)+1;
+                        $kd = sprintf("%04s", $tmp);
+                    }
+                }
+                else
+                {
+                    $kd = date('d-m-Y').'-'."0001";
+                }
+
                 $good_receipts = [];
                 $total_dpp = 0;
                 foreach($recordIds as $record) {
@@ -93,7 +110,7 @@ class VendorController extends Controller
                 $total_ppn = $total_dpp * 0.02;
                 // kondisi TAX code ma = 11%
                 $total_harga = $total_dpp + $total_ppn;
-                return view('vendor.po.edit', compact('good_receipts', 'total_dpp', 'total_ppn', 'total_harga'));
+                return view('vendor.po.edit', compact('good_receipts', 'total_dpp', 'total_ppn', 'total_harga','kd'));
                 break;
 
                 case 'ba':
@@ -105,12 +122,28 @@ class VendorController extends Controller
                     $good_receipt = good_receipt::find($record);
                     array_push($good_receipts, $good_receipt);
                     
+                    //buat kode otomatis
+                    $q = DB::table('draft_ba')->select(DB::raw('MAX(RIGHT(no_draft, 4)) as kode'));
+                    $kd="";
+                    if($q->count()>0)
+                    {
+                        foreach($q->get() as $k)
+                        {
+                            $tmp = ((int)$k->kode)+1;
+                            $kd = date('d-m-Y').'-'.sprintf("%04s", $tmp);
+                        }
+                    }
+                    else
+                    {
+                        $kd = date('d-m-Y').'-'."0001";
+                    }
                     $draft = Draft_BA::create([
                         'id_gr' =>$good_receipt->id_gr,
-                        'no_draft' => $good_receipt->id_vendor,
-                        'date_draft' => $good_receipt->GR_Date,
+                        'id_vendor' => $good_receipt->id_vendor,
+                        'no_draft' => "MKP-Draft-". $kd,                        
+                        'date_draft' => $good_receipt->gr_date,
                         'po_number' => $good_receipt->no_po,
-                        'material' => $good_receipt->Material_Number,
+                        'material' => $good_receipt->material_number,
                         'status_draft' => 'Not Yet Verified - Draft',
                     ]);
                 }   
@@ -129,7 +162,24 @@ class VendorController extends Controller
     public function editba(Request $request){
         $recordIds = $request->get('ids');
         
-        
+        //buat kode otomatis
+        $q = DB::table('invoice')->select(DB::raw('MAX(RIGHT(no_invoice_proposal, 4)) as kode'));
+
+                
+        $kd="";
+        if($q->count()>0)
+        {
+            foreach($q->get() as $k)
+            {
+                $tmp = ((int)$k->kode)+1;
+                $kd = sprintf("%04s", $tmp);
+            }
+        }
+        else
+        {
+            $kd = date('d-m-Y').'-'."0001";
+        }
+
         $bas = [];
         $total_dpp = 0;
         foreach($recordIds as $record) {
@@ -137,10 +187,11 @@ class VendorController extends Controller
             $total_dpp += $ba->amount_vendor * $ba->qty;
             array_push($bas, $ba);
         }
+        // dd($ba->id_vendor);
         // dd($total_dpp);
         $total_ppn = $total_dpp * 0.02;
         $total_harga = $total_dpp + $total_ppn;
-        return view('vendor.po.editba', compact('bas', 'total_dpp', 'total_ppn', 'total_harga'));
+        return view('vendor.po.editba', compact('bas', 'total_dpp', 'total_ppn', 'total_harga', 'kd'));
     }
 
      public function update(Request $request)
@@ -149,7 +200,7 @@ class VendorController extends Controller
          foreach($request->id as $id) {
              $good_receipt = good_receipt::find($id);
              $good_receipt->update([
-                 'Status' => 'Dispute',
+                 'status' => 'Dispute',
                  'alasan_disp' => $request->alasan_disp
              ]);
              $good_receipt->save();
@@ -166,9 +217,27 @@ class VendorController extends Controller
     
     public function store(Request $request){
         $from = "GR"; 
+        //buat kode otomatis
+        $q = DB::table('invoice')->select(DB::raw('MAX(RIGHT(no_invoice_proposal, 4)) as kode'));
+
+        $kd="";
+        if($q->count()>0)
+        {
+            foreach($q->get() as $k)
+            {
+                $tmp = ((int)$k->kode)+1;
+                $kd = sprintf("%04s", $tmp);
+            }
+        }
+        else
+        {
+            $kd = date('d-m-Y').'-'."0001";
+        }
+
         $request->validate([
         'posting_date'  => 'required',
         'vendor_invoice_number'  => 'required',
+        'no_invoice_proposal' => "",
         'faktur_pajak_number'  => 'required',
         'total_harga_gross' => 'required',
         'del_costs' => 'required',
@@ -197,13 +266,32 @@ class VendorController extends Controller
 
     public function storeba(Request $request){
         $from = "BA"; 
+
+        $q = DB::table('invoice')->select(DB::raw('MAX(RIGHT(no_invoice_proposal, 4)) as kode'));
+
+        $kd="";
+        if($q->count()>0)
+        {
+            foreach($q->get() as $k)
+            {
+                $tmp = ((int)$k->kode)+1;
+                $kd = sprintf("%04s", $tmp);
+            }
+        }
+        else
+        {
+            $kd = date('d-m-Y').'-'."0001";
+        }
+
         $request->validate([
         'posting_date'  => 'required',
         'vendor_invoice_number'  => 'required',
+        'no_invoice_proposal' => "",
         'faktur_pajak_number'  => 'required',
         'total_harga_gross' => 'required',
         'del_costs' => 'required',
         'data_from' => '',
+        'id_vendor' => '',
     ]);
 
     $Invoice = Invoice::create($request->all());
@@ -229,13 +317,17 @@ class VendorController extends Controller
     
     public function draft()
         {
-        $draft = Draft_BA::all();
+        $user_vendor = Auth::User()->id_vendor;
+        // dd($user_vendor);
+        $draft = Draft_BA::all()->where("id_vendor", $user_vendor);
         return view('Vendor.ba.draft',compact('draft'));
         }
 
     public function ba()
     {
-        $ba = BA_Reconcile::all();
+        $user_vendor = Auth::User()->id_vendor;
+
+        $ba = BA_Reconcile::all()->where("id_vendor", $user_vendor);
         
         return view('Vendor.ba.upload',compact('ba'));
     }
@@ -323,8 +415,11 @@ class VendorController extends Controller
 
     public function invoiceba()
     {
-         $invoice = Invoice::latest()->orWhere("data_from", "BA")->get();
-         return view('vendor.invoice.indexba',compact('invoice'))
+        $user_vendor = Auth::User()->id_vendor;
+        // dd($user_vendor);
+        $invoice = Invoice::latest()->Where("id_vendor", $user_vendor)->Where("data_from", "BA")->get();
+         
+        return view('vendor.invoice.indexba',compact('invoice'))
                  ->with('i',(request()->input('page', 1) -1) *5);
         
     }
@@ -388,7 +483,9 @@ class VendorController extends Controller
 
     public function disputed()
     {
-        $good_receipts = good_receipt::where("Status", "Dispute")->get();
+        $user_vendor = Auth::User()->id_vendor;
+        $good_receipts = good_receipt::where("status", "Dispute")->Where("id_vendor", $user_vendor)->get();
+
         return view('vendor.dispute.index',compact('good_receipts'))
                 ->with('i',(request()->input('page', 1) -1) *5);
     }

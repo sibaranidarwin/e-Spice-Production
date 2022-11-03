@@ -22,12 +22,6 @@ class ProfileController extends Controller
     {
         $this->middleware('auth');
     }
-    public function index()
-    {
-        $pengaduans = Pengaduan::latest()->paginate(5);
-        $laporansaya = Pengaduan::all();
-        return view('profile',compact('pengaduans','laporansaya'));
-    }
 
     /**
      * Show the form for creating a new resource.
@@ -108,15 +102,4 @@ class ProfileController extends Controller
      * @param  \App\Profile  $profile
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Pengaduan $pengaduan)
-    {
-        $pengaduan = \App\Pengaduans::find($id);
-        $pengaduan->delete();
-        return back();
-    }
-    public function delete ($id){
-        $pengaduan = \App\Pengaduans::find($id);
-        $pengaduan->delete();
-        return back()->with('sukses','Data Berhasil Di Hapus');
-    }
 }

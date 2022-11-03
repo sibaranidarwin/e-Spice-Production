@@ -51,6 +51,16 @@ label {
                             @endforeach
                             <div class="row">
                                 <div class="form-group col-md-6">
+                                    <label class="form-control-label" for="no_invoice_proposal">Nomor Invoice Proposal<span style="color: red">*</span></label>
+                                    <input type="text"
+                                        class="form-control @error('no_invoice_proposal') is-invalid @enderror"
+                                        name="no_invoice_proposal" placeholder="Masukkan No Invoice ..."
+                                        value="{{ "MKP-INV-".$kd }}" readonly>
+                                    @error('no_invoice_proposal')<span
+                                        class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
+                                </div>
+
+                                <div class="form-group col-md-6">
                                     <label class="form-control-label" for="posting_date">Invoice Date <span style="color: red">*</span></label>
                                     <input type="date"
                                         class="form-control @error('posting_date') is-invalid @enderror"
