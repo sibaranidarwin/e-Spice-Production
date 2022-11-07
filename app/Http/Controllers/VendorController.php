@@ -40,7 +40,7 @@ class VendorController extends Controller
     {
         $user_vendor = Auth::User()->id_vendor;
         
-        $good_receipt = good_receipt::Where("id_vendor", $user_vendor)->count();
+        $good_receipt = good_receipt::Where("status", "Verified")->Where("id_vendor", $user_vendor)->count();
         $invoicegr = Invoice::all()->where("data_from", "GR")->Where("id_vendor", $user_vendor)->count();
         $invoiceba = Invoice::all()->where("data_from", "BA")->Where("id_vendor", $user_vendor)->count();
         $dispute = good_receipt::all()->where("status", "Dispute")->Where("id_vendor", $user_vendor)->count();
@@ -365,6 +365,7 @@ class VendorController extends Controller
                                     "invoice.id_inv", 
                                     "invoice.posting_date", 
                                     "invoice.baselinedate",
+                                    "invoice.no_invoice_proposal",
                                     "invoice.vendor_invoice_number",
                                     "invoice.faktur_pajak_number",
                                     "invoice.total_harga_everify",
@@ -437,6 +438,7 @@ class VendorController extends Controller
                                     "invoice.posting_date", 
                                     "invoice.baselinedate",
                                     "invoice.vendor_invoice_number",
+                                    "invoice.no_invoice_proposal",
                                     "invoice.faktur_pajak_number",
                                     "invoice.total_harga_everify",
                                     "invoice.ppn",
@@ -539,12 +541,16 @@ class VendorController extends Controller
 
         return view('vendor.user.password',compact('user'));  
     }
+
+    
+
     public function editpass(Request $request, $id){
-        $password1 = $request->current_password;
+        $passwordlama = $request->current_password;
         
+    
         $user = User::where("id", $id)->first();
         // dd($user);
-        if (password_verify($password1, $user->password)) {
+        if (password_verify($passwordlama, $user->password)) {
             
                 //Change Password
                 $user =  User::whereId(auth()->user()->id)->update([

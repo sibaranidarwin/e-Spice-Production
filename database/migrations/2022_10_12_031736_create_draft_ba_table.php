@@ -17,6 +17,7 @@ class CreateDraftBaTable extends Migration
             $table->bigIncrements('id_draft_ba');
             $table->bigInteger('id_gr')->unsigned();
             $table->foreign('id_gr')->references('id_gr')->on('goods_receipt');
+            $table->bigIncrements('id_vendor');
             $table->string('no_draft');
             $table->date('date_draft');
             $table->integer('po_number');

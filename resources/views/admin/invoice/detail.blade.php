@@ -59,10 +59,10 @@
                     </div> --}}
                 <div class="row">
                     <div class="form-group col-md-6">
-                        <label class="form-control-label" for="posting_date[]">Posting Date</label>
-                        <input type="date" class="form-control @error('posting_date[]') is-invalid @enderror"
-                            name="posting_date[]" placeholder="Masukkan Tanggal ..." value="{{ $invoice->posting_date }}">
-                        @error('posting_date[]')<span
+                        <label class="form-control-label" for="vendor_invoice_number[]">No Invoice Proposal</label>
+                        <input type="text" class="form-control @error('vendor_invoice_number[]') is-invalid @enderror"
+                            name="vendor_invoice_number[]" placeholder="Masukkan Tanggal ..." value="{{ $invoice->no_invoice_proposal }}">
+                        @error('vendor_invoice_number[]')<span
                             class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                     </div>
                     <div class="form-group col-md-6">
@@ -70,6 +70,13 @@
                         <input type="text" class="form-control @error('vendor_invoice_number[]') is-invalid @enderror"
                             name="vendor_invoice_number[]" placeholder="Masukkan Tanggal ..." value="{{ $invoice->vendor_invoice_number }}">
                         @error('vendor_invoice_number[]')<span
+                            class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label class="form-control-label" for="posting_date[]">Posting Date</label>
+                        <input type="date" class="form-control @error('posting_date[]') is-invalid @enderror"
+                            name="posting_date[]" placeholder="Masukkan Tanggal ..." value="{{ $invoice->posting_date }}">
+                        @error('posting_date[]')<span
                             class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                     </div>
                     <div class="form-group col-md-6">

@@ -63,6 +63,7 @@ class UserController extends Controller
             'password' => Hash::make($request['password']),
             'level' => $request['level'],
         ]);
+        
         return redirect ('admin/user')->with('success','Data Has Been Saved');
     }
 
