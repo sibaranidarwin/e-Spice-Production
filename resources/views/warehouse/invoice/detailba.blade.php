@@ -58,10 +58,17 @@ label {
                     </div> --}}
                     <div class="row">
                         <div class="form-group col-md-6">
+                            <label class="form-control-label" for="vendor_invoice_number[]">No Invoice Proposal</label>
+                            <input type="text" class="form-control @error('vendor_invoice_number[]') is-invalid @enderror"
+                                name="vendor_invoice_number[]" placeholder="Masukkan Tanggal ..." value="{{ $invoice->no_invoice_proposal }}" readonly>
+                            @error('vendor_invoice_number[]')<span
+                                class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
+                        </div>
+                        <div class="form-group col-md-6">
                             <label class="form-control-label" for="posting_date[]">Posting Date</label>
                             <input type="date" class="form-control @error('posting_date[]') is-invalid @enderror"
                                 name="posting_date[]" placeholder="Masukkan Tanggal ..."
-                                value="{{ $invoice->posting_date }}">
+                                value="{{ $invoice->posting_date }}" readonly>
                             @error('posting_date[]')<span
                                 class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                         </div>
@@ -70,7 +77,7 @@ label {
                             <input type="text"
                                 class="form-control @error('vendor_invoice_number[]') is-invalid @enderror"
                                 name="vendor_invoice_number[]" placeholder="Masukkan Tanggal ..."
-                                value="{{ $invoice->vendor_invoice_number }}">
+                                value="{{ $invoice->vendor_invoice_number }}" readonly>
                             @error('vendor_invoice_number[]')<span
                                 class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                         </div>
@@ -79,7 +86,7 @@ label {
                             <input type="number"
                                 class="form-control @error('total_harga_everify[]') is-invalid @enderror"
                                 name="total_harga_everify[]" placeholder="Masukkan Tanggal ..."
-                                value="{{ $invoice->faktur_pajak_number }}">
+                                value="{{ $invoice->faktur_pajak_number }}" readonly>
                             @error('total_harga_everify[]')<span
                                 class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                         </div>
@@ -87,14 +94,14 @@ label {
                             <label class="form-control-label" for="Material_Number[]">Amount DDP</label>
                             <input type="text" class="form-control @error('Material_Number[]') is-invalid @enderror"
                                 name="Material_Number[]" placeholder="Masukkan Tanggal ..."
-                                value="{{ $invoice->total_harga_gross }}">
+                                value="{{ $invoice->total_harga_gross }}" readonly>
                             @error('Material_Number[]')<span
                                 class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                         </div>
                         <div class="form-group col-md-6">
                             <label class="form-control-label" for="ppn[]">PPN</label>
                             <input type="text" class="form-control @error('ppn[]') is-invalid @enderror" name="ppn[]"
-                                placeholder="Masukkan Tanggal ..." value="{{ $invoice->ppn }}">
+                                placeholder="Masukkan Tanggal ..." value="{{ $invoice->ppn }}" readonly>
                             @error('ppn[]')<span
                                 class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                         </div>
@@ -102,19 +109,19 @@ label {
                             <label class="form-control-label" for="total_harga_gross[]">Amount Price</label> <br>
                             <input type="text" class="form-control @error('total_harga_gross[]') is-invalid @enderror"
                                 name="total_harga_gross[]" placeholder="Masukkan Tanggal ..."
-                                value="{{ $invoice->total_harga_everify }}">
+                                value="{{ $invoice->total_harga_everify }}" readonly>
                             @error('total_harga_gross[]')<span
                                 class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                         </div>
                         <div class="form-group col-md-6">
                             <label class="form-control-label" for="Status[]">Selisih Harga</label> <br>
                             <input type="text" class="form-control @error('Tax_Code[]') is-invalid @enderror"
-                                name="Tax_Code[]" placeholder="Masukkan Tanggal ..." value="{{ $invoice->DEL_COSTS}}">
+                                name="Tax_Code[]" placeholder="Masukkan Tanggal ..." value="{{ $invoice->del_costs}}" readonly>
                             @error('Tax_Code[]')<span
                                 class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                         </div>
                     </div>
-                    &nbsp;<a href="{{url('vendor/invoiceba')}}" type="submit" class="btn btn-danger mb-2"
+                    &nbsp;<a href="{{url('warehouse/invoiceba')}}" type="submit" class="btn btn-danger mb-2"
                         id="simpan">Return</a>
                     </form>
                     <table id="list" class="table table-stats order-table ov-h">

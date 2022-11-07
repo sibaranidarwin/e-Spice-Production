@@ -19,6 +19,7 @@ class CreateBaTable extends Migration
             $table->foreign('id_draft_ba')->references('id_draft_ba')->on('draft_ba');
             $table->bigInteger('id_inv')->unsigned();
             $table->foreign('id_inv')->references('id_inv')->on('invoice');
+            $table->bigIncrements('id_vendor');
             $table->string('no_ba');
             $table->date('gr_date');
             $table->integer('po_number');

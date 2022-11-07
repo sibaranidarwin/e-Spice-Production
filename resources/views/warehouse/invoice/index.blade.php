@@ -83,13 +83,14 @@ label {
                                     <thead>
                                         <tr>
                                             <th class="serial">No</th>
-                                            <th>No GR</th>
-                                            <th>Invoice date</th>
+                                            <th>Tanggal Invoice</th>
                                             <th>No Invoice</th>
-                                            <th>No tax invoice </th>
-                                            {{-- <th>e-verify number</th> --}}
-                                            <th>Total price</th>
-                                            <th>Status sap</th>
+                                            <th>No Invoice Proposal</th>
+                                            <th>No Faktur Pajak</th>
+                                            <th>No E-Verify</th>
+                                            <th>Total PPN</th>
+                                            <th>Total Harga</th>
+                                            <th>Status Upload Sap</th>
 
                                             <!-- <th class="text-center">Reference</th> -->
                                             <!-- <th class="text-center">Vendor Part Number</th>
@@ -103,16 +104,18 @@ label {
                                             <!-- <th class="text-center">Valuation Type</th> -->
                                             <th>Action</th>
                                         </tr>
+                                        </tr>
                                     </thead>
                                     <tbody>
                                         @foreach($invoice as $item)
                                         <tr>
                                             <td class="serial">{{++$i}}</td>
-                                            <td>{{$item['GR_Number'] }}</td>
                                             <td>{{$item['posting_date'] }}</td>
                                             <td>{{$item['vendor_invoice_number'] }}</td>
-                                            {{-- <td>{{$item['everify_number'] }}</td> --}}
+                                            <td>{{$item['no_invoice_proposal'] }}</td>
                                             <td>{{$item['faktur_pajak_number'] }}</td>
+                                            <td>{{$item['everify_number'] }}</td>
+                                            <td>{{$item['ppn']}}</td>
                                             <td>{{$item['total_harga_everify'] }}</td>
                                             <td>{{$item['status']}}</td>
                                             <td>
