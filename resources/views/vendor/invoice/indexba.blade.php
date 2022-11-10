@@ -25,7 +25,7 @@
 .table td,
 .table th,
 label {
-    font-size: 11.4px;
+    font-size: 11.7px;
 }
 </style>
 <div class="breadcrumbs">
@@ -86,10 +86,10 @@ label {
                     <div class="card-body">
                         <div class="table-responsive text-nowrap">
                             <div class="row">
-                                <div class="form-group col-4 bg-white mb-2">
-                                    <label for="">Tanggal Invoice From: </label>
+                                <div class="form-group col-3 bg-white mb-2">
+                                    <label for="">Invoice Date: </label>
                                     <input class="form-group" type="text" id="min" name="min">
-                                </div>
+                                </div> 
                                 <div class=" form-group col-3 bg-white mb-2">
                                     <label for="">To: </label>
                                     <input class="form-group" type="text" id="max" name="max">
@@ -101,14 +101,14 @@ label {
                                     <thead>
                                         <tr>
                                             <th class="serial">No</th>
-                                            <th>Tanggal Invoice</th>
-                                            <th>No Invoice</th>
+                                            <th>Invoice Date</th>
+                                            <th>Invoice Number</th>
                                             <th>No Invoice Proposal</th>
-                                            <th>No Faktur Pajak</th>
+                                            <th>VAT NO</th>
                                             <th>No E-Verify</th>
                                             <th>Total PPN</th>
-                                            <th>Total Harga</th>
-                                            <th>Status Upload Sap</th>
+                                            <th>Total DPP</th>
+                                            <th>Status Upload SAP</th>
 
                                             <!-- <th class="text-center">Reference</th> -->
                                             <!-- <th class="text-center">Vendor Part Number</th>

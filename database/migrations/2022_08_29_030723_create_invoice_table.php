@@ -15,7 +15,7 @@ class CreateInvoiceTable extends Migration
     {
         Schema::create('invoice', function (Blueprint $table) {
             $table->bigIncrements('id_inv');
-            $table->bigIncrements('id_vendor');
+            $table->bigInteger('id_vendor');
             $table->date('posting_date');
             $table->string('vendor_invoice_number');
             $table->string('everify_number')->nullable();

@@ -23,7 +23,7 @@
 
 <style>
     .table td, .table th,  label{
-        font-size: 11.4px;
+        font-size: 12.4px;
     }
 </style>
 <div class="breadcrumbs">
@@ -79,7 +79,7 @@
                     </div>
                     @endif
                     <div class="card-header">
-                        <strong class="card-title">Good Receipt Disputed List</strong>
+                        <strong class="card-title">Dispute Good Receipt List</strong>
                     </div>
                     <div class="card-body">
                     <div class="table-responsive text-nowrap">
@@ -114,7 +114,7 @@
                                         <th>Curr</th>
                                         <th>Unit Price</th>
                                         <th>Tax Code</th>
-                                        <th>Keterengan</th>
+                                        <th>Reason</th>
                                     </tr>
                                 </thead>
                                 <tbody style="font-size: 11px;">

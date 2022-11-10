@@ -25,7 +25,7 @@
 .table td,
 .table th,
 label {
-    font-size: 11.4px;
+    font-size: 11.7px;
 }
 </style>
 <div class="breadcrumbs">
@@ -87,11 +87,11 @@ label {
                         <div class="table-responsive text-nowrap">
                             <div class="row">
                                 <div class="form-group col-3 bg-white mb-2">
-                                    <label for="">Date From: </label>
+                                    <label for="">BA Date:</label>
                                     <input class="form-group" type="text" id="min" name="min">
-                                </div>
+                                </div>To:
                                 <div class=" form-group col-3 bg-white mb-2">
-                                    <label for="">To: </label>
+                                    <label for=""></label>
                                     <input class="form-group" type="text" id="max" name="max">
                                 </div>
                                 <div class="col-3 mb-2">

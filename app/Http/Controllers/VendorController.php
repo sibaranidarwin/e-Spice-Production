@@ -53,8 +53,8 @@ class VendorController extends Controller
     public function po()
     {   
         $user_vendor = Auth::User()->id_vendor;
-        //  dd($user_vendor);
-        $good_receipts = good_receipt::Where("id_vendor", $user_vendor)->Where("status", "Verified")->get();
+        //  dd($user_vendodelr);
+        $good_receipts = good_receipt::Where("id_vendor", $user_vendor)->WhereNOTNULL("status")->orWhereNULL("status")->orWhere("status", "Verified")->WhereNULL("id_inv")->get();
         return view('vendor.po.index',compact('good_receipts'))
                 ->with('i',(request()->input('page', 1) -1) *5);
     }
@@ -91,7 +91,7 @@ class VendorController extends Controller
                     foreach($q->get() as $k)
                     {
                         $tmp = ((int)$k->kode)+1;
-                        $kd = sprintf("%04s", $tmp);
+                        $kd = date('d-m-Y').'-'.sprintf("%04s", $tmp);
                     }
                 }
                 else
@@ -172,7 +172,7 @@ class VendorController extends Controller
             foreach($q->get() as $k)
             {
                 $tmp = ((int)$k->kode)+1;
-                $kd = sprintf("%04s", $tmp);
+                $kd = date('d-m-Y').'-'.sprintf("%04s", $tmp);
             }
         }
         else
@@ -226,7 +226,7 @@ class VendorController extends Controller
             foreach($q->get() as $k)
             {
                 $tmp = ((int)$k->kode)+1;
-                $kd = sprintf("%04s", $tmp);
+                $kd = date('d-m-Y').'-'.sprintf("%04s", $tmp);
             }
         }
         else
@@ -240,7 +240,7 @@ class VendorController extends Controller
         'no_invoice_proposal' => "",
         'faktur_pajak_number'  => 'required',
         'total_harga_gross' => 'required',
-        'del_costs' => 'required',
+        'del_costs' => '',
         'data_from' => '',
         'id_vendor' => '',
     ]);
@@ -275,7 +275,7 @@ class VendorController extends Controller
             foreach($q->get() as $k)
             {
                 $tmp = ((int)$k->kode)+1;
-                $kd = sprintf("%04s", $tmp);
+                $kd = date('d-m-Y').'-'.sprintf("%04s", $tmp);
             }
         }
         else
@@ -284,12 +284,12 @@ class VendorController extends Controller
         }
 
         $request->validate([
-        'posting_date'  => 'required',
+        'posting_date'  => 'required|before now',
         'vendor_invoice_number'  => 'required',
         'no_invoice_proposal' => "",
         'faktur_pajak_number'  => 'required',
         'total_harga_gross' => 'required',
-        'del_costs' => 'required',
+        'del_costs' => '',
         'data_from' => '',
         'id_vendor' => '',
     ]);
@@ -470,7 +470,7 @@ class VendorController extends Controller
         "invoice.faktur_pajak_number",
         "invoice.total_harga_everify",
         "invoice.ppn",
-        "invoice.DEL_COSTS",
+        "invoice.del_costs",
         "invoice.total_harga_gross",
         "invoice.created_at"
         )

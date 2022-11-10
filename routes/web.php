@@ -18,7 +18,7 @@ Auth::routes();
 
 Route::get('login-user', function () {
     return view('login/index');
-});
+})->name('login-user');
 
 Route::get('daftar-login', function () {
     return view('login/daftar');
@@ -38,17 +38,14 @@ Route::get('about', 'IndexController@about')->name('about');
 // DASHBOARD ADMIN
 Route::resource('admin/dashboard','AdminController')->middleware('admin');
 Route::get('admin/dashboard', 'AdminController@index')->name('admin/dashboard')->middleware('admin');
-
 // Purchase Order
 Route::get('admin/po', 'AdminController@po')->name('admin/po')->middleware('admin');
 Route::get('admin/pover', 'AdminController@pover')->name('admin/pover')->middleware('admin');
 Route::get('admin/poreject', 'AdminController@poreject')->name('admin/poreject')->middleware('admin');
-
 //BA
 Route::get('admin/draft', 'AdminController@draft')->name('admin/draft');
 Route::get('admin/ba', 'AdminController@ba')->name('admin/ba');
 Route::put('admin/draft','AdminController@uploaddraft');
-
 // Invoice 
 Route::get('admin/invoice', 'AdminController@invoice')->middleware('admin');
 Route::get('admin/detail-invoice/{id}', 'AdminController@detailinvoice')->name('detail-invoice');
@@ -57,52 +54,34 @@ Route::get('admin/cetak_pdf/{id}', 'AdminController@cetak_pdf')->name('cetak-lap
 Route::get('admin/invoiceba', 'AdminController@invoiceba')->name('admin/invoiceba');
 Route::get('admin/detail-invoice-ba/{id}', 'AdminController@detailinvoiceba')->name('detail-invoice');
 Route::get('admin/cetak_pdf_ba/{id}', 'AdminController@cetak_pdf_ba')->name('cetak-laporan-ba');
-
 //Pruchase order disputed
 Route::get('admin/disputed', 'AdminController@disputed')->middleware('admin');
-
 // USER
 Route::resource('admin/user', 'UserController')->middleware('admin');
 Route::get('admin/user/{id}/profile', 'UserController@showing')->name('user.showing')->middleware('admin');
 Route::get('admin/user/create', 'UserController@create')->name('tambah-user')->middleware('admin');
 Route::post('admin/user/create', 'UserController@store')->name('create-user')->middleware('admin');
-
 // Accounting
 Route::resource('admin/accounting', 'AccountingController')->middleware('admin');
 Route::get('admin/accounting/{id}/show', 'AccountingController@showing')->name('accounting.showing')->middleware('admin');
 Route::get('admin/accounting/{id}/ubah-accounting', 'AccountingController@profile')->name('accounting.edit')->middleware('admin');
 Route::post('admin/accounting/{id}/ubah-accounting', 'AccountingController@updatedong')->name('accounting-update')->middleware('admin');
-
 // Warehouse
 Route::resource('admin/warehouse', 'WarehouseController')->middleware('admin');
 Route::get('admin/warehouse/{id}/show', 'WarehouseController@showing')->name('warehouse.showing')->middleware('admin');
 Route::get('admin/warehouse/{id}/ubah-warehouse', 'WarehouseController@profile')->name('warehouse.edit')->middleware('admin');
 Route::post('admin/warehouse/{id}/ubah-warehouse', 'WarehouseController@updatedong')->name('warehouse-update')->middleware('admin');
-
 // Procumerent
 Route::resource('admin/procumerent', 'ProcumerentController')->middleware('admin');
 Route::get('admin/procumerent/{id}/show', 'ProcumerentController@showing')->name('procumerent.showing')->middleware('admin');
 Route::get('admin/procumerent/{id}/ubah-procumerent', 'ProcumerentController@profile')->name('procumerent.edit')->middleware('admin');
 Route::post('admin/procumerent/{id}/ubah-procumerent', 'ProcumerentController@updatedong')->name('procumerent-update')->middleware('admin');
 
-
 // Vendor
 Route::resource('admin/vendor', 'VendorController')->middleware('admin');
 Route::get('admin/vendor/{id}/show', 'VendorController@showing')->name('vendor.showing')->middleware('admin');
 Route::get('admin/vendor/{id}/ubah-vendor', 'VendorController@profile')->name('vendor.edit')->middleware('admin');
 Route::post('admin/vendor/{id}/ubah-vendor', 'VendorController@updatedong')->name('vendor-update')->middleware('admin');
-
-
-// MASYARAKAT
-Route::resource('admin/masyarakat', 'MasyarakatController')->middleware('admin');
-Route::get('admin/masyarakat/{id}/show', 'MasyarakatController@showing')->name('masyarakat.showing')->middleware('admin');
-Route::get('admin/masyarakat/{id}/ubah-masyarakat', 'MasyarakatController@profile')->name('masyarakat.edit')->middleware('admin');
-Route::post('admin/masyarakat/{id}/ubah-masyarakat', 'UserController@updatedong')->name('masyarakat-update')->middleware('admin');
-
-// PDF LAPOPORAN CEKTAK
-Route::resource('admin/laporan', 'LaporanController')->middleware('admin');
-Route::get('pengaduan_pdf/cetak_pdf', 'LaporanController@cetak_pdf')->name('cetak-laporan');
-
 
 // // INI MIDDLEWARE Accounting
 // // DASHBOARD

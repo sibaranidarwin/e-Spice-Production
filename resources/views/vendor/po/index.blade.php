@@ -23,7 +23,7 @@
 
 <style>
     .table td, .table th,  label{
-        font-size: 11.4px;
+        font-size: 11.7px;
     }
 </style>
 <div class="breadcrumbs">
@@ -84,12 +84,12 @@
                     <div class="card-body">
                     <div class="table-responsive text-nowrap">
                         <div class="row">
-                            <div class="col-4 bg-white mb-3">
-                                <label for="">GR Date From : </label>
+                            <div class="col-3 bg-white mb-3">
+                                <label for="">GR Date : </label>
                                 <input type="text" id="min" name="min"> 
-                            </div> 
+                            </div> To : 
                             <div class="col-2 bg-white mb-4">
-                                <label for="">To : </label>
+                                <label for=""> </label>
                                 <input type="text" id="max" name="max">
                             </div>
                             <div class="col-4">
@@ -97,12 +97,12 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-4 bg-white mb-3">
-                                <label for="">No PO From :  &nbsp;&nbsp;</label>
+                            <div class="col-3 bg-white mb-3">
+                                <label for="">No PO :  &nbsp;&nbsp;</label>
                                 <input type="text" id="minpo" name="minpo"> 
-                            </div> 
+                            </div> To : 
                             <div class="col-2 bg-white mb-4">
-                                <label for="">To : </label>
+                                <label for=""></label>
                                 <input type="text" id="maxpo" name="maxpo">
                             </div>
                             <div class="col-4">

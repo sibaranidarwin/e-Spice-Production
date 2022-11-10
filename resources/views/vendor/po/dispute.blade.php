@@ -3,7 +3,7 @@
 <link rel="stylesheet" href="{{asset('assets/css/argon-dashboard.css')}}">
 <style>
     .table td, .table th {
-        font-size: 11.4px;
+        font-size: 12.4px;
     }
 </style>
 <div class="breadcrumbs">
