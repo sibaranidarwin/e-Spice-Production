@@ -23,7 +23,7 @@
 
 <style>
     .table td, .table th,  label{
-        font-size: 11.4px;
+        font-size: 12.4px;
     }
 </style>
 <div class="breadcrumbs">

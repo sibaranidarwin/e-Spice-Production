@@ -96,7 +96,7 @@
                         aria-expanded="false"> <i class="menu-icon fa fa-file"></i>Good Receipt</a>
                     <ul class="sub-menu children dropdown-menu">
                         <li><i class="fa fa-check"></i><a href="{{url('vendor/purchaseorder')}}">Verified</a></li>
-                        <li><i class="fa fa-info"></i><a href="{{url('vendor/puchaseorderreject')}}">Reject</a></li>
+                        <li><i class="fa fa-close"></i><a href="{{url('vendor/puchaseorderreject')}}">Reject</a></li>
                         </li>
                     </ul>
                 </li>

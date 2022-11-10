@@ -19,7 +19,7 @@
                             <div class="main-menu f-left d-none d-lg-block">
                                 <nav> 
                                     <ul id="navigation">    
-                                        {{-- <li><a href="{{url('/')}}"> Home</a></li> --}}
+                                        <li> <a href="{{url('login-user')}}" class="btn header-btn">Login</a></li>
                                         {{-- <li><a href="{{url('/about')}}">About e-Spice</a></li> --}}
                                     </ul>
                                 </nav>
