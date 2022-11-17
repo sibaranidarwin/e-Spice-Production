@@ -19,7 +19,7 @@
                             <div class="main-menu f-left d-none d-lg-block">
                                 <nav> 
                                     <ul id="navigation">    
-                                        <li> <a href="{{url('login-user')}}" class="btn header-btn">Login</a></li>
+                                        {{-- <li> <a href="{{url('login-user')}}" class="btn header-btn">Login</a></li> --}}
                                         {{-- <li><a href="{{url('/about')}}">About e-Spice</a></li> --}}
                                     </ul>
                                 </nav>
@@ -58,7 +58,13 @@
                         
                         <!-- Mobile Menu -->
                         <div class="col-12">
-                            <div class="mobile_menu d-block d-lg-none"></div>
+                            <div class="mobile_menu d-block d-lg-none">
+                               
+                                <div class="header-right-btn f-right">
+                                    <a href="{{url('login-user')}}" class="btn header-btn">Login</a>
+                                </div>
+
+                            </div>
                         </div>
                     </div>
                 </div>

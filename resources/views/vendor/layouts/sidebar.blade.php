@@ -101,20 +101,44 @@
                     </ul>
                 </li>
 
-                <li class="menu-item-has-children dropdown ">
+                <li class="menu-item-has-children dropdown">
+                    <a class="accordion-heading menu-item-has-children dropdown-toggle" data-toggle="collapse" data-target="#submenu1" aria-haspopup="true"
+                    aria-expanded="false">
+                          <span class="nav-header-primary"><i class="menu-icon fa fa-newspaper-o"></i>BA Reconcile<span class="pull-right"><b class="caret"></b></span></span>
+                    </a>
+    
+                    <ul class="nav nav-list collapse" id="submenu1">
+                        <li>
+                              <a class="accordion-heading" data-toggle="collapse" data-target="#submenu2"><span class=""><i class="menu-icon fa fa-newspaper-o"></i>Draft BA</span></a>
+                              <ul class="nav nav-list collapse sub-menu children" id="submenu2">
+                                  <li><a href="#" title="Title"><i class="fa fa-history"></i>History Draft BA</a></li>
+                                  <li><a href="{{url('vendor/draft')}}" title="Title"><i class="fa fa-table"></i>Draft BA Active</a></li>
+                              </ul>
+                        </li>
+                        <li>
+                            <a class="accordion-heading" data-toggle="collapse" data-target="#submenu3"><span class=""><i class="menu-icon fa fa-newspaper-o"></i>BA</span></a>
+                            <ul class="nav nav-list collapse sub-menu children" id="submenu3">
+                                <li><a href="#" title="Title"><i class="fa fa-history "></i>History BA</a></li>
+                                <li><a href="{{url('vendor/ba')}}" title="Title"><i class="fa fa-table "></i>BA Active</a></li>
+                            </ul>
+                      </li>
+                    </ul>
+                  </li>
+
+
+                {{-- <li class="menu-item-has-children dropdown ">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
                         aria-expanded="false"> <i class="menu-icon fa fa-newspaper-o"></i>BA Reconcile</a>
                     <ul class="sub-menu children dropdown-menu ">
                         <li><i class="fa fa-table "></i><a href="{{url('vendor/draft')}}">Draft BA</a></li>
                         <li><i class="fa fa-table "></i><a href="{{url('vendor/ba')}}">BA</a></li>
                     </ul>
-                </li>
+                </li> --}}
                   <li class="menu-item-has-children dropdown ">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
                         aria-expanded="false"> <i class="menu-icon fa fa-warning"></i>Disputed Purchase</a>
                     <ul class="sub-menu children dropdown-menu ">
                         <li><i class="fa fa-table "></i><a href="{{url('vendor/disputed')}}">Show</a></li>
-
                     </ul>
                 </li>
                 <li class="menu-title">DATA Invoice</li><!-- /.menu-title -->
@@ -228,7 +252,7 @@
         </script> -->
 
     <!--Local Stuff-->
-    <script>
+    {{-- <script>
     jQuery(document).ready(function($) {
         "use strict";
 
@@ -472,7 +496,7 @@
         });
         // Bar Chart #flotBarChart End
     });
-    </script>
+    </script> --}}
     </body>
 
 </html>

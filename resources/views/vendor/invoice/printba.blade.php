@@ -42,7 +42,7 @@
     th {
         border: none;
         font-size: 13px;
-        width: 159px;
+        width: 189px;
     }
 
     th {
@@ -111,7 +111,6 @@
                 <tr style="text-align: center;">
                     <th>BA Number</th>
                     <th>PO Number</th>
-                    <th>PO MKP</th>
                     <th>GR Date</th>
                     <th>Material</th>
                     <!-- <th class="text-center">Reference</th> -->
@@ -132,9 +131,8 @@
                 <tr style="text-align: center;">
                     <td><span class="">{{$ba->no_ba}}</span> </td>
                     <td> <span class="">{{$ba->po_number}}</span> </td>
-                    <td> <span class="">{{$ba->po_mkp}}</span> </td>
                     <td> <span class="">{{$ba->gr_date}}</span> </td>
-                    <td> <span class="">{{$ba->material_bp}}</span></td>
+                    <td> <span class="">{{$ba->material_description}}</span></td>
                     <td>{{ $ba->status_ba }}</td>
                 </tr>
                 @endforeach

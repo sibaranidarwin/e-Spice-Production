@@ -20,8 +20,15 @@ class CreateDraftBaTable extends Migration
             $table->bigInteger('id_vendor');
             $table->string('no_draft');
             $table->date('date_draft');
-            $table->integer('po_number');
-            $table->string('material');
+            $table->string('po_number');
+            $table->string('mat_desc');
+            $table->string('vendor_part_number');
+            $table->string('doc_header_text');
+            $table->integer('po_item');
+            $table->string('jumlah');
+            $table->date('gr_date');
+            $table->string('jumlah_harga')->nullable();
+            $table->string('selisih_harga')->nullable();
             $table->enum('status_draft',['Not Yet Verified - Draft', 'Verified - Draft'])->default("Not Yet Verified - Draft")->nullable();
             $table->string('reason')->nullable();
             $table->timestamps();

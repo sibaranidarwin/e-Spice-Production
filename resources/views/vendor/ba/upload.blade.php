@@ -58,27 +58,29 @@ label {
         <div class="row">
             <div class="col-lg-12">
                 <div class="card">
-                    @if($message = Session::get('destroy'))
-                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                        <strong>Success!</strong> {{$message}}
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
+                    @if (count($errors) > 0)
+                    <div class="row">
+                        <div class="col-md-12 col-md-offset-1">
+                          <div class="alert alert-danger alert-dismissible">
+                              <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                              <h4><i class="icon fa fa-ban"></i> Error!</h4>
+                              @foreach($errors->all() as $error)
+                              {{ $error }} <br>
+                              @endforeach      
+                          </div>
+                        </div>
                     </div>
-                    @elseif($message = Session::get('success'))
-                    <div class="alert alert-success alert-dismissible fade show" role="alert">
-                        <strong>Success!</strong> {{$message}}
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    @elseif($message = Session::get('warning'))
-                    <div class="alert alert-primary alert-dismissible fade show" role="alert">
-                        <strong>Success!</strong> {{$message}}
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
+                    @endif
+      
+                    @if (Session::has('success'))
+                        <div class="row">
+                          <div class="col-md-12 col-md-offset-1">
+                            <div class="alert alert-success alert-dismissible">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                <h5>{!! Session::get('success') !!}</h5>   
+                            </div>
+                          </div>
+                        </div>
                     @endif
                     <div class="card-header">
                         <strong class="card-title">BA Reconcile List</strong>
@@ -95,7 +97,7 @@ label {
                                     <input class="form-group" type="text" id="max" name="max">
                                 </div>
                                 <div class="col-3 mb-2">
-                                    <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal-import"><i class="fa fa-plus"></i> Import Data BA</button>
+                                    <button class="btn btn-primary" data-toggle="modal" data-target="#modal-import"><i class="fa fa-cloud-upload"></i>&nbsp; Import Excel</button>
                                 </div>
                             </div>
                             <form action="{{ route('update-ba-vendor/{id_gr}') }}" method="POST">
@@ -108,9 +110,12 @@ label {
                                             <th>No BA</th>
                                             <th>Date</th>
                                             <th>No PO</th>
-                                            <th>PO MKP</th>
+                                            <th>PO Item</th>
                                             <th>Material</th>
+                                            <th>Quantity</th>
+                                            <th>Total Price</th>
                                             <th>Status BA</th>
+                                            <th>Status Invoice Proposal</th>
                                         </tr>
                                     </thead>
                                     <tbody style="font-size: 11px;">
@@ -122,9 +127,12 @@ label {
                                             <td>{{ $item->no_ba}}</td>
                                             <td><span>{{$item->gr_date}}</span></td>
                                             <td><span>{{$item->po_number}}</span></td>
-                                            <td><span>{{$item->po_mkp}}</span></td>
-                                            <td><span>{{$item->material_bp}}</span></td>
+                                            <td><span>{{$item->item}}</span></td>
+                                            <td><span>{{$item->material_description}}</span></td>
+                                            <td><span>{{$item->qty}}</span></td>
+                                            <td><span>{{$item->amount_mkp}}</span></td>
                                             <td><span>{{$item->status_ba}}</span></td>
+                                            <td><span>{{$item->status_invoice_proposal}}</span></td>
                                         </tr>
                                         @endforeach
                                         </select>
@@ -185,8 +193,8 @@ label {
           </div>
         </div>
         <div class="modal-footer justify-content-between">
-          <button type="button" class="btn btn-default" data-dismiss="modal" onclick="return confirm('Are you sure?')">Tutup</button>
-          <button type="submit" class="btn btn-primary" onclick="return confirm('Are you sure?')">Simpan</button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="return confirm('Are you sure?')">Return</button>
+          <button type="submit" class="btn btn-primary" onclick="return confirm('Are you sure?')">Extract Data</button>
         </div>
       </form>
     </div>

@@ -17,9 +17,9 @@ class CreateGoodsReceipt extends Migration
         Schema::create('goods_receipt', function (Blueprint $table) {
             $table->bigIncrements('id_gr');
             $table->bigInteger('id_inv')->unsigned();
-            $table->foreign('id_inv')->references('id_inv')->on('invoice');
+            // $table->foreign('id_inv')->references('id_inv')->on('invoice');
             $table->bigInteger('id_vendor')->unsigned()->nullable();
-            $table->foreign('id_vendor')->references('id_vendor')->on('vendor');
+            // $table->foreign('id_vendor')->references('id_vendor')->on('vendor');
             $table->string('vendor_name');
             $table->string('no_po');
             $table->integer('po_item');
@@ -33,10 +33,10 @@ class CreateGoodsReceipt extends Migration
             $table->string('gr_number');
             $table->string('uom')->nullable();
             $table->string('currency');
-            $table->float('harga_satuan');
+            $table->string('harga_satuan');
             $table->string('jumlah')->nullable();
             $table->string('jumlah_harga')->nullable();
-            $table->float('total_harga');
+            $table->string('total_harga');
             $table->string('tax_code')->nullable();
             $table->string('alasan_disp')->nullable();
             $table->enum('status',['Not Verified', 'Verified', 'Reject', 'Dispute'])->default("Not Verified")->nullable();
@@ -47,7 +47,8 @@ class CreateGoodsReceipt extends Migration
             $table->string('ref_doc_no');
             $table->float('total_ppn');
             $table->text('lampiran');
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->nullable()->useCurrentOnUpdate();
         });
     }
 

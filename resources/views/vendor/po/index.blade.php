@@ -96,19 +96,6 @@
                                 <label for=""> </label>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-3 bg-white mb-3">
-                                <label for="">No PO :  &nbsp;&nbsp;</label>
-                                <input type="text" id="minpo" name="minpo"> 
-                            </div> To : 
-                            <div class="col-2 bg-white mb-4">
-                                <label for=""></label>
-                                <input type="text" id="maxpo" name="maxpo">
-                            </div>
-                            <div class="col-4">
-                                <label for=""> </label>
-                            </div>
-                        </div>
                         <form action="{{ route('update-datagr-vendor/{id_gr}') }}" method="POST">
                             @csrf
                             <table id="list" class="table table-striped" style="font-size: 10px;">
@@ -239,14 +226,14 @@
         });
         // DataTables initialisation
         var table = $('#list').DataTable({
-            dom: "<'row'<'col-md-2 bg-white'l><'col-md-5 bg-white'B><'col-md-5 bg-white'f>>" +
-                "<'row'<'col-md-12'tr>>" +
-                "<'row'<'col-md-6'i><'col-md-6'p>>",
-            buttons: [{
-                extend: 'excelHtml5',
-                autoFilter: true,
-                sheetName: 'Exported data'
-            }]
+            // dom: "<'row'<'col-md-2 bg-white'l><'col-md-5 bg-white'B><'col-md-5 bg-white'f>>" +
+            //     "<'row'<'col-md-12'tr>>" +
+            //     "<'row'<'col-md-6'i><'col-md-6'p>>",
+            // buttons: [{
+            //     extend: 'excelHtml5',
+            //     autoFilter: true,
+            //     sheetName: 'Exported data'
+            // }]
         });
     
         // Refilter the table
