@@ -144,6 +144,7 @@ Route::post('vendor/create_invoice','VendorController@store')->name('create-invo
 Route::get('vendor/draft', 'VendorController@draft')->name('vendor/draft');
 Route::get('vendor/ba', 'VendorController@ba')->name('vendor/ba');
 Route::put('vendor/draft','VendorController@uploaddraft');
+Route::get('vendor/exportdraftba', 'VendorController@draftbaexport')->name('exportdraftba');
 
 Route::post('vendor/edit-ba','VendorController@editba')->name('update-ba-vendor/{id_gr}');
 Route::post('vendor/create_invoice_ba','VendorController@storeba')->name('create-invoice-ba');

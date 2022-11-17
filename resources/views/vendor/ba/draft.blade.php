@@ -94,7 +94,9 @@ label {
                                     <label for=""></label>
                                     <input class="form-group" type="text" id="max" name="max">
                                 </div>
-                               
+                                <div class="col-3 mb-2">
+                                    <a href="{{route('exportdraftba')}}" class="btn btn-success sm"><i class="fa fa-cloud-download"></i>&nbsp; Export To Excel</a>
+                                </div>
                             </div>
                             <form action="{{ route('update-datagr-vendor/{id_gr}') }}" method="POST">
                                 @csrf
@@ -105,10 +107,16 @@ label {
                                             <th>No Draft</th>
                                             <th>Date</th>
                                             <th>No PO</th>
-                                            <th>Material</th>
-                                            <th>Status BA</th>
+                                            <th>Material Description</th>
+                                            <th>Vendor Part Number</th>
+                                            <th>Header Text</th>
+                                            <th>Po Item</th>
+                                            <th>Quantity</th>
+                                            <th>GR Date</th>
+                                            <th>Total Price</th>
+                                            <th>Total Value</th>
+                                            <th>Status Draft BA</th>
                                             <th>Status Invoice Proposal</th>
-                                            <th>Reason</th>
                                         </tr>
                                     </thead>
                                     <tbody style="font-size: 11px;">
@@ -119,10 +127,16 @@ label {
                                             <td>{{ $item->no_draft}}</td>
                                             <td><span>{{$item->date_draft}}</span></td>
                                             <td><span>{{$item->po_number}}</span></td>
-                                            <td><span>{{$item->material}}</span></td>
+                                            <td><span>{{$item->mat_desc}}</span></td>
+                                            <td><span>{{$item->vendor_part_number}}</span></td>
+                                            <td><span>{{$item->doc_header_text}}</span></td>
+                                            <td><span>{{$item->po_item}}</span></td>
+                                            <td><span>{{$item->jumlah}}</span></td>
+                                            <td><span>{{$item->gr_date}}</span></td>
+                                            <td><span>{{$item->jumlah_harga}}</span></td>
+                                            <td><span>{{$item->selisih_harga}}</span></td>
                                             <td><span>{{$item->status_draft}}</span></td>
-                                            <td></td>
-                                            <td><span>{{$item->reason}}</span></td>
+                                            <td><span>{{$item->status_invoice_proposal}}</span></td>
                                         </tr>
                                         @endforeach
                                         </select>
@@ -220,18 +234,7 @@ $(document).ready(function() {
     });
 
     // DataTables initialisation
-    var table = $('#list').DataTable(
-        {
-            dom: "<'row'<'col-md-2 bg-white'l><'col-md-5 bg-white'B><'col-md-5 bg-white'f>>" +
-                "<'row'<'col-md-12'tr>>" +
-                "<'row'<'col-md-6'i><'col-md-6'p>>",
-            buttons: [{
-                extend: 'excelHtml5',
-                autoFilter: true,
-                sheetName: 'Exported data'
-            }]
-        }
-    );
+    var table = $('#list').DataTable();
 
     // Refilter the table
     $('#min, #max').on('change', function() {

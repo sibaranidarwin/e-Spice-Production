@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use App\BA_Reconcile;
 use App\Draft_BA;
+use App\Exports\DraftbaExport;
 use App\User;
 use App\Imports\Draft_BAImport;
 use App\good_receipt;
 use App\Invoice;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 
 use PDF; //library pdf
@@ -143,8 +145,15 @@ class VendorController extends Controller
                         'no_draft' => "MKP-Draft-". $kd,                        
                         'date_draft' => $good_receipt->gr_date,
                         'po_number' => $good_receipt->no_po,
-                        'material' => $good_receipt->material_number,
-                        'status_draft' => 'Not Yet Verified - Draft',
+                        'mat_desc' => $good_receipt->mat_desc,
+                        'vendor_part_number' => $good_receipt->vendor_part_number,
+                        'doc_header_text' => $good_receipt->doc_header_text,
+                        'po_item' => $good_receipt->po_item,
+                        'jumlah' => $good_receipt->jumlah,
+                        'gr_date' => $good_receipt->gr_date,
+                        'jumlah_harga' => $good_receipt->jumlah_harga,
+                        'status_draft' => 'Verified',
+                        'status_invoice_proposal' => 'Not Yet Verified-Draft',
                     ]);
                 }   
                 if($draft){
@@ -184,13 +193,14 @@ class VendorController extends Controller
         $total_dpp = 0;
         foreach($recordIds as $record) {
             $ba = BA_Reconcile::find($record);
-            $total_dpp += $ba->amount_vendor * $ba->qty;
+            $total_dpp += $ba->amount_mkp * $ba->qty;
             array_push($bas, $ba);
         }
         // dd($ba->id_vendor);
         // dd($total_dpp);
         $total_ppn = $total_dpp * 0.02;
         $total_harga = $total_dpp + $total_ppn;
+
         return view('vendor.po.editba', compact('bas', 'total_dpp', 'total_ppn', 'total_harga', 'kd'));
     }
 
@@ -235,7 +245,7 @@ class VendorController extends Controller
         }
 
         $request->validate([
-        'posting_date'  => 'required',
+        'posting_date'  => 'required','date','before:now',
         'vendor_invoice_number'  => 'required',
         'no_invoice_proposal' => "",
         'faktur_pajak_number'  => 'required',
@@ -243,6 +253,7 @@ class VendorController extends Controller
         'del_costs' => '',
         'data_from' => '',
         'id_vendor' => '',
+        'status_invoice_proposal' =>'',
     ]);
 
     $Invoice = Invoice::create($request->all());
@@ -284,14 +295,15 @@ class VendorController extends Controller
         }
 
         $request->validate([
-        'posting_date'  => 'required|before now',
+        'posting_date'  => 'required','date','before:now',
         'vendor_invoice_number'  => 'required',
         'no_invoice_proposal' => "",
         'faktur_pajak_number'  => 'required',
-        'total_harga_gross' => 'required',
+        'total_harga_gross' => '',
         'del_costs' => '',
         'data_from' => '',
         'id_vendor' => '',
+        'status_invoice_proposal' =>'',
     ]);
 
     $Invoice = Invoice::create($request->all());
@@ -340,6 +352,10 @@ class VendorController extends Controller
         return back()->with('success', 'BA Imported Successfully');
     }
     
+    public function draftbaexport(){
+        return Excel::download(new DraftbaExport,'ba.xlsx');
+    }
+
     public function invoice()
     {
         $user_vendor = Auth::User()->id_vendor;
@@ -430,9 +446,8 @@ class VendorController extends Controller
         $invoices = BA_Reconcile::select("ba_reconcile.id_ba",
                                     "ba_reconcile.no_ba",
                                     "ba_reconcile.po_number",
-                                    "ba_reconcile.po_mkp",
                                     "ba_reconcile.gr_date",
-                                    "ba_reconcile.material_bp",
+                                    "ba_reconcile.material_description",
                                     "ba_reconcile.status_ba",
                                     "invoice.id_inv", 
                                     "invoice.posting_date", 
@@ -459,9 +474,8 @@ class VendorController extends Controller
         $invoices = BA_Reconcile::select("ba_reconcile.id_ba",
         "ba_reconcile.no_ba",
         "ba_reconcile.po_number",
-        "ba_reconcile.po_mkp",
         "ba_reconcile.gr_date",
-        "ba_reconcile.material_bp",
+        "ba_reconcile.material_description",
         "ba_reconcile.status_ba",
         "invoice.id_inv", 
         "invoice.posting_date", 

@@ -84,12 +84,12 @@
                     <div class="card-body">
                     <div class="table-responsive text-nowrap">
                         <div class="row">
-                            <div class="col-4 bg-white mb-3">
+                            <div class="col-3 bg-white mb-3">
                                 <label for="">GR Date: </label>
                                 <input type="text" id="min" name="min"> 
                             </div> 
                             <div class="col-2 bg-white mb-4">
-                                <label for="">To date: </label>
+                                <label for="">To: </label>
                                 <input type="text" id="max" name="max">
                             </div>
                             <div class="col-4">

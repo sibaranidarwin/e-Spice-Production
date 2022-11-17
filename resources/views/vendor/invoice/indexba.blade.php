@@ -108,6 +108,7 @@ label {
                                             <th>No E-Verify</th>
                                             <th>Total PPN</th>
                                             <th>Total DPP</th>
+                                            <th>Status Invoice Proposal</th>
                                             <th>Status Upload SAP</th>
 
                                             <!-- <th class="text-center">Reference</th> -->
@@ -134,6 +135,7 @@ label {
                                             <td>{{$item['everify_number'] }}</td>
                                             <td>{{$item['ppn']}}</td>
                                             <td>{{$item['total_harga_everify'] }}</td>
+                                            <td>{{$item['status_invoice_proposal'] }}</td>
                                             <td>{{$item['status']}}</td>
                                             <td>
                                                 <a href="/vendor/detail-invoice-ba/{{$item->id_inv}}"
@@ -214,16 +216,16 @@ label {
     
         // DataTables initialisation
         var table = $('#list').DataTable(
-            {
-                dom: "<'row'<'col-md-2 bg-white'l><'col-md-5 bg-white'B><'col-md-5 bg-white'f>>" +
-                    "<'row'<'col-md-12'tr>>" +
-                    "<'row'<'col-md-6'i><'col-md-6'p>>",
-                buttons: [{
-                    extend: 'excelHtml5',
-                    autoFilter: true,
-                    sheetName: 'Exported data'
-                }]
-            }
+            // {
+            //     dom: "<'row'<'col-md-2 bg-white'l><'col-md-5 bg-white'B><'col-md-5 bg-white'f>>" +
+            //         "<'row'<'col-md-12'tr>>" +
+            //         "<'row'<'col-md-6'i><'col-md-6'p>>",
+            //     buttons: [{
+            //         extend: 'excelHtml5',
+            //         autoFilter: true,
+            //         sheetName: 'Exported data'
+            //     }]
+            // }
         );
     
         // Refilter the table

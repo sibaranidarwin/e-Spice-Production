@@ -23,18 +23,10 @@ class CreateBaTable extends Migration
             $table->string('no_ba');
             $table->date('gr_date');
             $table->integer('po_number');
-            $table->integer('cis_no');
-            $table->integer('po_mkp');
-            $table->string('sales_name');
-            $table->string('sales_order');
             $table->integer('item');
-            $table->string('material_bp');
             $table->string('material_description');
             $table->string('reference');
             $table->integer('qty');
-            $table->integer('amount_vendor');
-            $table->string('material_mkp');
-            $table->date('gr_date_mkp');
             $table->integer('amount_mkp');
             $table->string('confirm_price');
             $table->enum('status_ba',['Not Yet Verified - BA', 'Verified - BA'])->default("Not Yet Verified - BA")->nullable();
