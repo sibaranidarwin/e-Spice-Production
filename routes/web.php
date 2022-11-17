@@ -142,6 +142,8 @@ Route::post('vendor/update-datagr','VendorController@update')->name('dispute_dat
 Route::post('vendor/create_invoice','VendorController@store')->name('create-invoice');
 
 Route::get('vendor/draft', 'VendorController@draft')->name('vendor/draft');
+Route::get('vendor/historydraft', 'VendorController@historydraft')->name('vendor/historydraft');
+Route::get('vendor/historyba', 'VendorController@historyba')->name('vendor/historyba');
 Route::get('vendor/ba', 'VendorController@ba')->name('vendor/ba');
 Route::put('vendor/draft','VendorController@uploaddraft');
 Route::get('vendor/exportdraftba', 'VendorController@draftbaexport')->name('exportdraftba');

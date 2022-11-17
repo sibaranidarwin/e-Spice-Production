@@ -29,7 +29,7 @@ class DraftbaExport implements WithEvents,FromCollection, WithHeadings, ShouldAu
             AfterSheet::class    => function(AfterSheet $event) {
                 
                 $event->sheet->protectCells('A1:J1', 'PASSWORD');
-                $event->sheet->getStyle('k2:z2')->getProtection()->setLocked(\PhpOffice\PhpSpreadsheet\Style\Protection::PROTECTION_UNPROTECTED);
+                $event->sheet->getStyle('k2:k100')->getProtection()->setLocked(\PhpOffice\PhpSpreadsheet\Style\Protection::PROTECTION_UNPROTECTED);
                 $event->sheet->getDelegate()->getProtection()->setSheet(true);
             },
         ];

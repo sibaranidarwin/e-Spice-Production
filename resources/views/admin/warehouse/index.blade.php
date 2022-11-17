@@ -85,16 +85,6 @@
                                     <td class="text-center"> <span
                                             class="btn btn-warning font-weight-bold">Warehouse</span> </td>
                                     <td class="text-center"><span>
-                                            <form action="{{route('user.destroy',$user->id)}}" method="POST">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-danger fa fa-times"
-                                                    onclick="return confirm('Are you sure?')"></button>
-                                                <a href="{{route('masyarakat.showing',$user->id)}}"
-                                                    class="btn fa fa-eye"></a>
-                                                <a href="{{route('masyarakat.edit',$user->id)}}"
-                                                    class="btn btn-primary fa fa-edit"></a>
-                                            </form>
                                         </span></td>
                                 </tr>
                                 @endif

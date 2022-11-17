@@ -99,8 +99,7 @@ label {
                                 <label class="form-control-label" for="vendor_invoice_number">Invoice Number<span style="color: red">*</span></label>
                                 <input type="text" id="input_mask1"
                                     class="form-control @error('vendor_invoice_number') is-invalid @enderror"
-                                    name="vendor_invoice_number" placeholder="Fill in Invoice Number ..."
-                                    value="{{ $good->vendor_invoice_number }}"  required>
+                                    name="vendor_invoice_number" required>
                                 @error('vendor_invoice_number')<span
                                     class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                             </div>
@@ -143,7 +142,7 @@ label {
                             </div>
                     </div>
                     <button type="submit" class="btn btn-success mb-2" id="simpan" onclick="return confirm('Are you sure?')">Submit</button>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="{{url('vendor/purchaseorder')}}" type="submit"
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="{{url('vendor/ba')}}" type="submit"
                         class="btn btn-danger mb-2" id="simpan" onclick="return confirm('Are you sure?')">Return</a>
                     </form>
                     <br>

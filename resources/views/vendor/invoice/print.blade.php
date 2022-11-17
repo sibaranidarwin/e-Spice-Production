@@ -78,7 +78,7 @@
                 <td colspan="3">Nomor Pelanggan (Account No) : 12278</td>
                 <td colspan="1"></td>
                 <td></td>
-                <td>Nomor Faktur (Invoice Number) : 9142</td>
+                <td>Nomor Faktur (Invoice Number) : {{$invoice->vendor_invoice_number}}</td>
             </tr>
             <tr>
                 <td>Nomor Pesanan (Order Reff) : 4020071510</td>
@@ -99,7 +99,7 @@
                 <td>Tanggal Jatuh Tempo (Payment Due Date) : 3 April 2022</td>
             </tr>
             <tr>
-                <td>Nomor Faktur Pajak (VAT No.) : 010.001-22.66960371</td>
+                <td>Nomor Faktur Pajak (VAT No.) : {{$invoice->faktur_pajak_number}}</td>
             </tr>
         </table>
         {{-- @endforeach --}}

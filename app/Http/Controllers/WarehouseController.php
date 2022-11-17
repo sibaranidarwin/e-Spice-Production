@@ -118,12 +118,12 @@ class WarehouseController extends Controller
         $dispute = good_receipt::all()->where("Status", "Dispute")->count();
 
         // dd($detail->id_inv);
-        $invoices = BA_Reconcile::select("ba_reconcile.id_ba",
+     $invoices = BA_Reconcile::select("ba_reconcile.id_ba",
                                     "ba_reconcile.no_ba",
                                     "ba_reconcile.po_number",
-                                    "ba_reconcile.po_mkp",
+                                    "ba_reconcile.item",
                                     "ba_reconcile.gr_date",
-                                    "ba_reconcile.material_bp",
+                                    "ba_reconcile.material_description",
                                     "ba_reconcile.status_ba",
                                     "invoice.id_inv", 
                                     "invoice.posting_date", 

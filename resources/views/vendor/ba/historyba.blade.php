@@ -58,30 +58,32 @@ label {
         <div class="row">
             <div class="col-lg-12">
                 <div class="card">
-                    @if($message = Session::get('destroy'))
-                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                        <strong>Success!</strong> {{$message}}
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    @elseif($message = Session::get('success'))
-                    <div class="alert alert-success alert-dismissible fade show" role="alert">
-                        <strong>Success!</strong> {{$message}}
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    @elseif($message = Session::get('warning'))
-                    <div class="alert alert-primary alert-dismissible fade show" role="alert">
-                        <strong>Success!</strong> {{$message}}
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
+                    @if (count($errors) > 0)
+                    <div class="row">
+                        <div class="col-md-12 col-md-offset-1">
+                          <div class="alert alert-danger alert-dismissible">
+                              <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                              <h4><i class="icon fa fa-ban"></i> Error!</h4>
+                              @foreach($errors->all() as $error)
+                              {{ $error }} <br>
+                              @endforeach      
+                          </div>
+                        </div>
                     </div>
                     @endif
+      
+                    @if (Session::has('success'))
+                        <div class="row">
+                          <div class="col-md-12 col-md-offset-1">
+                            <div class="alert alert-success alert-dismissible">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                <h5>{!! Session::get('success') !!}</h5>   
+                            </div>
+                          </div>
+                        </div>
+                    @endif
                     <div class="card-header">
-                        <strong class="card-title">Draft BA Reconcile List</strong>
+                        <strong class="card-title">History BA Reconcile List</strong>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive text-nowrap">
@@ -94,48 +96,42 @@ label {
                                     <label for=""></label>
                                     <input class="form-group" type="text" id="max" name="max">
                                 </div>
-                                <div class="col-3 mb-2">
-                                    <a href="{{route('exportdraftba')}}" class="btn btn-success sm" onclick="return confirm('Are you sure?')"><i class="fa fa-cloud-download"></i>&nbsp; Export To Excel</a>
-                                </div>
+                                {{-- <div class="col-3 mb-2">
+                                    <button class="btn btn-primary" data-toggle="modal" data-target="#modal-import"><i class="fa fa-cloud-upload"></i>&nbsp; Import Excel</button>
+                                </div> --}}
                             </div>
-                            <form action="{{ route('update-datagr-vendor/{id_gr}') }}" method="POST">
+                            <form action="{{ route('update-ba-vendor/{id_gr}') }}" method="POST">
                                 @csrf
                                 <table id="list" class="table table-striped" style="font-size: 10px;">
                                     <thead>
                                         <tr>
+                                       
                                             <th>No</th>
-                                            <th>No Draft</th>
+                                            <th>No BA</th>
                                             <th>Date</th>
                                             <th>No PO</th>
-                                            <th>Material Description</th>
-                                            <th>Vendor Part Number</th>
-                                            <th>Header Text</th>
-                                            <th>Po Item</th>
+                                            <th>PO Item</th>
+                                            <th>Material</th>
                                             <th>Quantity</th>
-                                            <th>GR Date</th>
                                             <th>Total Price</th>
-                                            <th>Total Value</th>
-                                            <th>Status Draft BA</th>
+                                            <th>Status BA</th>
                                             <th>Status Invoice Proposal</th>
                                         </tr>
                                     </thead>
                                     <tbody style="font-size: 11px;">
                                         @php $i = 1 @endphp
-                                        @foreach($draft as $item)
+                                        @foreach($ba as $item)
                                         <tr>
+                                          
                                             <td>{{$i++}}</td>
-                                            <td>{{ $item->no_draft}}</td>
-                                            <td><span>{{$item->date_draft}}</span></td>
-                                            <td><span>{{$item->po_number}}</span></td>
-                                            <td><span>{{$item->mat_desc}}</span></td>
-                                            <td><span>{{$item->vendor_part_number}}</span></td>
-                                            <td><span>{{$item->doc_header_text}}</span></td>
-                                            <td><span>{{$item->po_item}}</span></td>
-                                            <td><span>{{$item->jumlah}}</span></td>
+                                            <td>{{ $item->no_ba}}</td>
                                             <td><span>{{$item->gr_date}}</span></td>
-                                            <td><span>{{$item->jumlah_harga}}</span></td>
-                                            <td><span>{{$item->selisih_harga}}</span></td>
-                                            <td><span>{{$item->status_draft}}</span></td>
+                                            <td><span>{{$item->po_number}}</span></td>
+                                            <td><span>{{$item->item}}</span></td>
+                                            <td><span>{{$item->material_description}}</span></td>
+                                            <td><span>{{$item->qty}}</span></td>
+                                            <td><span>{{$item->amount_mkp}}</span></td>
+                                            <td><span>{{$item->status_ba}}</span></td>
                                             <td><span>{{$item->status_invoice_proposal}}</span></td>
                                         </tr>
                                         @endforeach
@@ -144,6 +140,8 @@ label {
                                 </table>
                                 {{-- &nbsp;&nbsp;<button type="submit" name="action" value="Dispute"
                                     class="btn btn-warning btn-sm-3">Dispute</button> --}}
+                                    {{-- &nbsp;&nbsp;<button type="submit" name="action" value="Update"
+                                    class="btn btn-success btn-sm-3" onclick="return confirm('Are you sure?')">Create Invoice</button> --}}
                             </form>
                         </div> <!-- /.table-stats -->
                     </div>
@@ -176,7 +174,7 @@ label {
     <div class="modal-dialog modal-lg">
       <form method="post" id="form-import" action="{{url('vendor/draft')}}" enctype="multipart/form-data" class="modal-content">
         <div class="modal-header">
-          <h4 class="modal-title">Import Data Draft BA</h4>
+          <h4 class="modal-title">Import Data BA</h4>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -186,17 +184,17 @@ label {
           {{csrf_field()}}
           <div class="row">
             <div class="col-md-12">
-              <p>Import data Draft BA sesuai format contoh berikut.<br/><a href="{{url('')}}/excel-karyawan.xlsx"><i class="fa fa-download"></i> File Contoh Draft BA</a></p>
+              <p>Import data BA sesuai format contoh berikut.<br/><a href="{{url('')}}/vendor-ba.xlsx"><i class="fa fa-download"></i> File Contoh BA</a></p>
             </div>
             <div class="col-md-12">
-              <label>File Excel Draft BA</label>
-              <input type="file" name="excel-draft" required>
+              <label>File Excel BA</label>
+              <input type="file" name="excel-vendor-ba" required>
             </div>
           </div>
         </div>
         <div class="modal-footer justify-content-between">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
-          <button type="submit" class="btn btn-primary">Simpan</button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="return confirm('Are you sure?')">Return</button>
+          <button type="submit" class="btn btn-primary" onclick="return confirm('Are you sure?')">Extract Data</button>
         </div>
       </form>
     </div>
@@ -209,7 +207,7 @@ $.fn.dataTable.ext.search.push(
     function(settings, data, dataIndex) {
         var min = minDate.val();
         var max = maxDate.val();
-        var date = new Date(data[2]);
+        var date = new Date(data[3]);
 
         if (
             (min === null && max === null) ||

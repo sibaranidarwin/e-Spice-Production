@@ -191,8 +191,13 @@ class VendorController extends Controller
 
         $bas = [];
         $total_dpp = 0;
-        foreach($recordIds as $record) {
+        foreach($recordIds as $record ) {
             $ba = BA_Reconcile::find($record);
+            $ba->update([
+                'status_invoice_proposal' => 'Verified',
+            ]);
+            $ba->save();
+
             $total_dpp += $ba->amount_mkp * $ba->qty;
             array_push($bas, $ba);
         }
@@ -247,7 +252,7 @@ class VendorController extends Controller
         $request->validate([
         'posting_date'  => 'required','date','before:now',
         'vendor_invoice_number'  => 'required',
-        'no_invoice_proposal' => "",
+        'no_invoice_proposal' => "required",
         'faktur_pajak_number'  => 'required',
         'total_harga_gross' => 'required',
         'del_costs' => '',
@@ -297,7 +302,7 @@ class VendorController extends Controller
         $request->validate([
         'posting_date'  => 'required','date','before:now',
         'vendor_invoice_number'  => 'required',
-        'no_invoice_proposal' => "",
+        'no_invoice_proposal' => "required",
         'faktur_pajak_number'  => 'required',
         'total_harga_gross' => '',
         'del_costs' => '',
@@ -334,14 +339,29 @@ class VendorController extends Controller
         $draft = Draft_BA::all()->where("id_vendor", $user_vendor);
         return view('Vendor.ba.draft',compact('draft'));
         }
+    public function historydraft()
+        {
+        $user_vendor = Auth::User()->id_vendor;
+        // dd($user_vendor);
+        $draft = Draft_BA::all()->where("id_vendor", $user_vendor);
+        return view('Vendor.ba.historydraft',compact('draft'));
+        }
 
     public function ba()
     {
         $user_vendor = Auth::User()->id_vendor;
 
-        $ba = BA_Reconcile::all()->where("id_vendor", $user_vendor);
+        $ba = BA_Reconcile::all()->where("id_vendor", $user_vendor)->where("status_invoice_proposal", "Not Yet Verified - BA");
         
         return view('Vendor.ba.upload',compact('ba'));
+    }
+    public function historyba()
+    {
+        $user_vendor = Auth::User()->id_vendor;
+
+        $ba = BA_Reconcile::all()->where("id_vendor", $user_vendor)->where("status_invoice_proposal", "Verified");
+        
+        return view('Vendor.ba.historyba',compact('ba'));
     }
     
     public function uploaddraft(Request $request)
@@ -443,7 +463,7 @@ class VendorController extends Controller
     public function detailinvoiceba(Request $request, $id){
         $detail = Invoice::find($id);
         // dd($detail->id_inv);
-        $invoices = BA_Reconcile::select("ba_reconcile.id_ba",
+       $invoices = BA_Reconcile::select("ba_reconcile.id_ba",
                                     "ba_reconcile.no_ba",
                                     "ba_reconcile.po_number",
                                     "ba_reconcile.gr_date",
