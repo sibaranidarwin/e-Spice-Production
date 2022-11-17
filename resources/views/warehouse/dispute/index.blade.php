@@ -88,7 +88,7 @@ label
                         <div class="table-responsive text-nowrap">
                             <div class="row">
                                 <div class="form-group col-3 bg-white mb-2">
-                                    <label for="">GR Date From: </label>
+                                    <label for="">GR Date: </label>
                                     <input class="form-group" type="text" id="min" name="min">
                                 </div>
                                 <div class=" form-group col-2 bg-white mb-2">
