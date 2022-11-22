@@ -134,9 +134,16 @@ label {
                                             <td><span>{{$item->doc_header_text}}</span></td>
                                             <td><span>{{$item->po_item}}</span></td>
                                             <td><span>{{$item->jumlah}}</span></td>
-                                            <td><span>{{$item->gr_date}}</span></td>
+                                            <td><span>{{ Carbon\Carbon::parse($item->gr_date)->format('d F Y') }}</span></td>
                                             <td><span>RP. {{ number_format($item->jumlah_harga) }}</span></td> 
-                                            <td><span>{{$item->selisih_harga}}</span></td>
+                                            <td><span>
+                                            <?php
+                                            $harga = $item->jumlah_harga;
+                                            $jumlah = $item->jumlah;
+                                            $total = $harga * $jumlah;
+                                            echo"Rp."; echo number_format($total);
+                                            ?>
+                                            </span></td>
                                             <td><span>{{$item->status_draft}}</span></td>
                                             <td><span>{{$item->status_invoice_proposal}}</span></td>
                                         </tr>

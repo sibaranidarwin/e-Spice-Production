@@ -31,6 +31,7 @@ class CreateBaTable extends Migration
             $table->integer('amount_mkp');
             $table->string('confirm_price');
             $table->enum('status_ba',['Not Yet Verified - BA', 'Verified - BA'])->default("Not Yet Verified - BA")->nullable();
+            $table->enum('status_invoice_proposal',['Not Yet Verified - BA', 'Verified - BA'])->default("Not Yet Verified - BA")->nullable();
             $table->timestamps();
         });
     }

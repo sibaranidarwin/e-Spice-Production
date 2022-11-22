@@ -125,14 +125,14 @@ label {
                                         <tr>
                                             <td>{{$i++}}</td>
                                             <td>{{ $item->no_draft}}</td>
-                                            <td><span>{{$item->date_draft}}</span></td>
+                                            <td><span>{{ Carbon\Carbon::parse($item->created_at)->format('d F Y') }}</span></td>
                                             <td><span>{{$item->po_number}}</span></td>
                                             <td><span>{{$item->mat_desc}}</span></td>
                                             <td><span>{{$item->vendor_part_number}}</span></td>
                                             <td><span>{{$item->doc_header_text}}</span></td>
                                             <td><span>{{$item->po_item}}</span></td>
                                             <td><span>{{$item->jumlah}}</span></td>
-                                            <td><span>{{$item->gr_date}}</span></td>
+                                            <td><span>{{ Carbon\Carbon::parse($item->gr_date)->format('d F Y') }}</span></td>
                                             <td><span>RP. {{ number_format($item->jumlah_harga) }}</span></td> 
                                             <td><span>{{$item->selisih_harga}}</span></td>
                                             <td><span>{{$item->status_draft}}</span></td>

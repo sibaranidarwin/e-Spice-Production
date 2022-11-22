@@ -125,7 +125,7 @@
                                         <td ><span>{{$good_receipt->gr_number}}</span></td>
                                         <td ><span>{{$good_receipt->no_po}}</span></td>
                                         <td><span>{{$good_receipt->po_item}}</span></td>
-                                        <td><span>{{$good_receipt->gr_date}}</span></td>
+                                        <td><span>{{ Carbon\Carbon::parse($good_receipt->gr_date)->format('d F Y') }}</span></td>
                                         <td> <span>{{$good_receipt->material_number}}</span></td>
                                         <td> <span>{{$good_receipt->ref_doc_no}}</span> </td>
                                         <td> <span>{{$good_receipt->mat_desc}}</span> </td>

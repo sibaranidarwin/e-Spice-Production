@@ -43,7 +43,9 @@ class VendorController extends Controller
     {
         $user_vendor = Auth::User()->id_vendor;
         
-        $good_receipt = good_receipt::Where("status", "Verified")->orWhere("status","Not Verified")->Where("id_vendor", $user_vendor)->count();
+        $good_receipt = good_receipt::where('id_vendor', $user_vendor)->where(function($query) {
+			$query->where('status','Verified')
+            ->orWhereNull('status');})->count();
         $invoicegr = Invoice::all()->where("data_from", "GR")->Where("id_vendor", $user_vendor)->count();
         $invoiceba = Invoice::all()->where("data_from", "BA")->Where("id_vendor", $user_vendor)->count();
         $dispute = good_receipt::all()->where("status", "Dispute")->Where("id_vendor", $user_vendor)->count();
@@ -56,8 +58,12 @@ class VendorController extends Controller
     public function po()
     {   
         $user_vendor = Auth::User()->id_vendor;
-        //  dd($user_vendodelr);
-        $good_receipts = good_receipt::Where("id_vendor", $user_vendor)->WhereNOTNULL("status")->orWhereNULL("status")->orWhere("status", "Verified")->WhereNULL("id_inv")->get();
+
+        $good_receipts = good_receipt::where('id_vendor', $user_vendor)->where(function($query) {
+			$query->where('status','Verified')
+						->orWhereNull('status');})->get();
+        
+
         return view('vendor.po.index',compact('good_receipts'))
                 ->with('i',(request()->input('page', 1) -1) *5);
     }
@@ -338,6 +344,11 @@ class VendorController extends Controller
         $user_vendor = Auth::User()->id_vendor;
         // dd($user_vendor);
         $draft = Draft_BA::all()->where("id_vendor", $user_vendor);
+        // $total_price= Draft_BA::all()->jumlah_harga->get();
+        //  dd($total_price);
+        // $total = $total_price * 2;
+        // $total = Draft_BA::all()->select('sum(jumlah_harga*jumlah) as total');
+        // dd($total);
         return view('Vendor.ba.draft',compact('draft'));
         }
     public function historydraft()
