@@ -146,7 +146,7 @@ label {
                                 <td> <span class="">{{$invoice->no_po}}</span> </td>
                                 <td> <span class="">{{$invoice->gr_number}}</span> </td>
                                 <td> <span class="">{{$invoice->po_item}}</span> </td>
-                                <td> <span class="">{{$invoice->gr_date}}</span>
+                                <td><span>{{ Carbon\Carbon::parse($invoice->gr_date)->format('d F Y') }}</span></td>
                                 <td> <span class="">{{$invoice->material_number}}</span>
                                 <td> <span class="">{{$invoice->harga_satuan}}</span>
                                 <td> <span class="">{{$invoice->jumlah}}</span></td>

@@ -151,7 +151,7 @@ label {
                             <tr>
                                 <td><span class="name">{{$ba->no_ba}}</span> </td>
                                 <td> <span class="">{{$ba->po_number}}</span> </td>
-                                <td> <span class="">{{$ba->gr_date}}</span> </td>
+                                <td><span>{{ Carbon\Carbon::parse($ba->gr_date)->format('d F Y') }}</span></td>
                                 <td> <span class="">{{$ba->material_description}}</span></td>
                                 <td>{{ $ba->status_ba }}</td>
                             </tr>

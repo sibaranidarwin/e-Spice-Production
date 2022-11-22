@@ -128,7 +128,7 @@ label {
                                         @foreach($invoice as $item)
                                         <tr>
                                             <td class="serial">{{++$i}}</td>
-                                            <td>{{$item['posting_date'] }}</td>
+                                            <td><span>{{ Carbon\Carbon::parse($item['posting_date'])->format('d F Y') }}</span></td>
                                             <td>{{$item['vendor_invoice_number'] }}</td>
                                             <td>{{$item['no_invoice_proposal'] }}</td>
                                             <td>{{$item['faktur_pajak_number'] }}</td>

@@ -125,7 +125,7 @@ label {
                                           
                                             <td>{{$i++}}</td>
                                             <td>{{ $item->no_ba}}</td>
-                                            <td><span>{{$item->gr_date}}</span></td>
+                                            <td><span>{{ Carbon\Carbon::parse($item->gr_date)->format('d F Y') }}</span></td>
                                             <td><span>{{$item->po_number}}</span></td>
                                             <td><span>{{$item->item}}</span></td>
                                             <td><span>{{$item->material_description}}</span></td>
