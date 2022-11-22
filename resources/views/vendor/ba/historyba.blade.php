@@ -130,7 +130,7 @@ label {
                                             <td><span>{{$item->item}}</span></td>
                                             <td><span>{{$item->material_description}}</span></td>
                                             <td><span>{{$item->qty}}</span></td>
-                                            <td><span>{{$item->amount_mkp}}</span></td>
+                                            <td><span>RP. {{ number_format($item->amount_mkp) }}</span></td>
                                             <td><span>{{$item->status_ba}}</span></td>
                                             <td><span>{{$item->status_invoice_proposal}}</span></td>
                                         </tr>

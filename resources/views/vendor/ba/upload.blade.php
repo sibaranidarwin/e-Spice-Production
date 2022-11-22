@@ -83,7 +83,9 @@ label {
                         </div>
                     @endif
                     <div class="card-header">
-                        <strong class="card-title">BA Reconcile List</strong>
+                        @foreach($ba as $item)
+                        @endforeach
+                        <strong class="card-title">BA Reconcile {{$item->no_ba}}</strong>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive text-nowrap">
@@ -111,7 +113,8 @@ label {
                                             <th>Date</th>
                                             <th>No PO</th>
                                             <th>PO Item</th>
-                                            <th>Material</th>
+                                            <th>Material Description</th>
+                                            <th>Vendor Part Number</th>
                                             <th>Quantity</th>
                                             <th>Total Price</th>
                                             <th>Status BA</th>
@@ -129,8 +132,9 @@ label {
                                             <td><span>{{$item->po_number}}</span></td>
                                             <td><span>{{$item->item}}</span></td>
                                             <td><span>{{$item->material_description}}</span></td>
+                                            <td><span>{{$item->vendor_part_number}}</span></td>
                                             <td><span>{{$item->qty}}</span></td>
-                                            <td><span>{{$item->amount_mkp}}</span></td>
+                                            <td><span>RP. {{ number_format($item->amount_mkp) }}</span></td>
                                             <td><span>{{$item->status_ba}}</span></td>
                                             <td><span>{{$item->status_invoice_proposal}}</span></td>
                                         </tr>
@@ -140,6 +144,8 @@ label {
                                 </table>
                                 {{-- &nbsp;&nbsp;<button type="submit" name="action" value="Dispute"
                                     class="btn btn-warning btn-sm-3">Dispute</button> --}}
+                                    <a href="{{url('vendor/detailba')}}" type="submit"
+                                    class="btn btn-danger" id="simpan" onclick="return confirm('Are you sure?')"> Return</a> &nbsp;&nbsp;&nbsp;
                                     &nbsp;&nbsp;<button type="submit" name="action" value="Update"
                                     class="btn btn-success btn-sm-3" onclick="return confirm('Are you sure?')">Create Invoice</button>
                             </form>
@@ -184,7 +190,7 @@ label {
           {{csrf_field()}}
           <div class="row">
             <div class="col-md-12">
-              <p>Import data BA sesuai format contoh berikut.<br/><a href="{{url('')}}/vendor-ba.xlsx"><i class="fa fa-download"></i> File Contoh BA</a></p>
+              <p>Import data BA sesuai format contoh berikut.<br/><a href="{{url('')}}/Panduan_Pengisian_Excel.pdf"><i class="fa fa-download"></i> File Contoh BA</a></p>
             </div>
             <div class="col-md-12">
               <label>File Excel BA</label>

@@ -2,6 +2,7 @@
 
 namespace App\Imports;
 
+use App\Ba;
 use App\BA_Reconcile;
 use App\Draft_BA;
 use Auth;
@@ -20,7 +21,7 @@ class Draft_BAImport implements ToCollection, WithHeadingRow
     */
     public function collection(Collection $rows)
     {
-        $q = DB::table('draft_ba')->select(DB::raw('MAX(RIGHT(no_draft, 8)) as kode'));
+        $q = DB::table('ba_reconcile')->select(DB::raw('MAX(RIGHT(no_ba, 4)) as kode'));
         $kd="";
         if($q->count()>0)
         {
@@ -34,17 +35,18 @@ class Draft_BAImport implements ToCollection, WithHeadingRow
         {
             $kd = date('d-m-Y').'-'."0001";
         }
-                                                                                                                                            
+                
          Validator::make($rows->toArray(), [
              '*.id_vendor' => '',
              '*.no_ba' => '',
-             '*.gr_date' => 'required',
-             '*.po_number' => 'required',
-             '*.item' => 'required',
-             '*.material_description' => 'required',
-             '*.qty' => 'required',
-             '*.amount_mkp' => 'required',
-             '*.status_ba' => 'required',
+             '*.gr_date' => '',
+             '*.po_number' => '',
+             '*.item' => '',
+             '*.material_description' => '',
+             '*.vendor_part_number' => '',
+             '*.qty' => '',
+             '*.amount_mkp' => '',
+             '*.status_ba' => '',
              '*.status_invoice_proposal' => '',
              '*.created_at' => ''
 
@@ -52,17 +54,23 @@ class Draft_BAImport implements ToCollection, WithHeadingRow
         foreach ($rows as $row) {
             BA_Reconcile::create([
                 'id_vendor' =>Auth::User()->id_vendor,
-                'no_ba'=>"MKP-BA-".$kd,
+                'no_ba'=>"MKP-BA-". $kd,
                 'gr_date'=>$row['gr_date'],
                 // dd($row['gr_date']),
                 'po_number'=>$row['po_number'],
                 'item'=>$row['item'],
                 'material_description'=>$row['material_description'],
+                'vendor_part_number'=>$row['vendor_part_number'],
                 // 'reference'=>$row['reference'],
                 'qty'=>$row['qty'],
                 'amount_mkp'=>$row['amount_mkp'],
                 'status_ba'=>"Verified",
                 'status_invoice_proposal' =>"Not Yet Verified - BA",
+                'created_at'=>$now = date('Y-m-d H:i:s'),
+            ]);
+            Ba::create([
+                'no_ba'=>"MKP-BA-". $kd,
+                'id_vendor' =>Auth::User()->id_vendor,
                 'created_at'=>$now = date('Y-m-d H:i:s'),
             ]);
         }

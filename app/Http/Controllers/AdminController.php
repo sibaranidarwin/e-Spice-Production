@@ -55,7 +55,11 @@ class AdminController extends Controller
         return view('admin.po.reject',compact('good_receipts'))
                 ->with('i',(request()->input('page', 1) -1) *5);
     }
-
+    public function historydraft()
+    {
+    $draft = Draft_BA::all();
+    return view('admin.ba.historydraft',compact('draft'));
+    }
     public function draft()
         {
         $draft = Draft_BA::all();
@@ -64,15 +68,23 @@ class AdminController extends Controller
 
     public function ba()
     {
-        $ba = BA_Reconcile::all();
+        $ba = BA_Reconcile::all()->where("status_invoice_proposal", "Not Yet Verified - BA");
         
         return view('admin.ba.index',compact('ba'));
     }
+    public function historyba()
+    {
+        $user_vendor = Auth::User()->id_vendor;
 
+        $ba = BA_Reconcile::all()->where("status_invoice_proposal", "Verified");
+        
+        return view('admin.ba.historyba',compact('ba'));
+    }
 
     public function invoice()
     {   
         $invoice = Invoice::latest()->orWhere("data_from", "GR")->get();
+        
         return view('admin.invoice.index',compact('invoice'))
                 ->with('i',(request()->input('page', 1) -1) *5);
 

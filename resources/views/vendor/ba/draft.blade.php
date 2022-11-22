@@ -94,15 +94,16 @@ label {
                                     <label for=""></label>
                                     <input class="form-group" type="text" id="max" name="max">
                                 </div>
-                                <div class="col-3 mb-2">
+                                {{-- <div class="col-3 mb-2">
                                     <a href="{{route('exportdraftba')}}" class="btn btn-success sm" onclick="return confirm('Are you sure?')"><i class="fa fa-cloud-download"></i>&nbsp; Export To Excel</a>
-                                </div>
+                                </div> --}}
                             </div>
-                            <form action="{{ route('update-datagr-vendor/{id_gr}') }}" method="POST">
+                            <form action="{{ route('exportdraftba/{id_draft_ba}') }}" method="POST">
                                 @csrf
                                 <table id="list" class="table table-striped" style="font-size: 10px;">
                                     <thead>
                                         <tr>
+                                            <th><input type="checkbox" onchange="checkAll(this)"></th>
                                             <th>No</th>
                                             <th>No Draft</th>
                                             <th>Date</th>
@@ -123,6 +124,7 @@ label {
                                         @php $i = 1 @endphp
                                         @foreach($draft as $item)
                                         <tr>
+                                            <td><input type="checkbox" name="ids[]" value="{{$item->id_draft_ba}}"></td>
                                             <td>{{$i++}}</td>
                                             <td>{{ $item->no_draft}}</td>
                                             <td><span>{{$item->date_draft}}</span></td>
@@ -133,7 +135,7 @@ label {
                                             <td><span>{{$item->po_item}}</span></td>
                                             <td><span>{{$item->jumlah}}</span></td>
                                             <td><span>{{$item->gr_date}}</span></td>
-                                            <td><span>{{$item->jumlah_harga}}</span></td>
+                                            <td><span>RP. {{ number_format($item->jumlah_harga) }}</span></td> 
                                             <td><span>{{$item->selisih_harga}}</span></td>
                                             <td><span>{{$item->status_draft}}</span></td>
                                             <td><span>{{$item->status_invoice_proposal}}</span></td>
@@ -142,8 +144,7 @@ label {
                                         </select>
                                     </tbody>
                                 </table>
-                                {{-- &nbsp;&nbsp;<button type="submit" name="action" value="Dispute"
-                                    class="btn btn-warning btn-sm-3">Dispute</button> --}}
+                                <button class="btn btn-info sm" onclick="return confirm('Are you sure?')"> Choose To Export </button>
                             </form>
                         </div> <!-- /.table-stats -->
                     </div>
@@ -243,6 +244,7 @@ $(document).ready(function() {
 
 
 });
+
 function checkAll(ele) {
       var checkboxes = document.getElementsByTagName('input');
       if (ele.checked) {
