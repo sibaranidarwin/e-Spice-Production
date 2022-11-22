@@ -141,9 +141,9 @@ label {
                                     class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                             </div>
                     </div>
+                    <a href="{{url('vendor/ba')}}" type="submit" class="btn btn-danger mb-2" id="simpan" onclick="return confirm('Are you sure?')">Return</a>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <button type="submit" class="btn btn-success mb-2" id="simpan" onclick="return confirm('Are you sure?')">Submit</button>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="{{url('vendor/ba')}}" type="submit"
-                        class="btn btn-danger mb-2" id="simpan" onclick="return confirm('Are you sure?')">Return</a>
                     </form>
                     <br>
                     <strong class="card-header">Data GR to be Invoice Proposal</strong>

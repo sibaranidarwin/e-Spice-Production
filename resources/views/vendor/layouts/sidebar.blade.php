@@ -119,7 +119,7 @@
                             <a class="accordion-heading" data-toggle="collapse" data-target="#submenu3"><span class=""><i class="menu-icon fa fa-newspaper-o"></i>BA</span></a>
                             <ul class="nav nav-list collapse sub-menu children" id="submenu3">
                                 <li><a href="{{url('vendor/historyba')}}" title="Title"><i class="fa fa-history "></i>History BA</a></li>
-                                <li><a href="{{url('vendor/ba')}}" title="Title"><i class="fa fa-table "></i>BA Active</a></li>
+                                <li><a href="{{url('vendor/detailba')}}" title="Title"><i class="fa fa-table "></i>BA Active</a></li>
                             </ul>
                       </li>
                     </ul>

@@ -9,6 +9,7 @@ use App\User;
 use App\Imports\Draft_BAImport;
 use App\good_receipt;
 use App\Invoice;
+use App\Ba;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
@@ -42,7 +43,7 @@ class VendorController extends Controller
     {
         $user_vendor = Auth::User()->id_vendor;
         
-        $good_receipt = good_receipt::Where("status", "Verified")->Where("id_vendor", $user_vendor)->count();
+        $good_receipt = good_receipt::Where("status", "Verified")->orWhere("status","Not Verified")->Where("id_vendor", $user_vendor)->count();
         $invoicegr = Invoice::all()->where("data_from", "GR")->Where("id_vendor", $user_vendor)->count();
         $invoiceba = Invoice::all()->where("data_from", "BA")->Where("id_vendor", $user_vendor)->count();
         $dispute = good_receipt::all()->where("status", "Dispute")->Where("id_vendor", $user_vendor)->count();
@@ -347,12 +348,19 @@ class VendorController extends Controller
         return view('Vendor.ba.historydraft',compact('draft'));
         }
 
-    public function ba()
+    public function detailba()
+        {
+            $user_vendor = Auth::User()->id_vendor;
+             $ba = BA::select('no_ba','status_ba','status_invoice_proposal')->distinct()->where("id_vendor", $user_vendor)->get(); 
+
+            return view('Vendor.ba.detail',compact('ba'));
+        }
+
+    public function ba($no_ba)
     {
         $user_vendor = Auth::User()->id_vendor;
-
-        $ba = BA_Reconcile::all()->where("id_vendor", $user_vendor)->where("status_invoice_proposal", "Not Yet Verified - BA");
-        
+        $ba = BA_Reconcile::where("no_ba", $no_ba)->where("id_vendor", $user_vendor)->get();
+        //  dd($ba);
         return view('Vendor.ba.upload',compact('ba'));
     }
     public function historyba()
@@ -371,10 +379,22 @@ class VendorController extends Controller
         
         return back()->with('success', 'BA Imported Successfully');
     }
-    
-    public function draftbaexport(){
-        return Excel::download(new DraftbaExport,'ba.xlsx');
+    public function draftbaexport(Request $request){
+        $recordIds = $request->get('ids');
+        // dd($recordIds);
+
+        $drafts = [];
+        foreach($recordIds as $record) {
+            $draft = Draft_BA::find($record);
+            array_push($drafts, $draft);
+        }
+        return view('vendor.ba.export', compact('drafts'));
     }
+    
+    public function export(){
+
+        return Excel::download(new DraftbaExport,'ba.xlsx');
+   }
 
     public function invoice()
     {

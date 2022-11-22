@@ -77,7 +77,7 @@
                 <td colspan="3"> &nbsp;&nbsp;Nomor Pelanggan (Account No) : 12278</td>
                 <td colspan="1"></td>
                 <td></td>
-                <td> &nbsp;&nbsp;Nomor Faktur (Invoice Number) : 9142</td>
+                <td> &nbsp;&nbsp;Nomor Faktur (Invoice Number) : {{$invoice->vendor_invoice_number}}</td>
             </tr>
             <tr>
                 <td> &nbsp;&nbsp;Nomor Pesanan (Order Reff) : 4020071510</td>
@@ -87,10 +87,10 @@
                     {{ Carbon\Carbon::parse($invoice->gr_date)->format('d F Y')}}</td>
             </tr>
             <tr>
-                <td> &nbsp;&nbsp;Mata uang (Currency) : {{$invoice->Currency}}</td>
+                <td> &nbsp;&nbsp;Mata uang (Currency) : {{$invoice->currency}}</td>
                 <td colspan="3"></td>
                 <td></td>
-                <td> &nbsp;&nbsp;Sales Order (Sales Order No.) : 0230960070</td>
+                {{-- <td> &nbsp;&nbsp;Sales Order (Sales Order No.) : 0230960070</td> --}}
             </tr>
             <tr>
                 <td> &nbsp;&nbsp;Tanggal Faktur (invoice Date) :
@@ -100,7 +100,7 @@
                 <td> &nbsp;&nbsp;Tanggal Jatuh Tempo (Payment Due Date) : 3 April 2023</td>
             </tr>
             <tr>
-                <td> &nbsp;&nbsp;Nomor Faktur Pajak (VAT No.) : 010.001-22.66960371</td>
+                <td> &nbsp;&nbsp;Nomor Faktur Pajak (VAT No.) : {{$invoice->faktur_pajak_number}}</td>
             </tr>
         </table>
         <br><br>

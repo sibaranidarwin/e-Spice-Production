@@ -25,6 +25,7 @@ class CreateBaTable extends Migration
             $table->integer('po_number');
             $table->integer('item');
             $table->string('material_description');
+            $table->string('vendor_part_number');
             $table->string('reference');
             $table->integer('qty');
             $table->integer('amount_mkp');

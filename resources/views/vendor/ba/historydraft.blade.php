@@ -133,7 +133,7 @@ label {
                                             <td><span>{{$item->po_item}}</span></td>
                                             <td><span>{{$item->jumlah}}</span></td>
                                             <td><span>{{$item->gr_date}}</span></td>
-                                            <td><span>{{$item->jumlah_harga}}</span></td>
+                                            <td><span>RP. {{ number_format($item->jumlah_harga) }}</span></td> 
                                             <td><span>{{$item->selisih_harga}}</span></td>
                                             <td><span>{{$item->status_draft}}</span></td>
                                             <td><span>{{$item->status_invoice_proposal}}</span></td>

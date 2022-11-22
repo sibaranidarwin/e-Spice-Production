@@ -114,7 +114,7 @@
                                         <th>Curr</th>
                                         <th>Unit Price</th>
                                         <th>Tax Code</th>
-                                        <th>Reason</th>
+                                        <th>Cause</th>
                                     </tr>
                                 </thead>
                                 <tbody style="font-size: 11px;">
@@ -131,7 +131,7 @@
                                         <td> <span>{{$good_receipt->mat_desc}}</span> </td>
                                         <td> <span>{{$good_receipt->jumlah}}</span>&nbsp;<span>{{$good_receipt->UOM}}</span> </td>
                                         <td> <span>{{$good_receipt->currency}}</span> </td>
-                                        <td> <span>{{$good_receipt->harga_satuan}}</span> </td>
+                                        <td> <span>Rp. {{number_format($good_receipt->harga_satuan)}}</span> </td>
                                         <td> <span>{{$good_receipt->tax_code}}</span> </td>
                                         <td><span>{{$good_receipt->alasan_disp}}</span></td>
                                     </tr>
@@ -201,16 +201,7 @@
         });
     
         // DataTables initialisation
-        var table = $('#list').DataTable({
-            dom: "<'row'<'col-md-2 bg-white'l><'col-md-5 bg-white'B><'col-md-5 bg-white'f>>" +
-                "<'row'<'col-md-12'tr>>" +
-                "<'row'<'col-md-6'i><'col-md-6'p>>",
-            buttons: [{
-                extend: 'excelHtml5',
-                autoFilter: true,
-                sheetName: 'Exported data'
-            }]
-        });
+        var table = $('#list').DataTable();
     
         // Refilter the table
         $('#min, #max').on('change', function() {

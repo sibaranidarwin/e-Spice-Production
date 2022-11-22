@@ -54,14 +54,16 @@ label {
                             <div class="row">
                                 <div class="form-group col-md-6">
                                     <label class="form-control-label" for="total_harga_gross">Total DPP</label>
-                                    <input type="text" class="form-control @error('total_harga_gross[]') is-invalid @enderror"
+                                    <input type="text"
+                                        class="form-control @error('total_harga_gross[]') is-invalid @enderror"
                                         name="total_harga_gross" placeholder="Masukkan Total DDP ..."
                                         value="{{ number_format($total_dpp) }}" readonly>
                                     @error('total_harga_gross[]')<span
                                         class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label class="form-control-label" for="no_invoice_proposal">Nomor Invoice Proposal<span style="color: red">*</span></label>
+                                    <label class="form-control-label" for="no_invoice_proposal">Nomor Invoice
+                                        Proposal<span style="color: red">*</span></label>
                                     <input type="text"
                                         class="form-control @error('no_invoice_proposal') is-invalid @enderror"
                                         name="no_invoice_proposal" placeholder="Masukkan No Invoice ..."
@@ -72,122 +74,125 @@ label {
                                 <div class="form-group col-md-6">
                                     <label class="form-control-label" for="tax_code">Tax Code</label>
                                     <input type="text" class="form-control @error('tax_code[]') is-invalid @enderror"
-                                        name="tax_code" 
-                                        value="{{ $good->tax_code }}" readonly>
+                                        name="tax_code" value="{{ $good->tax_code }}" readonly>
                                     @error('tax_code[]')<span
                                         class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label class="form-control-label" for="posting_date">Invoice Date <span style="color: red">*</span></label>
-                                    <input type="date"
-                                        class="form-control @error('posting_date') is-invalid @enderror"
-                                        name="posting_date" placeholder="Masukkan Posting Date ..."
-                                        required>
+                                    <label class="form-control-label" for="posting_date">Invoice Date <span
+                                            style="color: red">*</span></label>
+                                    <input type="date" class="form-control @error('posting_date') is-invalid @enderror"
+                                        name="posting_date" placeholder="Masukkan Posting Date ..." required>
                                     @error('posting_date')<span
                                         class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label class="form-control-label" for="ppn">Total PPN</label>
                                     <input type="text" class="form-control @error('ppn[]') is-invalid @enderror"
-                                        name="ppn" placeholder="Masukkan Total PPN ..." value="{{ number_format($total_ppn) }}"
-                                        readonly>
+                                        name="ppn" placeholder="Masukkan Total PPN ..."
+                                        value="{{ number_format($total_ppn) }}" readonly>
                                     @error('ppn[]')<span
                                         class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                                 </div>
-                            <div class="form-group col-md-6">
-                                <label class="form-control-label" for="vendor_invoice_number">Invoice Number<span style="color: red">*</span></label>
-                                <input type="text" id="input_mask1"
-                                    class="form-control @error('vendor_invoice_number') is-invalid @enderror"
-                                    name="vendor_invoice_number" placeholder="Fill in Invoice Number ..."
-                                    value="{{ $good->vendor_invoice_number }}" required>
-                                @error('vendor_invoice_number')<span
-                                    class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
+                                <div class="form-group col-md-6">
+                                    <label class="form-control-label" for="vendor_invoice_number">Invoice Number<span
+                                            style="color: red">*</span></label>
+                                    <input type="text" id="input_mask1"
+                                        class="form-control @error('vendor_invoice_number') is-invalid @enderror"
+                                        name="vendor_invoice_number" placeholder="Fill in Invoice Number ..."
+                                        value="{{ $good->vendor_invoice_number }}" required>
+                                    @error('vendor_invoice_number')<span
+                                        class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label class="form-control-label" for="total_harga_everify">Total Price</label> <br>
+                                    <input type="text"
+                                        class="form-control @error('total_harga_everify[]') is-invalid @enderror"
+                                        name="total_harga_everify" placeholder="Masukkan Total Price ..."
+                                        value="RP {{ number_format($total_harga) }}" readonly>
+                                    @error('total_harga_everify[]')<span
+                                        class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label class="form-control-label" for="faktur_pajak_number">VAT NO.<span
+                                            style="color: red">*</span></label>
+                                    <input type="text" id="input_mask"
+                                        class="form-control @error('faktur_pajak_number[]') is-invalid @enderror"
+                                        name="faktur_pajak_number" placeholder="Fill in VAT NO ..."
+                                        value="{{ $good->faktur_pajak_number }}" required>
+                                    @error('faktur_pajak_number[]')<span
+                                        class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label class="form-control-label" for="del_costs">Invoice Difference</label><br>
+                                    <input type="number" class="form-control @error('del_costs[]') is-invalid @enderror"
+                                        name="del_costs" placeholder="Fill in Invoice Difference ...">
+                                    @error('del_costs[]')<span
+                                        class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
+                                </div>
+                                <div hidden class="form-group col-md-6">
+                                    <input type="text" class="form-control @error('data_from') is-invalid @enderror"
+                                        name="data_from" value="BA">
+                                    @error('data_from')<span
+                                        class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
+                                </div>
+                                <div hidden class="form-group col-md-6">
+                                    <input type="number" class="form-control @error('id_vendor') is-invalid @enderror"
+                                        name="id_vendor" value="{{ $good->id_vendor }}">
+                                    @error('id_vendor')<span
+                                        class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
+                                </div>
                             </div>
-                            <div class="form-group col-md-6">
-                                <label class="form-control-label" for="total_harga_everify">Total Price</label> <br>
-                                <input type="text"
-                                    class="form-control @error('total_harga_everify[]') is-invalid @enderror"
-                                    name="total_harga_everify" placeholder="Masukkan Total Price ..."
-                                    value="RP {{ number_format($total_harga) }}" readonly>
-                                @error('total_harga_everify[]')<span
-                                    class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label class="form-control-label" for="faktur_pajak_number">VAT NO.<span style="color: red">*</span></label>
-                                <input type="text" id="input_mask"
-                                    class="form-control @error('faktur_pajak_number[]') is-invalid @enderror"
-                                    name="faktur_pajak_number" placeholder="Fill in VAT NO ..."
-                                    value="{{ $good->faktur_pajak_number }}" required>
-                                @error('faktur_pajak_number[]')<span
-                                    class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label class="form-control-label" for="del_costs">Invoice Difference</label><br>
-                                <input type="number" class="form-control @error('del_costs[]') is-invalid @enderror"
-                                    name="del_costs" placeholder="Fill in Invoice Difference ...">
-                                @error('del_costs[]')<span
-                                    class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
-                            </div>
-                            <div hidden class="form-group col-md-6">
-                                <input type="text" class="form-control @error('data_from') is-invalid @enderror"
-                                    name="data_from" value="BA">
-                                @error('data_from')<span
-                                    class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
-                            </div>
-                            <div hidden class="form-group col-md-6">
-                                <input type="number" class="form-control @error('id_vendor') is-invalid @enderror"
-                                    name="id_vendor" value="{{ $good->id_vendor }}" >
-                                @error('id_vendor')<span
-                                    class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
-                            </div>
-                    </div>
-                    <button type="submit" class="btn btn-success mb-2" id="simpan" onclick="return confirm('Are you sure?')">Submit</button>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="{{url('vendor/purchaseorder')}}" type="submit"
-                        class="btn btn-danger mb-2" id="simpan" onclick="return confirm('Are you sure?')">Return</a>
-                    </form>
-                    <br>
-                    <strong class="card-header">Data BA to be Invoice Proposal</strong>
-                    <table id="list" class="table table-stats order-table ov-h">
-                        <thead>
-                            <tr>
-                                <th>BA Number</th>
-                                <th>PO Number</th>
-                                <th>PO MKP</th>
-                                <th>GR Date</th>
-                                <th>Material Description</th>
-                                <!-- <th class="text-center">Reference</th> -->
-                                <!-- <th class="text-center">Vendor Part Number</th>
+                            <a href="{{url('vendor/purchaseorder')}}" type="submit" class="btn btn-danger mb-2"
+                                id="simpan" onclick="return confirm('Are you sure?')">Return</a>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <button type="submit" class="btn btn-success mb-2" id="simpan"
+                                onclick="return confirm('Are you sure?')">Submit</button>
+                        </form>
+                        <br>
+                        <strong class="card-header">Data BA to be Invoice Proposal</strong>
+                        <table id="list" class="table table-stats order-table ov-h">
+                            <thead>
+                                <tr>
+                                    <th>BA Number</th>
+                                    <th>PO Number</th>
+                                    <th>PO MKP</th>
+                                    <th>GR Date</th>
+                                    <th>Material Description</th>
+                                    <!-- <th class="text-center">Reference</th> -->
+                                    <!-- <th class="text-center">Vendor Part Number</th>
                                         <th class="text-center">Item Description</th>
                                         <th class="text-center">UoM</th>
                                         <th class="text-center">Currency</th>
                                         <th class="text-center">Harga Satuan</th>
                                         <th class="text-center">Jumlah</th> -->
-                                <!-- <th class="text-center">Jumlah Harga</th> -->
-                                {{-- <th>Tax Code</th> --}}
-                                <!-- <th class="text-center">Valuation Type</th> -->
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach($bas as $ba)
-                            <tr>
-                                <td><span class="name">{{$ba->no_ba}}</span> </td>
-                                <td> <span class="">{{$ba->po_number}}</span> </td>
-                                <td> <span class="">{{$ba->item}}</span> </td>
-                                <td> <span class="">{{ Carbon\Carbon::parse($ba->gr_date)->format('d F Y') }}</span> </td>
-                                <td> <span class="">{{$ba->material_description}}</span></td>
-                                <td>{{ $ba->status_ba }}</td>
-                            </tr>
-                            @endforeach
-                            </select>
-                        </tbody>
-                    </table>
+                                    <!-- <th class="text-center">Jumlah Harga</th> -->
+                                    {{-- <th>Tax Code</th> --}}
+                                    <!-- <th class="text-center">Valuation Type</th> -->
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($bas as $ba)
+                                <tr>
+                                    <td><span class="name">{{$ba->no_ba}}</span> </td>
+                                    <td> <span class="">{{$ba->po_number}}</span> </td>
+                                    <td> <span class="">{{$ba->item}}</span> </td>
+                                    <td> <span class="">{{ Carbon\Carbon::parse($ba->gr_date)->format('d F Y') }}</span>
+                                    </td>
+                                    <td> <span class="">{{$ba->material_description}}</span></td>
+                                    <td>{{ $ba->status_ba }}</td>
+                                </tr>
+                                @endforeach
+                                </select>
+                            </tbody>
+                        </table>
 
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 </div><!-- .animated -->
 </div><!-- .content -->
 
@@ -197,29 +202,29 @@ label {
 
 
 <script type="text/javascript">
-    $('#input_mask').inputmask({
-            mask: '***.***.**.********',
-            definitions: {
-                A: {
-                    validator: "[A-Za-z0-9 ]"
-                },
-            },            
-        });
-    $('#input_mask1').inputmask({
-            mask: '*********-**',
-            definitions: {
-                A: {
-                    validator: "[A-Za-z0-9 ]"
-                },
-            },            
-        });
-    $("#input_mask_currency").inputmask({
-        prefix : 'Rp ',
-        radixPoint: ',',
-        groupSeparator: ".",
-        alias: "numeric",
-        autoGroup: true,
-        digits: 0
-    });
+$('#input_mask').inputmask({
+    mask: '***.***.**.********',
+    definitions: {
+        A: {
+            validator: "[A-Za-z0-9 ]"
+        },
+    },
+});
+$('#input_mask1').inputmask({
+    mask: '*********-**',
+    definitions: {
+        A: {
+            validator: "[A-Za-z0-9 ]"
+        },
+    },
+});
+$("#input_mask_currency").inputmask({
+    prefix: 'Rp ',
+    radixPoint: ',',
+    groupSeparator: ".",
+    alias: "numeric",
+    autoGroup: true,
+    digits: 0
+});
 </script>
 @endsection

@@ -12,7 +12,7 @@
 <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.print.min.js"></script>
 <script src="https://cdn.datatables.net/datetime/1.1.2/js/dataTables.dateTime.min.js"></script>
 
-@extends('admin.layouts.app')
+@extends('vendor.layouts.sidebar')
 @section('content')
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.6/css/buttons.dataTables.min.css">
@@ -25,7 +25,7 @@
 .table td,
 .table th,
 label {
-    font-size: 11.4px;
+    font-size: 11.7px;
 }
 </style>
 <div class="breadcrumbs">
@@ -81,24 +81,28 @@ label {
                     </div>
                     @endif
                     <div class="card-header">
-                        <strong class="card-title">Draft BA Reconcile List</strong>
+                        <strong class="card-title">Export Draft BA</strong>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive text-nowrap">
                             <div class="row">
                                 <div class="form-group col-3 bg-white mb-2">
-                                    <label for="">Date From: </label>
+                                    <label for="">BA Date:</label>
                                     <input class="form-group" type="text" id="min" name="min">
-                                </div>
+                                </div>To:
                                 <div class=" form-group col-3 bg-white mb-2">
-                                    <label for="">To: </label>
+                                    <label for=""></label>
                                     <input class="form-group" type="text" id="max" name="max">
                                 </div>
-                               
+                                {{-- <div class="col-3 mb-2">
+                                    <a href="{{url('vendor/draft')}}" type="submit"
+                        class="btn btn-danger" id="simpan" onclick="return confirm('Are you sure?')"><i class="fa fa-arrow-left"></i>&nbsp; Return</a> &nbsp;&nbsp;&nbsp;
+                                    <a href="{{route('exportdraftba')}}" class="btn btn-success sm" onclick="return confirm('Are you sure?')"><i class="fa fa-cloud-download"></i>&nbsp; Export To Excel</a>
+                                </div> --}}
                             </div>
-                            <form action="{{ route('update-datagr-vendor/{id_gr}') }}" method="POST">
+                            <form action="{{ route('exportdraftba') }}" method="GET">
                                 @csrf
-                                <table id="list" class="table table-striped" style="font-size: 10px;">
+                                <table id="" class="table table-striped" style="font-size: 10px;">
                                     <thead>
                                         <tr>
                                             <th>No</th>
@@ -119,7 +123,7 @@ label {
                                     </thead>
                                     <tbody style="font-size: 11px;">
                                         @php $i = 1 @endphp
-                                        @foreach($draft as $item)
+                                        @foreach($drafts as $item)
                                         <tr>
                                             <td>{{$i++}}</td>
                                             <td>{{ $item->no_draft}}</td>
@@ -131,7 +135,7 @@ label {
                                             <td><span>{{$item->po_item}}</span></td>
                                             <td><span>{{$item->jumlah}}</span></td>
                                             <td><span>{{$item->gr_date}}</span></td>
-                                            <td><span>{{$item->jumlah_harga}}</span></td>
+                                            <td><span>RP. {{ number_format($item->jumlah_harga) }}</span></td> 
                                             <td><span>{{$item->selisih_harga}}</span></td>
                                             <td><span>{{$item->status_draft}}</span></td>
                                             <td><span>{{$item->status_invoice_proposal}}</span></td>
@@ -140,8 +144,11 @@ label {
                                         </select>
                                     </tbody>
                                 </table>
-                                {{-- &nbsp;&nbsp;<button type="submit" name="action" value="Dispute"
-                                    class="btn btn-warning btn-sm-3">Dispute</button> --}}
+                                <div class="col-3 mb-2">
+                                    <a href="{{url('vendor/draft')}}" type="submit"
+                        class="btn btn-danger" id="simpan" onclick="return confirm('Are you sure?')"> Return</a> &nbsp;&nbsp;&nbsp;
+                                    <a href="{{route('exportdraftba')}}" class="btn btn-success sm" onclick="return confirm('Are you sure?')"><i class="fa fa-cloud-download"></i>&nbsp; Export To Excel</a>
+                                </div>
                             </form>
                         </div> <!-- /.table-stats -->
                     </div>
@@ -232,18 +239,7 @@ $(document).ready(function() {
     });
 
     // DataTables initialisation
-    var table = $('#list').DataTable(
-        // {
-        //     dom: "<'row'<'col-md-2 bg-white'l><'col-md-5 bg-white'B><'col-md-5 bg-white'f>>" +
-        //         "<'row'<'col-md-12'tr>>" +
-        //         "<'row'<'col-md-6'i><'col-md-6'p>>",
-        //     buttons: [{
-        //         extend: 'excelHtml5',
-        //         autoFilter: true,
-        //         sheetName: 'Exported data'
-        //     }]
-        // }
-    );
+    var table = $('#list').DataTable();
 
     // Refilter the table
     $('#min, #max').on('change', function() {
@@ -252,6 +248,7 @@ $(document).ready(function() {
 
 
 });
+
 function checkAll(ele) {
       var checkboxes = document.getElementsByTagName('input');
       if (ele.checked) {

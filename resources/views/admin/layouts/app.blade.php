@@ -93,7 +93,7 @@
                     <li class="menu-title">DATA Good Receipt</li><!-- /.menu-title -->
                     <li class="menu-item-has-children dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                            aria-expanded="false"> <i class="menu-icon fa fa-list-ul"></i>Good Receipt</a>
+                            aria-expanded="false"> <i class="menu-icon fa fa-file"></i>Good Receipt</a>
                         <ul class="sub-menu children dropdown-menu">
                             <li><i class="fa fa-close"></i><a href="{{url('admin/po')}}">Not Verified</a></li>
                             <li><i class="fa fa-check"></i><a href="{{url('admin/pover')}}">Verified</a></li>
@@ -102,14 +102,29 @@
                 </ul>
                 </li>
 
-                <li class="menu-item-has-children dropdown ">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                        aria-expanded="false"> <i class="menu-icon fa fa-newspaper-o"></i>BA Reconcile</a>
-                    <ul class="sub-menu children dropdown-menu ">
-                        <li><i class="fa fa-table "></i><a href="{{url('admin/draft')}}">Draft BA</a></li>
-                        <li><i class="fa fa-table "></i><a href="{{url('admin/ba')}}">BA</a></li>
+                <li class="menu-item-has-children dropdown">
+                    <a class="accordion-heading menu-item-has-children dropdown-toggle" data-toggle="collapse" data-target="#submenu1" aria-haspopup="true"
+                    aria-expanded="false">
+                          <span class="nav-header-primary"><i class="menu-icon fa fa-newspaper-o"></i>BA Reconcile<span class="pull-right"><b class="caret"></b></span></span>
+                    </a>
+    
+                    <ul class="nav nav-list collapse" id="submenu1">
+                        <li>
+                              <a class="accordion-heading" data-toggle="collapse" data-target="#submenu2"><span class=""><i class="menu-icon fa fa-newspaper-o"></i>Draft BA</span></a>
+                              <ul class="nav nav-list collapse sub-menu children" id="submenu2">
+                                  <li><a href="{{url('admin/historydraft')}}" title="Title"><i class="fa fa-history"></i>History Draft BA</a></li>
+                                  <li><a href="{{url('admin/draft')}}" title="Title"><i class="fa fa-table"></i>Draft BA Active</a></li>
+                              </ul>
+                        </li>
+                        <li>
+                            <a class="accordion-heading" data-toggle="collapse" data-target="#submenu3"><span class=""><i class="menu-icon fa fa-newspaper-o"></i>BA</span></a>
+                            <ul class="nav nav-list collapse sub-menu children" id="submenu3">
+                                <li><a href="{{url('admin/historyba')}}" title="Title"><i class="fa fa-history "></i>History BA</a></li>
+                                <li><a href="{{url('admin/ba')}}" title="Title"><i class="fa fa-table "></i>BA Active</a></li>
+                            </ul>
+                      </li>
                     </ul>
-                </li>
+                  </li>
                 
                 <li class="menu-item-has-children dropdown ">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
@@ -122,7 +137,7 @@
                 <li class="menu-title">DATA Invoice</li><!-- /.menu-title -->
                 <li class="menu-item-has-children dropdown ">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                        aria-expanded="false"> <i class="menu-icon fa fa-file"></i>Invoice Proposal</a>
+                        aria-expanded="false"> <i class="menu-icon fa fa-file-pdf-o"></i>Invoice Proposal</a>
                     <ul class="sub-menu children dropdown-menu ">
                         <li><i class="fa fa-table "></i><a href="{{url('admin/invoice')}}">Invoice GR</a></li>
                         <li><i class="fa fa-table "></i><a href="{{url('admin/invoiceba')}}">Invoice BA</a></li>

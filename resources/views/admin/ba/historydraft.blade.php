@@ -25,7 +25,7 @@
 .table td,
 .table th,
 label {
-    font-size: 11.4px;
+    font-size: 11.7px;
 }
 </style>
 <div class="breadcrumbs">
@@ -87,14 +87,16 @@ label {
                         <div class="table-responsive text-nowrap">
                             <div class="row">
                                 <div class="form-group col-3 bg-white mb-2">
-                                    <label for="">Date From: </label>
+                                    <label for="">BA Date:</label>
                                     <input class="form-group" type="text" id="min" name="min">
-                                </div>
+                                </div>To:
                                 <div class=" form-group col-3 bg-white mb-2">
-                                    <label for="">To: </label>
+                                    <label for=""></label>
                                     <input class="form-group" type="text" id="max" name="max">
                                 </div>
-                               
+                                <div class="col-3 mb-2">
+                                    <a href="{{route('exportdraftba')}}" class="btn btn-success sm"><i class="fa fa-cloud-download"></i>&nbsp; Export To Excel</a>
+                                </div>
                             </div>
                             <form action="{{ route('update-datagr-vendor/{id_gr}') }}" method="POST">
                                 @csrf
@@ -232,18 +234,7 @@ $(document).ready(function() {
     });
 
     // DataTables initialisation
-    var table = $('#list').DataTable(
-        // {
-        //     dom: "<'row'<'col-md-2 bg-white'l><'col-md-5 bg-white'B><'col-md-5 bg-white'f>>" +
-        //         "<'row'<'col-md-12'tr>>" +
-        //         "<'row'<'col-md-6'i><'col-md-6'p>>",
-        //     buttons: [{
-        //         extend: 'excelHtml5',
-        //         autoFilter: true,
-        //         sheetName: 'Exported data'
-        //     }]
-        // }
-    );
+    var table = $('#list').DataTable();
 
     // Refilter the table
     $('#min, #max').on('change', function() {

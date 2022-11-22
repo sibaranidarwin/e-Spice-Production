@@ -46,6 +46,9 @@ Route::get('admin/poreject', 'AdminController@poreject')->name('admin/poreject')
 Route::get('admin/draft', 'AdminController@draft')->name('admin/draft');
 Route::get('admin/ba', 'AdminController@ba')->name('admin/ba');
 Route::put('admin/draft','AdminController@uploaddraft');
+Route::get('admin/historydraft', 'AdminController@historydraft')->name('admin/historydraft');
+Route::get('admin/historyba', 'AdminController@historyba')->name('admin/historyba');
+
 // Invoice 
 Route::get('admin/invoice', 'AdminController@invoice')->middleware('admin');
 Route::get('admin/detail-invoice/{id}', 'AdminController@detailinvoice')->name('detail-invoice');
@@ -144,9 +147,11 @@ Route::post('vendor/create_invoice','VendorController@store')->name('create-invo
 Route::get('vendor/draft', 'VendorController@draft')->name('vendor/draft');
 Route::get('vendor/historydraft', 'VendorController@historydraft')->name('vendor/historydraft');
 Route::get('vendor/historyba', 'VendorController@historyba')->name('vendor/historyba');
-Route::get('vendor/ba', 'VendorController@ba')->name('vendor/ba');
+Route::get('vendor/ba/{id}', 'VendorController@ba')->name('vendor/ba/{id}');
+Route::get('vendor/detailba', 'VendorController@detailba')->name('vendor/detailba');
 Route::put('vendor/draft','VendorController@uploaddraft');
-Route::get('vendor/exportdraftba', 'VendorController@draftbaexport')->name('exportdraftba');
+Route::post('vendor/exportdraftba', 'VendorController@draftbaexport')->name('exportdraftba/{id_draft_ba}');
+Route::get('vendor/exportdraft', 'VendorController@export')->name('exportdraftba');
 
 Route::post('vendor/edit-ba','VendorController@editba')->name('update-ba-vendor/{id_gr}');
 Route::post('vendor/create_invoice_ba','VendorController@storeba')->name('create-invoice-ba');
