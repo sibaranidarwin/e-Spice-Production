@@ -22,7 +22,7 @@
 
 <style>
     .table td, .table th,label {
-        font-size: 11.4px;
+        font-size: 11.7px;
     }
 </style>
 <div class="breadcrumbs">
@@ -89,17 +89,17 @@
                                     <tr>
                                     <th><input type="checkbox" onchange="checkAll(this)"></th>
                                     <th>No</th>
-                                    <th>Status</th>
+                                    <th>Sts.</th>
+                                    <th style="text-align: center;">Sts. Inv. Props.</th>
+                                    <th>Vendor ID</th>
                                     <th>GR Number</th>
-                                    <th>No PO</th>
-                                    <th>PO Item</th>
+                                    <th>PO</th>
                                     <th>GR Date</th>
                                     <th>Part Number</th>
                                     <th>Reference</th>
-                                    <th>Material Description</th>
+                                    <th>Mat. Desc.</th>
                                     <th>QTY UOM</th>
                                     <th>Curr</th>
-                                    <th>Unit Price</th>
                                     <th>Tax Code</th>
                                     </tr>
                                 </thead>
@@ -109,16 +109,16 @@
                                         <td><input type="checkbox" name="ids[]" value="{{$good_receipt->id_gr}}"></td>
                                         <td>{{++$i}}</td>
                                         <td >{{ $good_receipt->status }}</td>
+                                        <td >{{ $good_receipt->status_invoice }}</td>
+                                        <td >{{ $good_receipt->id_vendor }}</td>
                                         <td ><span>{{$good_receipt->gr_number}}</span></td>
-                                        <td ><span>{{$good_receipt->no_po}}</span></td>
-                                        <td><span>{{$good_receipt->po_item}}</span></td>
+                                        <td ><span>{{$good_receipt->no_po}}/{{$good_receipt->po_item}}</span></td>
                                         <td><span>{{ Carbon\Carbon::parse($good_receipt->gr_date)->format('d F Y') }}</span></td>
                                         <td> <span>{{$good_receipt->material_number}}/<br> {{$good_receipt->vendor_part_number}}</span></td>
                                         <td> <span>{{$good_receipt->ref_doc_no}}</span> </td>
-                                        <td> <span>{{$good_receipt->mat_desc}}</span> </td>
+                                        <td> <span>{{$good_receipt->mat_desc}}</span> <br>({{$good_receipt->valuation_type}})</td>
                                         <td> <span>{{$good_receipt->jumlah}}</span>&nbsp;<span>{{$good_receipt->uom}}</span> </td>
                                         <td> <span>{{$good_receipt->currency}}</span> </td>
-                                        <td> <span>{{$good_receipt->harga_satuan}}</span> </td>
                                         <td> <span>{{$good_receipt->tax_code}}</span> </td>
                                     </tr>
                                     @endforeach

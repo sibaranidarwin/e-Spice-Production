@@ -5,7 +5,7 @@
     .table td,
     .table th,
     label {
-        font-size: 12.4px;
+        font-size: 11px;
     }
     </style>
     
@@ -143,12 +143,12 @@
                         <tbody>
                             @foreach($invoices as $invoice)
                             <tr>   
-                            <td> <span class="">{{$invoice->no_po}}</span> </td>
-                            <td> <span class="">{{$invoice->gr_number}}</span> </td>
+                                <td> <span class="">{{$invoice->gr_number}}</span> </td>
+                                <td> <span class="">{{$invoice->no_po}}</span> </td>
                             <td> <span class="">{{$invoice->po_item}}</span> </td>
                             <td><span>{{ Carbon\Carbon::parse($invoice->gr_date)->format('d F Y') }}</span></td>
                             <td> <span class="">{{$invoice->material_number}}</span>
-                            <td> <span class="">{{$invoice->harga_satuan}}</span>
+                            <td style="text-align: right"> <span>Rp{{number_format($invoice->harga_satuan)}}</span> </td>
                             <td> <span class="">{{$invoice->jumlah}}</span></td>
                             <td> <span class="">{{$invoice->tax_code}}</span></td>
                             <td> <span class="">{{ $invoice->status }}</span></td>

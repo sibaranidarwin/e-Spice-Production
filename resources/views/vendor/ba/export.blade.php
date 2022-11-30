@@ -25,7 +25,7 @@
 .table td,
 .table th,
 label {
-    font-size: 11.7px;
+    font-size: 11px;
 }
 </style>
 <div class="breadcrumbs">
@@ -81,74 +81,81 @@ label {
                     </div>
                     @endif
                     <div class="card-header">
-                        <strong class="card-title">Export Draft BA</strong>
+                        <strong class="card-title">Draft BA Reconcile List</strong>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive text-nowrap">
-                            <div class="row">
-                                <div class="form-group col-3 bg-white mb-2">
-                                    <label for="">BA Date:</label>
-                                    <input class="form-group" type="text" id="min" name="min">
-                                </div>To:
-                                <div class=" form-group col-3 bg-white mb-2">
-                                    <label for=""></label>
-                                    <input class="form-group" type="text" id="max" name="max">
-                                </div>
-                                {{-- <div class="col-3 mb-2">
-                                    <a href="{{url('vendor/draft')}}" type="submit"
-                        class="btn btn-danger" id="simpan" onclick="return confirm('Are you sure?')"><i class="fa fa-arrow-left"></i>&nbsp; Return</a> &nbsp;&nbsp;&nbsp;
-                                    <a href="{{route('exportdraftba')}}" class="btn btn-success sm" onclick="return confirm('Are you sure?')"><i class="fa fa-cloud-download"></i>&nbsp; Export To Excel</a>
-                                </div> --}}
-                            </div>
                             <form action="{{ route('exportdraftba') }}" method="GET">
                                 @csrf
-                                <table id="" class="table table-striped" style="font-size: 10px;">
+                                @foreach ($draft as $good)
+                                <input type="hidden" name="id[]" value="{{$good->id_draft_ba}}">
+                                @endforeach
+                                <div class="row">
+                                    <div class="form-group col-3 bg-white mb-2">
+                                        <label for="">BA Date:</label>
+                                        <input class="form-group" type="text" id="min" name="min">
+                                    </div>
+                                    <div class=" form-group col-3 bg-white mb-2">
+                                        <label for="">To:</label>
+                                        <input class="form-group" type="text" id="max" name="max">
+                                    </div>
+                                <div class="text-right mb-2">
+                                    <a href="{{url('vendor/draft')}}" type="submit" style="text-align: right"
+                                     class="btn btn-danger" id="simpan" onclick="return confirm('Are you sure?')"> Return</a> &nbsp;&nbsp;&nbsp;
+                                    <a href="{{route('exportdraftba')}}" class="btn btn-success sm" onclick="return confirm('Are you sure?')"><i class="fa fa-cloud-download"></i>&nbsp; Export To Excel</a>
+                                </div>
+                            </div>
+                                    <table id="" class="table table-striped" style="font-size: 10px; text-align: right;">
                                     <thead>
                                         <tr>
-                                            <th>No</th>
-                                            <th>No Draft</th>
-                                            <th>Date</th>
-                                            <th>No PO</th>
-                                            <th>Material Description</th>
-                                            <th>Vendor Part Number</th>
-                                            <th>Header Text</th>
-                                            <th>Po Item</th>
-                                            <th>Quantity</th>
-                                            <th>GR Date</th>
-                                            <th>Total Price</th>
-                                            <th>Total Value</th>
-                                            <th>Status Draft BA</th>
-                                            <th>Status Invoice Proposal</th>
+                                            {{-- <th><input type="checkbox" onchange="checkAll(this)"></th> --}}
+                                            <th style="text-align: center;">No</th>
+                                            <th style="text-align: center;">Sts. Draft BA</th>
+                                            <th style="text-align: center;">St.s Inv. Props.</th>
+                                            <th style="text-align: center;">No Draft</th>
+                                            <th style="text-align: center;">Date</th>
+                                            <th style="text-align: center;">PO</th>
+                                            <th style="text-align: center;">Mat. Desc.</th>
+                                            <th style="text-align: center;">Part Number</th>
+                                            <th style="text-align: center;">Header Text</th>
+                                            <th style="text-align: center;">Qty</th>
+                                            <th style="text-align: center;">GR Date</th>
+                                            <th style="text-align: center;">Price</th>
+                                            <th style="text-align: center;">Tax Code</th>
+                                            <th style="text-align: center;">Total Value</th>
                                         </tr>
                                     </thead>
                                     <tbody style="font-size: 11px;">
                                         @php $i = 1 @endphp
-                                        @foreach($drafts as $item)
+                                        @foreach($draft as $item)
                                         <tr>
+                                            {{-- <td><input type="checkbox" name="ids[]" value="{{$item->id_draft_ba}}"></td> --}}
                                             <td>{{$i++}}</td>
+                                            <td><span>Verified - Draft BA</span></td>
+                                            <td><span>{{$item->status_invoice_proposal}}</span></td>
                                             <td>{{ $item->no_draft}}</td>
-                                            <td><span>{{$item->date_draft}}</span></td>
-                                            <td><span>{{$item->po_number}}</span></td>
-                                            <td><span>{{$item->mat_desc}}</span></td>
-                                            <td><span>{{$item->vendor_part_number}}</span></td>
+                                            <td><span>{{ Carbon\Carbon::parse($item->created_at)->format('d F Y') }}</span></td>
+                                            <td><span>{{$item->po_number}}/{{$item->po_item}}</span></td>
+                                            <td><span>{{$item->mat_desc}} <br>({{$item->valuation_type}})</span></td>
+                                            <td><span>{{$item->material_number}} / {{$item->vendor_part_number}}</span></td>
                                             <td><span>{{$item->doc_header_text}}</span></td>
-                                            <td><span>{{$item->po_item}}</span></td>
                                             <td><span>{{$item->jumlah}}</span></td>
                                             <td><span>{{ Carbon\Carbon::parse($item->gr_date)->format('d F Y') }}</span></td>
-                                            <td><span>RP. {{ number_format($item->jumlah_harga) }}</span></td> 
-                                            <td><span>{{$item->selisih_harga}}</span></td>
-                                            <td><span>{{$item->status_draft}}</span></td>
-                                            <td><span>{{$item->status_invoice_proposal}}</span></td>
+                                            <td  style="text-align: right"><span>Rp{{ number_format($item->jumlah_harga) }}</span></td> 
+                                            <td><span>{{$item->tax_code}}</span></td>
+                                            <td style="text-align: right"><span>
+                                            <?php
+                                            $harga = $item->jumlah_harga;
+                                            $jumlah = $item->jumlah;
+                                            $total = $harga * $jumlah;
+                                            echo"Rp"; echo number_format($total);
+                                            ?>
+                                            </span></td>
                                         </tr>
                                         @endforeach
                                         </select>
                                     </tbody>
                                 </table>
-                                <div class="col-3 mb-2">
-                                    <a href="{{url('vendor/draft')}}" type="submit"
-                        class="btn btn-danger" id="simpan" onclick="return confirm('Are you sure?')"> Return</a> &nbsp;&nbsp;&nbsp;
-                                    <a href="{{route('exportdraftba')}}" class="btn btn-success sm" onclick="return confirm('Are you sure?')"><i class="fa fa-cloud-download"></i>&nbsp; Export To Excel</a>
-                                </div>
                             </form>
                         </div> <!-- /.table-stats -->
                     </div>

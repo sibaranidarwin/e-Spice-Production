@@ -34,13 +34,13 @@ class CreateGoodsReceipt extends Migration
             $table->string('uom')->nullable();
             $table->string('currency');
             $table->string('harga_satuan');
-            $table->string('jumlah')->nullable();
+            $table->integer('jumlah');
             $table->string('jumlah_harga')->nullable();
             $table->string('total_harga');
             $table->string('tax_code')->nullable();
             $table->string('alasan_disp')->nullable();
-            $table->enum('status',['Not Verified', 'Verified', 'Reject', 'Dispute'])->default("Not Verified")->nullable();
-            $table->enum('status_invoice',['Not Yet Verified-Draft', 'Verified Yet Verified-BA', 'Reject'])->default("Not Yet Verified-Draft")->nullable();
+            $table->enum('status',['Verified','Not Verified', 'Reject', 'Dispute'])->nullable();
+            $table->enum('status_invoice',['Not Yet Verified-Draft BA', 'Verified Yet Verified-BA', 'Reject'])->default("Not Yet Verified-Draft BA")->nullable();
             $table->string('mat_doc_it')->nullable();
             $table->string('year');
             $table->string('comp_code');

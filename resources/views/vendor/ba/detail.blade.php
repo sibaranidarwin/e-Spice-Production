@@ -25,7 +25,7 @@
 .table td,
 .table th,
 label {
-    font-size: 11.7px;
+    font-size: 11px;
 }
 </style>
 <div class="breadcrumbs">
@@ -91,9 +91,9 @@ label {
                                 <div class="form-group col-3 bg-white mb-2">
                                     <label for="">BA Date:</label>
                                     <input class="form-group" type="text" id="min" name="min">
-                                </div>To:
+                                </div>
                                 <div class=" form-group col-3 bg-white mb-2">
-                                    <label for=""></label>
+                                    <label for="">To:</label>
                                     <input class="form-group" type="text" id="max" name="max">
                                 </div>
                                 <div class="col-3 mb-2">
@@ -105,21 +105,20 @@ label {
                                 <table id="list" class="table table-striped" style="font-size: 10px;">
                                     <thead>
                                         <tr>
-                                           
                                             <th>No</th>
+                                            <th>Sts. BA</th>
+                                            <th>Sts. Inv. Props.</th>
                                             <th>No BA</th>
-                                            <th>Status BA</th>
-                                            <th>Status Invoice Proposal</th>
                                         </tr>
                                     </thead>
                                     <tbody style="font-size: 11px;">
                                         @php $i = 1 @endphp
-                                        @foreach($ba as $item)
+                                        @foreach($BA as $item)
                                         <tr>
                                             <td>{{$i++}}</td>
-                                            <td> <a href="/vendor/ba/{{ $item->no_ba }}">{{$item->no_ba}}</td>
                                             <td>{{$item->status_ba}}</td>
                                             <td>{{$item->status_invoice_proposal}}</td>
+                                            <td> <a href="/vendor/ba/{{ $item->no_ba }}">{{$item->no_ba}}</td>
                                         </tr>
                                         @endforeach
                                         </select>

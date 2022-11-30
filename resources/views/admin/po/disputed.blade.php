@@ -23,7 +23,7 @@
 
 <style>
     .table td, .table th,  label{
-        font-size: 11.4px;
+        font-size: 11.7px;
     }
 </style>
 <div class="breadcrumbs">
@@ -79,7 +79,7 @@
                     </div>
                     @endif
                     <div class="card-header">
-                        <strong class="card-title">Good Receipt Disputed List</strong>
+                        <strong class="card-title">Disputed Invoice List</strong>
                     </div>
                     <div class="card-body">
                     <div class="table-responsive text-nowrap">
@@ -104,8 +104,7 @@
                                         <th>No</th>
                                         <th>Status</th>
                                         <th>GR Number</th>
-                                        <th>No PO</th>
-                                        <th>PO Item</th>
+                                        <th>PO</th>
                                         <th>GR Date</th>
                                         <th>Part Number</th>
                                         <th>Reference</th>
@@ -123,8 +122,7 @@
                                         <td>{{++$i}}</td>
                                         <td >{{ $good_receipt->status }}</td>
                                         <td ><span>{{$good_receipt->gr_number}}</span></td>
-                                        <td ><span>{{$good_receipt->no_po}}</span></td>
-                                        <td><span>{{$good_receipt->po_item}}</span></td>
+                                        <td ><span>{{$good_receipt->no_po}}/{{$good_receipt->po_item}}</span></td>
                                         <td><span>{{$good_receipt->gr_date}}</span></td>
                                         <td> <span>{{$good_receipt->material_number}}</span></td>
                                         <td> <span>{{$good_receipt->ref_doc_no}}</span> </td>

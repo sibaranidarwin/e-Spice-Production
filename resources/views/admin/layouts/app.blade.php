@@ -108,27 +108,28 @@
                           <span class="nav-header-primary"><i class="menu-icon fa fa-newspaper-o"></i>BA Reconcile<span class="pull-right"><b class="caret"></b></span></span>
                     </a>
     
-                    <ul class="nav nav-list collapse" id="submenu1">
+                    <ul class="nav nav-list collapse sub-menu" id="submenu1">
                         <li>
-                              <a class="accordion-heading" data-toggle="collapse" data-target="#submenu2"><span class=""><i class="menu-icon fa fa-newspaper-o"></i>Draft BA</span></a>
+                             <a class="accordion-heading" data-toggle="collapse" data-target="#submenu2"><span class="">Draft BA</span></a>
                               <ul class="nav nav-list collapse sub-menu children" id="submenu2">
-                                  <li><a href="{{url('admin/historydraft')}}" title="Title"><i class="fa fa-history"></i>History Draft BA</a></li>
-                                  <li><a href="{{url('admin/draft')}}" title="Title"><i class="fa fa-table"></i>Draft BA Active</a></li>
+                                  <li><a href="{{url('admin/historydraft')}}" title="Title"><i class="fa fa-history"></i>History</a></li>
+                                  <li><a href="{{url('admin/draft')}}" title="Title"><i class="fa fa-table"></i>Active</a></li>
                               </ul>
                         </li>
                         <li>
-                            <a class="accordion-heading" data-toggle="collapse" data-target="#submenu3"><span class=""><i class="menu-icon fa fa-newspaper-o"></i>BA</span></a>
+                            <a class="accordion-heading" data-toggle="collapse" data-target="#submenu3"><span class="">BA</span></a>
                             <ul class="nav nav-list collapse sub-menu children" id="submenu3">
-                                <li><a href="{{url('admin/historyba')}}" title="Title"><i class="fa fa-history "></i>History BA</a></li>
-                                <li><a href="{{url('admin/ba')}}" title="Title"><i class="fa fa-table "></i>BA Active</a></li>
+                                <li><a href="{{url('admin/historyba')}}" title="Title"><i class="fa fa-history "></i>History</a></li>
+                                <li><a href="{{url('admin/detailba')}}" title="Title"><i class="fa fa-table "></i>Active</a></li>
                             </ul>
                       </li>
                     </ul>
                   </li>
+
                 
                 <li class="menu-item-has-children dropdown ">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                        aria-expanded="false"> <i class="menu-icon fa fa-warning"></i>Dispute Purchase</a>
+                        aria-expanded="false"> <i class="menu-icon fa fa-warning"></i>Dispute Invoice</a>
                     <ul class="sub-menu children dropdown-menu ">
                         <li><i class="fa fa-table "></i><a href="{{url('admin/disputed')}}">Show</a></li>
 

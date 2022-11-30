@@ -23,7 +23,7 @@
 
 <style>
     .table td, .table th,  label{
-        font-size: 12.4px;
+        font-size: 11px;
     }
 </style>
 <div class="breadcrumbs">
@@ -101,19 +101,20 @@
                             <table id="list" class="table table-striped" style="font-size: 10px;">
                                 <thead>
                                     <tr>
-                                        <th>No</th>
-                                        <th>Status</th>
-                                        <th>GR Number</th>
-                                        <th>No PO</th>
-                                        <th>PO Item</th>
-                                        <th>GR Date</th>
-                                        <th>Part Number</th>
-                                        <th>Reference</th>
-                                        <th>Material Description</th>
-                                    <th>QTY UOM</th>
-                                    <th>Curr</th>
-                                    <th>Unit Price</th>
-                                    <th>Tax Code</th>
+                                        {{-- <th><input type="checkbox" onchange="checkAll(this)"></th> --}}
+                                        <th style="text-align: center;">No</th>
+                                        <th style="text-align: center;">Sts.</th>
+                                        <th style="text-align: center;">GR Number</th>
+                                        <th style="text-align: center;">PO</th>
+                                        <th style="text-align: center;">GR Date</th>
+                                        <th style="text-align: center;">Part Number</th>
+                                        <th style="text-align: center;">Reference</th>
+                                        <th style="text-align: center;">Mat. Desc.</th>
+                                        <th style="text-align: center;">Del. Note</th>
+                                        <th style="text-align: center;">Qty UOM</th>
+                                        <th style="text-align: center;">Curr</th>
+                                        <th style="text-align: center;">Unit Price</th>
+                                        <th style="text-align: center;">Tax Code</th>
                                     </tr>
                                 </thead>
                                 <tbody style="font-size: 11px;">
@@ -122,15 +123,15 @@
                                         <td>{{++$i}}</td>
                                         <td >{{ $good_receipt->status }}</td>
                                         <td ><span>{{$good_receipt->gr_number}}</span></td>
-                                        <td ><span>{{$good_receipt->no_po}}</span></td>
-                                        <td><span>{{$good_receipt->po_item}}</span></td>
+                                        <td ><span>{{$good_receipt->no_po}} /{{$good_receipt->po_item}}</span></td>
                                         <td><span>{{ Carbon\Carbon::parse($good_receipt->gr_date)->format('d F Y') }}</span></td>
                                         <td> <span>{{$good_receipt->material_number}}/<br> {{$good_receipt->vendor_part_number}}</span></td>
                                         <td> <span>{{$good_receipt->ref_doc_no}}</span> </td>
-                                        <td> <span>{{$good_receipt->mat_desc}}</span> </td>
+                                        <td> <span>{{$good_receipt->mat_desc}}</span> <br>({{$good_receipt->valuation_type}})</td>
+                                        <td> <span>{{$good_receipt->delivery_note}}</span> </td>
                                         <td> <span>{{$good_receipt->jumlah}}</span>&nbsp;<span>{{$good_receipt->uom}}</span> </td>
                                         <td> <span>{{$good_receipt->currency}}</span> </td>
-                                        <td> <span>{{$good_receipt->harga_satuan}}</span> </td>
+                                        <td style="text-align: right"> <span>Rp{{number_format($good_receipt->harga_satuan)}}</span> </td>
                                         <td> <span>{{$good_receipt->tax_code}}</span> </td>
                                     </tr>
                                     @endforeach

@@ -8,7 +8,7 @@
 .table td,
 .table th,
 label {
-    font-size: 12.4px;
+    font-size: 11px;
 }
 </style>
 <div class="breadcrumbs">
@@ -62,12 +62,11 @@ label {
                                         class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label class="form-control-label" for="no_invoice_proposal">Nomor Invoice
-                                        Proposal<span style="color: red">*</span></label>
+                                    <label class="form-control-label" for="no_invoice_proposal">Invoice Number Proposal<span style="color: red">*</span></label>
                                     <input type="text"
                                         class="form-control @error('no_invoice_proposal') is-invalid @enderror"
                                         name="no_invoice_proposal" placeholder="Masukkan No Invoice ..."
-                                        value="{{ "MKP-INV-".$kd }}" readonly>
+                                        value="{{ date('Y')."/XI/MKP/INV/".$kd }} " readonly>
                                     @error('no_invoice_proposal')<span
                                         class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                                 </div>
@@ -81,7 +80,7 @@ label {
                                 <div class="form-group col-md-6">
                                     <label class="form-control-label" for="posting_date">Invoice Date <span
                                             style="color: red">*</span></label>
-                                    <input type="date" class="form-control @error('posting_date') is-invalid @enderror"
+                                    <input id="datefield" type='date' min='1899-01-01' max='2000-13-13' class="form-control @error('posting_date') is-invalid @enderror"
                                         name="posting_date" placeholder="Masukkan Posting Date ..." required>
                                     @error('posting_date')<span
                                         class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
@@ -97,7 +96,7 @@ label {
                                 <div class="form-group col-md-6">
                                     <label class="form-control-label" for="vendor_invoice_number">Invoice Number<span
                                             style="color: red">*</span></label>
-                                    <input type="text" id="input_mask1"
+                                    <input type="text" 
                                         class="form-control @error('vendor_invoice_number') is-invalid @enderror"
                                         name="vendor_invoice_number" placeholder="Fill in Invoice Number ..."
                                         value="{{ $good->vendor_invoice_number }}" required>
@@ -124,7 +123,7 @@ label {
                                         class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label class="form-control-label" for="del_costs">Invoice Difference</label><br>
+                                    <label class="form-control-label" for="del_costs">Price Gap</label><br>
                                     <input type="number" class="form-control @error('del_costs[]') is-invalid @enderror"
                                         name="del_costs" placeholder="Fill in Invoice Difference ...">
                                     @error('del_costs[]')<span
@@ -143,7 +142,7 @@ label {
                                         class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                                 </div>
                             </div>
-                            <a href="{{url('vendor/purchaseorder')}}" type="submit" class="btn btn-danger mb-2"
+                            <a href="{{url('vendor/detailba')}}" type="submit" class="btn btn-danger mb-2"
                                 id="simpan" onclick="return confirm('Are you sure?')">Return</a>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             <button type="submit" class="btn btn-success mb-2" id="simpan"
@@ -226,5 +225,20 @@ $("#input_mask_currency").inputmask({
     autoGroup: true,
     digits: 0
 });
+
+
+var today = new Date();
+                var dd = today.getDate();
+                var mm = today.getMonth() + 1; //January is 0!
+                var yyyy = today.getFullYear();
+                if (dd < 10) {
+                dd = '0' + dd
+                }
+                if (mm < 10) {
+                mm = '0' + mm
+                }
+
+                today = yyyy + '-' + mm + '-' + dd;
+                document.getElementById("datefield").setAttribute("max", today);
 </script>
 @endsection

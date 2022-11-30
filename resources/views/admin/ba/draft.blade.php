@@ -25,7 +25,7 @@
 .table td,
 .table th,
 label {
-    font-size: 11.4px;
+    font-size: 11.7px;
 }
 </style>
 <div class="breadcrumbs">
@@ -102,6 +102,8 @@ label {
                                     <thead>
                                         <tr>
                                             <th>No</th>
+                                            <th>Sts. Draft BA</th>
+                                            <th>Sts. Inv. Props.</th>
                                             <th>No Draft</th>
                                             <th>Date</th>
                                             <th>No PO</th>
@@ -113,8 +115,6 @@ label {
                                             <th>GR Date</th>
                                             <th>Total Price</th>
                                             <th>Total Value</th>
-                                            <th>Status Draft BA</th>
-                                            <th>Status Invoice Proposal</th>
                                         </tr>
                                     </thead>
                                     <tbody style="font-size: 11px;">
@@ -122,6 +122,8 @@ label {
                                         @foreach($draft as $item)
                                         <tr>
                                             <td>{{$i++}}</td>
+                                            <td><span>Verified - Draft BA</span></td>
+                                            <td><span>{{$item->status_invoice_proposal}}</span></td>
                                             <td>{{ $item->no_draft}}</td>
                                             <td><span>{{$item->date_draft}}</span></td>
                                             <td><span>{{$item->po_number}}</span></td>
@@ -131,10 +133,8 @@ label {
                                             <td><span>{{$item->po_item}}</span></td>
                                             <td><span>{{$item->jumlah}}</span></td>
                                             <td><span>{{$item->gr_date}}</span></td>
-                                            <td><span>{{$item->jumlah_harga}}</span></td>
+                                            <td style="text-align: right"><span>Rp{{ number_format($item->jumlah_harga) }}</span></td> 
                                             <td><span>{{$item->selisih_harga}}</span></td>
-                                            <td><span>{{$item->status_draft}}</span></td>
-                                            <td><span>{{$item->status_invoice_proposal}}</span></td>
                                         </tr>
                                         @endforeach
                                         </select>
