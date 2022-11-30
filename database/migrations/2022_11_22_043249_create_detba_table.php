@@ -13,7 +13,7 @@ class CreateDetbaTable extends Migration
      */
     public function up()
     {
-        Schema::create('detba', function (Blueprint $table) {
+        Schema::create('ba', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('id_vendor');
             $table->string('no_ba');

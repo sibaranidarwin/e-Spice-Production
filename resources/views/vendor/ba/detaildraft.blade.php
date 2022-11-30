@@ -43,7 +43,7 @@ label {
                     <div class="page-title">
                         <ol class="breadcrumb text-right">
                             <li><a href="#">Dashboard</a></li>
-                            <li><a href="#">BA Reconcile</a></li>
+                            <li><a href="#">Draft BA Reconcile</a></li>
                             <li class="active">Show</li>
                         </ol>
                     </div>
@@ -58,96 +58,100 @@ label {
         <div class="row">
             <div class="col-lg-12">
                 <div class="card">
-                    @if (count($errors) > 0)
-                    <div class="row">
-                        <div class="col-md-12 col-md-offset-1">
-                          <div class="alert alert-danger alert-dismissible">
-                              <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                              <h4><i class="icon fa fa-ban"></i> Error!</h4>
-                              @foreach($errors->all() as $error)
-                              {{ $error }} <br>
-                              @endforeach      
-                          </div>
-                        </div>
+                    @if($message = Session::get('destroy'))
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <strong>Success!</strong> {{$message}}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    @elseif($message = Session::get('success'))
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <strong>Success!</strong> {{$message}}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    @elseif($message = Session::get('warning'))
+                    <div class="alert alert-primary alert-dismissible fade show" role="alert">
+                        <strong>Success!</strong> {{$message}}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                     </div>
                     @endif
-      
-                    @if (Session::has('success'))
-                        <div class="row">
-                          <div class="col-md-12 col-md-offset-1">
-                            <div class="alert alert-success alert-dismissible">
-                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                                <h5>{!! Session::get('success') !!}</h5>   
-                            </div>
-                          </div>
-                        </div>
-                    @endif
                     <div class="card-header">
-                        @foreach($ba as $item)
-                        @endforeach
-                        <strong class="card-title">BA Reconcile : {{$item->no_ba}}</strong>
-                        <br>
-                        <strong class="card-title">Created Ba Reconcile : {{ Carbon\Carbon::parse($item->created_at)->format('d F Y') }}</strong>
+                        <strong class="card-title">Draft BA Reconcile List</strong>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive text-nowrap">
                             <div class="row">
                                 <div class="form-group col-3 bg-white mb-2">
-                                    <label for="">BA Date:</label>
+                                    <label for="">Date:</label>
                                     <input class="form-group" type="text" id="min" name="min">
-                                </div>To:
+                                </div>
                                 <div class=" form-group col-3 bg-white mb-2">
-                                    <label for=""></label>
+                                    <label for="">To:</label>
                                     <input class="form-group" type="text" id="max" name="max">
                                 </div>
-                                <div class="col-3 mb-2">
-                                    <button class="btn btn-primary" data-toggle="modal" data-target="#modal-import"><i class="fa fa-cloud-upload"></i>&nbsp; Import Excel</button>
-                                </div>
+                                {{-- <div class="col-3 mb-2">
+                                    <a href="{{route('exportdraftba')}}" class="btn btn-success sm" onclick="return confirm('Are you sure?')"><i class="fa fa-cloud-download"></i>&nbsp; Export To Excel</a>
+                                </div> --}}
                             </div>
-                            <form action="{{ route('update-ba-vendor/{id_gr}') }}" method="POST">
+                            <form action="{{ route('exportdraftba/{id_draft_ba}') }}" method="POST">
                                 @csrf
                                 <table id="list" class="table table-striped" style="font-size: 10px;">
                                     <thead>
                                         <tr>
                                             <th><input type="checkbox" onchange="checkAll(this)"></th>
-                                            <th>No</th>
-                                            <th>Sts. BA</th>
-                                            <th>Sts. Inv. Props.</th>
-                                            <th>Date</th>
-                                            <th>PO</th>
-                                            <th>Material Description</th>
-                                            <th>Vendor Part Number</th>
-                                            <th>GR Date</th>
-                                            <th>Qty</th>
-                                            <th>Total Price</th>
+                                            <th style="text-align: center;">No</th>
+                                            <th style="text-align: center;">Sts. Draft BA</th>
+                                            <th style="text-align: center;">Sts. Inv. Props.</th>
+                                            <th style="text-align: center;">No Draft</th>
+                                            <th style="text-align: center;">Date</th>
+                                            <th style="text-align: center;">No PO</th>
+                                            <th style="text-align: center;">Mat. Desc.</th>
+                                            <th style="text-align: center;">Part Number</th>
+                                            <th style="text-align: center;">Header Text</th>
+                                            <th style="text-align: center;">Qty</th>
+                                            <th style="text-align: center;">GR Date</th>
+                                            <th style="text-align: center;">Price</th>
+                                            <th style="text-align: center;">Tax_code</th>
+                                            <th style="text-align: center;">Total Value</th>
                                         </tr>
                                     </thead>
                                     <tbody style="font-size: 11px;">
                                         @php $i = 1 @endphp
-                                        @foreach($ba as $item)
+                                        @foreach($draft as $item)
                                         <tr>
-                                            <td><input type="checkbox" name="ids[]" value="{{$item->id_ba}}"></td>
+                                            <td><input type="checkbox" name="ids[]" value="{{$item->id_draft_ba}}"></td>
                                             <td>{{$i++}}</td>
-                                            <td><span>{{$item->status_ba}}</span></td>
+                                            <td><span>Verified - Draft BA</span></td>
                                             <td><span>{{$item->status_invoice_proposal}}</span></td>
-                                            <td><span>{{ Carbon\Carbon::parse($item->created_at)->format('d F Y') }}</span></td>
-                                            <td><span>{{$item->po_number}}/{{$item->item}}</span></td>
-                                            <td><span>{{$item->material_description}} <br>({{$item->valuation_type}})</span></td>
-                                            <td><span>{{$item->material_number}}/{{$item->vendor_part_number}}</span></td>
+                                            <td><span>{{ $item->no_draft}}</span></td>
+                                            <td><span>{{ Carbon\Carbon::parse($item->date_draft)->format('d F Y') }}</span></td>
+                                            <td><span>{{$item->po_number}}/{{$item->po_item}}</span></td>
+                                            <td><span>{{$item->mat_desc}} <br>({{$item->valuation_type}})</span></td>
+                                            <td><span>{{$item->material_number}} / {{$item->vendor_part_number}}</span></td>
+                                            <td><span>{{$item->doc_header_text}}</span></td>
+                                            <td><span>{{$item->jumlah}}</span></td>
                                             <td><span>{{ Carbon\Carbon::parse($item->gr_date)->format('d F Y') }}</span></td>
-                                            <td><span>{{$item->qty}}</span></td>
-                                            <td style="text-align: right"><span>Rp{{ number_format($item->amount_mkp) }}</span></td> 
+                                            <td style="text-align: right"><span>Rp{{ number_format($item->jumlah_harga) }}</span></td>
+                                            <td><span>{{$item->tax_code}}</span></td>
+                                            <td style="text-align: right"><span>
+                                            <?php
+                                            $harga = $item->jumlah_harga;
+                                            $jumlah = $item->jumlah;
+                                            $total = $harga * $jumlah;
+                                            echo"Rp"; echo number_format($total);
+                                            ?>
+                                            </span></td>
                                         </tr>
                                         @endforeach
                                         </select>
                                     </tbody>
                                 </table>
-                                {{-- &nbsp;&nbsp;<button type="submit" name="action" value="Dispute"
-                                    class="btn btn-warning btn-sm-3">Dispute</button> --}}
-                                    <a href="{{url('vendor/detailba')}}" type="submit"
-                                    class="btn btn-danger" id="simpan" onclick="return confirm('Are you sure?')"> Return</a> &nbsp;&nbsp;&nbsp;
-                                    &nbsp;&nbsp;<button type="submit" name="action" value="Update"
-                                    class="btn btn-success btn-sm-3" onclick="return confirm('Are you sure?')">Create Invoice</button>
+                                <button class="btn btn-info sm" onclick="return confirm('Are you sure?')"> Choose To Export </button>
                             </form>
                         </div> <!-- /.table-stats -->
                     </div>
@@ -180,7 +184,7 @@ label {
     <div class="modal-dialog modal-lg">
       <form method="post" id="form-import" action="{{url('vendor/draft')}}" enctype="multipart/form-data" class="modal-content">
         <div class="modal-header">
-          <h4 class="modal-title">Import Data BA</h4>
+          <h4 class="modal-title">Import Data Draft BA</h4>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -190,17 +194,17 @@ label {
           {{csrf_field()}}
           <div class="row">
             <div class="col-md-12">
-              <p>Import data BA sesuai format contoh berikut.<br/><a href="{{url('')}}/Panduan_Pengisian_Excel.pdf"><i class="fa fa-download"></i> File Contoh BA</a></p>
+              <p>Import data Draft BA sesuai format contoh berikut.<br/><a href="{{url('')}}/excel-karyawan.xlsx"><i class="fa fa-download"></i> File Contoh Draft BA</a></p>
             </div>
             <div class="col-md-12">
-              <label>File Excel BA</label>
-              <input type="file" name="excel-vendor-ba" required>
+              <label>File Excel Draft BA</label>
+              <input type="file" name="excel-draft" required>
             </div>
           </div>
         </div>
         <div class="modal-footer justify-content-between">
-          <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="return confirm('Are you sure?')">Return</button>
-          <button type="submit" class="btn btn-primary" onclick="return confirm('Are you sure?')">Extract Data</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+          <button type="submit" class="btn btn-primary">Simpan</button>
         </div>
       </form>
     </div>
@@ -213,7 +217,7 @@ $.fn.dataTable.ext.search.push(
     function(settings, data, dataIndex) {
         var min = minDate.val();
         var max = maxDate.val();
-        var date = new Date(data[3]);
+        var date = new Date(data[2]);
 
         if (
             (min === null && max === null) ||
@@ -247,6 +251,7 @@ $(document).ready(function() {
 
 
 });
+
 function checkAll(ele) {
       var checkboxes = document.getElementsByTagName('input');
       if (ele.checked) {

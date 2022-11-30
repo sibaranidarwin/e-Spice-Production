@@ -25,7 +25,7 @@
 .table td,
 .table th,
 label {
-    font-size: 11.7px;
+    font-size: 11px;
 }
 </style>
 <div class="breadcrumbs">
@@ -91,9 +91,9 @@ label {
                                 <div class="form-group col-3 bg-white mb-2">
                                     <label for="">BA Date:</label>
                                     <input class="form-group" type="text" id="min" name="min">
-                                </div>To:
+                                </div>
                                 <div class=" form-group col-3 bg-white mb-2">
-                                    <label for=""></label>
+                                    <label for="">To:</label>
                                     <input class="form-group" type="text" id="max" name="max">
                                 </div>
                                 {{-- <div class="col-3 mb-2">
@@ -105,34 +105,30 @@ label {
                                 <table id="list" class="table table-striped" style="font-size: 10px;">
                                     <thead>
                                         <tr>
-                                       
                                             <th>No</th>
+                                            <th>Sts. BA</th>
+                                            <th>Sts. Inv. Props.</th>
                                             <th>No BA</th>
                                             <th>Date</th>
-                                            <th>No PO</th>
-                                            <th>PO Item</th>
-                                            <th>Material</th>
+                                            <th>PO</th>
+                                            <th>Mat. Desc.</th>
                                             <th>Quantity</th>
                                             <th>Total Price</th>
-                                            <th>Status BA</th>
-                                            <th>Status Invoice Proposal</th>
                                         </tr>
                                     </thead>
                                     <tbody style="font-size: 11px;">
                                         @php $i = 1 @endphp
                                         @foreach($ba as $item)
                                         <tr>
-                                          
                                             <td>{{$i++}}</td>
-                                            <td>{{ $item->no_ba}}</td>
-                                            <td><span>{{ Carbon\Carbon::parse($item->gr_date)->format('d F Y') }}</span></td>
-                                            <td><span>{{$item->po_number}}</span></td>
-                                            <td><span>{{$item->item}}</span></td>
-                                            <td><span>{{$item->material_description}}</span></td>
-                                            <td><span>{{$item->qty}}</span></td>
-                                            <td><span>RP. {{ number_format($item->amount_mkp) }}</span></td>
                                             <td><span>{{$item->status_ba}}</span></td>
                                             <td><span>{{$item->status_invoice_proposal}}</span></td>
+                                            <td>{{ $item->no_ba}}</td>
+                                            <td><span>{{ Carbon\Carbon::parse($item->created_at)->format('d F Y') }}</span></td>
+                                            <td><span>{{$item->po_number}}/{{$item->item}}</span></td>
+                                            <td><span>{{$item->material_description}}<br>({{$item->valuation_type}})</span></td>
+                                            <td><span>{{$item->qty}}</span></td>
+                                            <td style="text-align: right"><span>Rp{{ number_format($item->amount_mkp) }}</span></td> 
                                         </tr>
                                         @endforeach
                                         </select>

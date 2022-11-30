@@ -112,7 +112,7 @@
                 </li>
                   <li class="menu-item-has-children dropdown ">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                        aria-expanded="false"> <i class="menu-icon fa fa-warning"></i>Disputed Purchase</a>
+                        aria-expanded="false"> <i class="menu-icon fa fa-warning"></i>Disputed Invoice</a>
                     <ul class="sub-menu children dropdown-menu ">
                         <li><i class="fa fa-table "></i><a href="{{url('accounting/disputed')}}">Show</a></li>
 

@@ -107,15 +107,14 @@ label {
                                         <tr>
                                        
                                             <th>No</th>
+                                            <th>Sts. BA</th>
+                                            <th>Sts. Inv. Props.</th>
                                             <th>No BA</th>
                                             <th>Date</th>
-                                            <th>No PO</th>
-                                            <th>PO Item</th>
-                                            <th>Material</th>
-                                            <th>Quantity</th>
+                                            <th>PO</th>
+                                            <th>Mat. Desc.</th>
+                                            <th>Qty</th>
                                             <th>Total Price</th>
-                                            <th>Status BA</th>
-                                            <th>Status Invoice Proposal</th>
                                         </tr>
                                     </thead>
                                     <tbody style="font-size: 11px;">
@@ -124,15 +123,14 @@ label {
                                         <tr>
                                           
                                             <td>{{$i++}}</td>
+                                            <td><span>{{$item->status_ba}}</span></td>
+                                            <td><span>{{$item->status_invoice_proposal}}</span></td>
                                             <td>{{ $item->no_ba}}</td>
                                             <td><span>{{$item->gr_date}}</span></td>
-                                            <td><span>{{$item->po_number}}</span></td>
-                                            <td><span>{{$item->item}}</span></td>
+                                            <td><span>{{$item->po_number}}/{{$item->item}}</span></td>
                                             <td><span>{{$item->material_description}}</span></td>
                                             <td><span>{{$item->qty}}</span></td>
                                             <td><span>{{$item->amount_mkp}}</span></td>
-                                            <td><span>{{$item->status_ba}}</span></td>
-                                            <td><span>{{$item->status_invoice_proposal}}</span></td>
                                         </tr>
                                         @endforeach
                                         </select>

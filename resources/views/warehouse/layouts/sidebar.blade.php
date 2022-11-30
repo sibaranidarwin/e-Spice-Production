@@ -46,20 +46,36 @@
                 <li class="active">
                     <a href="{{url('warehouse/dashboard')}}"><i class="menu-icon fa fa-laptop"></i>Dashboard</a>
                 </li>
+
+
                 <li class="menu-title">DATA GOOD RECEIPT</li><!-- /.menu-title -->
                 <li class="menu-item-has-children dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                        aria-expanded="false"> <i class="menu-icon fa fa-file"></i>Good Receipt</a>
-                    <ul class="sub-menu children dropdown-menu">
-                        <li><i class="fa fa-info"></i><a href="{{url('warehouse/po')}}">Not Verified</a></li>
-                        <li><i class="fa fa-check"></i><a href="{{url('warehouse/pover')}}">Verified</a></li>
-                        <li><i class="fa fa-close"></i><a href="{{url('warehouse/poreject')}}">Reject</a></li>
-                </li>
-            </ul>
-            </li>
+                    <a class="accordion-heading menu-item-has-children dropdown-toggle" data-toggle="collapse" data-target="#submenu1" aria-haspopup="true"
+                    aria-expanded="false">
+                          <span class="nav-header-primary"><i class="menu-icon fa fa-newspaper-o"></i>Good Receipt<span class="pull-right"><b class="caret"></b></span></span>
+                    </a>
+    
+                    <ul class="nav nav-list collapse sub-menu" id="submenu1">
+                        <li>
+                             <a class="accordion-heading" data-toggle="collapse" data-target="#submenu2"><span class="">All Status</span></a>
+                              <ul class="nav nav-list collapse sub-menu children" id="submenu2">
+                                  <li><a href="{{url('warehouse/all')}}" title="Title"><i class="fa fa-list"></i>All</a></li>
+                              </ul>
+                        </li>
+                        <li>
+                            <a class="accordion-heading" data-toggle="collapse" data-target="#submenu3"><span class="">By Status</span></a>
+                            <ul class="nav nav-list collapse sub-menu children" id="submenu3">
+                                <li><a href="{{url('warehouse/po')}}" title="Title"><i class="fa fa-info"></i>Not Verified</a></li>
+                                <li><a href="{{url('warehouse/pover')}}" title="Title"><i class="fa fa-check "></i>Verified</a></li>
+                                <li><a href="{{url('warehouse/poreject')}}" title="Title"><i class="fa fa-close"></i>Reject</a></li>
+                            </ul>
+                      </li>
+                    </ul>
+                  </li>
+
             <li class="menu-item-has-children dropdown ">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="menu-icon fa fa-warning"></i>Dispute Purchase</a>
+                    <i class="menu-icon fa fa-warning"></i>Disputed Invoice</a>
                 <ul class="sub-menu children dropdown-menu ">
                     <li><i class="fa fa-table "></i><a href="{{url('warehouse/disputed')}}">Show</a></li>
 

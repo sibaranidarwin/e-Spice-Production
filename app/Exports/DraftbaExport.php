@@ -25,18 +25,18 @@ class DraftbaExport implements WithEvents,FromCollection, WithHeadings, ShouldAu
         return [
             AfterSheet::class    => function(AfterSheet $event) {
                 
-                $event->sheet->protectCells('A1:J1', 'PASSWORD');
-                $event->sheet->getStyle('K1:L1')->getProtection()->setLocked(\PhpOffice\PhpSpreadsheet\Style\Protection::PROTECTION_UNPROTECTED);
-                $event->sheet->getStyle('K2:L2')->getProtection()->setLocked(\PhpOffice\PhpSpreadsheet\Style\Protection::PROTECTION_UNPROTECTED);
-                $event->sheet->getStyle('K3:L3')->getProtection()->setLocked(\PhpOffice\PhpSpreadsheet\Style\Protection::PROTECTION_UNPROTECTED);
-                $event->sheet->getStyle('K4:L4')->getProtection()->setLocked(\PhpOffice\PhpSpreadsheet\Style\Protection::PROTECTION_UNPROTECTED);
-                $event->sheet->getStyle('K5:L5')->getProtection()->setLocked(\PhpOffice\PhpSpreadsheet\Style\Protection::PROTECTION_UNPROTECTED);
-                $event->sheet->getStyle('K6:L6')->getProtection()->setLocked(\PhpOffice\PhpSpreadsheet\Style\Protection::PROTECTION_UNPROTECTED);
-                $event->sheet->getStyle('K7:L7')->getProtection()->setLocked(\PhpOffice\PhpSpreadsheet\Style\Protection::PROTECTION_UNPROTECTED);
-                $event->sheet->getStyle('K8:L8')->getProtection()->setLocked(\PhpOffice\PhpSpreadsheet\Style\Protection::PROTECTION_UNPROTECTED);
-                $event->sheet->getStyle('K9:L9')->getProtection()->setLocked(\PhpOffice\PhpSpreadsheet\Style\Protection::PROTECTION_UNPROTECTED);
-                $event->sheet->getStyle('K10:L10')->getProtection()->setLocked(\PhpOffice\PhpSpreadsheet\Style\Protection::PROTECTION_UNPROTECTED);
-                $event->sheet->getStyle('K11:L11')->getProtection()->setLocked(\PhpOffice\PhpSpreadsheet\Style\Protection::PROTECTION_UNPROTECTED);
+                $event->sheet->protectCells('A1:K1', 'PASSWORD');
+                $event->sheet->getStyle('L1:N1')->getProtection()->setLocked(\PhpOffice\PhpSpreadsheet\Style\Protection::PROTECTION_UNPROTECTED);
+                $event->sheet->getStyle('L2:N2')->getProtection()->setLocked(\PhpOffice\PhpSpreadsheet\Style\Protection::PROTECTION_UNPROTECTED);
+                $event->sheet->getStyle('L3:N3')->getProtection()->setLocked(\PhpOffice\PhpSpreadsheet\Style\Protection::PROTECTION_UNPROTECTED);
+                $event->sheet->getStyle('L4:N4')->getProtection()->setLocked(\PhpOffice\PhpSpreadsheet\Style\Protection::PROTECTION_UNPROTECTED);
+                $event->sheet->getStyle('L5:N5')->getProtection()->setLocked(\PhpOffice\PhpSpreadsheet\Style\Protection::PROTECTION_UNPROTECTED);
+                $event->sheet->getStyle('L6:N6')->getProtection()->setLocked(\PhpOffice\PhpSpreadsheet\Style\Protection::PROTECTION_UNPROTECTED);
+                $event->sheet->getStyle('L7:N7')->getProtection()->setLocked(\PhpOffice\PhpSpreadsheet\Style\Protection::PROTECTION_UNPROTECTED);
+                $event->sheet->getStyle('L8:N8')->getProtection()->setLocked(\PhpOffice\PhpSpreadsheet\Style\Protection::PROTECTION_UNPROTECTED);
+                $event->sheet->getStyle('L9:N9')->getProtection()->setLocked(\PhpOffice\PhpSpreadsheet\Style\Protection::PROTECTION_UNPROTECTED);
+                $event->sheet->getStyle('L10:N10')->getProtection()->setLocked(\PhpOffice\PhpSpreadsheet\Style\Protection::PROTECTION_UNPROTECTED);
+                $event->sheet->getStyle('L11:N11')->getProtection()->setLocked(\PhpOffice\PhpSpreadsheet\Style\Protection::PROTECTION_UNPROTECTED);
                 
                 $event->sheet->getDelegate()->getProtection()->setSheet(true);
             },
@@ -50,9 +50,12 @@ class DraftbaExport implements WithEvents,FromCollection, WithHeadings, ShouldAu
             'po_number',
             'mat_desc',
             'vendor_part_number',
+            'material_number',
+            'valuation_type',
             'doc_header_text',
             'po_item',
             'jumlah',
+            'tax_code',
             'jumlah_harga',
             'selisih_harga',
             'status_draft',
@@ -65,9 +68,12 @@ class DraftbaExport implements WithEvents,FromCollection, WithHeadings, ShouldAu
             'po_number',
             'material_description',
             'vendor_part_number',
+            'material_number',
+            'valuation_type',
             'doc_header_text',
             'item',
             'qty',
+            'tax_code',
             'amount_mkp',
             'total_value',
             'status_ba',

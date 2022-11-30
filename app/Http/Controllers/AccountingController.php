@@ -177,17 +177,34 @@ class AccountingController extends Controller
                 ->with('i',(request()->input('page', 1) -1) *5);
    }
    public function detailinvoice(Request $request, $id){
-    $invoice = Invoice::where('id', $id)->get();
-    
-    // $recordIds = $request->get('ids');
-    // $newStatus = $request->get('Status');
+        $detail = Invoice::find($id);
+        $invoices = good_receipt::select("goods_receipt.id_gr",
+                                    "goods_receipt.no_po",
+                                    "goods_receipt.gr_number",
+                                    "goods_receipt.po_item",
+                                    "goods_receipt.gr_date",
+                                    "goods_receipt.material_number",
+                                    "goods_receipt.harga_satuan",
+                                    "goods_receipt.jumlah",
+                                    "goods_receipt.tax_code",
+                                    "goods_receipt.status",
+                                    "invoice.id_inv", 
+                                    "invoice.posting_date", 
+                                    "invoice.baselinedate",
+                                    "invoice.no_invoice_proposal",
+                                    "invoice.vendor_invoice_number",
+                                    "invoice.faktur_pajak_number",
+                                    "invoice.total_harga_everify",
+                                    "invoice.ppn",
+                                    "invoice.del_costs",
+                                    "invoice.total_harga_gross",
+                                    "invoice.created_at"
+                                    )
+                                    ->JOIN("invoice", "goods_receipt.id_inv", "=", "invoice.id_inv")
+                                    ->where("invoice.id_inv", "=", "$detail->id_inv")
+                                    ->get();
 
-    // $good_receipts = [];
-    // foreach($recordIds as $record) {
-    //     $good_receipt = good_receipt::find($record);
-    //     array_push($good_receipts, $good_receipt);
-    // }
-    return view('accounting.invoice.detail', compact('invoice'))->with('i',(request()->input('page', 1) -1) *5);
+    return view('accounting.invoice.detail', compact('invoices'))->with('i',(request()->input('page', 1) -1) *5);
 }
 
     /**

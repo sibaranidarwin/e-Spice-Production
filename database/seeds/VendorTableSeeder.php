@@ -14,6 +14,7 @@ class VendorTableSeeder extends Seeder
     {
         //
         VendorID::create([
+            'id_vendor' => 2011000155,
             'vendor_name' => 'United Tractors',
             'vendor_address' => 'Jakarta Selatan',
             'logo' => 'unitedtractors.png',

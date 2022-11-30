@@ -59,7 +59,8 @@ class VendorController extends Controller
     {   
         $user_vendor = Auth::User()->id_vendor;
 
-        $good_receipts = good_receipt::where('id_vendor', $user_vendor)->where(function($query) {
+
+        $good_receipts = good_receipt::where('id_vendor', $user_vendor)->where('id_inv',0)->where(function($query) {
 			$query->where('status','Verified')
 						->orWhereNull('status');})->get();
         
@@ -92,6 +93,7 @@ class VendorController extends Controller
                 $recordIds = $request->get('ids');
                 $newStatus = $request->get('Status');
                 
+                // dd($recordIds);
                 //buat kode otomatis
                 $q = DB::table('invoice')->select(DB::raw('MAX(RIGHT(no_invoice_proposal, 4)) as kode'));
                 $kd="";
@@ -100,14 +102,17 @@ class VendorController extends Controller
                     foreach($q->get() as $k)
                     {
                         $tmp = ((int)$k->kode)+1;
-                        $kd = date('d-m-Y').'-'.sprintf("%04s", $tmp);
+                        $kd = sprintf("%04s", $tmp);
                     }
                 }
                 else
                 {
-                    $kd = date('d-m-Y').'-'."0001";
+                    $kd = "0001";
                 }
+                
 
+                // $tax = good_receipt::where('tax_code', 'M2')->get();
+                //  dd($tax);
                 $good_receipts = [];
                 $total_dpp = 0;
                 foreach($recordIds as $record) {
@@ -115,8 +120,29 @@ class VendorController extends Controller
                     $total_dpp += $good_receipt->jumlah_harga * $good_receipt->jumlah;
                     array_push($good_receipts, $good_receipt);
                 }
-
+                
+                if (good_receipt::where('tax_code', 'M1')){
+                $total_ppn = $total_dpp * 0.01;
+                }
+                elseif (good_receipt::where('tax_code', 'M2')){
                 $total_ppn = $total_dpp * 0.02;
+                }
+                elseif (good_receipt::where('tax_code', 'M3')){
+                $total_ppn = $total_dpp * 0.03;
+                }
+                elseif (good_receipt::where('tax_code', 'M4')){
+                $total_ppn = $total_dpp * 0.04;
+                }
+                elseif (good_receipt::where('tax_code', 'M5')){
+                $total_ppn = $total_dpp * 0.05;
+                }
+                elseif (good_receipt::where('tax_code', 'M6')){
+                    $total_ppn = $total_dpp * 0.06;
+                    }
+                else{
+                $tota_ppn = $total_dpp * 0.07;
+                }
+
                 // kondisi TAX code ma = 11%
                 $total_harga = $total_dpp + $total_ppn;
                 return view('vendor.po.edit', compact('good_receipts', 'total_dpp', 'total_ppn', 'total_harga','kd'));
@@ -132,38 +158,55 @@ class VendorController extends Controller
                     array_push($good_receipts, $good_receipt);
                     
                     //buat kode otomatis
-                    $q = DB::table('draft_ba')->select(DB::raw('MAX(RIGHT(no_draft, 4)) as kode'));
+                    $q = DB::table('draft_ba')->select(DB::raw('MAX(RIGHT(no_draft, 5)) as kode'));
                     $kd="";
                     if($q->count()>0)
                     {
                         foreach($q->get() as $k)
                         {
                             $tmp = ((int)$k->kode)+1;
-                            $kd = date('d-m-Y').'-'.sprintf("%04s", $tmp);
+                            $kd = sprintf("%05s", $tmp);
                         }
                     }
                     else
                     {
-                        $kd = date('d-m-Y').'-'."0001";
+                        // 00001/XI/DRAFT-BA/MKP/2022
+                        $kd = "00001";
                     }
+                    // dd($kd);
+
                     $draft = Draft_BA::create([
-                        'id_gr' =>$good_receipt->id_gr,
+                        'id_gr' =>$good_receipt->id_gr, 
                         'id_vendor' => $good_receipt->id_vendor,
-                        'no_draft' => "MKP-Draft-". $kd,                        
+                        'no_draft' => $kd."/XI/DRAFT-BA/MKP/".date('Y'),                        
                         'date_draft' => $good_receipt->gr_date,
                         'po_number' => $good_receipt->no_po,
                         'mat_desc' => $good_receipt->mat_desc,
+                        'material_number' => $good_receipt->material_number,
                         'vendor_part_number' => $good_receipt->vendor_part_number,
+                        'valuation_type' =>$good_receipt->valuation_type,
                         'doc_header_text' => $good_receipt->doc_header_text,
                         'po_item' => $good_receipt->po_item,
                         'jumlah' => $good_receipt->jumlah,
                         'gr_date' => $good_receipt->gr_date,
+                        'tax_code' =>  $good_receipt->tax_code,
                         'jumlah_harga' => $good_receipt->jumlah_harga,
-                        'status_draft' => 'Verified',
-                        'status_invoice_proposal' => 'Not Yet Verified-Draft',
+                        'status_invoice_proposal' => 'Not Yet Verified - Draft BA',
                     ]);
-                }   
-                if($draft){
+
+                    
+                    // dd($draft);
+                    //dd($draft->status_invoice_proposal);
+                    $good_receipts = [];
+                    foreach($recordIds as $record) {
+                        $good_receipt = good_receipt::find($record);
+                        $good_receipt->update([
+                            'status_invoice' => $draft->status_invoice_proposal
+                        ]);
+                        $good_receipt->save();
+                    }
+                   }
+                if($good_receipt){
                     //redirect dengan pesan sukses
                     return redirect('vendor/draft')->with('success','Data Telah berhasil Di Create Menjadi Draft Ba.');
                     }
@@ -201,9 +244,10 @@ class VendorController extends Controller
         foreach($recordIds as $record ) {
             $ba = BA_Reconcile::find($record);
             $ba->update([
-                'status_invoice_proposal' => 'Verified',
+                'status_invoice_proposal' => 'Verified - BA',
             ]);
             $ba->save();
+
 
             $total_dpp += $ba->amount_mkp * $ba->qty;
             array_push($bas, $ba);
@@ -342,8 +386,9 @@ class VendorController extends Controller
     public function draft()
         {
         $user_vendor = Auth::User()->id_vendor;
+        //   $ba = BA::select('no_ba','status_ba','status_invoice_proposal')->distinct()->where("id_vendor", $user_vendor)->get(); 
         // dd($user_vendor);
-        $draft = Draft_BA::all()->where("id_vendor", $user_vendor);
+        $draft = Draft_BA::select('no_draft','status_invoice_proposal')->distinct()->where("id_vendor", $user_vendor)->where("status_invoice_proposal", "Not Yet Verified - Draft BA")->get();
         // $total_price= Draft_BA::all()->jumlah_harga->get();
         //  dd($total_price);
         // $total = $total_price * 2;
@@ -351,34 +396,56 @@ class VendorController extends Controller
         // dd($total);
         return view('Vendor.ba.draft',compact('draft'));
         }
+
+    public function detaildraft()
+        {
+        $user_vendor = Auth::User()->id_vendor;
+
+        $draft = Draft_BA::all()->where("id_vendor", $user_vendor)->where("status_invoice_proposal", "Not Yet Verified - Draft BA");
+    //    dd($draft);
+        return view('Vendor.ba.detaildraft',compact('draft'));
+        }
+
     public function historydraft()
         {
         $user_vendor = Auth::User()->id_vendor;
         // dd($user_vendor);
-        $draft = Draft_BA::all()->where("id_vendor", $user_vendor);
+        $draft = Draft_BA::all()->where("id_vendor", $user_vendor)->where('status_invoice_proposal', 'Verified - Draft BA');
+        // dd($draft);
         return view('Vendor.ba.historydraft',compact('draft'));
         }
 
     public function detailba()
         {
             $user_vendor = Auth::User()->id_vendor;
-             $ba = BA::select('no_ba','status_ba','status_invoice_proposal')->distinct()->where("id_vendor", $user_vendor)->get(); 
+            //   $ba = BA::select('no_ba','status_ba','status_invoice_proposal')->distinct()->where("id_vendor", $user_vendor)->get(); 
 
-            return view('Vendor.ba.detail',compact('ba'));
+             $BA = Ba::select("ba.no_ba",
+             "ba.status_ba",
+             "ba_reconcile.status_invoice_proposal",
+             )
+             ->distinct()
+             ->JOIN("ba_reconcile","ba.no_ba", "=", "ba_reconcile.no_ba")
+             ->where("ba.id_vendor", "=", $user_vendor)
+             ->where("ba_reconcile.status_invoice_proposal", "=", "Not Yet Verified - BA")
+             ->get();
+            //  dd($BA);
+
+            return view('Vendor.ba.detail',compact('BA'));
         }
 
     public function ba($no_ba)
     {
         $user_vendor = Auth::User()->id_vendor;
-        $ba = BA_Reconcile::where("no_ba", $no_ba)->where("id_vendor", $user_vendor)->get();
-        //  dd($ba);
+        $ba = BA_Reconcile::where("no_ba", $no_ba)->where("id_vendor", $user_vendor)->where('status_invoice_proposal', 'Not Yet Verified - BA')->get();
+        
         return view('Vendor.ba.upload',compact('ba'));
     }
     public function historyba()
     {
         $user_vendor = Auth::User()->id_vendor;
 
-        $ba = BA_Reconcile::all()->where("id_vendor", $user_vendor)->where("status_invoice_proposal", "Verified");
+        $ba = BA_Reconcile::all()->where("id_vendor", $user_vendor)->where('status_invoice_proposal', 'Verified - BA');
         
         return view('Vendor.ba.historyba',compact('ba'));
     }
@@ -392,14 +459,20 @@ class VendorController extends Controller
     }
     public function draftbaexport(Request $request){
         $recordIds = $request->get('ids');
-        // dd($recordIds);
 
-        $drafts = [];
-        foreach($recordIds as $record) {
-            $draft = Draft_BA::find($record);
-            array_push($drafts, $draft);
+        foreach($recordIds as $id) {
+            $drafts = Draft_BA::find($id);
+            $drafts->update([
+                'status_invoice_proposal' => 'Verified - Draft BA'
+            ]);
         }
-        return view('vendor.ba.export', compact('drafts'));
+            $drafts->save();
+
+            $user_vendor = Auth::User()->id_vendor;
+
+            $draft = Draft_BA::all()->where("id_vendor", $user_vendor);
+                // dd($draft);
+        return view('vendor.ba.export', compact('draft'));
     }
     
     public function export(){

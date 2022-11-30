@@ -22,19 +22,21 @@ class Draft_BAImport implements ToCollection, WithHeadingRow
     public function collection(Collection $rows)
     {
         $q = DB::table('ba_reconcile')->select(DB::raw('MAX(RIGHT(no_ba, 4)) as kode'));
+        // dd($q);
         $kd="";
         if($q->count()>0)
         {
             foreach($q->get() as $k)
             {
                 $tmp = ((int)$k->kode)+1;
-                $kd = date('d-m-Y').'-'.sprintf("%04s", $tmp);
+                $kd = sprintf("%04s", $tmp);
             }
         }
         else
         {
-            $kd = date('d-m-Y').'-'."0001";
+            $kd = "0001";
         }
+        // dd($kd);
                 
          Validator::make($rows->toArray(), [
              '*.id_vendor' => '',
@@ -46,6 +48,7 @@ class Draft_BAImport implements ToCollection, WithHeadingRow
              '*.vendor_part_number' => '',
              '*.qty' => '',
              '*.amount_mkp' => '',
+            //  '*.tax_code' => '',
              '*.status_ba' => '',
              '*.status_invoice_proposal' => '',
              '*.created_at' => ''
@@ -54,7 +57,7 @@ class Draft_BAImport implements ToCollection, WithHeadingRow
         foreach ($rows as $row) {
             BA_Reconcile::create([
                 'id_vendor' =>Auth::User()->id_vendor,
-                'no_ba'=>"MKP-BA-". $kd,
+                'no_ba'=>date('Y')."-XI-MKP-BA-".$kd,
                 'gr_date'=>$row['gr_date'],
                 // dd($row['gr_date']),
                 'po_number'=>$row['po_number'],
@@ -64,12 +67,13 @@ class Draft_BAImport implements ToCollection, WithHeadingRow
                 // 'reference'=>$row['reference'],
                 'qty'=>$row['qty'],
                 'amount_mkp'=>$row['amount_mkp'],
-                'status_ba'=>"Verified",
+                // 'tax_code'=>$row['tax_code'],
+                'status_ba'=>"Verified - BA",
                 'status_invoice_proposal' =>"Not Yet Verified - BA",
                 'created_at'=>$now = date('Y-m-d H:i:s'),
             ]);
             Ba::create([
-                'no_ba'=>"MKP-BA-". $kd,
+                'no_ba'=>date('Y')."-XI-MKP-BA-".$kd,
                 'id_vendor' =>Auth::User()->id_vendor,
                 'created_at'=>$now = date('Y-m-d H:i:s'),
             ]);

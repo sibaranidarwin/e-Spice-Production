@@ -38,7 +38,7 @@
                     <div class="card-body">
                         <form autocomplete="off" action="" method="post"
                             enctype="multipart/form-data">
-                            @foreach ($invoice as $good)
+                            @foreach ($invoices as $good)
                             @csrf
                             <input type="hidden" name="id[]" value="{{$good->id}}">
                             {{-- <b class="mb-4">
@@ -140,7 +140,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($invoice as $good_receipt)
+                            @foreach($invoices as $good_receipt)
                             <tr>
                             <td><input type="hidden" name="ids[]" value="{{$good_receipt->id}}"></td>      
                             

@@ -81,7 +81,7 @@ label {
                     </div>
                     @endif
                     <div class="card-header">
-                        <strong class="card-title">Draft BA Reconcile List</strong>
+                        <strong class="card-title">History Draft BA Reconcile List</strong>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive text-nowrap">
@@ -89,14 +89,14 @@ label {
                                 <div class="form-group col-3 bg-white mb-2">
                                     <label for="">BA Date:</label>
                                     <input class="form-group" type="text" id="min" name="min">
-                                </div>To:
+                                </div>
                                 <div class=" form-group col-3 bg-white mb-2">
-                                    <label for=""></label>
+                                    <label for="">To:</label>
                                     <input class="form-group" type="text" id="max" name="max">
                                 </div>
-                                <div class="col-3 mb-2">
+                                {{-- <div class="col-3 mb-2">
                                     <a href="{{route('exportdraftba')}}" class="btn btn-success sm"><i class="fa fa-cloud-download"></i>&nbsp; Export To Excel</a>
-                                </div>
+                                </div> --}}
                             </div>
                             <form action="{{ route('update-datagr-vendor/{id_gr}') }}" method="POST">
                                 @csrf
@@ -104,19 +104,19 @@ label {
                                     <thead>
                                         <tr>
                                             <th>No</th>
+                                            <th>Sts. Draft BA</th>
+                                            <th>Sts. Inv. Props.</th>
                                             <th>No Draft</th>
                                             <th>Date</th>
-                                            <th>No PO</th>
-                                            <th>Material Description</th>
+                                            <th>PO</th>
+                                            <th>Mat. Desc.</th>
                                             <th>Vendor Part Number</th>
                                             <th>Header Text</th>
                                             <th>Po Item</th>
-                                            <th>Quantity</th>
+                                            <th>Qty</th>
                                             <th>GR Date</th>
                                             <th>Total Price</th>
                                             <th>Total Value</th>
-                                            <th>Status Draft BA</th>
-                                            <th>Status Invoice Proposal</th>
                                         </tr>
                                     </thead>
                                     <tbody style="font-size: 11px;">
@@ -124,6 +124,8 @@ label {
                                         @foreach($draft as $item)
                                         <tr>
                                             <td>{{$i++}}</td>
+                                            <td><span>Verified - Draft BA</span></td>
+                                            <td><span>{{$item->status_invoice_proposal}}</span></td>
                                             <td>{{ $item->no_draft}}</td>
                                             <td><span>{{$item->date_draft}}</span></td>
                                             <td><span>{{$item->po_number}}</span></td>
@@ -133,10 +135,8 @@ label {
                                             <td><span>{{$item->po_item}}</span></td>
                                             <td><span>{{$item->jumlah}}</span></td>
                                             <td><span>{{$item->gr_date}}</span></td>
-                                            <td><span>{{$item->jumlah_harga}}</span></td>
+                                            <td style="text-align: right"><span>Rp{{ number_format($item->jumlah_harga) }}</span></td> 
                                             <td><span>{{$item->selisih_harga}}</span></td>
-                                            <td><span>{{$item->status_draft}}</span></td>
-                                            <td><span>{{$item->status_invoice_proposal}}</span></td>
                                         </tr>
                                         @endforeach
                                         </select>

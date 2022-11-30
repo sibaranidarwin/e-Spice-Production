@@ -25,7 +25,7 @@
 .table td,
 .table th,
 label {
-    font-size: 11.7px;
+    font-size: 11px;
 }
 </style>
 <div class="breadcrumbs">
@@ -43,7 +43,7 @@ label {
                     <div class="page-title">
                         <ol class="breadcrumb text-right">
                             <li><a href="#">Dashboard</a></li>
-                            <li><a href="#">BA Reconcile</a></li>
+                            <li><a href="#">Draft BA Reconcile</a></li>
                             <li class="active">Show</li>
                         </ol>
                     </div>
@@ -87,11 +87,11 @@ label {
                         <div class="table-responsive text-nowrap">
                             <div class="row">
                                 <div class="form-group col-3 bg-white mb-2">
-                                    <label for="">BA Date:</label>
+                                    <label for="">Date:</label>
                                     <input class="form-group" type="text" id="min" name="min">
-                                </div>To:
+                                </div>
                                 <div class=" form-group col-3 bg-white mb-2">
-                                    <label for=""></label>
+                                    <label for="">To:</label>
                                     <input class="form-group" type="text" id="max" name="max">
                                 </div>
                                 {{-- <div class="col-3 mb-2">
@@ -103,55 +103,51 @@ label {
                                 <table id="list" class="table table-striped" style="font-size: 10px;">
                                     <thead>
                                         <tr>
-                                            <th><input type="checkbox" onchange="checkAll(this)"></th>
-                                            <th>No</th>
-                                            <th>No Draft</th>
-                                            <th>Date</th>
-                                            <th>No PO</th>
-                                            <th>Material Description</th>
-                                            <th>Vendor Part Number</th>
-                                            <th>Header Text</th>
-                                            <th>Po Item</th>
-                                            <th>Quantity</th>
-                                            <th>GR Date</th>
-                                            <th>Total Price</th>
-                                            <th>Total Value</th>
-                                            <th>Status Draft BA</th>
-                                            <th>Status Invoice Proposal</th>
+                                            {{-- <th><input type="checkbox" onchange="checkAll(this)"></th> --}}
+                                            <th style="text-align: center;">No</th>
+                                            <th style="text-align: center;">Sts. Draft BA</th>
+                                            <th style="text-align: center;">Sts. Inv. Props.</th>
+                                            <th style="text-align: center;">No Draft</th>
+                                            <th style="text-align: center;">Date</th>
+                                            {{-- <th style="text-align: center;">No PO</th>
+                                            <th style="text-align: center;">Mat. Desc.</th>
+                                            <th style="text-align: center;">Part Number</th>
+                                            <th style="text-align: center;">Header Text</th>
+                                            <th style="text-align: center;">PO Item</th>
+                                            <th style="text-align: center;">Qty</th>
+                                            <th style="text-align: center;">GR Date</th>
+                                            <th style="text-align: center;">Price</th>
+                                            <th style="text-align: center;">Total Value</th> --}}
                                         </tr>
                                     </thead>
                                     <tbody style="font-size: 11px;">
                                         @php $i = 1 @endphp
                                         @foreach($draft as $item)
                                         <tr>
-                                            <td><input type="checkbox" name="ids[]" value="{{$item->id_draft_ba}}"></td>
+                                            {{-- <td><input type="checkbox" name="ids[]" value="{{$item->id_draft_ba}}"></td> --}}
                                             <td>{{$i++}}</td>
-                                            <td>{{ $item->no_draft}}</td>
-                                            <td><span>{{$item->date_draft}}</span></td>
-                                            <td><span>{{$item->po_number}}</span></td>
-                                            <td><span>{{$item->mat_desc}}</span></td>
-                                            <td><span>{{$item->vendor_part_number}}</span></td>
+                                            <td><span>Verified - Draft BA</span></td>
+                                            <td><span>{{$item->status_invoice_proposal}}</span></td>
+                                            {{-- <td> <a href="/vendor/ba/{{ $item->no_ba }}">{{$item->no_ba}}</td> --}}
+
+                                            <td><a href="/vendor/draft/{{ $item->no_draft }}">{{ $item->no_draft}}</td>
+                                            <td><span>{{ Carbon\Carbon::parse($item->date_draft)->format('d F Y') }}</span></td>
+                                            {{-- <td><span>{{$item->po_number}}</span></td>
+                                            <td><span>{{$item->mat_desc}} <br>({{$item->valuation_type}})</span></td>
+                                            <td><span>{{$item->material_number}} / {{$item->vendor_part_number}}</span></td>
                                             <td><span>{{$item->doc_header_text}}</span></td>
                                             <td><span>{{$item->po_item}}</span></td>
                                             <td><span>{{$item->jumlah}}</span></td>
                                             <td><span>{{ Carbon\Carbon::parse($item->gr_date)->format('d F Y') }}</span></td>
-                                            <td><span>RP. {{ number_format($item->jumlah_harga) }}</span></td> 
+                                            <td  style="text-align: right"><span>Rp{{ number_format($item->jumlah_harga) }}</span></td> 
                                             <td><span>
-                                            <?php
-                                            $harga = $item->jumlah_harga;
-                                            $jumlah = $item->jumlah;
-                                            $total = $harga * $jumlah;
-                                            echo"Rp."; echo number_format($total);
-                                            ?>
-                                            </span></td>
-                                            <td><span>{{$item->status_draft}}</span></td>
-                                            <td><span>{{$item->status_invoice_proposal}}</span></td>
+                                           
+                                            </span></td> --}}
                                         </tr>
                                         @endforeach
                                         </select>
                                     </tbody>
                                 </table>
-                                <button class="btn btn-info sm" onclick="return confirm('Are you sure?')"> Choose To Export </button>
                             </form>
                         </div> <!-- /.table-stats -->
                     </div>

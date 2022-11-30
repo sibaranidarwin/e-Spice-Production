@@ -25,7 +25,7 @@
 .table td,
 .table th,
 label {
-    font-size: 11.7px;
+    font-size: 11px;
 }
 </style>
 <div class="breadcrumbs">
@@ -43,7 +43,7 @@ label {
                     <div class="page-title">
                         <ol class="breadcrumb text-right">
                             <li><a href="#">Dashboard</a></li>
-                            <li><a href="#">Invoice BA</a></li>
+                            <li><a href="#">Invoice Proposal BA</a></li>
                             <li class="active">Show</li>
                         </ol>
                     </div>
@@ -101,15 +101,15 @@ label {
                                     <thead>
                                         <tr>
                                             <th class="serial">No</th>
+                                            <th>Sts. Upload SAP</th>
+                                            <th>Sts. Inv. Props.</th>
                                             <th>Invoice Date</th>
                                             <th>Invoice Number</th>
                                             <th>No Invoice Proposal</th>
                                             <th>VAT NO</th>
-                                            <th>No E-Verify</th>
+                                            {{-- <th>No E-Verify</th> --}}
                                             <th>Total PPN</th>
                                             <th>Total DPP</th>
-                                            <th>Status Invoice Proposal</th>
-                                            <th>Status Upload SAP</th>
 
                                             <!-- <th class="text-center">Reference</th> -->
                                             <!-- <th class="text-center">Vendor Part Number</th>
@@ -128,18 +128,18 @@ label {
                                         @foreach($invoice as $item)
                                         <tr>
                                             <td class="serial">{{++$i}}</td>
+                                            <td>{{$item['status']}}</td>
+                                            <td>{{$item['status_invoice_proposal'] }}</td>
                                             <td><span>{{ Carbon\Carbon::parse($item['posting_date'])->format('d F Y') }}</span></td>
                                             <td>{{$item['vendor_invoice_number'] }}</td>
                                             <td>{{$item['no_invoice_proposal'] }}</td>
                                             <td>{{$item['faktur_pajak_number'] }}</td>
-                                            <td>{{$item['everify_number'] }}</td>
+                                            {{-- <td>{{$item['everify_number'] }}</td> --}}
                                             <td>{{$item['ppn']}}</td>
                                             <td>{{$item['total_harga_everify'] }}</td>
-                                            <td>{{$item['status_invoice_proposal'] }}</td>
-                                            <td>{{$item['status']}}</td>
                                             <td>
                                                 <a href="/vendor/detail-invoice-ba/{{$item->id_inv}}"
-                                                    class="btn btn-info btn-sm">Detail</a> 
+                                                    class="btn btn-info btn-sm">Det.</a> 
                                                 <a href="/vendor/cetak_pdf_ba/{{$item->id_inv}}" class="btn btn-secondary btn-sm">Print</a>
                                             </td>
                                         </tr>
@@ -190,7 +190,7 @@ label {
         function(settings, data, dataIndex) {
             var min = minDate.val();
             var max = maxDate.val();
-            var date = new Date(data[1]);
+            var date = new Date(data[3]);
     
             if (
                 (min === null && max === null) ||

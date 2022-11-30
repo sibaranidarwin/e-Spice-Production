@@ -43,9 +43,23 @@ class WarehouseController extends Controller
         $ba = BA_Reconcile::count();
         return view('warehouse.dashboard',['good_receipt'=>$good_receipt, 'invoice'=>$invoice,'invoiceba'=>$invoiceba, 'dispute'=>$dispute, 'vendor'=>$vendor]);
     }
+    
+    public function all()
+    { 
+
+        $good_receipts = good_receipt::all();
+        
+        $dispute = good_receipt::all()->where("status", "Dispute")->count();
+
+        return view('warehouse.po.all',compact('good_receipts', 'dispute'))
+                ->with('i',(request()->input('page', 1) -1) *5);
+    }
+
     public function po()
-    {   
+    { 
+
         $good_receipts = good_receipt::where("status","Not Verified")->orWhere("status"," ")->get();
+        
         $dispute = good_receipt::all()->where("status", "Dispute")->count();
 
         return view('warehouse.po.index',compact('good_receipts', 'dispute'))
