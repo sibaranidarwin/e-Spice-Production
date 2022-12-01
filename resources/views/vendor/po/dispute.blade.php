@@ -12,7 +12,7 @@
             <div class="col-sm-4">
                 <div class="page-header float-left">
                     <div class="page-title">
-                        <!-- <h1>Data Purchase Order</h1> -->
+                         <h1>Dashboard</h1> 
                     </div>
                 </div>
             </div>
@@ -64,8 +64,7 @@
                     </div> --}}
                     <div class="form-group">
                         <label class="form-control-label" for="alasan_disp">Dispute Identification</label>
-                        <input type="text" class="form-control @error('alasan_disp') is-invalid @enderror"
-                            name="alasan_disp" placeholder="Mohon masukan alasan dispute invoice">
+                        <textarea name="alasan_disp" class="form-control" placeholder="Mohon masukan alasan dispute invoice" id="" cols="20" rows="5"></textarea>
                         @error('alasan_disp')<span
                             class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                     </div>

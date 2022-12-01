@@ -107,7 +107,7 @@ label {
                                             <th style="text-align: center;">No</th>
                                             <th style="text-align: center;">Sts. Draft BA</th>
                                             <th style="text-align: center;">Sts. Inv. Props.</th>
-                                            <th style="text-align: center;">No Draft</th>
+                                            <th style="text-align: center;">No Draft BA</th>
                                             <th style="text-align: center;">Date</th>
                                             {{-- <th style="text-align: center;">No PO</th>
                                             <th style="text-align: center;">Mat. Desc.</th>

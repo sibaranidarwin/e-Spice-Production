@@ -130,10 +130,9 @@ label {
                         <thead>
                             <tr>
                                 <th>BA Number</th>
-                                <th>PO Number</th>
+                                <th>PO</th>
                                 <th>GR Date</th>
-                                <th>Material</th>
-                                <th>Id</th>
+                                <th>Mat. Desc.</th>
                                 
                                 <!-- <th class="text-center">Reference</th> -->
                                 <!-- <th class="text-center">Vendor Part Number</th>
@@ -152,10 +151,9 @@ label {
                             @foreach($invoices as $ba)
                             <tr>
                                 <td><span class="name">{{$ba->no_ba}}</span> </td>
-                                <td> <span class="">{{$ba->po_number}}</span> </td>
+                                <td> <span class="">{{$ba->po_number}} /{{$ba->item}}</span> </td>
                                 <td><span>{{ Carbon\Carbon::parse($ba->gr_date)->format('d F Y') }}</span></td>
                                 <td> <span class="">{{$ba->material_description}}</span></td>
-                                <td> <span class="">{{$ba->id_gr}}</span></td>
                                 <td>{{ $ba->status_ba }}</td>
                             </tr>
                             @endforeach

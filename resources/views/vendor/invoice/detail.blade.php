@@ -130,12 +130,11 @@
                         <thead>
                             <tr>
                                 <th>GR Number</th>
-                                <th>No PO</th>
-                                <th>PO Item</th>
+                                <th>PO</th>
                                 <th>GR Slip Date</th>
-                                <th>Material Number</th>
-                                <th>Harga Satuan</th>
-                                <th>Jumlah</th>
+                                <th>Part Number</th>
+                                <th>Qty UOM</th>
+                                <th>Unit Price</th>
                                 <th>Tax Code</th>
                                 <th>Status</th>
                             </tr>
@@ -143,13 +142,12 @@
                         <tbody>
                             @foreach($invoices as $invoice)
                             <tr>   
-                                <td> <span class="">{{$invoice->gr_number}}</span> </td>
-                                <td> <span class="">{{$invoice->no_po}}</span> </td>
-                            <td> <span class="">{{$invoice->po_item}}</span> </td>
-                            <td><span>{{ Carbon\Carbon::parse($invoice->gr_date)->format('d F Y') }}</span></td>
-                            <td> <span class="">{{$invoice->material_number}}</span>
+                            <td> <span class="">{{$invoice->gr_number}}</span> </td>
+                            <td> <span class="">{{$invoice->no_po}} /{{$invoice->po_item}}</span> </td>
+                            <td> <span>{{ Carbon\Carbon::parse($invoice->gr_date)->format('d F Y') }}</span></td>
+                            <td> <span class="">{{$invoice->material_number}} /{{$invoice->vendor_part_number}}</span>
+                            <td> <span class="">{{$invoice->jumlah}} {{$invoice->uom}}</span></td>
                             <td style="text-align: right"> <span>Rp{{number_format($invoice->harga_satuan)}}</span> </td>
-                            <td> <span class="">{{$invoice->jumlah}}</span></td>
                             <td> <span class="">{{$invoice->tax_code}}</span></td>
                             <td> <span class="">{{ $invoice->status }}</span></td>
                             </tr>

@@ -23,12 +23,17 @@ class CreateDraftBaTable extends Migration
             $table->string('po_number');
             $table->string('mat_desc');
             $table->string('material_number');
+            $table->string('ref_doc_no');
+            $table->string('delivery_note');
+            $table->string('uom');
+            $table->string('currency');
             $table->string('vendor_part_number');
             $table->string('valuation_type');
             $table->string('doc_header_text');
             $table->integer('po_item');
             $table->integer('jumlah');
             $table->date('gr_date');
+            $table->string('harga_satuan')->nullable();
             $table->string('jumlah_harga')->nullable();
             $table->string('selisih_harga')->nullable();
             $table->enum('status_draft',['Not Yet Verified - Draft BA', 'Verified - Draft BA'])->nullable();

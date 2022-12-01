@@ -24,6 +24,10 @@ class CreateBaTable extends Migration
             $table->date('gr_date');
             $table->string('po_number');
             $table->string('item');
+            $table->string('ref_doc_no');
+            $table->string('uom');
+            $table->string('currency');
+            $table->string('delivery_note');
             $table->string('material_description');
             $table->string('vendor_part_number');
             $table->string('material_number');
@@ -31,7 +35,7 @@ class CreateBaTable extends Migration
             $table->string('reference');
             $table->string('tax_code')->nullable();
             $table->integer('qty');
-            $table->string('amount_mkp');
+            $table->string('jumlah_harga');
             $table->string('confirm_price');
             $table->enum('status_ba',['Not Yet Verified - BA', 'Verified - BA'])->default("Not Yet Verified - BA")->nullable();
             $table->enum('status_invoice_proposal',['Not Yet Verified - BA', 'Verified - BA'])->default("Not Yet Verified - BA")->nullable();

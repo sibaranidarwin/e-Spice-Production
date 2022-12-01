@@ -105,57 +105,54 @@ label {
                                     <a href="{{route('exportdraftba')}}" class="btn btn-success sm" onclick="return confirm('Are you sure?')"><i class="fa fa-cloud-download"></i>&nbsp; Export To Excel</a>
                                 </div>
                             </div>
-                                    <table id="" class="table table-striped" style="font-size: 10px; text-align: right;">
-                                    <thead>
-                                        <tr>
-                                            {{-- <th><input type="checkbox" onchange="checkAll(this)"></th> --}}
-                                            <th style="text-align: center;">No</th>
-                                            <th style="text-align: center;">Sts. Draft BA</th>
-                                            <th style="text-align: center;">St.s Inv. Props.</th>
-                                            <th style="text-align: center;">No Draft</th>
-                                            <th style="text-align: center;">Date</th>
-                                            <th style="text-align: center;">PO</th>
-                                            <th style="text-align: center;">Mat. Desc.</th>
-                                            <th style="text-align: center;">Part Number</th>
-                                            <th style="text-align: center;">Header Text</th>
-                                            <th style="text-align: center;">Qty</th>
-                                            <th style="text-align: center;">GR Date</th>
-                                            <th style="text-align: center;">Price</th>
-                                            <th style="text-align: center;">Tax Code</th>
-                                            <th style="text-align: center;">Total Value</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody style="font-size: 11px;">
-                                        @php $i = 1 @endphp
-                                        @foreach($draft as $item)
-                                        <tr>
-                                            {{-- <td><input type="checkbox" name="ids[]" value="{{$item->id_draft_ba}}"></td> --}}
-                                            <td>{{$i++}}</td>
-                                            <td><span>Verified - Draft BA</span></td>
-                                            <td><span>{{$item->status_invoice_proposal}}</span></td>
-                                            <td>{{ $item->no_draft}}</td>
-                                            <td><span>{{ Carbon\Carbon::parse($item->created_at)->format('d F Y') }}</span></td>
-                                            <td><span>{{$item->po_number}}/{{$item->po_item}}</span></td>
-                                            <td><span>{{$item->mat_desc}} <br>({{$item->valuation_type}})</span></td>
-                                            <td><span>{{$item->material_number}} / {{$item->vendor_part_number}}</span></td>
-                                            <td><span>{{$item->doc_header_text}}</span></td>
-                                            <td><span>{{$item->jumlah}}</span></td>
-                                            <td><span>{{ Carbon\Carbon::parse($item->gr_date)->format('d F Y') }}</span></td>
-                                            <td  style="text-align: right"><span>Rp{{ number_format($item->jumlah_harga) }}</span></td> 
-                                            <td><span>{{$item->tax_code}}</span></td>
-                                            <td style="text-align: right"><span>
-                                            <?php
-                                            $harga = $item->jumlah_harga;
-                                            $jumlah = $item->jumlah;
-                                            $total = $harga * $jumlah;
-                                            echo"Rp"; echo number_format($total);
-                                            ?>
-                                            </span></td>
-                                        </tr>
-                                        @endforeach
-                                        </select>
-                                    </tbody>
-                                </table>
+                            <table id="list" class="table table-striped" style="width: 100%; font-size: 10px;">
+                                <thead>
+                                    <tr>
+                                        <th style="text-align: center;">No</th>
+                                        <th style="text-align: center;">Sts. Draft BA</th>
+                                        <th style="text-align: center;">Sts. Inv. Props.</th>
+                                        <th style="text-align: center;">No Draft BA</th>
+                                        <th style="text-align: center;">Date</th>
+                                        <th style="text-align: center;">PO</th>
+                                        <th style="text-align: center;">Mat. Desc.</th>
+                                        <th style="text-align: center;">Part Number</th>
+                                        <th style="text-align: center;">Reference</th>
+                                        <th style="text-align: center;">Header Text</th>
+                                        <th style="text-align: center;">GR Date</th>
+                                        <th style="text-align: center;">Del. Note</th>
+                                        <th style="text-align: center;">Qty</th>
+                                        <th style="text-align: center;">Curr</th>
+                                        <th style="text-align: center;">Price</th>
+                                        <th style="text-align: center;">Tax_code</th>
+                                        <th style="text-align: center;">Total Value</th>
+                                    </tr>
+                                </thead>
+                                <tbody style="font-size: 11px;">
+                                    @php $i = 1 @endphp
+                                    @foreach($draft as $item)
+                                    <tr>
+                                        <td>{{$i++}}</td>
+                                        <td><span>Verified - Draft BA</span></td>
+                                        <td><span>{{$item->status_invoice_proposal}}</span></td>
+                                        <td><span>{{ $item->no_draft}}</span></td>
+                                        <td><span>{{ Carbon\Carbon::parse($item->date_draft)->format('d F Y') }}</span></td>
+                                        <td><span>{{$item->po_number}}/{{$item->po_item}}</span></td>
+                                        <td><span>{{$item->mat_desc}} <br>({{$item->valuation_type}})</span></td>
+                                        <td><span>{{$item->material_number}} / {{$item->vendor_part_number}}</span></td>
+                                        <td> <span>{{$item->ref_doc_no}}</span> </td>
+                                        <td><span>{{$item->doc_header_text}}</span></td>
+                                        <td><span>{{ Carbon\Carbon::parse($item->gr_date)->format('d F Y') }}</span></td>
+                                        <td> <span>{{$item->delivery_note}}</span> </td>
+                                        <td><span>{{$item->jumlah}}</span>&nbsp;<span>{{$item->uom}}</span></td>
+                                        <td> <span>{{$item->currency}}</span> </td>
+                                        <td style="text-align: right"><span>Rp{{ number_format($item->harga_satuan) }}</span></td>
+                                        <td><span>{{$item->tax_code}}</td>
+                                        <td style="text-align: right"></span>Rp{{ number_format($item->jumlah_harga) }}<span></td>
+                                    </tr>
+                                    @endforeach
+                                    </select>
+                                </tbody>
+                            </table>
                             </form>
                         </div> <!-- /.table-stats -->
                     </div>

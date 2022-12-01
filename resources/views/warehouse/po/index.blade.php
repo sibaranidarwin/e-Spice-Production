@@ -22,7 +22,7 @@
 
 <style>
     .table td, .table th,label {
-        font-size: 11.7px;
+        font-size: 11px;
     }
 </style>
 <div class="breadcrumbs">
@@ -98,6 +98,7 @@
                                     <th>Part Number</th>
                                     <th>Reference</th>
                                     <th>Mat. Desc.</th>
+                                    <th>Del. Note</th>
                                     <th>QTY UOM</th>
                                     <th>Curr</th>
                                     <th>Tax Code</th>
@@ -108,7 +109,7 @@
                                     <tr>
                                         <td><input type="checkbox" name="ids[]" value="{{$good_receipt->id_gr}}"></td>
                                         <td>{{++$i}}</td>
-                                        <td >{{ $good_receipt->status }}</td>
+                                        <td >Not Verified</td>
                                         <td >{{ $good_receipt->status_invoice }}</td>
                                         <td >{{ $good_receipt->id_vendor }}</td>
                                         <td ><span>{{$good_receipt->gr_number}}</span></td>
@@ -117,6 +118,7 @@
                                         <td> <span>{{$good_receipt->material_number}}/<br> {{$good_receipt->vendor_part_number}}</span></td>
                                         <td> <span>{{$good_receipt->ref_doc_no}}</span> </td>
                                         <td> <span>{{$good_receipt->mat_desc}}</span> <br>({{$good_receipt->valuation_type}})</td>
+                                        <td> <span>{{$good_receipt->delivery_note}}</span> </td>
                                         <td> <span>{{$good_receipt->jumlah}}</span>&nbsp;<span>{{$good_receipt->uom}}</span> </td>
                                         <td> <span>{{$good_receipt->currency}}</span> </td>
                                         <td> <span>{{$good_receipt->tax_code}}</span> </td>
