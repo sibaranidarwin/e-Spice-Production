@@ -181,15 +181,20 @@ class VendorController extends Controller
                         'no_draft' => $kd."/XI/DRAFT-BA/MKP/".date('Y'),                        
                         'date_draft' => $good_receipt->gr_date,
                         'po_number' => $good_receipt->no_po,
+                        'po_item' => $good_receipt->po_item,
                         'mat_desc' => $good_receipt->mat_desc,
                         'material_number' => $good_receipt->material_number,
+                        'ref_doc_no' => $good_receipt->ref_doc_no,
                         'vendor_part_number' => $good_receipt->vendor_part_number,
                         'valuation_type' =>$good_receipt->valuation_type,
                         'doc_header_text' => $good_receipt->doc_header_text,
-                        'po_item' => $good_receipt->po_item,
                         'jumlah' => $good_receipt->jumlah,
+                        'uom' => $good_receipt->uom,
+                        'currency' => $good_receipt->currency,
                         'gr_date' => $good_receipt->gr_date,
                         'tax_code' =>  $good_receipt->tax_code,
+                        'delivery_note' =>  $good_receipt->delivery_note,
+                        'harga_satuan' => $good_receipt->harga_satuan,
                         'jumlah_harga' => $good_receipt->jumlah_harga,
                         'status_invoice_proposal' => 'Not Yet Verified - Draft BA',
                     ]);
@@ -220,24 +225,24 @@ class VendorController extends Controller
     }
     public function editba(Request $request){
         $recordIds = $request->get('ids');
-        
+        // dd($recordIds);
         //buat kode otomatis
         $q = DB::table('invoice')->select(DB::raw('MAX(RIGHT(no_invoice_proposal, 4)) as kode'));
 
                 
         $kd="";
         if($q->count()>0)
-        {
-            foreach($q->get() as $k)
-            {
-                $tmp = ((int)$k->kode)+1;
-                $kd = date('d-m-Y').'-'.sprintf("%04s", $tmp);
-            }
-        }
-        else
-        {
-            $kd = date('d-m-Y').'-'."0001";
-        }
+                {
+                    foreach($q->get() as $k)
+                    {
+                        $tmp = ((int)$k->kode)+1;
+                        $kd = sprintf("%04s", $tmp);
+                    }
+                }
+                else
+                {
+                    $kd = "0001";
+                }
 
         $bas = [];
         $total_dpp = 0;
@@ -500,6 +505,7 @@ class VendorController extends Controller
                                     "goods_receipt.material_number",
                                     "goods_receipt.harga_satuan",
                                     "goods_receipt.jumlah",
+                                    "goods_receipt.uom",
                                     "goods_receipt.tax_code",
                                     "goods_receipt.status",
                                     "invoice.id_inv", 
@@ -570,7 +576,9 @@ class VendorController extends Controller
        $invoices = BA_Reconcile::select("ba_reconcile.id_ba",
                                     "ba_reconcile.no_ba",
                                     "ba_reconcile.po_number",
+                                    "ba_reconcile.item",
                                     "ba_reconcile.gr_date",
+                                    "ba_reconcile.tax_code",
                                     "ba_reconcile.material_description",
                                     "ba_reconcile.status_ba",
                                     "invoice.id_inv", 
@@ -598,7 +606,9 @@ class VendorController extends Controller
         $invoices = BA_Reconcile::select("ba_reconcile.id_ba",
         "ba_reconcile.no_ba",
         "ba_reconcile.po_number",
+        "ba_reconcile.item",
         "ba_reconcile.gr_date",
+        "ba_reconcile.tax_code",
         "ba_reconcile.material_description",
         "ba_reconcile.status_ba",
         "invoice.id_inv", 

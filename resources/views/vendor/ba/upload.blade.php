@@ -95,9 +95,9 @@ label {
                                 <div class="form-group col-3 bg-white mb-2">
                                     <label for="">BA Date:</label>
                                     <input class="form-group" type="text" id="min" name="min">
-                                </div>To:
+                                </div>
                                 <div class=" form-group col-3 bg-white mb-2">
-                                    <label for=""></label>
+                                    <label for="">To:</label>
                                     <input class="form-group" type="text" id="max" name="max">
                                 </div>
                                 <div class="col-3 mb-2">
@@ -115,10 +115,11 @@ label {
                                             <th>Sts. Inv. Props.</th>
                                             <th>Date</th>
                                             <th>PO</th>
-                                            <th>Material Description</th>
-                                            <th>Vendor Part Number</th>
+                                            <th>Mat. Desc.</th>
+                                            <th>Part Number</th>
                                             <th>GR Date</th>
                                             <th>Qty</th>
+                                            <th>Tax Code</th>
                                             <th>Total Price</th>
                                         </tr>
                                     </thead>
@@ -136,6 +137,7 @@ label {
                                             <td><span>{{$item->material_number}}/{{$item->vendor_part_number}}</span></td>
                                             <td><span>{{ Carbon\Carbon::parse($item->gr_date)->format('d F Y') }}</span></td>
                                             <td><span>{{$item->qty}}</span></td>
+                                            <td><span>{{$item->tax_code}}</span></td>
                                             <td style="text-align: right"><span>Rp{{ number_format($item->amount_mkp) }}</span></td> 
                                         </tr>
                                         @endforeach

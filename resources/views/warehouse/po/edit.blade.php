@@ -6,7 +6,7 @@
     .table td,
     .table th,
     label{
-        font-size: 11.4px;
+        font-size: 11px;
     }
     </style>
 <div class="breadcrumbs">

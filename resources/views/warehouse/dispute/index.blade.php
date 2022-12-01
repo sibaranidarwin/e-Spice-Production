@@ -110,6 +110,7 @@
                                         <th>Part Number</th>
                                         <th>Reference</th>
                                         <th>Material Description</th>
+                                        <th>Del. Note</th>
                                         <th>QTY UOM</th>
                                         <th>Curr</th>
                                         <th>Unit Price</th>
@@ -128,7 +129,8 @@
                                         <td><span>{{ Carbon\Carbon::parse($good_receipt->gr_date)->format('d F Y') }}</span></td>
                                         <td> <span>{{$good_receipt->material_number}}</span></td>
                                         <td> <span>{{$good_receipt->ref_doc_no}}</span> </td>
-                                        <td> <span>{{$good_receipt->mat_desc}}</span> </td>
+                                        <td> <span>{{$good_receipt->mat_desc}}<br>({{$good_receipt->valuation_type}})</span> </td>
+                                        <td> <span>{{$good_receipt->delivery_note}}</span> </td>
                                         <td> <span>{{$good_receipt->jumlah}}</span>&nbsp;<span>{{$good_receipt->UOM}}</span> </td>
                                         <td> <span>{{$good_receipt->currency}}</span> </td>
                                         <td> <span>Rp. {{number_format($good_receipt->harga_satuan)}}</span> </td>

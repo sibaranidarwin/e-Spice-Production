@@ -104,9 +104,9 @@ label {
                                             <th class="serial">No</th>
                                             <th>Sts. Upload SAP</th>
                                             <th>Sts. Inv. Props</th>
+                                            <th>Invoice Proposal No</th>
                                             <th>Invoice Date</th>
-                                            <th>Invoice Number</th>
-                                            <th>No Invoice Proposal</th>
+                                            <th>Invoice No</th>
                                             <th>VAT NO</th>
                                             {{-- <th>No E-Verify</th> --}}
                                             <th>Total PPN</th>
@@ -131,9 +131,9 @@ label {
                                             <td class="serial">{{++$i}}</td>
                                             <td>{{$item['status']}}</td>
                                             <td>{{$item['status_invoice_proposal'] }}</td>
+                                            <td>{{$item['no_invoice_proposal'] }}</td>
                                             <td><span>{{ Carbon\Carbon::parse($item['posting_date'])->format('d F Y') }}</span></td>
                                             <td>{{$item['vendor_invoice_number'] }}</td>
-                                            <td>{{$item['no_invoice_proposal'] }}</td>
                                             <td>{{$item['faktur_pajak_number'] }}</td>
                                             {{-- <td>{{$item['everify_number'] }}</td> --}}
                                             <td>Rp{{$item['ppn']}}</td>

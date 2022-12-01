@@ -10,6 +10,7 @@ use App\Profile;
 use App\BA_Reconcile;
 use App\Draft_BA;
 use App\good_receipt;
+use DB;
 
 use Auth;
 use Illuminate\Support\Facades\Hash;
@@ -55,10 +56,12 @@ class WarehouseController extends Controller
                 ->with('i',(request()->input('page', 1) -1) *5);
     }
 
-    public function po()
-    { 
+    public function po(Request $request, good_receipt $id_gr)
+    {   
+        $good_receipts = good_receipt::where('material_number','LG2KOM00707010F691')->get();
+        //  dd($good_receipts);
+        //$good_receipts = good_receipt::where("status","Not Verified")->get();
 
-        $good_receipts = good_receipt::where("status","Not Verified")->orWhere("status"," ")->get();
         
         $dispute = good_receipt::all()->where("status", "Dispute")->count();
 
