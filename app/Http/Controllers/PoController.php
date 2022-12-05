@@ -75,11 +75,11 @@ class PoController extends Controller
          }
         if($good_receipt){
         //redirect dengan pesan sukses
-        return redirect('warehouse/po')->with('success','Data Telah berhasil Diupdate.');
+        return redirect('warehouse/po')->with('success','Data has been successfully updated!');
         }
         else{
         //redirect dengan pesan error
-        return redirect('warehouse/po')->with(['error' => 'Data Gagal Diupdate!']);
+        return redirect('warehouse/po')->with(['error' => 'Data Update Failed!']);
       }
      }
 

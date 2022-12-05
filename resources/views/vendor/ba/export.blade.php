@@ -14,9 +14,7 @@
 
 @extends('vendor.layouts.sidebar')
 @section('content')
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
-<link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.6/css/buttons.dataTables.min.css">
-<link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
+<link rel="stylesheet" href="{{asset('admin/assets/css/datatable.css')}}">
 <link rel="stylesheet" href="https://cdn.datatables.net/datetime/1.1.2/css/dataTables.dateTime.min.css">
 
 <link rel="stylesheet" href="{{asset('assets/css/argon-dashboard.css')}}">
@@ -116,14 +114,14 @@ label {
                                         <th style="text-align: center;">PO</th>
                                         <th style="text-align: center;">Mat. Desc.</th>
                                         <th style="text-align: center;">Part Number</th>
-                                        <th style="text-align: center;">Reference</th>
+                                        <th style="text-align: center;">Ref.</th>
                                         <th style="text-align: center;">Header Text</th>
                                         <th style="text-align: center;">GR Date</th>
                                         <th style="text-align: center;">Del. Note</th>
                                         <th style="text-align: center;">Qty</th>
                                         <th style="text-align: center;">Curr</th>
                                         <th style="text-align: center;">Price</th>
-                                        <th style="text-align: center;">Tax_code</th>
+                                        <th style="text-align: center;">Tax Code</th>
                                         <th style="text-align: center;">Total Value</th>
                                     </tr>
                                 </thead>

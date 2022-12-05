@@ -104,7 +104,7 @@
                 <li class="menu-item-has-children dropdown">
                     <a class="accordion-heading menu-item-has-children dropdown-toggle" data-toggle="collapse" data-target="#submenu1" aria-haspopup="true"
                     aria-expanded="false">
-                          <span class="nav-header-primary"><i class="menu-icon fa fa-newspaper-o"></i>BA Reconcile<span class="pull-right"><b class="caret"></b></span></span>
+                          <span class="nav-header-primary"><i class="menu-icon fa fa-newspaper-o"></i>BA Reconcile<span class="pull-right"></span></span>
                     </a>
     
                     <ul class="nav nav-list collapse sub-menu" id="submenu1">

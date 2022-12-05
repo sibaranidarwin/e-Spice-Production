@@ -9,10 +9,8 @@
 <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.print.min.js"></script>
 @extends('warehouse.layouts.sidebar')
 @section('content')
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
-<link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.6/css/buttons.dataTables.min.css">
-<link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
-<link rel="stylesheet" href="https://cdn.datatables.net/datetime/1.1.2/css/dataTables.dateTime.min.css">
+<link rel="stylesheet" href="{{asset('admin/assets/css/datatable.css')}}">
+
 <link rel="stylesheet" href="{{asset('assets/css/argon-dashboard.css')}}">
 <style>
 .table td,

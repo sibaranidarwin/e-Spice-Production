@@ -14,10 +14,8 @@
 
 @extends('warehouse.layouts.sidebar')
 @section('content')
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
-<link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.6/css/buttons.dataTables.min.css">
-<link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
-<link rel="stylesheet" href="https://cdn.datatables.net/datetime/1.1.2/css/dataTables.dateTime.min.css">
+<link rel="stylesheet" href="{{asset('admin/assets/css/datatable.css')}}">
+
 <link rel="stylesheet" href="{{asset('assets/css/argon-dashboard.css')}}">
 
 <style>
@@ -87,41 +85,40 @@
                             <table id="list" class="table table-striped" style="font-size: 10px;">
                                 <thead>
                                     <tr>
-                                    <th><input type="checkbox" onchange="checkAll(this)"></th>
-                                    <th>No</th>
-                                    <th>Sts.</th>
+                                    <th style="text-align: center;"><input type="checkbox" onchange="checkAll(this)"></th>
+                                    <th style="text-align: center;">No</th>
+                                    <th style="text-align: center;">Sts. GR</th>
                                     <th style="text-align: center;">Sts. Inv. Props.</th>
-                                    <th>Vendor ID</th>
-                                    <th>GR Number</th>
-                                    <th>PO</th>
-                                    <th>GR Date</th>
-                                    <th>Part Number</th>
-                                    <th>Reference</th>
-                                    <th>Mat. Desc.</th>
-                                    <th>Del. Note</th>
-                                    <th>QTY UOM</th>
-                                    <th>Curr</th>
-                                    <th>Tax Code</th>
-                                    </tr>
+                                    <th style="text-align: center;">Vendor</th>
+                                    <th style="text-align: center;">PO</th>
+                                    <th style="text-align: center;">GR Number</th>
+                                    <th style="text-align: center;">GR Date</th>
+                                    <th style="text-align: center;">Part Number</th>
+                                    <th style="text-align: center;">Mat. Desc.</th>
+                                    <th style="text-align: center;">QTY UOM</th>
+                                    <th style="text-align: center;">Tax Code</th>
+                                    <th style="text-align: center;">Reference</th>
+                                    <th style="text-align: center;">Del. Note</th>
+                                    
+                                </tr>
                                 </thead>
                                 <tbody style="font-size: 11px;">
                                     @foreach($good_receipts as $good_receipt)
                                     <tr>
                                         <td><input type="checkbox" name="ids[]" value="{{$good_receipt->id_gr}}"></td>
                                         <td>{{++$i}}</td>
-                                        <td >Not Verified</td>
+                                        <td >{{ $good_receipt->status }}</td>
                                         <td >{{ $good_receipt->status_invoice }}</td>
-                                        <td >{{ $good_receipt->id_vendor }}</td>
+                                        <td >{{ $good_receipt->id_vendor }} /{{ $good_receipt->vendor_name}}</td>
+                                        <td ><span>{{$good_receipt->no_po}} /{{$good_receipt->po_item}}</span></td>
                                         <td ><span>{{$good_receipt->gr_number}}</span></td>
-                                        <td ><span>{{$good_receipt->no_po}}/{{$good_receipt->po_item}}</span></td>
                                         <td><span>{{ Carbon\Carbon::parse($good_receipt->gr_date)->format('d F Y') }}</span></td>
                                         <td> <span>{{$good_receipt->material_number}}/<br> {{$good_receipt->vendor_part_number}}</span></td>
-                                        <td> <span>{{$good_receipt->ref_doc_no}}</span> </td>
                                         <td> <span>{{$good_receipt->mat_desc}}</span> <br>({{$good_receipt->valuation_type}})</td>
-                                        <td> <span>{{$good_receipt->delivery_note}}</span> </td>
                                         <td> <span>{{$good_receipt->jumlah}}</span>&nbsp;<span>{{$good_receipt->uom}}</span> </td>
-                                        <td> <span>{{$good_receipt->currency}}</span> </td>
                                         <td> <span>{{$good_receipt->tax_code}}</span> </td>
+                                        <td> <span>{{$good_receipt->ref_doc_no}}</span> </td>
+                                        <td> <span>{{$good_receipt->delivery_note}}</span> </td>
                                     </tr>
                                     @endforeach
                                     </select>
@@ -191,7 +188,14 @@
         });
     
         // DataTables initialisation
-        var table = $('#list').DataTable();
+        var table = $('#list').DataTable({
+            rowReorder: true,
+             columnDefs: [
+            { orderable: true, className: 'reorder', targets: 1 },
+            { orderable: true, className: 'reorder', targets: 6 },
+            { orderable: false, targets: '_all' }
+                    ]
+        });
     
         // Refilter the table
         $('#min, #max').on('change', function() {

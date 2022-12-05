@@ -14,9 +14,7 @@
 
 @extends('vendor.layouts.sidebar')
 @section('content')
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
-<link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.6/css/buttons.dataTables.min.css">
-<link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
+<link rel="stylesheet" href="{{asset('admin/assets/css/datatable.css')}}">
 <link rel="stylesheet" href="https://cdn.datatables.net/datetime/1.1.2/css/dataTables.dateTime.min.css">
 
 <link rel="stylesheet" href="{{asset('assets/css/argon-dashboard.css')}}">
@@ -104,11 +102,11 @@ label {
                                     <thead>
                                         <tr>
                                             {{-- <th><input type="checkbox" onchange="checkAll(this)"></th> --}}
-                                            <th style="text-align: center;">No</th>
-                                            <th style="text-align: center;">Sts. Draft BA</th>
-                                            <th style="text-align: center;">Sts. Inv. Props.</th>
-                                            <th style="text-align: center;">No Draft BA</th>
-                                            <th style="text-align: center;">Date</th>
+                                            <th>No</th>
+                                            <th>Sts. Draft BA</th>
+                                            <th>Sts. Inv. Props.</th>
+                                            <th>No Draft BA</th>
+                                            <th>Date</th>
                                             {{-- <th style="text-align: center;">No PO</th>
                                             <th style="text-align: center;">Mat. Desc.</th>
                                             <th style="text-align: center;">Part Number</th>
@@ -128,8 +126,6 @@ label {
                                             <td>{{$i++}}</td>
                                             <td><span>Verified - Draft BA</span></td>
                                             <td><span>{{$item->status_invoice_proposal}}</span></td>
-                                            {{-- <td> <a href="/vendor/ba/{{ $item->no_ba }}">{{$item->no_ba}}</td> --}}
-
                                             <td><a href="/vendor/draft/{{ $item->no_draft }}">{{ $item->no_draft}}</td>
                                             <td><span>{{ Carbon\Carbon::parse($item->date_draft)->format('d F Y') }}</span></td>
                                             {{-- <td><span>{{$item->po_number}}</span></td>
