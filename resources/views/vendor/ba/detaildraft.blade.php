@@ -14,9 +14,7 @@
 
 @extends('vendor.layouts.sidebar')
 @section('content')
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
-<link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.6/css/buttons.dataTables.min.css">
-<link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
+<link rel="stylesheet" href="{{asset('admin/assets/css/datatable.css')}}">
 <link rel="stylesheet" href="https://cdn.datatables.net/datetime/1.1.2/css/dataTables.dateTime.min.css">
 
 <link rel="stylesheet" href="{{asset('assets/css/argon-dashboard.css')}}">
@@ -43,7 +41,7 @@ label {
                     <div class="page-title">
                         <ol class="breadcrumb text-right">
                             <li><a href="#">Dashboard</a></li>
-                            <li><a href="#">Draft BA Reconcile</a></li>
+                            <li><a href="#">BA Reconcile</a></li>
                             <li class="active">Show</li>
                         </ol>
                     </div>
@@ -85,72 +83,76 @@ label {
                     </div>
                     <div class="card-body">
                         <div class="table-responsive text-nowrap">
-                            <div class="row">
-                                <div class="form-group col-3 bg-white mb-2">
-                                    <label for="">Date:</label>
-                                    <input class="form-group" type="text" id="min" name="min">
-                                </div>
-                                <div class=" form-group col-3 bg-white mb-2">
-                                    <label for="">To:</label>
-                                    <input class="form-group" type="text" id="max" name="max">
-                                </div>
-                                {{-- <div class="col-3 mb-2">
-                                    <a href="{{route('exportdraftba')}}" class="btn btn-success sm" onclick="return confirm('Are you sure?')"><i class="fa fa-cloud-download"></i>&nbsp; Export To Excel</a>
-                                </div> --}}
-                            </div>
-                            <form action="{{ route('exportdraftba/{id_draft_ba}') }}" method="POST">
+                            <form action="{{ route('exportdraftba') }}" method="GET">
                                 @csrf
-                                <table id="list" class="table table-striped" style="width: 100%; font-size: 10px;">
-                                    <thead>
-                                        <tr>
-                                            <th><input type="checkbox" onchange="checkAll(this)"></th>
-                                            <th style="text-align: center;">No</th>
-                                            <th style="text-align: center;">Sts. Draft BA</th>
-                                            <th style="text-align: center;">Sts. Inv. Props.</th>
-                                            <th style="text-align: center;">No Draft BA</th>
-                                            <th style="text-align: center;">Date</th>
-                                            <th style="text-align: center;">PO</th>
-                                            <th style="text-align: center;">Mat. Desc.</th>
-                                            <th style="text-align: center;">Part Number</th>
-                                            <th style="text-align: center;">Reference</th>
-                                            <th style="text-align: center;">Header Text</th>
-                                            <th style="text-align: center;">GR Date</th>
-                                            <th style="text-align: center;">Del. Note</th>
-                                            <th style="text-align: center;">Qty</th>
-                                            <th style="text-align: center;">Curr</th>
-                                            <th style="text-align: center;">Price</th>
-                                            <th style="text-align: center;">Tax_code</th>
-                                            <th style="text-align: center;">Total Value</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody style="font-size: 11px;">
-                                        @php $i = 1 @endphp
-                                        @foreach($draft as $item)
-                                        <tr>
-                                            <td><input type="checkbox" name="ids[]" value="{{$item->id_draft_ba}}"></td>
-                                            <td>{{$i++}}</td>
-                                            <td><span>Verified - Draft BA</span></td>
-                                            <td><span>{{$item->status_invoice_proposal}}</span></td>
-                                            <td><span>{{ $item->no_draft}}</span></td>
-                                            <td><span>{{ Carbon\Carbon::parse($item->date_draft)->format('d F Y') }}</span></td>
-                                            <td><span>{{$item->po_number}}/{{$item->po_item}}</span></td>
-                                            <td><span>{{$item->mat_desc}} <br>({{$item->valuation_type}})</span></td>
-                                            <td><span>{{$item->material_number}} / {{$item->vendor_part_number}}</span></td>
-                                            <td> <span>{{$item->ref_doc_no}}</span> </td>
-                                            <td><span>{{$item->doc_header_text}}</span></td>
-                                            <td><span>{{ Carbon\Carbon::parse($item->gr_date)->format('d F Y') }}</span></td>
-                                            <td> <span>{{$item->delivery_note}}</span> </td>
-                                            <td><span>{{$item->jumlah}}</span>&nbsp;<span>{{$item->uom}}</span></td>
-                                            <td> <span>{{$item->currency}}</span> </td>
-                                            <td style="text-align: right"><span>Rp{{ number_format($item->harga_satuan) }}</span></td>
-                                            <td><span>{{$item->tax_code}}</td>
-                                            <td style="text-align: right"></span>Rp{{ number_format($item->jumlah_harga) }}<span></td>
-                                        </tr>
-                                        @endforeach
-                                        </select>
-                                    </tbody>
-                                </table>
-                                <button class="btn btn-info sm" onclick="return confirm('Are you sure?')"> Choose To Export </button>
+                                @foreach ($draft as $good)
+                                <input type="hidden" name="id[]" value="{{$good->id_draft_ba}}">
+                                @endforeach
+                                <div class="row">
+                                    <div class="form-group col-3 bg-white mb-2">
+                                        <label for="">BA Date:</label>
+                                        <input class="form-group" type="text" id="min" name="min">
+                                    </div>
+                                    <div class=" form-group col-3 bg-white mb-2">
+                                        <label for="">To:</label>
+                                        <input class="form-group" type="text" id="max" name="max">
+                                    </div>
+                                <div class="text-right mb-2">
+                                    <a href="{{url('vendor/draft')}}" type="submit" style="text-align: right"
+                                     class="btn btn-danger" id="simpan" onclick="return confirm('Are you sure?')"> Return</a> &nbsp;&nbsp;&nbsp;
+                                    <a href="{{route('exportdraftba')}}" class="btn btn-success sm" onclick="return confirm('Are you sure?')"><i class="fa fa-cloud-download"></i>&nbsp; Export To Excel</a>
+                                </div>
+                            </div>
+                            <table id="list" class="table table-striped" style="width: 100%; font-size: 10px;">
+                                <thead>
+                                    <tr>
+                                        <th style="text-align: center;">No</th>
+                                        <th style="text-align: center;">Sts. Draft BA</th>
+                                        <th style="text-align: center;">Sts. Inv. Props.</th>
+                                        <th style="text-align: center;">No Draft BA</th>
+                                        <th style="text-align: center;">Date</th>
+                                        <th style="text-align: center;">PO</th>
+                                        <th style="text-align: center;">Gr Number</th>
+                                        <th style="text-align: center;">GR Date</th>
+                                        <th style="text-align: center;">Part Number</th>
+                                        <th style="text-align: center;">Mat. Desc.</th>
+                                        <th style="text-align: center;">Qty UOM</th>
+                                        <th style="text-align: center;">Header Text</th>
+                                        <th style="text-align: center;">Curr</th>
+                                        <th style="text-align: center;">Price</th>
+                                        <th style="text-align: center;">Total Value</th>
+                                        <th style="text-align: center;">Tax Code</th>
+                                        <th style="text-align: center;">Ref.</th>
+                                        <th style="text-align: center;">Del. Note</th>
+                                    </tr>
+                                </thead>
+                                <tbody style="font-size: 11px;">
+                                    @php $i = 1 @endphp
+                                    @foreach($draft as $item)
+                                    <tr>
+                                        <td>{{$i++}}</td>
+                                        <td><span>Verified - Draft BA</span></td>
+                                        <td><span>{{$item->status_invoice_proposal}}</span></td>
+                                        <td><span>{{ $item->no_draft}}</span></td>
+                                        <td><span>{{ Carbon\Carbon::parse($item->created_at)->format('d F Y') }}</span></td>
+                                        <td><span>{{$item->po_number}} /{{$item->po_item}}</span></td>
+                                        <td ><span>{{$item->gr_number}}</span></td>
+                                        <td><span>{{ Carbon\Carbon::parse($item->gr_date)->format('d F Y') }}</span></td>
+                                        <td><span>{{$item->material_number}} / {{$item->vendor_part_number}}</span></td>
+                                        <td><span>{{$item->mat_desc}} <br>({{$item->valuation_type}})</span></td>
+                                        <td><span>{{$item->doc_header_text}}</span></td>
+                                        <td><span>{{$item->jumlah}}</span>&nbsp;<span>{{$item->uom}}</span></td>
+                                        <td> <span>{{$item->currency}}</span> </td>
+                                        <td style="text-align: right"><span>Rp{{ number_format($item->harga_satuan) }}</span></td>
+                                        <td style="text-align: right"></span>Rp{{ number_format($item->jumlah_harga) }}<span></td>
+                                        <td><span>{{$item->tax_code}}</td>
+                                        <td> <span>{{$item->ref_doc_no}}</span> </td>
+                                        <td><span>{{$item->delivery_note}}</span> </td>
+                                    </tr>
+                                    @endforeach
+                                    </select>
+                                </tbody>
+                            </table>
                             </form>
                         </div> <!-- /.table-stats -->
                     </div>
@@ -241,7 +243,13 @@ $(document).ready(function() {
     });
 
     // DataTables initialisation
-    var table = $('#list').DataTable();
+    var table = $('#list').DataTable({
+        rowReorder: true,
+             columnDefs: [
+            { orderable: true, className: 'reorder', targets: 0 },
+            { orderable: false, targets: '_all' }
+                    ]
+    });
 
     // Refilter the table
     $('#min, #max').on('change', function() {
@@ -268,4 +276,4 @@ function checkAll(ele) {
       }
   }
 </script>
-@endsection
+@endsection 

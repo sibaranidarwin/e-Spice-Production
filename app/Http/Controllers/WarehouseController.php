@@ -58,7 +58,7 @@ class WarehouseController extends Controller
 
     public function po(Request $request, good_receipt $id_gr)
     {   
-        $good_receipts = good_receipt::where('material_number','LG2KOM00707010F691')->get();
+        $good_receipts = good_receipt::where('material_number','LG2KOM00707010F691')->where("status","Not Verified")->get();
         //  dd($good_receipts);
         //$good_receipts = good_receipt::where("status","Not Verified")->get();
 

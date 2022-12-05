@@ -173,14 +173,17 @@ class VendorController extends Controller
                         // 00001/XI/DRAFT-BA/MKP/2022
                         $kd = "00001";
                     }
-                    // dd($kd);
+
+                    $array_bln    = array(1=>"I","II","III", "IV", "V","VI","VII","VIII","IX","X", "XI","XII");
+                    $bln      = $array_bln[date('n')];
 
                     $draft = Draft_BA::create([
                         'id_gr' =>$good_receipt->id_gr, 
                         'id_vendor' => $good_receipt->id_vendor,
-                        'no_draft' => $kd."/XI/DRAFT-BA/MKP/".date('Y'),                        
+                        'no_draft' => $kd."/".$bln."/DRAFT-BA/MKP/".date('Y'),                        
                         'date_draft' => $good_receipt->gr_date,
                         'po_number' => $good_receipt->no_po,
+                        'gr_number' => $good_receipt->gr_number,
                         'po_item' => $good_receipt->po_item,
                         'mat_desc' => $good_receipt->mat_desc,
                         'material_number' => $good_receipt->material_number,
@@ -195,12 +198,12 @@ class VendorController extends Controller
                         'tax_code' =>  $good_receipt->tax_code,
                         'delivery_note' =>  $good_receipt->delivery_note,
                         'harga_satuan' => $good_receipt->harga_satuan,
-                        'jumlah_harga' => $good_receipt->jumlah_harga,
+                        'jumlah_harga' => $good_receipt->total_harga,
                         'status_invoice_proposal' => 'Not Yet Verified - Draft BA',
                     ]);
 
                     
-                    // dd($draft);
+                    //  dd($draft);
                     //dd($draft->status_invoice_proposal);
                     $good_receipts = [];
                     foreach($recordIds as $record) {
@@ -213,11 +216,11 @@ class VendorController extends Controller
                    }
                 if($good_receipt){
                     //redirect dengan pesan sukses
-                    return redirect('vendor/draft')->with('success','Data Telah berhasil Di Create Menjadi Draft Ba.');
+                    return redirect('vendor/draft')->with('success','Data Has Been Successfully Created Into Draft Ba!');
                     }
                     else{
                     //redirect dengan pesan error
-                    return redirect('vendor/draft')->with(['error' => 'Data Gagal Di Create Draft Ba!']);
+                    return redirect('vendor/draft')->with(['error' => 'Data Failed to Create Draft Ba!']);
                   }
 
                 break;
@@ -278,11 +281,11 @@ class VendorController extends Controller
          }
         if($good_receipt){
         //redirect dengan pesan sukses
-        return redirect('vendor/purchaseorder')->with('success','Data Telah berhasil Didisputed.');
+        return redirect('vendor/purchaseorder')->with('success','Data has been successfully Disputed!');
         }
         else{
         //redirect dengan pesan error
-        return redirect('vendor/purchaseorder')->with(['error' => 'Data Gagal Didisputed!']);
+        return redirect('vendor/purchaseorder')->with(['error' => 'Data Failed to Disputed!']);
       }
      }
     
@@ -329,10 +332,10 @@ class VendorController extends Controller
 
         if($good_receipt){
             //redirect dengan pesan sukses
-            return redirect('vendor/invoice')->with('success','Invoice Proposal Telah Berhasil Disimpan.');
+            return redirect('vendor/invoice')->with('success','Proposal Invoice Has Been Saved Successfully!');
         }else{
             //redirect dengan pesan error
-            return redirect('vendor/purchaseorder')->with(['error' => 'Data Gagal Disimpan!']);
+            return redirect('vendor/purchaseorder')->with(['error' => 'Data Failed to Save!']);
             }
     }
 
@@ -380,10 +383,10 @@ class VendorController extends Controller
 
         if($ba){
             //redirect dengan pesan sukses
-            return redirect('vendor/invoiceba')->with('success','Invoice Proposal Telah Berhasil Disimpan.');
+            return redirect('vendor/invoiceba')->with('success','Proposal Invoice Has Been Saved Successfully!');
         }else{
             //redirect dengan pesan error
-            return redirect('vendor/ba')->with(['error' => 'Data Gagal Disimpan!']);
+            return redirect('vendor/ba')->with(['error' => 'Data Failed to Save!']);
             }
             }
     
@@ -462,9 +465,10 @@ class VendorController extends Controller
         
         return back()->with('success', 'BA Imported Successfully');
     }
-    public function draftbaexport(Request $request){
-        $recordIds = $request->get('ids');
 
+    public function draftbaexport(Request $request){
+        $recordIds = $request->get('id_draft_ba');
+        // dd($recordIds);
         foreach($recordIds as $id) {
             $drafts = Draft_BA::find($id);
             $drafts->update([
@@ -476,8 +480,9 @@ class VendorController extends Controller
             $user_vendor = Auth::User()->id_vendor;
 
             $draft = Draft_BA::all()->where("id_vendor", $user_vendor);
-                // dd($draft);
-        return view('vendor.ba.export', compact('draft'));
+        // dd($draft);
+        // return view('vendor.ba.export', compact('draft'));
+        return view('vendor.ba.export', compact('draft')) and Excel::download(new DraftbaExport,'ba.xlsx');
     }
     
     public function export(){
@@ -708,13 +713,13 @@ class VendorController extends Controller
                     
                 ]);
                  
-                return redirect()->back()->with("success","Kata Sandi Berhasil Di Ubah !");
+                return redirect()->back()->with("success","Password Changed Successfully!");
         
         }
         
         else{
             // The passwords matches
-        return redirect()->back()->with("error","Kata Sandi yang dimasukkan tidak sesuai. Coba Lagi.");
+        return redirect()->back()->with("error","The entered password does not match. Try again!");
 
         }
     }

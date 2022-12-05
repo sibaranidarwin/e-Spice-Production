@@ -133,7 +133,6 @@ label {
                                 <th>PO</th>
                                 <th>GR Date</th>
                                 <th>Mat. Desc.</th>
-                                
                                 <!-- <th class="text-center">Reference</th> -->
                                 <!-- <th class="text-center">Vendor Part Number</th>
                                         <th class="text-center">Item Description</th>

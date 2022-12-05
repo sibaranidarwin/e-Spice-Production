@@ -14,9 +14,7 @@
 
 @extends('vendor.layouts.sidebar')
 @section('content')
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
-<link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.6/css/buttons.dataTables.min.css">
-<link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
+<link rel="stylesheet" href="{{asset('admin/assets/css/datatable.css')}}">
 <link rel="stylesheet" href="https://cdn.datatables.net/datetime/1.1.2/css/dataTables.dateTime.min.css">
 
 <link rel="stylesheet" href="{{asset('assets/css/argon-dashboard.css')}}">
@@ -119,8 +117,11 @@ label {
                                             <th>Part Number</th>
                                             <th>GR Date</th>
                                             <th>Qty</th>
+                                            <th>Del. Note</th>
                                             <th>Tax Code</th>
-                                            <th>Total Price</th>
+                                            <th>Price</th>
+                                            <th>Total Value</th>
+
                                         </tr>
                                     </thead>
                                     <tbody style="font-size: 11px;">
@@ -137,8 +138,10 @@ label {
                                             <td><span>{{$item->material_number}}/{{$item->vendor_part_number}}</span></td>
                                             <td><span>{{ Carbon\Carbon::parse($item->gr_date)->format('d F Y') }}</span></td>
                                             <td><span>{{$item->qty}}</span></td>
+                                            <td><span>{{$item->delivery_note}}</span></td>
                                             <td><span>{{$item->tax_code}}</span></td>
-                                            <td style="text-align: right"><span>Rp{{ number_format($item->amount_mkp) }}</span></td> 
+                                            <td style="text-align: right"><span>Rp{{ number_format($item->harga_satuan) }}</span></td> 
+                                            <td style="text-align: right"><span>Rp{{ number_format($item->jumlah_harga) }}</span></td> 
                                         </tr>
                                         @endforeach
                                         </select>
@@ -192,7 +195,7 @@ label {
           {{csrf_field()}}
           <div class="row">
             <div class="col-md-12">
-              <p>Import data BA sesuai format contoh berikut.<br/><a href="{{url('')}}/Panduan_Pengisian_Excel.pdf"><i class="fa fa-download"></i> File Contoh BA</a></p>
+                <p>Import data BA sesuai format contoh berikut.<br/><a href="{{asset('panduan/Panduan_Pengisian_Excel.pdf')}}" target="_blank"><i class="fa fa-download"></i>&nbsp; File Panduan Pengisian Excel</a></p>
             </div>
             <div class="col-md-12">
               <label>File Excel BA</label>

@@ -14,9 +14,8 @@
 
 @extends('vendor.layouts.sidebar')
 @section('content')
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
-<link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.6/css/buttons.dataTables.min.css">
-<link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
+{{-- <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.6/css/buttons.dataTables.min.css"> --}}
+<link rel="stylesheet" href="{{asset('admin/assets/css/datatable.css')}}">
 <link rel="stylesheet" href="https://cdn.datatables.net/datetime/1.1.2/css/dataTables.dateTime.min.css">
 
 <link rel="stylesheet" href="{{asset('assets/css/argon-dashboard.css')}}">
@@ -103,19 +102,20 @@
                                     <tr>
                                         <th><input type="checkbox" onchange="checkAll(this)"></th>
                                         <th style="text-align: center;">No</th>
-                                        <th style="text-align: center;">Sts.</th>
+                                        <th style="text-align: center;">Sts. GR</th>
                                         <th style="text-align: center;">Sts. Inv. Props.</th>
-                                        <th style="text-align: center;">GR Number</th>
+                                        <th style="text-align: center;">Plant Code</th>
                                         <th style="text-align: center;">PO</th>
+                                        <th style="text-align: center;">GR Number</th>
                                         <th style="text-align: center;">GR Date</th>
                                         <th style="text-align: center;">Part Number</th>
-                                        <th style="text-align: center;">Reference</th>
                                         <th style="text-align: center;">Mat. Desc.</th>
-                                        <th style="text-align: center;">Del. Note</th>
                                         <th style="text-align: center;">Qty UOM</th>
                                         <th style="text-align: center;">Curr</th>
                                         <th style="text-align: center;">Unit Price</th>
                                         <th style="text-align: center;">Tax Code</th>
+                                        <th style="text-align: center;">Ref.</th>
+                                        <th style="text-align: center;">Del. Note</th>
                                     </tr>
                                 </thead>
                                 <tbody style="font-size: 11px;">
@@ -129,17 +129,18 @@
                                         <td>{{++$i}}</td>
                                         <td >{{ $good_receipt->status }}</td>
                                         <td >{{ $good_receipt->status_invoice }}</td>
-                                        <td ><span>{{$good_receipt->gr_number}}</span></td>
+                                        <td >{{ $good_receipt->plant_code }}</td>
                                         <td ><span>{{$good_receipt->no_po}} /{{$good_receipt->po_item}}</span></td>
-                                        <td><span>{{ Carbon\Carbon::parse($good_receipt->gr_date)->format('d M Y') }}</span></td>
+                                        <td ><span>{{$good_receipt->gr_number}}</span></td>
+                                        <td><span>{{ Carbon\Carbon::parse($good_receipt->gr_date)->format('d F Y') }}</span></td>
                                         <td> <span>{{$good_receipt->material_number}}/<br> {{$good_receipt->vendor_part_number}}</span></td>
-                                        <td> <span>{{$good_receipt->ref_doc_no}}</span> </td>
                                         <td> <span>{{$good_receipt->mat_desc}}</span> <br>({{$good_receipt->valuation_type}})</td>
-                                        <td> <span>{{$good_receipt->delivery_note}}</span> </td>
                                         <td> <span>{{$good_receipt->jumlah}}</span>&nbsp;<span>{{$good_receipt->uom}}</span> </td>
                                         <td> <span>{{$good_receipt->currency}}</span> </td>
                                         <td style="text-align: right"> <span>Rp{{number_format($good_receipt->harga_satuan)}}</span> </td>
                                         <td> <span>{{$good_receipt->tax_code}}</span> </td>
+                                        <td> <span>{{$good_receipt->ref_doc_no}}</span> </td>
+                                        <td> <span>{{$good_receipt->delivery_note}}</span> </td>
                                     </tr>
                                     @endforeach
                                     </select>
@@ -148,10 +149,27 @@
                             &nbsp;&nbsp;<button type="submit" name="action" value="Dispute"
                             class="btn btn-warning btn-sm-3" onclick="return confirm('Are you sure?')">Dispute</button>
                         &nbsp;&nbsp;&nbsp;&nbsp;<button type="submit" name="action" value="Update"
-                            class="btn btn-success btn-sm-3" onclick="return confirm('Are you sure?')">Create Invoice</button>
+                            class="btn btn-success btn-sm-3" onclick="return confirm('Are you sure?')">Create Invoice Proposal</button>
                         &nbsp;&nbsp;&nbsp;&nbsp;<button type="submit" name="action" value="ba"
-                            class="btn btn-info btn-sm-3" onclick="return confirm('Are you sure?')">Generate Draft BA</button>
-                           </form>
+                            class="btn btn-primary btn-sm-3" onclick="return confirm('Are you sure?')">Generate Draft BA</button>
+                            <div class="row">
+                                <div class="col-6">
+
+                                </div>
+                                <div class="col-lg-6 col-md-6">
+                                    <div class="card bg-info card-outline-danger text-cen">
+                                        <span class="pull-right clickable close-icon text-right" data-effect="fadeOut"><i class="fa fa-times"></i></span>
+                                        <div class="card-block text-white">
+                                          <blockquote class="card-blockquote text-white">
+                                            <p style="font-size: 14px;"><strong>&nbsp; Description: </strong></p>
+                                            <p style="font-size: 13px;"><strong>&nbsp; 1. GR data has been auto verified by the system.</strong></p>
+                                          </blockquote>
+                                        </div>
+                                      </div>
+                                    </div>
+                                </div>
+                        </form>
+                           
                     </div> <!-- /.table-stats -->
                 </div>
             </div>
@@ -240,6 +258,12 @@
             //     autoFilter: true,
             //     sheetName: 'Exported data'
             // }]
+            rowReorder: true,
+             columnDefs: [
+            { orderable: true, className: 'reorder', targets: 1 },
+            { orderable: true, className: 'reorder', targets: 4 },
+            { orderable: false, targets: '_all' }
+                    ]
         });
     
         // Refilter the table

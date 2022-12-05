@@ -150,9 +150,9 @@ label {
                     <table id="list" class="table table-stats order-table ov-h">
                         <thead>
                             <tr>
-                                <th>GR Number</th>
                                 <th>PO</th>
-                                <th>GR Slip Date</th>
+                                <th>GR Number</th>
+                                <th>GR Date</th>
                                 <th>Material Number</th>
                                 <!-- <th class="text-center">Reference</th> -->
                                 <!-- <th class="text-center">Vendor Part Number</th>
@@ -170,8 +170,8 @@ label {
                         <tbody>
                             @foreach($good_receipts as $good_receipt)
                             <tr>
-                                <td><span class="name">{{$good_receipt->gr_number}}</span> </td>
                                 <td> <span class="">{{$good_receipt->no_po}} /{{$good_receipt->po_item}}</span> </td>
+                                <td><span class="name">{{$good_receipt->gr_number}}</span> </td>
                                 <td> <span class="">{{ Carbon\Carbon::parse($good_receipt->gr_date)->format('d F Y') }}</span> </td>
                                 <td> <span class="">{{$good_receipt->material_number}}</span>
                                 </td>

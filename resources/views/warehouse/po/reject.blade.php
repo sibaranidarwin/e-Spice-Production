@@ -14,10 +14,8 @@
 
 @extends('warehouse.layouts.sidebar')
 @section('content')
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
-<link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.6/css/buttons.dataTables.min.css">
-<link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
-<link rel="stylesheet" href="https://cdn.datatables.net/datetime/1.1.2/css/dataTables.dateTime.min.css">
+<link rel="stylesheet" href="{{asset('admin/assets/css/datatable.css')}}">
+
 <link rel="stylesheet" href="{{asset('assets/css/argon-dashboard.css')}}">
 
 <style>
@@ -89,21 +87,20 @@ label {
                                 <table id="list" class="table table-striped" style="font-size: 10px;">
                                     <thead>
                                         <tr>
-                                            <th>No</th>
-                                            <th>Status</th>
+                                            <th style="text-align: center;">No</th>
+                                            <th style="text-align: center;">Sts. GR</th>
                                             <th style="text-align: center;">Sts. Inv. Props.</th>
-                                            <th>Vendor ID</th>
-                                            <th>GR Number</th>
-                                            <th>PO</th>
-                                            <th>GR Date</th>
-                                            <th>Part Number</th>
-                                            <th>Reference</th>
-                                            <th>Mat. Desc.</th>
-                                            <th>Del. Note</th>
-                                            <th>QTY UOM</th>
-                                            <th>Curr</th>
-                                            <th>Unit Price</th>
-                                            <th>Tax Code</th>
+                                            <th style="text-align: center;">Vendor ID</th>
+                                            <th style="text-align: center;">GR Number</th>
+                                            <th style="text-align: center;">PO</th>
+                                            <th style="text-align: center;">GR Date</th>
+                                            <th style="text-align: center;">Part Number</th>
+                                            <th style="text-align: center;">Ref.</th>
+                                            <th style="text-align: center;">Mat. Desc.</th>
+                                            <th style="text-align: center;">Del. Note</th>
+                                            <th style="text-align: center;">QTY UOM</th>
+                                            <th style="text-align: center;">Curr</th>
+                                            <th style="text-align: center;">Tax Code</th>
                                         </tr>
                                     </thead>
                                     <tbody style="font-size: 11px;">
@@ -122,7 +119,6 @@ label {
                                             <td> <span>{{$good_receipt->delivery_note}}</span> </td>
                                             <td> <span>{{$good_receipt->jumlah}}</span>&nbsp;<span>{{$good_receipt->uom}}</span> </td>
                                             <td> <span>{{$good_receipt->currency}}</span> </td>
-                                            <td style="text-align: right"> <span>Rp{{number_format($good_receipt->harga_satuan)}}</span> </td>
                                             <td> <span>{{$good_receipt->tax_code}}</span> </td>
                                         </tr>
                                         @endforeach
@@ -193,7 +189,14 @@ $(document).ready(function() {
     });
 
     // DataTables initialisation
-    var table = $('#list').DataTable();
+    var table = $('#list').DataTable({
+        rowReorder: true,
+             columnDefs: [
+            { orderable: true, className: 'reorder', targets: 1 },
+            { orderable: true, className: 'reorder', targets: 6 },
+            { orderable: false, targets: '_all' }
+                    ]
+    });
 
     // Refilter the table
     $('#min, #max').on('change', function() {

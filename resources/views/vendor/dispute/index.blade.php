@@ -14,10 +14,7 @@
 
 @extends('vendor.layouts.sidebar')
 @section('content')
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
-<link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.6/css/buttons.dataTables.min.css">
-<link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
-<link rel="stylesheet" href="https://cdn.datatables.net/datetime/1.1.2/css/dataTables.dateTime.min.css">
+<link rel="stylesheet" href="{{asset('admin/assets/css/datatable.css')}}">
 
 <link rel="stylesheet" href="{{asset('assets/css/argon-dashboard.css')}}">
 
@@ -103,17 +100,17 @@
                                     <tr>
                                         <th>No</th>
                                         <th>Sts.</th>
-                                        <th>GR Number</th>
                                         <th>PO</th>
+                                        <th>GR Number</th>
                                         <th>GR Date</th>
                                         <th>Part Number</th>
-                                        <th>Reference</th>
                                         <th>Mat. Desc.</th>
-                                        <th>Del. Note</th>
                                         <th>QTY UOM</th>
                                         <th>Curr</th>
                                         <th>Unit Price</th>
                                         <th>Tax Code</th>
+                                        <th>Reference</th>
+                                        <th>Del. Note</th>
                                         <th>Cause</th>
                                     </tr>
                                 </thead>
@@ -122,17 +119,17 @@
                                     <tr>
                                         <td>{{++$i}}</td>
                                         <td >{{ $good_receipt->status }}</td>
-                                        <td ><span>{{$good_receipt->gr_number}}</span></td>
                                         <td ><span>{{$good_receipt->no_po}} /{{$good_receipt->po_item}}</span></td>
+                                        <td ><span>{{$good_receipt->gr_number}}</span></td>
                                         <td><span>{{ Carbon\Carbon::parse($good_receipt->gr_date)->format('d F Y') }}</span></td>
                                         <td> <span>{{$good_receipt->material_number}}/<br> {{$good_receipt->vendor_part_number}}</span></td>
-                                        <td> <span>{{$good_receipt->ref_doc_no}}</span> </td>
                                         <td> <span>{{$good_receipt->mat_desc}}</span> <br>({{$good_receipt->valuation_type}})</td>
-                                        <td> <span>{{$good_receipt->delivery_note}}</span> </td>
                                         <td> <span>{{$good_receipt->jumlah}}</span>&nbsp;<span>{{$good_receipt->UOM}}</span> </td>
                                         <td> <span>{{$good_receipt->currency}}</span> </td>
                                         <td> <span>Rp. {{number_format($good_receipt->harga_satuan)}}</span> </td>
                                         <td> <span>{{$good_receipt->tax_code}}</span> </td>
+                                        <td> <span>{{$good_receipt->ref_doc_no}}</span> </td>
+                                        <td> <span>{{$good_receipt->delivery_note}}</span> </td>
                                         <td><span>{{$good_receipt->alasan_disp}}</span></td>
                                     </tr>
                                     @endforeach
@@ -201,7 +198,14 @@
         });
     
         // DataTables initialisation
-        var table = $('#list').DataTable();
+        var table = $('#list').DataTable({
+            rowReorder: true,
+             columnDefs: [
+            { orderable: true, className: 'reorder', targets: 0 },
+            { orderable: true, className: 'reorder', targets: 2 },
+            { orderable: false, targets: '_all' }
+                    ]
+        });
     
         // Refilter the table
         $('#min, #max').on('change', function() {
