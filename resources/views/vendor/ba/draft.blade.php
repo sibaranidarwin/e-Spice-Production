@@ -96,7 +96,7 @@ label {
                                     <a href="{{route('exportdraftba')}}" class="btn btn-success sm" onclick="return confirm('Are you sure?')"><i class="fa fa-cloud-download"></i>&nbsp; Export To Excel</a>
                                 </div> --}}
                             </div>
-                            <form action="{{ route('exportdraftba/{id_draft_ba}') }}" method="POST">
+                            <form action="" method="POST">
                                 @csrf
                                 <table id="list" class="table table-striped" style="font-size: 10px;">
                                     <thead>

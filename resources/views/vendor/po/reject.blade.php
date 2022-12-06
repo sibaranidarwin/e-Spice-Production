@@ -77,7 +77,7 @@
                     </div>
                     @endif
                     <div class="card-header">
-                        <strong class="card-title">Good Receipt Reject List</strong>
+                        <strong class="card-title">Good Receipt Rejected List</strong>
                     </div>
                     <div class="card-body">
                     <div class="table-responsive text-nowrap">
@@ -99,7 +99,7 @@
                             <table id="list" class="table table-striped" style="font-size: 10px;">
                                 <thead>
                                     <tr>
-                                        <th><input type="checkbox" onchange="checkAll(this)"></th>
+                                        {{-- <th><input type="checkbox" onchange="checkAll(this)"></th> --}}
                                         <th style="text-align: center;">No</th>
                                         <th style="text-align: center;">Sts. GR</th>
                                         <th style="text-align: center;">Plant Code</th>
@@ -119,11 +119,6 @@
                                 <tbody style="font-size: 11px;">
                                     @foreach($good_receipts as $good_receipt)
                                     <tr>
-                                        @if ($good_receipt->status_invoice == 'Not Yet Verified - Draft BA')
-                                        <td><input disabled type="hidden" name="ids[]" value="{{$good_receipt->id_gr}}"></td>
-                                        @else
-                                        <td><input type="checkbox" name="ids[]" value="{{$good_receipt->id_gr}}"></td>
-                                        @endif
                                         <td>{{++$i}}</td>
                                         <td >{{ $good_receipt->status }}</td>
                                         <td >{{ $good_receipt->plant_code }}</td>
@@ -216,7 +211,9 @@
             // }]
             rowReorder: true,
              columnDefs: [
-            { orderable: true, className: 'reorder', targets: 2 },
+            { orderable: true, className: 'reorder', targets: 0 },
+            { orderable: true, className: 'reorder', targets: 4 },
+            
             { orderable: false, targets: '_all' }
                     ]
         });

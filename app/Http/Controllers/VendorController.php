@@ -257,7 +257,7 @@ class VendorController extends Controller
             $ba->save();
 
 
-            $total_dpp += $ba->amount_mkp * $ba->qty;
+            $total_dpp += $ba->harga_satuan * $ba->qty;
             array_push($bas, $ba);
         }
         // dd($ba->id_vendor);
@@ -407,15 +407,18 @@ class VendorController extends Controller
 
     public function detaildraft()
         {
+        $now = date('Y-m-d H:i:s');
         $user_vendor = Auth::User()->id_vendor;
 
         $draft = Draft_BA::all()->where("id_vendor", $user_vendor)->where("status_invoice_proposal", "Not Yet Verified - Draft BA");
-    //    dd($draft);
+        // dd($draft);
         return view('Vendor.ba.detaildraft',compact('draft'));
         }
 
     public function historydraft()
         {
+        $now = date('Y-m-d');
+        // dd($now);
         $user_vendor = Auth::User()->id_vendor;
         // dd($user_vendor);
         $draft = Draft_BA::all()->where("id_vendor", $user_vendor)->where('status_invoice_proposal', 'Verified - Draft BA');
@@ -467,22 +470,26 @@ class VendorController extends Controller
     }
 
     public function draftbaexport(Request $request){
-        $recordIds = $request->get('id_draft_ba');
+        $recordIds = $request->get('ids');
         // dd($recordIds);
         foreach($recordIds as $id) {
             $drafts = Draft_BA::find($id);
             $drafts->update([
-                'status_invoice_proposal' => 'Verified - Draft BA'
+                'status_invoice_proposal' => 'Verified - Draft BA',
+                // 'status_draft' => 'Verified - Draft BA'
             ]);
-        }
+            }
+            
             $drafts->save();
 
             $user_vendor = Auth::User()->id_vendor;
 
             $draft = Draft_BA::all()->where("id_vendor", $user_vendor);
-        // dd($draft);
+            //  dd($draft);
         // return view('vendor.ba.export', compact('draft'));
-        return view('vendor.ba.export', compact('draft')) and Excel::download(new DraftbaExport,'ba.xlsx');
+        return Excel::download(new DraftbaExport,'ba.xlsx');
+        return view('vendor.ba.detaildraft', compact('draft'));
+        // return Excel::download(new DraftbaExport,'ba.xlsx');
     }
     
     public function export(){

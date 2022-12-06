@@ -20,6 +20,7 @@ class CreateDraftBaTable extends Migration
             $table->bigInteger('id_vendor');
             $table->string('no_draft');
             $table->date('date_draft');
+            $table->string('gr_number');
             $table->string('po_number');
             $table->string('mat_desc');
             $table->string('material_number');

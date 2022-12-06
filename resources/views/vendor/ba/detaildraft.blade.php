@@ -83,7 +83,7 @@ label {
                     </div>
                     <div class="card-body">
                         <div class="table-responsive text-nowrap">
-                            <form action="{{ route('exportdraftba') }}" method="GET">
+                            <form action="{{ route('exportdraftba') }}" method="POST">
                                 @csrf
                                 @foreach ($draft as $good)
                                 <input type="hidden" name="id[]" value="{{$good->id_draft_ba}}">
@@ -100,12 +100,14 @@ label {
                                 <div class="text-right mb-2">
                                     <a href="{{url('vendor/draft')}}" type="submit" style="text-align: right"
                                      class="btn btn-danger" id="simpan" onclick="return confirm('Are you sure?')"> Return</a> &nbsp;&nbsp;&nbsp;
-                                    <a href="{{route('exportdraftba')}}" class="btn btn-success sm" onclick="return confirm('Are you sure?')"><i class="fa fa-cloud-download"></i>&nbsp; Export To Excel</a>
+                                     <button class="btn btn-success sm" onclick="return confirm('Are you sure?')"><i class="fa fa-cloud-download"></i> Export To excel</button>
+                                    {{-- <a href="{{route('exportdraftba')}}" class="btn btn-success sm" onclick="return confirm('Are you sure?')"><i class="fa fa-cloud-download"></i>&nbsp; Export To Excel</a> --}}
                                 </div>
                             </div>
                             <table id="list" class="table table-striped" style="width: 100%; font-size: 10px;">
                                 <thead>
                                     <tr>
+                                        <th><input type="checkbox" onchange="checkAll(this)"></th>
                                         <th style="text-align: center;">No</th>
                                         <th style="text-align: center;">Sts. Draft BA</th>
                                         <th style="text-align: center;">Sts. Inv. Props.</th>
@@ -130,6 +132,7 @@ label {
                                     @php $i = 1 @endphp
                                     @foreach($draft as $item)
                                     <tr>
+                                        <td><input type="checkbox" name="ids[]" value="{{$item->id_draft_ba}}"></td>
                                         <td>{{$i++}}</td>
                                         <td><span>Verified - Draft BA</span></td>
                                         <td><span>{{$item->status_invoice_proposal}}</span></td>
@@ -246,7 +249,8 @@ $(document).ready(function() {
     var table = $('#list').DataTable({
         rowReorder: true,
              columnDefs: [
-            { orderable: true, className: 'reorder', targets: 0 },
+            { orderable: true, className: 'reorder', targets: 1 },
+            { orderable: true, className: 'reorder', targets: 7 },
             { orderable: false, targets: '_all' }
                     ]
     });
