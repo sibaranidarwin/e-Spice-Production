@@ -261,7 +261,7 @@
             rowReorder: true,
              columnDefs: [
             { orderable: true, className: 'reorder', targets: 1 },
-            { orderable: true, className: 'reorder', targets: 4 },
+            { orderable: true, className: 'reorder', targets: 6 },
             { orderable: false, targets: '_all' }
                     ]
         });

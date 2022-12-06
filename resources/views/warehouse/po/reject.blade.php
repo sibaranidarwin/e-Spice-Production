@@ -78,7 +78,7 @@ label {
                     </div>
                     @endif
                     <div class="card-header">
-                        <strong class="card-title">Good Receipt Reject List</strong>
+                        <strong class="card-title">Good Receipt Rejected List</strong>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive text-nowrap">
@@ -107,17 +107,21 @@ label {
                                         @foreach($good_receipts as $good_receipt)
                                         <tr>
                                             <td>{{++$i}}</td>
-                                            <td >{{ $good_receipt->status }}</td>
-                                            <td >{{ $good_receipt->status_invoice }}</td>
-                                            <td >{{ $good_receipt->id_vendor }}</td>
-                                            <td ><span>{{$good_receipt->gr_number}}</span></td>
-                                            <td ><span>{{$good_receipt->no_po}}/{{$good_receipt->po_item}}</span></td>
-                                            <td><span>{{ Carbon\Carbon::parse($good_receipt->gr_date)->format('d F Y') }}</span></td>
-                                            <td> <span>{{$good_receipt->material_number}}/<br> {{$good_receipt->vendor_part_number}}</span></td>
+                                            <td>{{ $good_receipt->status }}</td>
+                                            <td>{{ $good_receipt->status_invoice }}</td>
+                                            <td>{{ $good_receipt->id_vendor }}</td>
+                                            <td><span>{{$good_receipt->gr_number}}</span></td>
+                                            <td><span>{{$good_receipt->no_po}}/{{$good_receipt->po_item}}</span></td>
+                                            <td><span>{{ Carbon\Carbon::parse($good_receipt->gr_date)->format('d F Y') }}</span>
+                                            </td>
+                                            <td> <span>{{$good_receipt->material_number}}/<br>
+                                                    {{$good_receipt->vendor_part_number}}</span></td>
                                             <td> <span>{{$good_receipt->ref_doc_no}}</span> </td>
-                                            <td> <span>{{$good_receipt->mat_desc}}</span> <br>({{$good_receipt->valuation_type}})</td>
+                                            <td> <span>{{$good_receipt->mat_desc}}</span>
+                                                <br>({{$good_receipt->valuation_type}})</td>
                                             <td> <span>{{$good_receipt->delivery_note}}</span> </td>
-                                            <td> <span>{{$good_receipt->jumlah}}</span>&nbsp;<span>{{$good_receipt->uom}}</span> </td>
+                                            <td> <span>{{$good_receipt->jumlah}}</span>&nbsp;<span>{{$good_receipt->uom}}</span>
+                                            </td>
                                             <td> <span>{{$good_receipt->currency}}</span> </td>
                                             <td> <span>{{$good_receipt->tax_code}}</span> </td>
                                         </tr>
@@ -125,8 +129,8 @@ label {
                                         </select>
                                     </tbody>
                                 </table>
-                                &nbsp;&nbsp;<button type="submit" value="Update" name="action"
-                                    class="btn btn-success">Update Data</button>
+                                {{-- &nbsp;&nbsp;<button type="submit" value="Update" name="action" --}}
+                                {{-- class="btn btn-success">Update Data</button> --}}
                             </form>
                         </div> <!-- /.table-stats -->
                     </div>
@@ -191,11 +195,21 @@ $(document).ready(function() {
     // DataTables initialisation
     var table = $('#list').DataTable({
         rowReorder: true,
-             columnDefs: [
-            { orderable: true, className: 'reorder', targets: 1 },
-            { orderable: true, className: 'reorder', targets: 6 },
-            { orderable: false, targets: '_all' }
-                    ]
+        columnDefs: [{
+                orderable: true,
+                className: 'reorder',
+                targets: 1
+            },
+            {
+                orderable: true,
+                className: 'reorder',
+                targets: 6
+            },
+            {
+                orderable: false,
+                targets: '_all'
+            }
+        ]
     });
 
     // Refilter the table

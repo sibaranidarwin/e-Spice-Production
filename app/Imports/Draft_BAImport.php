@@ -37,13 +37,16 @@ class Draft_BAImport implements ToCollection, WithHeadingRow
             $kd = "0001";
         }
         // dd($kd);
-                
+        $array_bln    = array(1=>"I","II","III", "IV", "V","VI","VII","VIII","IX","X", "XI","XII");
+        $bln      = $array_bln[date('n')];
+        // dd($bln);
          Validator::make($rows->toArray(), [
              '*.id_vendor' => '',
              '*.no_ba' => '',
              '*.gr_date' => '',
              '*.po_number' => '',
              '*.item' => '',
+             '*.gr_number' => '',
              '*.material_description' => '',
              '*.vendor_part_number' => '',
              '*.material_number' => '',
@@ -57,6 +60,7 @@ class Draft_BAImport implements ToCollection, WithHeadingRow
              '*.tax_code' => '',
              '*.harga_satuan' => '',
              '*.jumlah_harga' => '',
+             '*.confirm_price' => '',
              '*.status_ba' => '',
              '*.status_invoice_proposal' => '',
              '*.created_at' => ''
@@ -65,11 +69,12 @@ class Draft_BAImport implements ToCollection, WithHeadingRow
         foreach ($rows as $row) {
             BA_Reconcile::create([
                 'id_vendor' =>Auth::User()->id_vendor,
-                'no_ba'=>date('Y')."-XI-MKP-BA-".$kd,
+                'no_ba'=>date('Y')."-".$bln."-MKP-BA-".$kd,
                 'gr_date'=>$row['gr_date'],
                 // dd($row['gr_date']),
                 'po_number'=>$row['po_number'],
                 'item'=>$row['item'],
+                'gr_number'=>$row['gr_number'],
                 'material_description'=>$row['material_description'],
                 'vendor_part_number'=>$row['vendor_part_number'],
                 'material_number'=>$row['material_number'],
@@ -85,12 +90,13 @@ class Draft_BAImport implements ToCollection, WithHeadingRow
                 'tax_code'=>$row['tax_code'],
                 'harga_satuan'=>$row['harga_satuan'],
                 'jumlah_harga'=>$row['jumlah_harga'],
+                'confirm_price'=>$row['keterangan'],
                 'status_ba'=>"Verified - BA",
                 'status_invoice_proposal' =>"Not Yet Verified - BA",
                 'created_at'=>$now = date('Y-m-d H:i:s'),
             ]);
             Ba::create([
-                'no_ba'=>date('Y')."-XI-MKP-BA-".$kd,
+                'no_ba'=>date('Y')."-".$bln."-MKP-BA-".$kd,
                 'id_vendor' =>Auth::User()->id_vendor,
                 'created_at'=>$now = date('Y-m-d H:i:s'),
             ]);

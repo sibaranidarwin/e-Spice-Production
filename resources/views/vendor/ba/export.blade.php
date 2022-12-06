@@ -83,7 +83,7 @@ label {
                     </div>
                     <div class="card-body">
                         <div class="table-responsive text-nowrap">
-                            <form action="{{ route('exportdraftba') }}" method="GET">
+                            <form action="{{ route('exportdraftba') }}" method="POST">
                                 @csrf
                                 @foreach ($draft as $good)
                                 <input type="hidden" name="id[]" value="{{$good->id_draft_ba}}">
@@ -100,6 +100,7 @@ label {
                                 <div class="text-right mb-2">
                                     <a href="{{url('vendor/draft')}}" type="submit" style="text-align: right"
                                      class="btn btn-danger" id="simpan" onclick="return confirm('Are you sure?')"> Return</a> &nbsp;&nbsp;&nbsp;
+                                     <button class="btn btn-primary">Export</button>
                                     <a href="{{route('exportdraftba')}}" class="btn btn-success sm" onclick="return confirm('Are you sure?')"><i class="fa fa-cloud-download"></i>&nbsp; Export To Excel</a>
                                 </div>
                             </div>

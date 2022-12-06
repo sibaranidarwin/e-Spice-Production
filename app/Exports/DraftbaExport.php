@@ -26,9 +26,9 @@ class DraftbaExport implements WithEvents,FromCollection, WithHeadings, ShouldAu
             AfterSheet::class    => function(AfterSheet $event) {
                 
                 $event->sheet->protectCells('A1:Q1', 'PASSWORD');
-                $event->sheet->getStyle('R1:R100')->getProtection()->setLocked(\PhpOffice\PhpSpreadsheet\Style\Protection::PROTECTION_UNPROTECTED);
                 $event->sheet->getStyle('S1:S100')->getProtection()->setLocked(\PhpOffice\PhpSpreadsheet\Style\Protection::PROTECTION_UNPROTECTED);
-                $event->sheet->getStyle('T3:T100')->getProtection()->setLocked(\PhpOffice\PhpSpreadsheet\Style\Protection::PROTECTION_UNPROTECTED);
+                $event->sheet->getStyle('T1:T100')->getProtection()->setLocked(\PhpOffice\PhpSpreadsheet\Style\Protection::PROTECTION_UNPROTECTED);
+                $event->sheet->getStyle('U1:U100')->getProtection()->setLocked(\PhpOffice\PhpSpreadsheet\Style\Protection::PROTECTION_UNPROTECTED);
                 // $event->sheet->getStyle('L4:N4')->getProtection()->setLocked(\PhpOffice\PhpSpreadsheet\Style\Protection::PROTECTION_UNPROTECTED);
                 // $event->sheet->getStyle('L5:N5')->getProtection()->setLocked(\PhpOffice\PhpSpreadsheet\Style\Protection::PROTECTION_UNPROTECTED);
                 // $event->sheet->getStyle('L6:N6')->getProtection()->setLocked(\PhpOffice\PhpSpreadsheet\Style\Protection::PROTECTION_UNPROTECTED);
@@ -45,16 +45,18 @@ class DraftbaExport implements WithEvents,FromCollection, WithHeadings, ShouldAu
     public function collection()
     {
         $user_vendor = Auth::User()->id_vendor;
-        return Draft_BA::Where("id_vendor", $user_vendor)->get([
+        $now = date('Y-m-d H:i:s');
+        return Draft_BA::Where("id_vendor", $user_vendor)->where("updated_at", $now)->get([
             'no_draft',
-            'gr_date',
             'po_number',
             'po_item',
-            'mat_desc',
-            'vendor_part_number',
+            'gr_number',
+            'gr_date',
             'material_number',
-            'ref_doc_no',
+            'vendor_part_number',
+            'mat_desc',
             'valuation_type',
+            'ref_doc_no',
             'doc_header_text',
             'jumlah',
             'uom',  
@@ -66,18 +68,18 @@ class DraftbaExport implements WithEvents,FromCollection, WithHeadings, ShouldAu
             'status_draft',
         ]);
     }
-
     public function headings():array{
         return[
             'no_draft_ba',
-            'gr_date',
             'po_number',
             'item',
-            'material_description',
-            'vendor_part_number',
+            'gr_number',
+            'gr_date',
             'material_number',
-            'ref_doc_no',
+            'vendor_part_number',
+            'material_description',
             'valuation_type',
+            'ref_doc_no',
             'doc_header_text',
             'qty',
             'uom',

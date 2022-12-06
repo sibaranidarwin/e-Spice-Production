@@ -97,7 +97,7 @@
                     <ul class="sub-menu children dropdown-menu">
                         <li><i class="fa fa-info"></i><a href="{{url('accounting/po')}}">Not Verified</a></li>
                         <li><i class="fa fa-check"></i><a href="{{url('accounting/pover')}}">Verified</a></li>
-                        <li><i class="fa fa-close"></i><a href="{{url('accounting/poreject')}}">Reject</a></li>
+                        <li><i class="fa fa-close"></i><a href="{{url('accounting/poreject')}}">Rejected</a></li>
                         </li>
                     </ul>
                 </li>

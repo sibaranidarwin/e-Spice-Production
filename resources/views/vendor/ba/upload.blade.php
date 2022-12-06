@@ -98,9 +98,9 @@ label {
                                     <label for="">To:</label>
                                     <input class="form-group" type="text" id="max" name="max">
                                 </div>
-                                <div class="col-3 mb-2">
+                                {{-- <div class="col-3 mb-2">
                                     <button class="btn btn-primary" data-toggle="modal" data-target="#modal-import"><i class="fa fa-cloud-upload"></i>&nbsp; Import Excel</button>
-                                </div>
+                                </div> --}}
                             </div>
                             <form action="{{ route('update-ba-vendor/{id_gr}') }}" method="POST">
                                 @csrf
@@ -113,15 +113,16 @@ label {
                                             <th>Sts. Inv. Props.</th>
                                             <th>Date</th>
                                             <th>PO</th>
-                                            <th>Mat. Desc.</th>
-                                            <th>Part Number</th>
+                                            <th>GR Number</th>
                                             <th>GR Date</th>
+                                            <th>Part Number</th>
+                                            <th>Mat. Desc.</th>
                                             <th>Qty</th>
-                                            <th>Del. Note</th>
-                                            <th>Tax Code</th>
                                             <th>Price</th>
                                             <th>Total Value</th>
-
+                                            <th>Tax Code</th>
+                                            <th>Del. Note</th>
+                                            
                                         </tr>
                                     </thead>
                                     <tbody style="font-size: 11px;">
@@ -134,14 +135,16 @@ label {
                                             <td><span>{{$item->status_invoice_proposal}}</span></td>
                                             <td><span>{{ Carbon\Carbon::parse($item->created_at)->format('d F Y') }}</span></td>
                                             <td><span>{{$item->po_number}}/{{$item->item}}</span></td>
+                                            <td><span>{{$item->gr_number}}</span></td>
+                                            <td><span>{{ Carbon\Carbon::parse($item->gr_date)->format('d F Y') }}</span></td>
                                             <td><span>{{$item->material_description}} <br>({{$item->valuation_type}})</span></td>
                                             <td><span>{{$item->material_number}}/{{$item->vendor_part_number}}</span></td>
-                                            <td><span>{{ Carbon\Carbon::parse($item->gr_date)->format('d F Y') }}</span></td>
-                                            <td><span>{{$item->qty}}</span></td>
-                                            <td><span>{{$item->delivery_note}}</span></td>
-                                            <td><span>{{$item->tax_code}}</span></td>
+                                            <td><span>{{$item->qty}} {{$item->uom}}</span></td>
                                             <td style="text-align: right"><span>Rp{{ number_format($item->harga_satuan) }}</span></td> 
                                             <td style="text-align: right"><span>Rp{{ number_format($item->jumlah_harga) }}</span></td> 
+                                            <td><span>{{$item->tax_code}}</span></td>
+                                            <td><span>{{$item->delivery_note}}</span></td>
+                                            
                                         </tr>
                                         @endforeach
                                         </select>

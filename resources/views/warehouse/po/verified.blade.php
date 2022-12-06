@@ -21,12 +21,14 @@
 <style>
 .table td,
 .table th,
-label{
+label {
     font-size: 11px;
-},
+}
+
+,
 a[disabled="disabled"] {
-        pointer-events: none;
-    }
+    pointer-events: none;
+}
 </style>
 <div class="breadcrumbs">
     <div class="breadcrumbs-inner">
@@ -90,7 +92,8 @@ a[disabled="disabled"] {
                                 <table id="list" class="table table-striped" style="font-size: 10px;">
                                     <thead>
                                         <tr>
-                                            <th style="text-align: center;"><input type="checkbox" onchange="checkAll(this)"></th>
+                                            <th style="text-align: center;"><input type="checkbox"
+                                                    onchange="checkAll(this)"></th>
                                             <th style="text-align: center;">No</th>
                                             <th style="text-align: center;">Sts. GR</th>
                                             <th style="text-align: center;">Sts. Inv. Props.</th>
@@ -104,32 +107,39 @@ a[disabled="disabled"] {
                                             <th style="text-align: center;">Tax Code</th>
                                             <th style="text-align: center;">Reference</th>
                                             <th style="text-align: center;">Del. Note</th>
-                                            <th style="text-align: center;">File</th>                                            
+                                            <th style="text-align: center;">File</th>
                                         </tr>
-                                        </thead>
-                                        <tbody style="font-size: 11px;">
-                                            @foreach($good_receipts as $good_receipt)
-                                            <tr>
-                                                <td><input type="checkbox" name="ids[]" value="{{$good_receipt->id_gr}}"></td>
-                                                <td>{{++$i}}</td>
-                                                <td >{{ $good_receipt->status }}</td>
-                                                <td >{{ $good_receipt->status_invoice }}</td>
-                                                <td >{{ $good_receipt->id_vendor }} /{{ $good_receipt->vendor_name}}</td>
-                                                <td ><span>{{$good_receipt->no_po}} /{{$good_receipt->po_item}}</span></td>
-                                                <td ><span>{{$good_receipt->gr_number}}</span></td>
-                                                <td><span>{{ Carbon\Carbon::parse($good_receipt->gr_date)->format('d F Y') }}</span></td>
-                                                <td> <span>{{$good_receipt->material_number}}/<br> {{$good_receipt->vendor_part_number}}</span></td>
-                                                <td> <span>{{$good_receipt->mat_desc}}</span> <br>({{$good_receipt->valuation_type}})</td>
-                                                <td> <span>{{$good_receipt->jumlah}}</span>&nbsp;<span>{{$good_receipt->uom}}</span> </td>
-                                                <td> <span>{{$good_receipt->tax_code}}</span> </td>
-                                                <td> <span>{{$good_receipt->ref_doc_no}}</span> </td>
-                                                <td> <span>{{$good_receipt->delivery_note}}</span> </td>
-                                                @if ($good_receipt->lampiran == null)
-                                                <td><a href="{{ $good_receipt->lampiran}}" onclick="return false;" class="btn btn-light btn-sm">View File</a></td>
-                                                @else
-                                                <td><a target="_blank" href="{{ $good_receipt->lampiran}}" class="btn btn-success btn-sm">View File</a></td>
-                                                @endif
-                                                
+                                    </thead>
+                                    <tbody style="font-size: 11px;">
+                                        @foreach($good_receipts as $good_receipt)
+                                        <tr>
+                                            <td><input type="checkbox" name="ids[]" value="{{$good_receipt->id_gr}}">
+                                            </td>
+                                            <td>{{++$i}}</td>
+                                            <td>{{ $good_receipt->status }}</td>
+                                            <td>{{ $good_receipt->status_invoice }}</td>
+                                            <td>{{ $good_receipt->id_vendor }} /{{ $good_receipt->vendor_name}}</td>
+                                            <td><span>{{$good_receipt->no_po}} /{{$good_receipt->po_item}}</span></td>
+                                            <td><span>{{$good_receipt->gr_number}}</span></td>
+                                            <td><span>{{ Carbon\Carbon::parse($good_receipt->gr_date)->format('d F Y') }}</span>
+                                            </td>
+                                            <td> <span>{{$good_receipt->material_number}}/<br>
+                                                    {{$good_receipt->vendor_part_number}}</span></td>
+                                            <td> <span>{{$good_receipt->mat_desc}}</span>
+                                                <br>({{$good_receipt->valuation_type}})</td>
+                                            <td> <span>{{$good_receipt->jumlah}}</span>&nbsp;<span>{{$good_receipt->uom}}</span>
+                                            </td>
+                                            <td> <span>{{$good_receipt->tax_code}}</span> </td>
+                                            <td> <span>{{$good_receipt->ref_doc_no}}</span> </td>
+                                            <td> <span>{{$good_receipt->delivery_note}}</span> </td>
+                                            @if ($good_receipt->lampiran == null)
+                                            <td><a href="{{ $good_receipt->lampiran}}" onclick="return false;"
+                                                    class="btn btn-light btn-sm">View File</a></td>
+                                            @else
+                                            <td><a target="_blank" href="{{ $good_receipt->lampiran}}"
+                                                    class="btn btn-success btn-sm">View File</a></td>
+                                            @endif
+
                                         </tr>
                                         @endforeach
                                         </select>

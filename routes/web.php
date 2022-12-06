@@ -152,8 +152,8 @@ Route::get('vendor/historyba', 'VendorController@historyba')->name('vendor/histo
 Route::get('vendor/ba/{id}', 'VendorController@ba')->name('vendor/ba/{id}');
 Route::get('vendor/detailba', 'VendorController@detailba')->name('vendor/detailba');
 Route::put('vendor/draft','VendorController@uploaddraft');
-Route::post('vendor/exportdraftba', 'VendorController@draftbaexport')->name('exportdraftba/{id_draft_ba}');
-Route::get('vendor/exportdraft', 'VendorController@export')->name('exportdraftba');
+// Route::post('vendor/exportdraftba', 'VendorController@draftbaexport')->name('exportdraftba/{id_draft_ba}');
+Route::post('vendor/exportdraft', 'VendorController@draftbaexport')->name('exportdraftba');
 
 Route::post('vendor/edit-ba','VendorController@editba')->name('update-ba-vendor/{id_gr}');
 Route::post('vendor/create_invoice_ba','VendorController@storeba')->name('create-invoice-ba');
