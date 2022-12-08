@@ -63,12 +63,8 @@ class VendorController extends Controller
         $good_receipts = good_receipt::where('id_vendor', $user_vendor)->where('id_inv',0)->where(function($query) {
 			$query->where('status','Verified')
 						->orWhereNull('status');})->orderBy('updated_at', 'ASC')->get();
-        
 
-        return view('vendor.po.index',compact('good_receipts'))
-                ->with('i',(request()->input('page', 1) -1) *5);
-    }
-    public function puchaseorderreject()
+public function puchaseorderreject()
     {   
         $user_vendor = Auth::User()->id_vendor;
         $good_receipts = good_receipt::Where("id_vendor", $user_vendor)->where("Status", "Rejected")->get();
