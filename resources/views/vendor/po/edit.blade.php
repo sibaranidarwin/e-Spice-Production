@@ -103,8 +103,8 @@ label {
                                 @error('vendor_invoice_number')<span
                                     class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                             </div>
-                            <div class="form-group col-md-6">
-                                <label class="form-control-label" for="total_harga_everify">Total Price</label> <br>
+                            <div class="form-group col-md-3">
+                                <label class="form-control-label" for="total_harga_everify">Total Price (calculate by system)</label> <br>
                                 <input type="text"
                                     class="form-control @error('total_harga_everify[]') is-invalid @enderror"
                                     name="total_harga_everify" placeholder="Masukkan Total Price ..."
@@ -112,19 +112,29 @@ label {
                                 @error('total_harga_everify[]')<span
                                     class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                             </div>
-                            <div class="form-group col-md-6">
-                                <label class="form-control-label" for="faktur_pajak_number">VAT NO.<span style="color: red">*</span></label>
+                            <div class="form-group col-md-3">
+                                <label class="form-control-label" for="faktur_pajak_number">Total Price (acc. to doc invoice)<span style="color: red">*</span></label>
                                 <input type="text" id="input_mask"
                                     class="form-control @error('faktur_pajak_number[]') is-invalid @enderror"
-                                    name="faktur_pajak_number" placeholder="Fill in VAT NO ..."
+                                    name="faktur_pajak_number" placeholder="Fill in Total Price (acc. to doc invoice)"
                                     value="{{ $good->faktur_pajak_number }}" required>
                                 @error('faktur_pajak_number[]')<span
                                     class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
-                            </div>
+                            
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="form-control-label" for="faktur_pajak_number">VAT NO.<span style="color: red">*</span></label>
+                            <input type="text" id="input_mask"
+                                class="form-control @error('faktur_pajak_number[]') is-invalid @enderror"
+                                name="faktur_pajak_number" placeholder="Fill in VAT NO ..."
+                                value="{{ $good->faktur_pajak_number }}" required>
+                            @error('faktur_pajak_number[]')<span
+                                class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
+                        </div>
                             <div class="form-group col-md-6">
-                                <label class="form-control-label" for="del_costs">Price Gap</label> <br>
+                                <label class="form-control-label" for="del_costs">Price Difference</label> <br>
                                 <input type="number" class="form-control @error('del_costs[]') is-invalid @enderror"
-                                    name="del_costs" placeholder="Fill in Invoice Difference ...">
+                                    name="del_costs" placeholder="Fill in Price Difference ...">
                                 @error('del_costs[]')<span
                                     class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                             </div>

@@ -30,6 +30,7 @@ class CreateDraftBaTable extends Migration
             $table->string('currency');
             $table->string('vendor_part_number');
             $table->string('valuation_type');
+            $table->string('tax_code');
             $table->string('doc_header_text');
             $table->integer('po_item');
             $table->integer('jumlah');

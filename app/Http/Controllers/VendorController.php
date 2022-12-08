@@ -62,7 +62,7 @@ class VendorController extends Controller
 
         $good_receipts = good_receipt::where('id_vendor', $user_vendor)->where('id_inv',0)->where(function($query) {
 			$query->where('status','Verified')
-						->orWhereNull('status');})->get();
+						->orWhereNull('status');})->orderBy('updated_at', 'ASC')->get();
         
 
         return view('vendor.po.index',compact('good_receipts'))
@@ -71,7 +71,7 @@ class VendorController extends Controller
     public function puchaseorderreject()
     {   
         $user_vendor = Auth::User()->id_vendor;
-        $good_receipts = good_receipt::Where("id_vendor", $user_vendor)->where("Status", "Reject")->get();
+        $good_receipts = good_receipt::Where("id_vendor", $user_vendor)->where("Status", "Rejected")->get();
         return view('vendor.po.reject',compact('good_receipts'))
                 ->with('i',(request()->input('page', 1) -1) *5);
     }
@@ -201,8 +201,6 @@ class VendorController extends Controller
                         'jumlah_harga' => $good_receipt->total_harga,
                         'status_invoice_proposal' => 'Not Yet Verified - Draft BA',
                     ]);
-
-                    
                     //  dd($draft);
                     //dd($draft->status_invoice_proposal);
                     $good_receipts = [];
@@ -394,6 +392,9 @@ class VendorController extends Controller
     public function draft()
         {
         $user_vendor = Auth::User()->id_vendor;
+        $duration = 10;
+        $now = date('Y-m-d H:i:s', strtotime("+$duration sec"));
+        // dd($now);
         //   $ba = BA::select('no_ba','status_ba','status_invoice_proposal')->distinct()->where("id_vendor", $user_vendor)->get(); 
         // dd($user_vendor);
         $draft = Draft_BA::select('no_draft','status_invoice_proposal')->distinct()->where("id_vendor", $user_vendor)->where("status_invoice_proposal", "Not Yet Verified - Draft BA")->get();
@@ -646,7 +647,7 @@ class VendorController extends Controller
     public function disputed()
     {
         $user_vendor = Auth::User()->id_vendor;
-        $good_receipts = good_receipt::where("status", "Dispute")->Where("id_vendor", $user_vendor)->get();
+        $good_receipts = good_receipt::where("status", "Disputed")->Where("id_vendor", $user_vendor)->get();
 
         return view('vendor.dispute.index',compact('good_receipts'))
                 ->with('i',(request()->input('page', 1) -1) *5);

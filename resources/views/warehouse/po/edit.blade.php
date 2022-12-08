@@ -62,7 +62,7 @@
                                     <option selected>Silahkan Pilih Status</option>
                                     <option value="Verified" {{ $good->status == "Verified" ? 'selected' : '' }}>
                                         Verified</option>
-                                    <option value="Reject" {{ $good->status == "Reject" ? 'selected' : '' }}>Reject
+                                    <option value="Rejected" {{ $good->status == "Rejected" ? 'selected' : '' }}>Rejected
                                     </option>
                                 </select>
                             </div>

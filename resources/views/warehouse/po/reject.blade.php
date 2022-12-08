@@ -90,41 +90,36 @@ label {
                                             <th style="text-align: center;">No</th>
                                             <th style="text-align: center;">Sts. GR</th>
                                             <th style="text-align: center;">Sts. Inv. Props.</th>
-                                            <th style="text-align: center;">Vendor ID</th>
-                                            <th style="text-align: center;">GR Number</th>
+                                            <th style="text-align: center;">Vendor</th>
                                             <th style="text-align: center;">PO</th>
+                                            <th style="text-align: center;">GR Number</th>
                                             <th style="text-align: center;">GR Date</th>
                                             <th style="text-align: center;">Part Number</th>
-                                            <th style="text-align: center;">Ref.</th>
                                             <th style="text-align: center;">Mat. Desc.</th>
-                                            <th style="text-align: center;">Del. Note</th>
                                             <th style="text-align: center;">QTY UOM</th>
-                                            <th style="text-align: center;">Curr</th>
                                             <th style="text-align: center;">Tax Code</th>
+                                            <th style="text-align: center;">Reference</th>
+                                            <th style="text-align: center;">Del. Note</th>
+                                            
                                         </tr>
-                                    </thead>
-                                    <tbody style="font-size: 11px;">
-                                        @foreach($good_receipts as $good_receipt)
-                                        <tr>
-                                            <td>{{++$i}}</td>
-                                            <td>{{ $good_receipt->status }}</td>
-                                            <td>{{ $good_receipt->status_invoice }}</td>
-                                            <td>{{ $good_receipt->id_vendor }}</td>
-                                            <td><span>{{$good_receipt->gr_number}}</span></td>
-                                            <td><span>{{$good_receipt->no_po}}/{{$good_receipt->po_item}}</span></td>
-                                            <td><span>{{ Carbon\Carbon::parse($good_receipt->gr_date)->format('d F Y') }}</span>
-                                            </td>
-                                            <td> <span>{{$good_receipt->material_number}}/<br>
-                                                    {{$good_receipt->vendor_part_number}}</span></td>
-                                            <td> <span>{{$good_receipt->ref_doc_no}}</span> </td>
-                                            <td> <span>{{$good_receipt->mat_desc}}</span>
-                                                <br>({{$good_receipt->valuation_type}})</td>
-                                            <td> <span>{{$good_receipt->delivery_note}}</span> </td>
-                                            <td> <span>{{$good_receipt->jumlah}}</span>&nbsp;<span>{{$good_receipt->uom}}</span>
-                                            </td>
-                                            <td> <span>{{$good_receipt->currency}}</span> </td>
-                                            <td> <span>{{$good_receipt->tax_code}}</span> </td>
-                                        </tr>
+                                        </thead>
+                                        <tbody style="font-size: 11px;">
+                                            @foreach($good_receipts as $good_receipt)
+                                            <tr>
+                                                <td>{{++$i}}</td>
+                                                <td >{{ $good_receipt->status }}</td>
+                                                <td >{{ $good_receipt->status_invoice }}</td>
+                                                <td >{{ $good_receipt->id_vendor }} /{{ $good_receipt->vendor_name}}</td>
+                                                <td ><span>{{$good_receipt->no_po}} /{{$good_receipt->po_item}}</span></td>
+                                                <td ><span>{{$good_receipt->gr_number}}</span></td>
+                                                <td><span>{{ Carbon\Carbon::parse($good_receipt->gr_date)->format('d F Y') }}</span></td>
+                                                <td> <span>{{$good_receipt->material_number}}/<br> {{$good_receipt->vendor_part_number}}</span></td>
+                                                <td> <span>{{$good_receipt->mat_desc}}</span> <br>({{$good_receipt->valuation_type}})</td>
+                                                <td> <span>{{$good_receipt->jumlah}}</span>&nbsp;<span>{{$good_receipt->uom}}</span> </td>
+                                                <td> <span>{{$good_receipt->tax_code}}</span> </td>
+                                                <td> <span>{{$good_receipt->ref_doc_no}}</span> </td>
+                                                <td> <span>{{$good_receipt->delivery_note}}</span> </td>
+                                            </tr>
                                         @endforeach
                                         </select>
                                     </tbody>
