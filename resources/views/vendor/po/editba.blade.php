@@ -1,5 +1,6 @@
 @extends('vendor.layouts.sidebar')
 @section('content')
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://rawgit.com/RobinHerbots/jquery.inputmask/3.x/dist/jquery.inputmask.bundle.js"></script>
 
@@ -66,7 +67,7 @@ label {
                                     <input type="text"
                                         class="form-control @error('no_invoice_proposal') is-invalid @enderror"
                                         name="no_invoice_proposal" placeholder="Masukkan No Invoice ..."
-                                        value="{{ date('Y')."/XI/MKP/INV/".$kd }} " readonly>
+                                        value="{{ date('Y')."-".$bln."-MKP-INV-".$kd }} " readonly>
                                     @error('no_invoice_proposal')<span
                                         class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                                 </div>
@@ -105,23 +106,30 @@ label {
                                 </div>
                                 <div class="form-group col-md-3">
                                     <label class="form-control-label" for="total_harga_everify">Total Price (calculate by system)</label> <br>
-                                    <input type="text"
+                                    <input type="text" 
                                         class="form-control @error('total_harga_everify[]') is-invalid @enderror"
-                                        name="total_harga_everify" placeholder="Masukkan Total Price ..."
-                                        value="RP {{ number_format($total_harga) }}" readonly>
+                                        name="" placeholder="Masukkan Total Price ..."
+                                        value="{{ number_format($total_harga) }}" readonly>
                                     @error('total_harga_everify[]')<span
                                         class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
-                                </div>
+                                </div> 
+                                 <div hidden class="form-group col-md-3">
+                                    <input type="number" id="id-1"
+                                        class="form-control @error('total_harga_everify[]') is-invalid @enderror"
+                                        name="total_harga_everify" placeholder="Masukkan Total Price ..."
+                                        value="{{ ($total_harga) }}" readonly>
+                                    @error('total_harga_everify[]')<span
+                                        class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
+                                </div> 
                                 <div class="form-group col-md-3">
-                                    <label class="form-control-label" for="faktur_pajak_number">Total Price (acc. to doc invoice)<span
-                                            style="color: red">*</span></label>
-                                    <input type="text" 
+                                    <label class="form-control-label" for="faktur_pajak_number">Total Price (acc. to doc invoice)<span style="color: red">*</span></label>
+                                    <input  type="number" id="id-2"
                                         class="form-control @error('faktur_pajak_number[]') is-invalid @enderror"
-                                        name="faktur_pajak_number" placeholder="Fill in Total Price (acc. to doc invoice)"
-                                        value="{{ $good->faktur_pajak_number }}" required>
+                                        name="" placeholder="Fill in Total Price (acc. to doc invoice)"
+                                        value="">
                                     @error('faktur_pajak_number[]')<span
                                         class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
-                                </div>
+                            </div> 
                                 <div class="form-group col-md-6">
                                     <label class="form-control-label" for="faktur_pajak_number">VAT NO.<span
                                             style="color: red">*</span></label>
@@ -133,8 +141,8 @@ label {
                                         class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label class="form-control-label" for="del_costs">Price Difference</label><br>
-                                    <input type="number" class="form-control @error('del_costs[]') is-invalid @enderror"
+                                    <label class="form-control-label" for="del_costs">Price Difference</label> <br>
+                                    <input type="number" id="id-3" class="form-control @error('del_costs[]') is-invalid @enderror"
                                         name="del_costs" placeholder="Fill in Price Difference ...">
                                     @error('del_costs[]')<span
                                         class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
@@ -196,7 +204,7 @@ label {
                                 </select>
                             </tbody>
                         </table>
-
+ 
                     </div>
                 </div>
             </div>
@@ -211,8 +219,13 @@ label {
 
 
 <script type="text/javascript">
+  $(function () {
+            $("#id-1, #id-2").keyup(function () {
+                $("#id-3").val(+$("#id-1").val() - +$("#id-2").val());
+            });
+            });
 $('#input_mask').inputmask({
-    mask: '***.***.**.********',
+    mask: '**.***.***.*-***.***',
     definitions: {
         A: {
             validator: "[A-Za-z0-9 ]"

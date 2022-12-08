@@ -109,7 +109,8 @@ class VendorController extends Controller
                 {
                     $kd = "0001";
                 }
-                
+                $array_bln    = array(1=>"I","II","III", "IV", "V","VI","VII","VIII","IX","X", "XI","XII");
+                $bln      = $array_bln[date('n')];
 
                 // $tax = good_receipt::where('tax_code', 'M2')->get();
                 //  dd($tax);
@@ -145,7 +146,7 @@ class VendorController extends Controller
 
                 // kondisi TAX code ma = 11%
                 $total_harga = $total_dpp + $total_ppn;
-                return view('vendor.po.edit', compact('good_receipts', 'total_dpp', 'total_ppn', 'total_harga','kd'));
+                return view('vendor.po.edit', compact('good_receipts', 'total_dpp', 'total_ppn', 'total_harga','kd','bln'));
                 break;
 
                 case 'ba':
@@ -245,6 +246,9 @@ class VendorController extends Controller
                     $kd = "0001";
                 }
 
+                $array_bln    = array(1=>"I","II","III", "IV", "V","VI","VII","VIII","IX","X", "XI","XII");
+                $bln      = $array_bln[date('n')];
+
         $bas = [];
         $total_dpp = 0;
         foreach($recordIds as $record ) {
@@ -263,7 +267,7 @@ class VendorController extends Controller
         $total_ppn = $total_dpp * 0.02;
         $total_harga = $total_dpp + $total_ppn;
 
-        return view('vendor.po.editba', compact('bas', 'total_dpp', 'total_ppn', 'total_harga', 'kd'));
+        return view('vendor.po.editba', compact('bas', 'total_dpp', 'total_ppn', 'total_harga', 'kd', 'bln'));
     }
 
      public function update(Request $request)
@@ -305,7 +309,7 @@ class VendorController extends Controller
         {
             $kd = date('d-m-Y').'-'."0001";
         }
-
+        
         $request->validate([
         'posting_date'  => 'required','date','before:now',
         'vendor_invoice_number'  => 'required',
