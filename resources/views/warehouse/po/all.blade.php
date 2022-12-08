@@ -85,7 +85,6 @@
                             <table id="list" class="table table-striped" style="font-size: 10px;">
                                 <thead>
                                     <tr>
-                                    <th style="text-align: center;"><input type="checkbox" onchange="checkAll(this)"></th>
                                     <th style="text-align: center;">No</th>
                                     <th style="text-align: center;">Sts. GR</th>
                                     <th style="text-align: center;">Sts. Inv. Props.</th>
@@ -105,7 +104,6 @@
                                 <tbody style="font-size: 11px;">
                                     @foreach($good_receipts as $good_receipt)
                                     <tr>
-                                        <td><input type="checkbox" name="ids[]" value="{{$good_receipt->id_gr}}"></td>
                                         <td>{{++$i}}</td>
                                         <td >{{ $good_receipt->status }}</td>
                                         <td >{{ $good_receipt->status_invoice }}</td>

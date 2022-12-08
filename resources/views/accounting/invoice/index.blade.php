@@ -9,10 +9,7 @@
 <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.print.min.js"></script>
 @extends('accounting.layouts.sidebar')
 @section('content')
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
-<link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.6/css/buttons.dataTables.min.css">
-<link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
-<link rel="stylesheet" href="https://cdn.datatables.net/datetime/1.1.2/css/dataTables.dateTime.min.css">
+<link rel="stylesheet" href="{{asset('admin/assets/css/datatable.css')}}">
 <link rel="stylesheet" href="{{asset('assets/css/argon-dashboard.css')}}">
 <style>
 .table td,
@@ -154,16 +151,7 @@ label {
 
 <script type="text/javascript">
 $(document).ready(function() {
-    $('#list').DataTable({
-        buttons: ['excel'],
-        dom: "<'row'<'col-md-2 bg-white'l><'col-md-5 bg-white'B><'col-md-5 bg-white'f>>" +
-            "<'row'<'col-md-12'tr>>" +
-            "<'row'<'col-md-6'i><'col-md-6'p>>",
-        lengthMenu: [
-            [10, 25, 50, 100, -1],
-            [10, 25, 50, 100, "All"]
-        ]
-    });
+    $('#list').DataTable();
 
 });
 

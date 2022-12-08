@@ -117,7 +117,7 @@
                             class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                     </div>
                     <div class="form-group col-md-6">
-                        <label class="form-control-label" for="del_costs[]">Selisih Harga</label> <br>
+                        <label class="form-control-label" for="del_costs[]">Pride Gap</label> <br>
                         <input type="text" class="form-control @error('del_costs[]') is-invalid @enderror"
                             name="del_costs[]"  value="{{ $invoice->del_costs}}" readonly>
                         @error('del_costs[]')<span
