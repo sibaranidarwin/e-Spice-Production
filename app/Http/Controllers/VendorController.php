@@ -62,16 +62,12 @@ class VendorController extends Controller
 
         $good_receipts = good_receipt::where('id_vendor', $user_vendor)->where('id_inv',0)->where(function($query) {
 			$query->where('status','Verified')
-						->orWhereNull('status');})->orderBy(    'updated_at', 'ASC')->get();
-        
+						->orWhereNull('status');})->orderBy('updated_at', 'ASC')->get();
 
-        return view('vendor.po.index',compact('good_receipts'))
-                ->with('i',(request()->input('page', 1) -1) *5);
-    }
-    public function puchaseorderreject()
+public function puchaseorderreject()
     {   
         $user_vendor = Auth::User()->id_vendor;
-        $good_receipts = good_receipt::Where("id_vendor", $user_vendor)->where("Status", "Reject")->get();
+        $good_receipts = good_receipt::Where("id_vendor", $user_vendor)->where("Status", "Rejected")->get();
         return view('vendor.po.reject',compact('good_receipts'))
                 ->with('i',(request()->input('page', 1) -1) *5);
     }
@@ -109,7 +105,8 @@ class VendorController extends Controller
                 {
                     $kd = "0001";
                 }
-                
+                $array_bln    = array(1=>"I","II","III", "IV", "V","VI","VII","VIII","IX","X", "XI","XII");
+                $bln      = $array_bln[date('n')];
 
                 // $tax = good_receipt::where('tax_code', 'M2')->get();
                 //  dd($tax);
@@ -145,7 +142,7 @@ class VendorController extends Controller
 
                 // kondisi TAX code ma = 11%
                 $total_harga = $total_dpp + $total_ppn;
-                return view('vendor.po.edit', compact('good_receipts', 'total_dpp', 'total_ppn', 'total_harga','kd'));
+                return view('vendor.po.edit', compact('good_receipts', 'total_dpp', 'total_ppn', 'total_harga','kd','bln'));
                 break;
 
                 case 'ba':
@@ -201,8 +198,6 @@ class VendorController extends Controller
                         'jumlah_harga' => $good_receipt->total_harga,
                         'status_invoice_proposal' => 'Not Yet Verified - Draft BA',
                     ]);
-
-                    
                     //  dd($draft);
                     //dd($draft->status_invoice_proposal);
                     $good_receipts = [];
@@ -247,6 +242,9 @@ class VendorController extends Controller
                     $kd = "0001";
                 }
 
+                $array_bln    = array(1=>"I","II","III", "IV", "V","VI","VII","VIII","IX","X", "XI","XII");
+                $bln      = $array_bln[date('n')];
+
         $bas = [];
         $total_dpp = 0;
         foreach($recordIds as $record ) {
@@ -265,7 +263,7 @@ class VendorController extends Controller
         $total_ppn = $total_dpp * 0.02;
         $total_harga = $total_dpp + $total_ppn;
 
-        return view('vendor.po.editba', compact('bas', 'total_dpp', 'total_ppn', 'total_harga', 'kd'));
+        return view('vendor.po.editba', compact('bas', 'total_dpp', 'total_ppn', 'total_harga', 'kd', 'bln'));
     }
 
      public function update(Request $request)
@@ -307,7 +305,7 @@ class VendorController extends Controller
         {
             $kd = date('d-m-Y').'-'."0001";
         }
-
+        
         $request->validate([
         'posting_date'  => 'required','date','before:now',
         'vendor_invoice_number'  => 'required',
@@ -394,6 +392,9 @@ class VendorController extends Controller
     public function draft()
         {
         $user_vendor = Auth::User()->id_vendor;
+        $duration = 10;
+        $now = date('Y-m-d H:i:s', strtotime("+$duration sec"));
+        // dd($now);
         //   $ba = BA::select('no_ba','status_ba','status_invoice_proposal')->distinct()->where("id_vendor", $user_vendor)->get(); 
         // dd($user_vendor);
         $draft = Draft_BA::select('no_draft','status_invoice_proposal')->distinct()->where("id_vendor", $user_vendor)->where("status_invoice_proposal", "Not Yet Verified - Draft BA")->get();
@@ -646,7 +647,7 @@ class VendorController extends Controller
     public function disputed()
     {
         $user_vendor = Auth::User()->id_vendor;
-        $good_receipts = good_receipt::where("status", "Dispute")->Where("id_vendor", $user_vendor)->get();
+        $good_receipts = good_receipt::where("status", "Disputed")->Where("id_vendor", $user_vendor)->get();
 
         return view('vendor.dispute.index',compact('good_receipts'))
                 ->with('i',(request()->input('page', 1) -1) *5);

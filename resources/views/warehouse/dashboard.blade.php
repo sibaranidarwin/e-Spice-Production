@@ -115,8 +115,8 @@
                         <span class="pull-right clickable close-icon text-right" data-effect="fadeOut"><i class="fa fa-times"></i></span>
                         <div class="card-block text-white">
                           <blockquote class="card-blockquote text-white">
-                            <h5 class=""><strong>Description: </strong></h5>
-                            <p style="font-size: 13px;"><strong>1. Terdapat Beberapa Data GR dokumen yang harus di Verified.</strong></p>
+                            <h5 class=""><strong> Description: </strong></h5>
+                            <p style="font-size: 13px;"><strong> 1. Terdapat {{ $not_ver}} Data GR dokumen yang harus di Verified.</strong></p>
                           </blockquote>
                         </div>
                       </div>

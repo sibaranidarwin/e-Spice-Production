@@ -36,13 +36,14 @@ class WarehouseController extends Controller
     public function index2()
     {
         $good_receipt = good_receipt::count();
+        $not_ver =  good_receipt::where('material_number','LG2KOM00707010F691')->where("status","Not Verified")->count();
         $invoice = Invoice::all()->where("data_from", "GR")->count();
         $invoiceba = Invoice::all()->where("data_from", "BA")->count();
-        $dispute = good_receipt::all()->where("Status", "Dispute")->count();
+        $dispute = good_receipt::all()->where("Status", "Disputed")->count();
         $vendor = User::all()->where("level", "vendor")->count();
         $draft = Draft_BA::count();
         $ba = BA_Reconcile::count();
-        return view('warehouse.dashboard',['good_receipt'=>$good_receipt, 'invoice'=>$invoice,'invoiceba'=>$invoiceba, 'dispute'=>$dispute, 'vendor'=>$vendor]);
+        return view('warehouse.dashboard',['good_receipt'=>$good_receipt,'not_ver'=>$not_ver, 'invoice'=>$invoice,'invoiceba'=>$invoiceba, 'dispute'=>$dispute, 'vendor'=>$vendor]);
     }
     
     public function all()
@@ -50,7 +51,7 @@ class WarehouseController extends Controller
 
         $good_receipts = good_receipt::all();
         
-        $dispute = good_receipt::all()->where("status", "Dispute")->count();
+        $dispute = good_receipt::all()->where("status", "Disputed")->count();
 
         return view('warehouse.po.all',compact('good_receipts', 'dispute'))
                 ->with('i',(request()->input('page', 1) -1) *5);
@@ -63,21 +64,23 @@ class WarehouseController extends Controller
         //$good_receipts = good_receipt::where("status","Not Verified")->get();
 
         
-        $dispute = good_receipt::all()->where("status", "Dispute")->count();
+        $dispute = good_receipt::all()->where("status", "Disputed")->count();
 
         return view('warehouse.po.index',compact('good_receipts', 'dispute'))
                 ->with('i',(request()->input('page', 1) -1) *5);
     }
     public function pover(){
         $good_receipts = good_receipt::where("status","Verified")->get();
-        $dispute = good_receipt::all()->where("status", "Dispute")->count();
+        $dispute = good_receipt::all()->where("status", "Disputed")->count();
 
         return view('warehouse.po.verified',compact('good_receipts', 'dispute'))
         ->with('i',(request()->input('page', 1) -1) *5);
     }
     public function poreject(){
-        $good_receipts = good_receipt::where("status","Reject")->get();
-        $dispute = good_receipt::all()->where("status", "Dispute")->count();
+        $good_receipts = good_receipt::where("status","Rejected")->get();
+
+        
+        $dispute = good_receipt::all()->where("status", "Disputed")->count();
 
         return view('warehouse.po.reject',compact('good_receipts', 'dispute'))
         ->with('i',(request()->input('page', 1) -1) *5);
@@ -162,8 +165,8 @@ class WarehouseController extends Controller
     }
     public function disputed()
     {
-        $good_receipts = good_receipt::where("status", "Dispute")->get();
-        $dispute = good_receipt::all()->where("status", "Dispute")->count();
+        $good_receipts = good_receipt::where("status", "Disputed")->get();
+        $dispute = good_receipt::all()->where("status", "Disputed")->count();
 
         return view('warehouse.dispute.index',compact('good_receipts', 'dispute'))
                 ->with('i',(request()->input('page', 1) -1) *5);
