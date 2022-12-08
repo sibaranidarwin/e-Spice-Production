@@ -62,7 +62,7 @@ class VendorController extends Controller
 
         $good_receipts = good_receipt::where('id_vendor', $user_vendor)->where('id_inv',0)->where(function($query) {
 			$query->where('status','Verified')
-						->orWhereNull('status');})->get();
+						->orWhereNull('status');})->orderBy(    'updated_at', 'ASC')->get();
         
 
         return view('vendor.po.index',compact('good_receipts'))
