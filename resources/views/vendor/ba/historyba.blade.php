@@ -109,9 +109,12 @@ label {
                                             <th>No BA</th>
                                             <th>Date</th>
                                             <th>PO</th>
+                                            <th>GR Number</th>
+                                            <th>Part Number</th>
                                             <th>Mat. Desc.</th>
                                             <th>Quantity</th>
                                             <th>Total Price</th>
+                                            <th>Tax Code</th>
                                         </tr>
                                     </thead>
                                     <tbody style="font-size: 11px;">
@@ -123,10 +126,13 @@ label {
                                             <td><span>{{$item->status_invoice_proposal}}</span></td>
                                             <td>{{ $item->no_ba}}</td>
                                             <td><span>{{ Carbon\Carbon::parse($item->created_at)->format('d F Y') }}</span></td>
-                                            <td><span>{{$item->po_number}}/{{$item->item}}</span></td>
+                                            <td><span>{{$item->po_number}} /{{$item->item}}</span></td>
+                                            <td><span>{{$item->gr_number}}</span></td>
+                                            <td><span>{{$item->material_number}} /{{$item->vendor_part_number}}</span></td>
                                             <td><span>{{$item->material_description}}<br>({{$item->valuation_type}})</span></td>
                                             <td><span>{{$item->qty}}</span></td>
-                                            <td style="text-align: right"><span>Rp{{ number_format($item->amount_mkp) }}</span></td> 
+                                            <td style="text-align: right"><span>Rp{{ number_format($item->jumlah_harga) }}</span></td> 
+                                            <td><span>{{$item->tax_code}}</span></td>
                                         </tr>
                                         @endforeach
                                         </select>
@@ -226,7 +232,14 @@ $(document).ready(function() {
     });
 
     // DataTables initialisation
-    var table = $('#list').DataTable();
+    var table = $('#list').DataTable({
+        rowReorder: true,
+             columnDefs: [
+            { orderable: true, className: 'reorder', targets: 1 },
+            { orderable: true, className: 'reorder', targets: 6 },
+            { orderable: false, targets: '_all' }
+                    ]
+    });
 
     // Refilter the table
     $('#min, #max').on('change', function() {

@@ -99,7 +99,7 @@
                                 <thead>
                                     <tr>
                                         <th>No</th>
-                                        <th>Sts.</th>
+                                        <th>Sts. GR</th>
                                         <th>PO</th>
                                         <th>GR Number</th>
                                         <th>GR Date</th>
@@ -111,7 +111,7 @@
                                         <th>Tax Code</th>
                                         <th>Reference</th>
                                         <th>Del. Note</th>
-                                        <th>Cause</th>
+                                        <th>Desc. </th>
                                     </tr>
                                 </thead>
                                 <tbody style="font-size: 11px;">

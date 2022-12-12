@@ -91,7 +91,7 @@ label {
                                             <th>VAT NO</th>
                                             {{-- <th>No E-Verify</th> --}}
                                             <th>Total PPN</th>
-                                            <th>Total DPP</th>
+                                            <th>Total Price</th>
 
                                             <!-- <th class="text-center">Reference</th> -->
                                             <!-- <th class="text-center">Vendor Part Number</th>
@@ -118,7 +118,7 @@ label {
                                             <td>{{$item['faktur_pajak_number'] }}</td>
                                             {{-- <td>{{$item['everify_number'] }}</td> --}}
                                             <td style="text-align: right">Rp{{$item['ppn']}}</td>
-                                            <td>{{$item['total_harga_everify'] }}</td>
+                                            <td>Rp{{number_format($item['total_harga_everify']) }}</td>
                                             <td>
                                                 <a href="/warehouse/detail-invoice-ba/{{$item->id_inv}}"
                                                     class="btn btn-info btn-sm">Det.</a> 
@@ -127,7 +127,7 @@ label {
                                         @endforeach
                                     </tbody>
                                 </table>
-                                &nbsp;&nbsp;&nbsp;<a href="" class="btn btn-success mb-2">Upload SAP</a>
+                                {{-- &nbsp;&nbsp;&nbsp;<a href="" class="btn btn-success mb-2">Upload SAP</a> --}}
                                 {{-- <div class="row">
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<div class="col-md-1 mb-2"><a href=""
                                     class="btn btn-primary">Upload SAP</a></div>
@@ -164,7 +164,13 @@ label {
 
 <script type="text/javascript">
 $(document).ready(function() {
-    $('#list').DataTable();
+    $('#list').DataTable({
+        rowReorder: true,
+             columnDefs: [
+            { orderable: true, className: 'reorder', targets: 0 },
+            { orderable: false, targets: '_all' }
+                    ]
+    });
 
 });
 

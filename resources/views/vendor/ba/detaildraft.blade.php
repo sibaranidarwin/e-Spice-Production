@@ -99,8 +99,8 @@ label {
                                     </div>
                                 <div class="text-right mb-2">
                                     <a href="{{url('vendor/draft')}}" type="submit" style="text-align: right"
-                                     class="btn btn-danger btn-sm" id="simpan" onclick="return confirm('Are you sure?')"> Return</a> &nbsp;&nbsp;&nbsp;
-                                     <button class="btn btn-success btn-sm" onclick="return confirm('Are you sure?')"><i class="fa fa-cloud-download"></i> Export To excel</button>
+                                     class="btn btn-danger btn-s" id="simpan" onclick="return confirm('Are you sure?')"> Return</a> &nbsp;&nbsp;&nbsp;
+                                     <button class="btn btn-success btn-s" onclick="return confirm('Are you sure?')"><i class="fa fa-cloud-download"></i> Export To excel</button>
                                     {{-- <a href="{{route('exportdraftba')}}" class="btn btn-success sm" onclick="return confirm('Are you sure?')"><i class="fa fa-cloud-download"></i>&nbsp; Export To Excel</a> --}}
                                 </div>
                             </div>
@@ -252,7 +252,9 @@ $(document).ready(function() {
             { orderable: true, className: 'reorder', targets: 1 },
             { orderable: true, className: 'reorder', targets: 7 },
             { orderable: false, targets: '_all' }
-                    ]
+                    ],
+            lengthMenu: [[10, 25, 50, -1],[10, 25, 50, 'All'],],
+
     });
 
     // Refilter the table

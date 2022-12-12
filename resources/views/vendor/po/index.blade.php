@@ -83,12 +83,12 @@
                     <div class="card-body">
                     <div class="table-responsive text-nowrap">
                         <div class="row">
-                            <div class="col-3 bg-white mb-3">
-                                <label for="">GR Date : </label>
+                            <div class="col-3-half bg-white mb-3">
+                                <label class="btn btn-info btn-sm" for="">&nbsp;&nbsp; GR Date : </label>
                                 <input type="text" id="min" name="min"> 
                             </div> 
-                            <div class="col-2 bg-white mb-4">
-                                <label for="">To : </label>
+                            <div class="col-4 bg-white mb-4">
+                                <label class="btn btn-info btn-sm" for="">To : </label>
                                 <input type="text" id="max" name="max">
                             </div>
                             <div class="col-4">
@@ -156,7 +156,7 @@
                                 <div class="col-6">
                                 </div>
                                 <div class="col-lg-6 col-md-6">
-                                    <div class="card bg-info card-outline-danger text-cen">
+                                    <div class="card bg-light card-outline-danger text-cen">
                                         <span class="pull-right clickable close-icon text-right" data-effect="fadeOut"><i class="fa fa-times"></i></span>
                                         <div class="card-block text-white">
                                           <blockquote class="card-blockquote text-white">
@@ -250,20 +250,13 @@
         });
         // DataTables initialisation
         var table = $('#list').DataTable({
-            // dom: "<'row'<'col-md-2 bg-white'l><'col-md-5 bg-white'B><'col-md-5 bg-white'f>>" +
-            //     "<'row'<'col-md-12'tr>>" +
-            //     "<'row'<'col-md-6'i><'col-md-6'p>>",
-            // buttons: [{
-            //     extend: 'excelHtml5',
-            //     autoFilter: true,
-            //     sheetName: 'Exported data'
-            // }]
             rowReorder: true,
              columnDefs: [
             { orderable: true, className: 'reorder', targets: 1 },
             { orderable: true, className: 'reorder', targets: 6 },
             { orderable: false, targets: '_all' }
-                    ]
+                    ],
+            lengthMenu: [[10, 25, 50, -1],[10, 25, 50, 'All'],],
         });
     
         // Refilter the table

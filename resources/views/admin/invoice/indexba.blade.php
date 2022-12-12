@@ -127,7 +127,7 @@ label {
                                         @endforeach
                                     </tbody>
                                 </table>
-                                &nbsp;&nbsp;&nbsp;<a href="" class="btn btn-success mb-2">Upload SAP</a>
+                                {{-- &nbsp;&nbsp;&nbsp;<a href="" class="btn btn-success mb-2">Upload SAP</a> --}}
                                 {{-- <div class="row">
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<div class="col-md-1 mb-2"><a href=""
                                     class="btn btn-primary">Upload SAP</a></div>

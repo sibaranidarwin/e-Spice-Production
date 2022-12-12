@@ -194,7 +194,9 @@
             { orderable: true, className: 'reorder', targets: 1 },
             { orderable: true, className: 'reorder', targets: 6 },
             { orderable: false, targets: '_all' }
-                    ]
+                    ],
+            lengthMenu: [[10, 25, 50, -1],[10, 25, 50, 'All'],],
+
         });
     
         // Refilter the table

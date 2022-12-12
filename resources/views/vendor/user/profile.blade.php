@@ -95,7 +95,7 @@
                                     <label for="">Email</label>
                                     <input type="text" class="form-control" name="email" value="{{$user->email}}">
                                 </div>
-                                <div class="form-group">
+                                <div hidden class="form-group">
                                     <label for="new_password">Password Lama</label>
                                     <input type="password" class="form-control" id="password" name="password"  value="{{$user->password}}">
                                     <input type="hidden" name="fotoLama" value="{{$user->foto}}">
