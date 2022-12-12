@@ -98,7 +98,6 @@
                                     <th style="text-align: center;">Tax Code</th>
                                     <th style="text-align: center;">Reference</th>
                                     <th style="text-align: center;">Del. Note</th>
-                                    
                                 </tr>
                                 </thead>
                                 <tbody style="font-size: 11px;">
@@ -122,8 +121,23 @@
                                     </select>
                                 </tbody>
                             </table>
-                           &nbsp;&nbsp;<button type="submit" value="Update" name="action"
-                                class="btn btn-success" onclick="return confirm('Are you sure?')">Update Data</button>
+                            <div class="row mt-2">
+                                <div class="col-6">
+                                </div>
+                                <div class="col-lg-6 col-md-6">
+                                    <div class="card bg-light card-outline-danger text-cen">
+                                        <span class="pull-right clickable close-icon text-right" data-effect="fadeOut"><i class="fa fa-times"></i></span>
+                                        <div class="card-block text-white">
+                                          <blockquote class="card-blockquote text-white">
+                                            <p style="font-size: 14px;"><strong>&nbsp; Good receipt status description: </strong></p>
+                                            <p style="font-size: 13px;"><strong>&nbsp; 1. Not verified: good receipt data that has certain conditions and requires verification by <br> the vendor. Certain conditions in the GR data that enter the not verified status are <br> combinations where the data posting date, material number, quantity, vendor id and <br> reference are the same data.</strong></p>
+                                            <p style="font-size: 13px;"><strong>&nbsp; 2. Verified: good receipt data with certain conditions that have been verified <br> by the warehouse.</strong></p>
+                                            <p style="font-size: 13px;"><strong>&nbsp; 3. Rejected: good receipt data that is no longer used because it has certain problems</strong></p>
+                                        </blockquote>
+                                        </div>
+                                      </div>
+                                    </div>
+                                </div>
                         </form>
                     </div> <!-- /.table-stats -->
                 </div>
@@ -192,7 +206,9 @@
             { orderable: true, className: 'reorder', targets: 1 },
             { orderable: true, className: 'reorder', targets: 6 },
             { orderable: false, targets: '_all' }
-                    ]
+                    ],
+            lengthMenu: [[10, 25, 50, -1],[10, 25, 50, 'All'],],
+
         });
     
         // Refilter the table

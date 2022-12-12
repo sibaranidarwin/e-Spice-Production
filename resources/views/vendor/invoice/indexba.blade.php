@@ -16,6 +16,7 @@
 @section('content')
 <link rel="stylesheet" href="{{asset('admin/assets/css/datatable.css')}}">
 
+<link rel="stylesheet" href="https://cdn.datatables.net/datetime/1.1.2/css/dataTables.dateTime.min.css">
 <link rel="stylesheet" href="{{asset('assets/css/argon-dashboard.css')}}">
 
 <style>
@@ -106,7 +107,7 @@ label {
                                             <th>VAT NO</th>
                                             {{-- <th>No E-Verify</th> --}}
                                             <th>Total PPN</th>
-                                            <th>Total DPP</th>
+                                            <th>Total Price</th>
 
                                             <!-- <th class="text-center">Reference</th> -->
                                             <!-- <th class="text-center">Vendor Part Number</th>
@@ -132,8 +133,8 @@ label {
                                             <td>{{$item['vendor_invoice_number'] }}</td>
                                             <td>{{$item['faktur_pajak_number'] }}</td>
                                             {{-- <td>{{$item['everify_number'] }}</td> --}}
-                                            <td>{{$item['ppn']}}</td>
-                                            <td>{{$item['total_harga_everify'] }}</td>
+                                            <td>Rp{{$item['ppn']}}</td>
+                                            <td>Rp{{number_format($item['total_harga_everify']) }}</td>
                                             <td>
                                                 <a href="/vendor/detail-invoice-ba/{{$item->id_inv}}"
                                                     class="btn btn-info btn-sm">Det.</a> 
@@ -212,7 +213,15 @@ label {
         });
     
         // DataTables initialisation
-        var table = $('#list').DataTable(
+        var table = $('#list').DataTable({
+            rowReorder: true,
+             columnDefs: [
+            { orderable: true, className: 'reorder', targets: 0 },
+            { orderable: false, targets: '_all' }
+                    ],
+            lengthMenu: [[10, 25, 50, -1],[10, 25, 50, 'All'],],
+
+        }
             // {
             //     dom: "<'row'<'col-md-2 bg-white'l><'col-md-5 bg-white'B><'col-md-5 bg-white'f>>" +
             //         "<'row'<'col-md-12'tr>>" +

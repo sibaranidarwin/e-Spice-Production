@@ -58,7 +58,7 @@ label {
                                     <input type="text"
                                         class="form-control @error('total_harga_gross[]') is-invalid @enderror"
                                         name="total_harga_gross" placeholder="Masukkan Total DDP ..."
-                                        value="{{ number_format($total_dpp) }}" readonly>
+                                        value="Rp{{ number_format($total_dpp) }}" readonly>
                                     @error('total_harga_gross[]')<span
                                         class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                                 </div>
@@ -90,7 +90,7 @@ label {
                                     <label class="form-control-label" for="ppn">Total PPN</label>
                                     <input type="text" class="form-control @error('ppn[]') is-invalid @enderror"
                                         name="ppn" placeholder="Masukkan Total PPN ..."
-                                        value="{{ number_format($total_ppn) }}" readonly>
+                                        value="Rp{{ number_format($total_ppn) }}" readonly>
                                     @error('ppn[]')<span
                                         class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                                 </div>
@@ -109,7 +109,7 @@ label {
                                     <input type="text" 
                                         class="form-control @error('total_harga_everify[]') is-invalid @enderror"
                                         name="" placeholder="Masukkan Total Price ..."
-                                        value="{{ number_format($total_harga) }}" readonly>
+                                        value="Rp{{ number_format($total_harga) }}" readonly>
                                     @error('total_harga_everify[]')<span
                                         class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                                 </div> 

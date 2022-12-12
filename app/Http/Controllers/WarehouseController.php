@@ -49,8 +49,8 @@ class WarehouseController extends Controller
     public function all()
     { 
 
-        $good_receipts = good_receipt::all();
-        
+        $good_receipts = good_receipt::where("status", "Verified")->orwhere('material_number','LG2KOM00707010F691')->orwhere("status", "Rejected")->get();
+
         $dispute = good_receipt::all()->where("status", "Disputed")->count();
 
         return view('warehouse.po.all',compact('good_receipts', 'dispute'))
@@ -102,8 +102,10 @@ class WarehouseController extends Controller
                                     "goods_receipt.po_item",
                                     "goods_receipt.gr_date",
                                     "goods_receipt.material_number",
+                                    "goods_receipt.vendor_part_number",
                                     "goods_receipt.harga_satuan",
                                     "goods_receipt.jumlah",
+                                    "goods_receipt.uom",
                                     "goods_receipt.tax_code",
                                     "goods_receipt.status",
                                     "invoice.id_inv", 
@@ -141,8 +143,16 @@ class WarehouseController extends Controller
      $invoices = BA_Reconcile::select("ba_reconcile.id_ba",
                                     "ba_reconcile.no_ba",
                                     "ba_reconcile.po_number",
+                                    "ba_reconcile.gr_number",
+                                    "ba_reconcile.material_number",
+                                    "ba_reconcile.vendor_part_number",
                                     "ba_reconcile.item",
+                                    "ba_reconcile.uom",
+                                    "ba_reconcile.harga_satuan",
+                                    "ba_reconcile.qty",
                                     "ba_reconcile.gr_date",
+                                    "ba_reconcile.valuation_type",
+                                    "ba_reconcile.tax_code",
                                     "ba_reconcile.material_description",
                                     "ba_reconcile.status_ba",
                                     "invoice.id_inv", 

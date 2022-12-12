@@ -89,7 +89,7 @@ label {
                                             <th>VAT NO</th>
                                             {{-- <th>No E-Verify</th> --}}
                                             <th>Total PPN</th>
-                                            <th>Total DPP</th>
+                                            <th>Total Price</th>
 
                                             <!-- <th class="text-center">Reference</th> -->
                                             <!-- <th class="text-center">Vendor Part Number</th>
@@ -116,7 +116,7 @@ label {
                                             <td>{{$item['no_invoice_proposal'] }}</td>
                                             <td>{{$item['faktur_pajak_number'] }}</td>
                                             {{-- <td>{{$item['everify_number'] }}</td> --}}
-                                            <td style="text-align: right">Rp{{$item['ppn']}}</td>
+                                            <td style="text-align: right">Rp{{($item['ppn'])}}</td>
                                             <td>{{$item['total_harga_everify'] }}</td>
                                             <td>
                                                 <a href="/warehouse/detail-invoice/{{$item->id_inv}}"
@@ -157,7 +157,13 @@ label {
 
 <script type="text/javascript">
 $(document).ready(function() {
-    $('#list').DataTable();
+    $('#list').DataTable({
+        rowReorder: true,
+             columnDefs: [
+            { orderable: true, className: 'reorder', targets: 0 },
+            { orderable: false, targets: '_all' }
+                    ]
+    });
 
 });
 

@@ -203,7 +203,25 @@ $(document).ready(function() {
     });
 
     // DataTables initialisation
-    var table = $('#list').DataTable();
+    var table = $('#list').DataTable({
+        rowReorder: true,
+        columnDefs: [{
+                orderable: true,
+                className: 'reorder',
+                targets: 1
+            },
+            {
+                orderable: true,
+                className: 'reorder',
+                targets: 6
+            },
+            {
+                orderable: false,
+                targets: '_all'
+            }
+        ],
+        lengthMenu: [[10, 25, 50, -1],[10, 25, 50, 'All'],],
+    });
 
     // Refilter the table
     $('#min, #max').on('change', function() {

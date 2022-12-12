@@ -108,8 +108,8 @@ label {
                                             <th>Date</th>
                                             <th>PO</th>
                                             <th>GR Number</th>
-                                            <th>Part Number</th>
                                             <th>GR Date</th>
+                                            <th>Part Number</th>
                                             <th>Mat. Desc.</th>
                                             <th>Header Text</th>
                                             <th>Quantity</th>
@@ -126,10 +126,10 @@ label {
                                             <td><span>{{$item->status_invoice_proposal}}</span></td>
                                             <td>{{ $item->no_draft}}</td>
                                             <td><span>{{ Carbon\Carbon::parse($item->created_at)->format('d F Y') }}</span></td>
-                                            <td><span>{{$item->po_number}}/{{$item->po_item}}</span></td>
+                                            <td><span>{{$item->po_number}} /{{$item->po_item}}</span></td>
                                             <td><span>{{$item->gr_number}}</span></td>
-                                            <td><span>{{$item->material_number}} /{{$item->vendor_part_number}}</span></td>
                                             <td><span>{{ Carbon\Carbon::parse($item->gr_date)->format('d F Y') }}</span></td>
+                                            <td><span>{{$item->material_number}} /{{$item->vendor_part_number}}</span></td>
                                             <td><span>{{$item->mat_desc}} ({{$item->valuation_type}})</span></td>
                                             <td><span>{{$item->doc_header_text}}</span></td>
                                             <td><span>{{$item->jumlah}}</span></td>
@@ -237,7 +237,14 @@ $(document).ready(function() {
     });
 
     // DataTables initialisation
-    var table = $('#list').DataTable();
+    var table = $('#list').DataTable({
+        rowReorder: true,
+             columnDefs: [
+            { orderable: true, className: 'reorder', targets: 0 },
+            { orderable: true, className: 'reorder', targets: 6 },
+            { orderable: false, targets: '_all' }
+                    ]
+    });
 
     // Refilter the table
     $('#min, #max').on('change', function() {

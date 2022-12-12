@@ -82,12 +82,12 @@
                     <div class="card-body">
                     <div class="table-responsive text-nowrap">
                         <div class="row">
-                            <div class="col-3 bg-white mb-3">
-                                <label for="">GR Date: </label>
+                            <div class="col-3-half bg-white mb-3">
+                                <label class="btn btn-info btn-sm" for="">&nbsp;&nbsp; GR Date: </label>
                                 <input type="text" id="min" name="min">
                             </div> 
                             <div class="col-2 bg-white mb-4">
-                                <label for="">To : </label>
+                                <label class="btn btn-info btn-sm" for="">To : </label>
                                 <input type="text" id="max" name="max">
                             </div>
                             <div class="col-4">
@@ -215,7 +215,9 @@
             { orderable: true, className: 'reorder', targets: 4 },
             
             { orderable: false, targets: '_all' }
-                    ]
+                    ],
+            lengthMenu: [[10, 25, 50, -1],[10, 25, 50, 'All'],],
+
         });
     
         // Refilter the table
