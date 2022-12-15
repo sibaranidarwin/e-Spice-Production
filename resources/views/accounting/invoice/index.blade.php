@@ -10,6 +10,7 @@
 @extends('accounting.layouts.sidebar')
 @section('content')
 <link rel="stylesheet" href="{{asset('admin/assets/css/datatable.css')}}">
+
 <link rel="stylesheet" href="{{asset('assets/css/argon-dashboard.css')}}">
 <style>
 .table td,
@@ -80,13 +81,15 @@ label {
                                     <thead>
                                         <tr>
                                             <th class="serial">No</th>
-                                            <th>Tanggal Invoice</th>
-                                            <th>No Invoice</th>
-                                            <th>No Faktur Pajak</th>
-                                            <th>No E-Verify</th>
+                                            <th>Sts. Upload SAP</th>
+                                            <th>Sts. Inv. Props</th>
+                                            <th>Invoice Date</th>
+                                            <th>Invoice Number</th>
+                                            <th>No Invoice Proposal</th>
+                                            <th>VAT NO</th>
+                                            {{-- <th>No E-Verify</th> --}}
                                             <th>Total PPN</th>
-                                            <th>Total Harga</th>
-                                            <th>Status Upload Sap</th>
+                                            <th>Total Price</th>
 
                                             <!-- <th class="text-center">Reference</th> -->
                                             <!-- <th class="text-center">Vendor Part Number</th>
@@ -100,21 +103,24 @@ label {
                                             <!-- <th class="text-center">Valuation Type</th> -->
                                             <th>Action</th>
                                         </tr>
+                                        </tr>
                                     </thead>
                                     <tbody>
                                         @foreach($invoice as $item)
                                         <tr>
                                             <td class="serial">{{++$i}}</td>
-                                            <td>{{$item['posting_date'] }}</td>
-                                            <td>{{$item['vendor_invoice_number'] }}</td>
-                                            <td>{{$item['faktur_pajak_number'] }}</td>
-                                            <td>{{$item['everify_number'] }}</td>
-                                            <td>{{$item['ppn']}}</td>
-                                            <td>{{$item['total_harga_everify'] }}</td>
                                             <td>{{$item['status']}}</td>
+                                            <td>{{$item['status_invoice_proposal']}}</td>
+                                            <td><span>{{ Carbon\Carbon::parse($item['posting_date'])->format('d F Y') }}</span></td>
+                                            <td>{{$item['vendor_invoice_number'] }}</td>
+                                            <td>{{$item['no_invoice_proposal'] }}</td>
+                                            <td>{{$item['faktur_pajak_number'] }}</td>
+                                            {{-- <td>{{$item['everify_number'] }}</td> --}}
+                                            <td style="text-align: right">Rp{{($item['ppn'])}}</td>
+                                            <td>{{$item['total_harga_everify'] }}</td>
                                             <td>
                                                 <a href="/accounting/detail-invoice/{{$item->id_inv}}"
-                                                    class="btn btn-info btn-sm">Detail</a>
+                                                    class="btn btn-info btn-sm">Det.</a>
                                             </td>
                                         </tr>
                                         @endforeach
@@ -151,7 +157,13 @@ label {
 
 <script type="text/javascript">
 $(document).ready(function() {
-    $('#list').DataTable();
+    $('#list').DataTable({
+        rowReorder: true,
+             columnDefs: [
+            { orderable: true, className: 'reorder', targets: 0 },
+            { orderable: false, targets: '_all' }
+                    ]
+    });
 
 });
 

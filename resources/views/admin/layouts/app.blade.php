@@ -92,17 +92,30 @@
                     </li>
                     <li class="menu-title">DATA Good Receipt</li><!-- /.menu-title -->
                     <li class="menu-item-has-children dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                            aria-expanded="false"> <i class="menu-icon fa fa-file"></i>Good Receipt</a>
-                        <ul class="sub-menu children dropdown-menu">
-                            <li><i class="fa fa-close"></i><a href="{{url('admin/po')}}">Not Verified</a></li>
-                            <li><i class="fa fa-check"></i><a href="{{url('admin/pover')}}">Verified</a></li>
-                            <li><i class="fa fa-info"></i><a href="{{url('admin/poreject')}}">Reject</a></li>
-                    </li>
-                </ul>
-                </li>
+                        <a class="accordion-heading menu-item-has-children dropdown-toggle" data-toggle="collapse" data-target="#submenu1" aria-haspopup="true"
+                        aria-expanded="false">
+                              <span class="nav-header-primary"><i class="menu-icon fa fa-file"></i>Good Receipt<span class="pull-right"><b class="caret"></b></span></span>
+                        </a>
+        
+                        <ul class="nav nav-list collapse sub-menu" id="submenu1">
+                            <li>
+                                 <a href="{{url('admin/all')}}" class="accordion-heading"><span class=""><i class="fa fa-table"></i>All Status</span></a>
+                                  {{-- <ul class="nav nav-list collapse sub-menu children" id="submenu2">
+                                      <li><a href="{{url('warehouse/all')}}" title="Title"><i class="fa fa-list"></i>All</a></li>
+                                  </ul> --}}
+                            </li>
+                            <li>
+                                <a class="accordion-heading" data-toggle="collapse" data-target="#submenu3"><span class=""><i class="fa fa-table"></i>By Status</span></a>
+                                <ul class="nav nav-list collapse sub-menu children" id="submenu3">
+                                    <li><a href="{{url('admin/po')}}" title="Title"><i class="fa fa-info"></i>Not Verified</a></li>
+                                    <li><a href="{{url('admin/pover')}}" title="Title"><i class="fa fa-check "></i>Verified</a></li>
+                                    <li><a href="{{url('admin/poreject')}}" title="Title"><i class="fa fa-close"></i>Rejected</a></li>
+                                </ul>
+                          </li>
+                        </ul>
+                      </li>
 
-                <li class="menu-item-has-children dropdown">
+                {{-- <li class="menu-item-has-children dropdown">
                     <a class="accordion-heading menu-item-has-children dropdown-toggle" data-toggle="collapse" data-target="#submenu1" aria-haspopup="true"
                     aria-expanded="false">
                           <span class="nav-header-primary"><i class="menu-icon fa fa-newspaper-o"></i>BA Reconcile<span class="pull-right"><b class="caret"></b></span></span>
@@ -124,7 +137,7 @@
                             </ul>
                       </li>
                     </ul>
-                  </li>
+                  </li> --}}
 
                 
                 <li class="menu-item-has-children dropdown ">

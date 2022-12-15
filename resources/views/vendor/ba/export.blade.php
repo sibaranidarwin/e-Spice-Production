@@ -89,14 +89,17 @@ label {
                                 <input type="hidden" name="id[]" value="{{$good->id_draft_ba}}">
                                 @endforeach
                                 <div class="row">
-                                    <div class="form-group col-3 bg-white mb-2">
-                                        <label for="">BA Date:</label>
-                                        <input class="form-group" type="text" id="min" name="min">
-                                    </div>
-                                    <div class=" form-group col-3 bg-white mb-2">
-                                        <label for="">To:</label>
-                                        <input class="form-group" type="text" id="max" name="max">
-                                    </div>
+                                    <form action="{{ route('vendor-filter') }}" class="form-inline" method="GET">
+                                        <div class="form-group mb-2">
+                                          <label for="" >BA Date: &nbsp;</label>
+                                          <input type="date" class="form-control" name="start_date">
+                                        </div>
+                                        <div class="form-group mx-sm-3 mb-2">
+                                          <label for="inputPassword2">To: &nbsp;</label>
+                                          <input type="date" class="form-control" name="end_date">
+                                        </div>
+                                        <button class="btn btn-primary" type="submit">Submit</button>
+                                      </form>
                                 <div class="text-right mb-2">
                                     <a href="{{url('vendor/draft')}}" type="submit" style="text-align: right"
                                      class="btn btn-danger" id="simpan" onclick="return confirm('Are you sure?')"> Return</a> &nbsp;&nbsp;&nbsp;

@@ -15,6 +15,7 @@
 @extends('vendor.layouts.sidebar')
 @section('content')
 <link rel="stylesheet" href="{{asset('admin/assets/css/datatable.css')}}">
+<link rel="stylesheet" href="https://cdn.datatables.net/datetime/1.1.2/css/dataTables.dateTime.min.css">
 
 <link rel="stylesheet" href="{{asset('assets/css/argon-dashboard.css')}}">
 
@@ -80,19 +81,17 @@
                     </div>
                     <div class="card-body">
                     <div class="table-responsive text-nowrap">
-                        <div class="row">
-                            <div class="col-3 bg-white mb-3">
-                                <label for="">GR Date: </label>
-                                <input type="text" id="min" name="min"> 
-                            </div> 
-                            <div class="col-2 bg-white mb-4">
-                                <label for="">To: </label>
-                                <input type="text" id="max" name="max">
+                        <form action="{{ route('vendor-filter') }}" class="form-inline" method="GET">
+                            <div class="form-group mb-2">
+                              <label for="" >GR Date: &nbsp;</label>
+                              <input type="date" class="form-control" name="start_date">
                             </div>
-                            <div class="col-4">
-                                <label for=""> </label>
+                            <div class="form-group mx-sm-3 mb-2">
+                              <label for="inputPassword2">To: &nbsp;</label>
+                              <input type="date" class="form-control" name="end_date">
                             </div>
-                        </div>
+                            <button class="btn btn-primary" type="submit">Submit</button>
+                          </form>
                         <form action="{{ route('update-datagr-vendor/{id_gr}') }}" method="POST">
                             @csrf
                             <table id="list" class="table table-striped" style="font-size: 10px;">

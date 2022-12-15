@@ -122,13 +122,11 @@ label {
                                         class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                                 </div> 
                                 <div class="form-group col-md-3">
-                                    <label class="form-control-label" for="faktur_pajak_number">Total Price (acc. to doc invoice)<span style="color: red">*</span></label>
+                                    <label class="form-control-label" for="">Total Price (acc. to doc invoice)<span style="color: red">*</span></label>
                                     <input  type="number" id="id-2"
-                                        class="form-control @error('faktur_pajak_number[]') is-invalid @enderror"
+                                        class="form-control"
                                         name="" placeholder="Fill in Total Price (acc. to doc invoice)"
                                         value="">
-                                    @error('faktur_pajak_number[]')<span
-                                        class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                             </div> 
                                 <div class="form-group col-md-6">
                                     <label class="form-control-label" for="faktur_pajak_number">VAT NO.<span
@@ -143,7 +141,7 @@ label {
                                 <div class="form-group col-md-6">
                                     <label class="form-control-label" for="del_costs">Price Difference</label> <br>
                                     <input type="number" id="id-3" class="form-control @error('del_costs[]') is-invalid @enderror"
-                                        name="del_costs" placeholder="Fill in Price Difference ...">
+                                        name="del_costs" placeholder="Fill in Price Difference ..." readonly>
                                     @error('del_costs[]')<span
                                         class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                                 </div>
