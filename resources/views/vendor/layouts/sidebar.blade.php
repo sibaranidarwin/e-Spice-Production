@@ -141,7 +141,17 @@
                         <li><i class="fa fa-table "></i><a href="{{url('vendor/disputed')}}">Show</a></li>
                     </ul>
                 </li>
+
                 <li class="menu-title">DATA Invoice</li><!-- /.menu-title -->
+                <li class="menu-item-has-children dropdown ">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false"> <i class="menu-icon fa fa-file"></i>Invoice Document</a>
+                    <ul class="sub-menu children dropdown-menu ">
+                        <li><i class="fa fa-upload"></i><a href="{{url('vendor/uploadinv')}}">Upload Invoice</a></li>
+                        <li><i class="fa fa-upload"></i><a href="{{url('vendor/uploadtax')}}">Upload Tax Invoice</a></li>
+                    </ul>
+                </li>
+
                 <li class="menu-item-has-children dropdown ">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
                         aria-expanded="false"> <i class="menu-icon fa fa-file-pdf-o"></i>Invoice Proposal</a>

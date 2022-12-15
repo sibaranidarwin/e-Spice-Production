@@ -18,6 +18,7 @@ use PDF; //library pdf
 use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use thiagoalessio\TesseractOCR\TesseractOCR;
 use Carbon\Carbon;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx\Drawing;
 
@@ -64,12 +65,44 @@ class VendorController extends Controller
 			$query->where('status','Verified')
 						->orWhereNull('status');})->orderBy('updated_at', 'ASC')->get();
 
+
+        return view('vendor.po.index',compact('good_receipts'))
+                ->with('i',(request()->input('page', 1) -1) *5);
+    }
 public function puchaseorderreject()
     {   
         $user_vendor = Auth::User()->id_vendor;
         $good_receipts = good_receipt::Where("id_vendor", $user_vendor)->where("Status", "Rejected")->get();
         return view('vendor.po.reject',compact('good_receipts'))
                 ->with('i',(request()->input('page', 1) -1) *5);
+    }
+
+    function filter(){
+        if (request()->start_date || request()->end_date) {
+            $start_date = Carbon::parse(request()->start_date)->toDateTimeString();
+            $end_date = Carbon::parse(request()->end_date)->toDateTimeString();
+            $user_vendor = Auth::User()->id_vendor;
+            $good_receipts = good_receipt::whereBetween('gr_date',[$start_date,$end_date])->where('id_vendor', $user_vendor)->where('id_inv',0)->where(function($query) {
+                $query->where('status','Verified')
+                            ->orWhereNull('status');})->orderBy('updated_at', 'ASC')->get();
+        } else {
+            $good_receipts = good_receipt::latest()->get();
+        }
+        
+        return view('vendor.po.index', compact('good_receipts'))->with('i',(request()->input('page', 1) -1) *5);
+    }
+
+    function filterinv(){
+        if (request()->start_date || request()->end_date) {
+            $start_date = Carbon::parse(request()->start_date)->toDateTimeString();
+            $end_date = Carbon::parse(request()->end_date)->toDateTimeString();
+            $user_vendor = Auth::User()->id_vendor;
+            $invoice = Invoice::whereBetween('posting_date',[$start_date,$end_date])->Where("id_vendor", $user_vendor)->Where("data_from", "GR")->get();
+        } else {
+            $invoice = Invoice::latest()->get();
+        }
+        
+        return view('vendor.invoice.index', compact('invoice'))->with('i',(request()->input('page', 1) -1) *5);
     }
     public function edit(Request $request) {
         switch ($request->input('action')) {
@@ -148,36 +181,27 @@ public function puchaseorderreject()
                 case 'ba':
                 $recordIds = $request->get('ids');
                 $newStatus = $request->get('Status');
-        
+                
+                
                 $good_receipts = [];
+                $q = DB::table('draft_ba')->select(DB::raw('MAX(RIGHT(no_draft, 4)) as kode'))->get();
+                $last_draft = $q[0]->kode;
+
                 foreach($recordIds as $record) {
                     $good_receipt = good_receipt::find($record);
                     array_push($good_receipts, $good_receipt);
-                    
-                    //buat kode otomatis
-                    $q = DB::table('draft_ba')->select(DB::raw('MAX(RIGHT(no_draft, 5)) as kode'));
-                    $kd="";
-                    if($q->count()>0)
-                    {
-                        foreach($q->get() as $k)
-                        {
-                            $tmp = ((int)$k->kode)+1;
-                            $kd = sprintf("%05s", $tmp);
-                        }
-                    }
-                    else
-                    {
-                        // 00001/XI/DRAFT-BA/MKP/2022
-                        $kd = "00001";
-                    }
 
-                    $array_bln    = array(1=>"I","II","III", "IV", "V","VI","VII","VIII","IX","X", "XI","XII");
+                        $kd="";
+                        $tmp = ((int)$last_draft)+1;
+                        $kd = sprintf("%04s", $tmp);
+
+                    $array_bln    = array(1=>"I","II","III", "IV" , "V","VI","VII","VIII","IX","X", "XI","XII");
                     $bln      = $array_bln[date('n')];
-
+                   
                     $draft = Draft_BA::create([
                         'id_gr' =>$good_receipt->id_gr, 
                         'id_vendor' => $good_receipt->id_vendor,
-                        'no_draft' => $kd."/".$bln."/DRAFT-BA/MKP/".date('Y'),                        
+                        'no_draft' => date('Y')."-".$bln."-MKP-Draft BA-".$kd,                         
                         'date_draft' => $good_receipt->gr_date,
                         'po_number' => $good_receipt->no_po,
                         'gr_number' => $good_receipt->gr_number,
@@ -198,8 +222,7 @@ public function puchaseorderreject()
                         'jumlah_harga' => $good_receipt->total_harga,
                         'status_invoice_proposal' => 'Not Yet Verified - Draft BA',
                     ]);
-                    //  dd($draft);
-                    //dd($draft->status_invoice_proposal);
+
                     $good_receipts = [];
                     foreach($recordIds as $record) {
                         $good_receipt = good_receipt::find($record);
@@ -209,7 +232,8 @@ public function puchaseorderreject()
                         $good_receipt->save();
                     }
                    }
-                if($good_receipt){
+                
+                   if($good_receipt){
                     //redirect dengan pesan sukses
                     return redirect('vendor/draft')->with('success','Data Has Been Successfully Created Into Draft Ba!');
                     }
@@ -217,10 +241,10 @@ public function puchaseorderreject()
                     //redirect dengan pesan error
                     return redirect('vendor/draft')->with(['error' => 'Data Failed to Create Draft Ba!']);
                   }
-
                 break;
-    }
-    }
+                 }
+                }
+
     public function editba(Request $request){
         $recordIds = $request->get('ids');
         // dd($recordIds);
@@ -406,12 +430,11 @@ public function puchaseorderreject()
         return view('Vendor.ba.draft',compact('draft'));
         }
 
-    public function detaildraft()
+    public function detaildraft($no_draft)
         {
-        $now = date('Y-m-d H:i:s');
         $user_vendor = Auth::User()->id_vendor;
 
-        $draft = Draft_BA::all()->where("id_vendor", $user_vendor)->where("status_invoice_proposal", "Not Yet Verified - Draft BA");
+        $draft = Draft_BA::where("no_draft", $no_draft)->get();
         // dd($draft);
         return view('Vendor.ba.detaildraft',compact('draft'));
         }
@@ -498,6 +521,29 @@ public function puchaseorderreject()
         return Excel::download(new DraftbaExport,'ba.xlsx');
    }
 
+   public function uploadinv()
+   {
+       $user_vendor = Auth::User()->id_vendor;
+       // dd($user_vendor);
+       $invoice = Invoice::latest()->Where("id_vendor", $user_vendor)->Where("data_from", "GR")->get();
+
+        return view('vendor.ocr.uploadinv',compact('invoice'))
+                ->with('i',(request()->input('page', 1) -1) *5);
+       
+   }
+
+   public function upload(Request $request){
+
+    $image = $request->file('image');
+    $filename= date('YmdHi').$image->getClientOriginalName();
+    $image-> move(public_path('images'), $filename);
+    
+    $ocr = new TesseractOCR(public_path("images/$filename"));
+    $ocr->lang('eng');
+    $text = $ocr->run();
+
+    return redirect()->back()->with('text',$text);
+   }
     public function invoice()
     {
         $user_vendor = Auth::User()->id_vendor;
@@ -571,6 +617,7 @@ public function puchaseorderreject()
                     ->get();
                     
                     $pdf = PDF::loadView('vendor.invoice.print',compact('invoices'))->setOptions(['defaultFont' => 'sans-serif'])->setPaper('a4', 'landscape');
+                    
                     $pdf->save(storage_path().'invoice.pdf');
                     return $pdf->stream();
     }   

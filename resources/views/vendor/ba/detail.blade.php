@@ -86,16 +86,21 @@ label {
                     <div class="card-body">
                         <div class="table-responsive text-nowrap">
                             <div class="row">
-                                <div class="form-group col-3 bg-white mb-2">
-                                    <label for="">BA Date:</label>
-                                    <input class="form-group" type="text" id="min" name="min">
+                                <div class="col-half">
+                                <form action="{{ route('vendor-filter') }}" class="form-inline" method="GET">
+                                    <div class="form-group">
+                                      <label for="" >BA Date: &nbsp;</label>
+                                      <input type="date" class="form-control" name="start_date">
+                                    </div>
+                                    <div class="form-group mx-sm-3">
+                                      <label for="inputPassword2">To: &nbsp;</label>
+                                      <input type="date" class="form-control" name="end_date">
+                                    </div>
+                                    <button class="btn btn-primary" type="submit">Submit</button>
+                                  </form>
                                 </div>
-                                <div class=" form-group col-3 bg-white mb-2">
-                                    <label for="">To:</label>
-                                    <input class="form-group" type="text" id="max" name="max">
-                                </div>
-                                <div class="col-3 mb-2">
-                                    <button class="btn btn-primary" data-toggle="modal" data-target="#modal-import"><i class="fa fa-cloud-upload"></i>&nbsp; Import Excel</button>
+                                <div class="col">
+                                    <button class="btn btn-success" data-toggle="modal" data-target="#modal-import"><i class="fa fa-cloud-upload"></i>&nbsp; Import Excel</button>
                                 </div>
                             </div>
                             <form action="{{ route('update-ba-vendor/{id_gr}') }}" method="POST">

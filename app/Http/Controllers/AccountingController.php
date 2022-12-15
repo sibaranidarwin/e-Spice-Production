@@ -172,41 +172,89 @@ class AccountingController extends Controller
     }
 
     public function invoice(){
-        $invoice = Invoice::latest()->get();
+
+        $invoice = Invoice::latest()->orWhere("data_from", "GR")->get();
+
         return view('accounting.invoice.index',compact('invoice'))
                 ->with('i',(request()->input('page', 1) -1) *5);
    }
    public function detailinvoice(Request $request, $id){
-        $detail = Invoice::find($id);
-        $invoices = good_receipt::select("goods_receipt.id_gr",
-                                    "goods_receipt.no_po",
-                                    "goods_receipt.gr_number",
-                                    "goods_receipt.po_item",
-                                    "goods_receipt.gr_date",
-                                    "goods_receipt.material_number",
-                                    "goods_receipt.harga_satuan",
-                                    "goods_receipt.jumlah",
-                                    "goods_receipt.tax_code",
-                                    "goods_receipt.status",
-                                    "invoice.id_inv", 
-                                    "invoice.posting_date", 
-                                    "invoice.baselinedate",
-                                    "invoice.no_invoice_proposal",
-                                    "invoice.vendor_invoice_number",
-                                    "invoice.faktur_pajak_number",
-                                    "invoice.total_harga_everify",
-                                    "invoice.ppn",
-                                    "invoice.del_costs",
-                                    "invoice.total_harga_gross",
-                                    "invoice.created_at"
-                                    )
-                                    ->JOIN("invoice", "goods_receipt.id_inv", "=", "invoice.id_inv")
-                                    ->where("invoice.id_inv", "=", "$detail->id_inv")
-                                    ->get();
-
-    return view('accounting.invoice.detail', compact('invoices'))->with('i',(request()->input('page', 1) -1) *5);
-}
-
+    $dispute = good_receipt::all()->where("status", "Dispute")->count();
+    $detail = Invoice::find($id);
+    $invoices = good_receipt::select("goods_receipt.id_gr",
+                                "goods_receipt.no_po",
+                                "goods_receipt.gr_number",
+                                "goods_receipt.po_item",
+                                "goods_receipt.gr_date",
+                                "goods_receipt.material_number",
+                                "goods_receipt.vendor_part_number",
+                                "goods_receipt.harga_satuan",
+                                "goods_receipt.jumlah",
+                                "goods_receipt.uom",
+                                "goods_receipt.tax_code",
+                                "goods_receipt.status",
+                                "invoice.id_inv", 
+                                "invoice.posting_date", 
+                                "invoice.baselinedate",
+                                "invoice.no_invoice_proposal",
+                                "invoice.vendor_invoice_number",
+                                "invoice.faktur_pajak_number",
+                                "invoice.total_harga_everify",
+                                "invoice.ppn",
+                                "invoice.del_costs",
+                                "invoice.total_harga_gross",
+                                "invoice.created_at"
+                                )
+                                ->JOIN("invoice", "goods_receipt.id_inv", "=", "invoice.id_inv")
+                                ->where("invoice.id_inv", "=", "$detail->id_inv")
+                                ->get();
+            return view('accounting.invoice.detail', compact('invoices', 'dispute'))->with('i',(request()->input('page', 1) -1) *5);
+        }
+        public function invoiceba()
+        {
+            $invoice = Invoice::latest()->orWhere("data_from", "BA")->get();
+            return view('accounting.invoice.indexba',compact('invoice'))
+                    ->with('i',(request()->input('page', 1) -1) *5);
+            
+        }
+        public function detailinvoiceba(Request $request, $id){
+            $detail = Invoice::find($id);
+            $dispute = good_receipt::all()->where("Status", "Dispute")->count();
+    
+            // dd($detail->id_inv);
+         $invoices = BA_Reconcile::select("ba_reconcile.id_ba",
+                                        "ba_reconcile.no_ba",
+                                        "ba_reconcile.po_number",
+                                        "ba_reconcile.gr_number",
+                                        "ba_reconcile.material_number",
+                                        "ba_reconcile.vendor_part_number",
+                                        "ba_reconcile.item",
+                                        "ba_reconcile.uom",
+                                        "ba_reconcile.harga_satuan",
+                                        "ba_reconcile.qty",
+                                        "ba_reconcile.gr_date",
+                                        "ba_reconcile.valuation_type",
+                                        "ba_reconcile.tax_code",
+                                        "ba_reconcile.material_description",
+                                        "ba_reconcile.status_ba",
+                                        "invoice.id_inv", 
+                                        "invoice.posting_date", 
+                                        "invoice.baselinedate",
+                                        "invoice.vendor_invoice_number",
+                                        "invoice.no_invoice_proposal",
+                                        "invoice.faktur_pajak_number",
+                                        "invoice.total_harga_everify",
+                                        "invoice.ppn",
+                                        "invoice.del_costs",
+                                        "invoice.total_harga_gross",
+                                        "invoice.created_at"
+                                        )
+                                        ->JOIN("invoice", "ba_reconcile.id_inv", "=", "invoice.id_inv")
+                                        ->where("invoice.id_inv", "=", "$detail->id_inv")
+                                        ->get();
+    
+            return view('accounting.invoice.detailba', compact('invoices','dispute'))->with('i',(request()->input('page', 1) -1) *5);
+        }
     /**
      * Remove the specified resource from storage.
      *

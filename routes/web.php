@@ -14,7 +14,7 @@
 use Illuminate\Support\Facades\Route;
 
 Auth::routes();
-
+use Carbon\Carbon;
 
 Route::get('login-user', function () {
     return view('login/index');
@@ -39,6 +39,7 @@ Route::get('about', 'IndexController@about')->name('about');
 Route::resource('admin/dashboard','AdminController')->middleware('admin');
 Route::get('admin/dashboard', 'AdminController@index')->name('admin/dashboard')->middleware('admin');
 // Purchase Order
+Route::get('admin/all', 'AdminController@all');
 Route::get('admin/po', 'AdminController@po')->name('admin/po')->middleware('admin');
 Route::get('admin/pover', 'AdminController@pover')->name('admin/pover')->middleware('admin');
 Route::get('admin/poreject', 'AdminController@poreject')->name('admin/poreject')->middleware('admin');
@@ -100,6 +101,11 @@ Route::get('accounting/ba', 'AccountingController@ba')->name('accounting/ba');
 
 Route::get('accounting/invoice', 'AccountingController@invoice')->name('accounting/invoice');
 Route::get('accounting/detail-invoice/{id}', 'AccountingController@detailinvoice')->name('accounting-invoice');
+Route::get('accounting/cetak_pdf_ba/{id}', 'AccountingController@cetak_pdf_ba')->name('cetak-laporan-ba');
+
+Route::get('accounting/invoiceba', 'AccountingController@invoiceba')->name('accounting/invoiceba');
+Route::get('accounting/detail-invoice-ba/{id}', 'AccountingController@detailinvoiceba')->name('detail-invoice-ba');
+Route::get('accounting/cetak_pdf_ba/{id}', 'AccountingController@cetak_pdf_ba')->name('cetak-laporan-ba');
 
 Route::get('accounting/user/{id}/show', 'AccountingController@showing')->name('accounting-user.show');
 
@@ -145,7 +151,7 @@ Route::post('vendor/edit-datagr','VendorController@edit')->name('update-datagr-v
 Route::post('vendor/update-datagr','VendorController@update')->name('dispute_datagr');
 Route::post('vendor/create_invoice','VendorController@store')->name('create-invoice');
 
-Route::get('vendor/draft/00001/XII/DRAFT-BA/MKP/2022', 'VendorController@detaildraft')->name('vendor/draft/{id}');
+Route::get('vendor/draft/{id}', 'VendorController@detaildraft')->name('vendor/draft/{id}');
 Route::get('vendor/draft', 'VendorController@draft')->name('vendor/draft');
 Route::get('vendor/historydraft', 'VendorController@historydraft')->name('vendor/historydraft');
 Route::get('vendor/historyba', 'VendorController@historyba')->name('vendor/historyba');
@@ -157,6 +163,9 @@ Route::post('vendor/exportdraft', 'VendorController@draftbaexport')->name('expor
 
 Route::post('vendor/edit-ba','VendorController@editba')->name('update-ba-vendor/{id_gr}');
 Route::post('vendor/create_invoice_ba','VendorController@storeba')->name('create-invoice-ba');
+
+Route::get('vendor/uploadinv', 'VendorController@uploadinv')->name('vendor/uploadinv');
+Route::post('vendor/upload','VendorController@upload')->name('upload');
 
 Route::get('vendor/invoice', 'VendorController@invoice')->name('vendor/invoice');
 Route::get('vendor/detail-invoice/{id}', 'VendorController@detailinvoice')->name('detail-invoice');
@@ -172,3 +181,6 @@ Route::get('vendor/user/{id}/show', 'VendorController@showing')->name('vendor-us
 Route::get('vendor/user/{id}/profile', 'VendorController@show')->name('vendor-user.showing');
 Route::put('vendor/{id}/profile','VendorController@heyupdate')->name('update-vendor');
 Route::post('vendor/{id}/password','VendorController@editpass')->name('update-pass-vendor');
+
+Route::get('vendor/filter', 'VendorController@filter')->name('vendor-filter');
+Route::get('vendor/filterinv', 'VendorController@filterinv')->name('vendor-filterinv');

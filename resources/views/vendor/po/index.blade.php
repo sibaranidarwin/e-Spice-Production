@@ -82,19 +82,17 @@
                     </div>
                     <div class="card-body">
                     <div class="table-responsive text-nowrap">
-                        <div class="row">
-                            <div class="col-3-half bg-white mb-3">
-                                <label class="btn btn-info btn-sm" for="">&nbsp;&nbsp; GR Date : </label>
-                                <input type="text" id="min" name="min"> 
-                            </div> 
-                            <div class="col-4 bg-white mb-4">
-                                <label class="btn btn-info btn-sm" for="">To : </label>
-                                <input type="text" id="max" name="max">
+                        <form action="{{ route('vendor-filter') }}" class="form-inline" method="GET">
+                            <div class="form-group mb-2">
+                              <label for="" >GR Date: &nbsp;</label>
+                              <input type="date" class="form-control" name="start_date">
                             </div>
-                            <div class="col-4">
-                                <label for=""> </label>
+                            <div class="form-group mx-sm-3 mb-2">
+                              <label for="inputPassword2">To: &nbsp;</label>
+                              <input type="date" class="form-control" name="end_date">
                             </div>
-                        </div>
+                            <button class="btn btn-primary" type="submit">Submit</button>
+                          </form>
                         <form action="{{ route('update-datagr-vendor/{id_gr}') }}" method="POST">
                             @csrf
                             <table id="list" class="table table-striped" style="width:100%; font-size: 10px;">

@@ -14,18 +14,15 @@
 
 @extends('admin.layouts.app')
 @section('content')
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
-<link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.6/css/buttons.dataTables.min.css">
-<link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
+<link rel="stylesheet" href="{{asset('admin/assets/css/datatable.css')}}">
 <link rel="stylesheet" href="https://cdn.datatables.net/datetime/1.1.2/css/dataTables.dateTime.min.css">
+
 <link rel="stylesheet" href="{{asset('assets/css/argon-dashboard.css')}}">
 
 <style>
-.table td,
-.table th,
-label {
-    font-size: 11.7px;
-}
+    .table td, .table th,  label{
+        font-size: 11px;
+    }
 </style>
 <div class="breadcrumbs">
     <div class="breadcrumbs-inner">
@@ -80,57 +77,71 @@ label {
                     </div>
                     @endif
                     <div class="card-header">
-                        <strong class="card-title">Good Receipt Reject List</strong>
+                        <strong class="card-title">Good Receipt Rejected List</strong>
                     </div>
                     <div class="card-body">
-                        <div class="table-responsive text-nowrap">
-                            <form action="{{ route('update-datagr/{id}') }}" method="POST">
-                                @csrf
-                                <table id="list" class="table table-striped" style="font-size: 10px;">
-                                    <thead>
-                                        <tr>
-                                            <th>No</th>
-                                            <th>Status</th>
-                                            <th>GR Number</th>
-                                            <th>No PO</th>
-                                            <th>PO Item</th>
-                                            <th>GR Date</th>
-                                            <th>Part Number</th>
-                                            <th>Reference</th>
-                                            <th>Material Description</th>
-                                            <th>QTY UOM</th>
-                                            <th>Curr</th>
-                                            <th>Unit Price</th>
-                                            <th>Tax Code</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody style="font-size: 11px;">
-                                        @foreach($good_receipts as $good_receipt)
-                                        <tr>
-                                            <td>{{++$i}}</td>
-                                            <td >{{ $good_receipt->status }}</td>
-                                            <td ><span>{{$good_receipt->gr_number}}</span></td>
-                                            <td ><span>{{$good_receipt->no_po}}</span></td>
-                                            <td><span>{{$good_receipt->po_item}}</span></td>
-                                            <td><span>{{$good_receipt->gr_date}}</span></td>
-                                            <td> <span>{{$good_receipt->material_number}}</span></td>
-                                            <td> <span>{{$good_receipt->ref_doc_no}}</span> </td>
-                                            <td> <span>{{$good_receipt->mat_desc}}</span> </td>
-                                            <td> <span>{{$good_receipt->jumlah}}</span>&nbsp;<span>{{$good_receipt->uom}}</span> </td>
-                                            <td> <span>{{$good_receipt->currency}}</span> </td>
-                                            <td> <span>{{$good_receipt->harga_satuan}}</span> </td>
-                                            <td> <span>{{$good_receipt->tax_code}}</span> </td>
-                                        </tr>
-                                        @endforeach
-                                        </select>
-                                    </tbody>
-                                </table>
-                                &nbsp;&nbsp;<button type="submit" value="Update" name="action"
-                                    class="btn btn-success">Update Data</button>
-                            </form>
-                        </div> <!-- /.table-stats -->
-                    </div>
+                    <div class="table-responsive text-nowrap">
+                        <div class="row">
+                            <div class="col-3-half bg-white mb-3">
+                                <label class="btn btn-info btn-sm" for="">&nbsp;&nbsp; GR Date: </label>
+                                <input type="text" id="min" name="min">
+                            </div> 
+                            <div class="col-2 bg-white mb-4">
+                                <label class="btn btn-info btn-sm" for="">To : </label>
+                                <input type="text" id="max" name="max">
+                            </div>
+                            <div class="col-4">
+                                <label for=""> </label>
+                            </div>
+                        </div>
+                        <form action="{{ route('update-datagr-vendor/{id_gr}') }}" method="POST">
+                            @csrf
+                            <table id="list" class="table table-striped" style="font-size: 10px;">
+                                <thead>
+                                    <tr>
+                                        {{-- <th><input type="checkbox" onchange="checkAll(this)"></th> --}}
+                                        <th style="text-align: center;">No</th>
+                                        <th style="text-align: center;">Sts. GR</th>
+                                        <th style="text-align: center;">Plant Code</th>
+                                        <th style="text-align: center;">PO</th>
+                                        <th style="text-align: center;">GR Number</th>
+                                        <th style="text-align: center;">GR Date</th>
+                                        <th style="text-align: center;">Part Number</th>
+                                        <th style="text-align: center;">Mat. Desc.</th>
+                                        <th style="text-align: center;">Qty UOM</th>
+                                        <th style="text-align: center;">Curr</th>
+                                        <th style="text-align: center;">Unit Price</th>
+                                        <th style="text-align: center;">Tax Code</th>
+                                        <th style="text-align: center;">Ref.</th>
+                                        <th style="text-align: center;">Del. Note</th>
+                                    </tr>
+                                </thead>
+                                <tbody style="font-size: 11px;">
+                                    @foreach($good_receipts as $good_receipt)
+                                    <tr>
+                                        <td>{{++$i}}</td>
+                                        <td >{{ $good_receipt->status }}</td>
+                                        <td >{{ $good_receipt->plant_code }}</td>
+                                        <td ><span>{{$good_receipt->no_po}} /{{$good_receipt->po_item}}</span></td>
+                                        <td ><span>{{$good_receipt->gr_number}}</span></td>
+                                        <td><span>{{ Carbon\Carbon::parse($good_receipt->gr_date)->format('d F Y') }}</span></td>
+                                        <td> <span>{{$good_receipt->material_number}}/<br> {{$good_receipt->vendor_part_number}}</span></td>
+                                        <td> <span>{{$good_receipt->mat_desc}}</span> <br>({{$good_receipt->valuation_type}})</td>
+                                        <td> <span>{{$good_receipt->jumlah}}</span>&nbsp;<span>{{$good_receipt->uom}}</span> </td>
+                                        <td> <span>{{$good_receipt->currency}}</span> </td>
+                                        <td style="text-align: right"> <span>Rp{{number_format($good_receipt->harga_satuan)}}</span> </td>
+                                        <td> <span>{{$good_receipt->tax_code}}</span> </td>
+                                        <td> <span>{{$good_receipt->ref_doc_no}}</span> </td>
+                                        <td> <span>{{$good_receipt->delivery_note}}</span> </td>
+                                    </tr>
+                                    @endforeach
+                                    </select>
+                                </tbody>
+                            </table>
+                           </form>
+                    </div> <!-- /.table-stats -->
                 </div>
+            </div>
             </div>
         </div>
     </div>
@@ -157,64 +168,82 @@ label {
 </div><!-- /#right-panel -->
 
 <script type="text/javascript">
-var minDate, maxDate;
-
-// Custom filtering function which will search data in column four between two values
-$.fn.dataTable.ext.search.push(
-    function(settings, data, dataIndex) {
-        var min = minDate.val();
-        var max = maxDate.val();
-        var date = new Date(data[5]);
-
-        if (
-            (min === null && max === null) ||
-            (min === null && date <= max) ||
-            (min <= date && max === null) ||
-            (min <= date && date <= max)
-        ) {
-            return true;
+    var minDate, maxDate;
+    
+    // Custom filtering function which will search data in column four between two values
+    $.fn.dataTable.ext.search.push(
+        function(settings, data, dataIndex) {
+            var min = minDate.val();
+            var max = maxDate.val();
+            var date = new Date(data[5]);
+    
+            if (
+                (min === null && max === null) ||
+                (min === null && date <= max) ||
+                (min <= date && max === null) ||
+                (min <= date && date <= max)
+            ) {
+                return true;
+            }
+            return false;
         }
-        return false;
-    }
-);
+    );
+    
+    $(document).ready(function() {
+    
+        // Create date inputs
+        minDate = new DateTime($('#min'), {
+            format: 'DD MM YYYY'
+        });
+        maxDate = new DateTime($('#max'), {
+            format: 'DD MM YYYY'
+        });
+    
+        // DataTables initialisation
+        var table = $('#list').DataTable({
+            // dom: "<'row'<'col-md-2 bg-white'l><'col-md-5 bg-white'B><'col-md-5 bg-white'f>>" +
+            //     "<'row'<'col-md-12'tr>>" +
+            //     "<'row'<'col-md-6'i><'col-md-6'p>>",
+            // buttons: [{
+            //     extend: 'excelHtml5',
+            //     autoFilter: true,
+            //     sheetName: 'Exported data'
+            // }]
+            rowReorder: true,
+             columnDefs: [
+            { orderable: true, className: 'reorder', targets: 0 },
+            { orderable: true, className: 'reorder', targets: 4 },
+            
+            { orderable: false, targets: '_all' }
+                    ],
+            lengthMenu: [[10, 25, 50, -1],[10, 25, 50, 'All'],],
 
-$(document).ready(function() {
-
-    // Create date inputs
-    minDate = new DateTime($('#min'), {
-        format: 'MMMM Do YYYY'
+        });
+    
+        // Refilter the table
+        $('#min, #max').on('change', function() {
+            table.draw();
+        });
+    
+    
     });
-    maxDate = new DateTime($('#max'), {
-        format: 'MMMM Do YYYY'
-    });
-
-    // DataTables initialisation
-    var table = $('#list').DataTable();
-
-    // Refilter the table
-    $('#min, #max').on('change', function() {
-        table.draw();
-    });
-
-
-});
-
-function checkAll(box) {
-    let checkboxes = document.getElementsByTagName('input');
-
-    if (box.checked) { // jika checkbox teratar dipilih maka semua tag input juga dipilih
-        for (let i = 0; i < checkboxes.length; i++) {
-            if (checkboxes[i].type == 'checkbox') {
-                checkboxes[i].checked = true;
+    
+    function checkAll(box) {
+        let checkboxes = document.getElementsByTagName('input');
+    
+        if (box.checked) { // jika checkbox teratar dipilih maka semua tag input juga dipilih
+            for (let i = 0; i < checkboxes.length; i++) {
+                if (checkboxes[i].type == 'checkbox') {
+                    checkboxes[i].checked = true;
+                }
+            }
+        } else { // jika checkbox teratas tidak dipilih maka semua tag input juga tidak dipilih
+            for (let i = 0; i < checkboxes.length; i++) {
+                if (checkboxes[i].type == 'checkbox') {
+                    checkboxes[i].checked = false;
+                }
             }
         }
-    } else { // jika checkbox teratas tidak dipilih maka semua tag input juga tidak dipilih
-        for (let i = 0; i < checkboxes.length; i++) {
-            if (checkboxes[i].type == 'checkbox') {
-                checkboxes[i].checked = false;
-            }
-        }
     }
-}
-</script>
+    </script>
 @endsection

@@ -35,6 +35,16 @@ class AdminController extends Controller
         return view('admin.dashboard',['good_receipt'=>$good_receipt,'draft'=>$draft, 'ba'=>$ba , 'invoicegr'=>$invoicegr, 'invoiceba'=>$invoiceba, 'dispute'=>$dispute, 'vendor'=>$vendor]);
     }
 
+    public function all()
+    { 
+
+        $good_receipts = good_receipt::where("status", "Verified")->orwhere('material_number','LG2KOM00707010F691')->orwhere("status", "Rejected")->get();
+
+        $dispute = good_receipt::all()->where("status", "Disputed")->count();
+
+        return view('admin.po.all',compact('good_receipts', 'dispute'))
+                ->with('i',(request()->input('page', 1) -1) *5);
+    }
     public function po()
     {   
         $good_receipts = good_receipt::where("Status","Not Verified")->orWhere("Status", "")->get();

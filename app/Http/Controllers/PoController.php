@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\good_receipt;
 use Illuminate\Http\Request;
 
+
 class PoController extends Controller
 {
     //
@@ -87,4 +88,5 @@ class PoController extends Controller
     {
         return view('admin.po.dispsuted');
     }
+
 }
