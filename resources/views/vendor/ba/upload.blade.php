@@ -144,7 +144,6 @@ label {
                                             <td style="text-align: right"><span>Rp{{ number_format($item->jumlah_harga) }}</span></td> 
                                             <td><span>{{$item->tax_code}}</span></td>
                                             <td><span>{{$item->delivery_note}}</span></td>
-                                            
                                         </tr>
                                         @endforeach
                                         </select>

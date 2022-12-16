@@ -154,16 +154,16 @@
                             class="btn btn-primary btn-sm-3" onclick="return confirm('Are you sure?')">Generate Draft BA</button>
                             <div class="row">
                                 <div class="col-6">
-
                                 </div>
                                 <div class="col-lg-6 col-md-6">
                                     <div class="card bg-info card-outline-danger text-cen">
                                         <span class="pull-right clickable close-icon text-right" data-effect="fadeOut"><i class="fa fa-times"></i></span>
                                         <div class="card-block text-white">
                                           <blockquote class="card-blockquote text-white">
-                                            <p style="font-size: 14px;"><strong>&nbsp; Description: </strong></p>
-                                            <p style="font-size: 13px;"><strong>&nbsp; 1. GR data has been auto verified by the system.</strong></p>
-                                          </blockquote>
+                                            <p style="font-size: 14px;"><strong>&nbsp; Good receipt status description: </strong></p>
+                                            <p style="font-size: 13px;"><strong>&nbsp; 1. Verified: good receipt data with this status means that this data comes from the <br> warehouse and has been verified by the warehouse.</strong></p>
+                                            <p style="font-size: 13px;"><strong>&nbsp; 2. Auto verified: good receipt data with this status means the data from SAP is correct <br> and does not have certain conditions.</strong></p>
+                                        </blockquote>
                                         </div>
                                       </div>
                                     </div>
@@ -207,7 +207,7 @@
         function(settings, data, dataIndex) {
             var min = minDate.val();
             var max = maxDate.val();
-            var date = new Date(data[6]);
+            var date = new Date(data[7]);
     
             if (
                 (min === null && max === null) ||

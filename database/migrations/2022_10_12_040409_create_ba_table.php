@@ -17,7 +17,7 @@ class CreateBaTable extends Migration
             $table->bigIncrements('id_ba');
             $table->bigInteger('id_draft_ba')->unsigned()->nullable();
             $table->foreign('id_draft_ba')->references('id_draft_ba')->on('draft_ba')->nullable();
-            $table->bigInteger('id_inv')->unsigned();
+            $table->bigInteger('id_inv')->unsigned()->nullable();
             $table->foreign('id_inv')->references('id_inv')->on('invoice');
             $table->bigInteger('id_vendor')->nullable();
             $table->string('no_ba');

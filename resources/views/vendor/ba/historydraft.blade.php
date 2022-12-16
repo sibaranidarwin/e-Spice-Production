@@ -107,11 +107,12 @@ label {
                                             <th>No Draft</th>
                                             <th>Date</th>
                                             <th>PO</th>
+                                            <th>GR Number</th>
+                                            <th>Part Number</th>
+                                            <th>GR Date</th>
                                             <th>Mat. Desc.</th>
-                                            <th>Vendor Part Number</th>
                                             <th>Header Text</th>
                                             <th>Quantity</th>
-                                            <th>GR Date</th>
                                             <th>Total Price</th>
                                             <th>Total Value</th>
                                         </tr>
@@ -126,11 +127,12 @@ label {
                                             <td>{{ $item->no_draft}}</td>
                                             <td><span>{{ Carbon\Carbon::parse($item->created_at)->format('d F Y') }}</span></td>
                                             <td><span>{{$item->po_number}}/{{$item->po_item}}</span></td>
-                                            <td><span>{{$item->mat_desc}}</span></td>
-                                            <td><span>{{$item->vendor_part_number}}</span></td>
+                                            <td><span>{{$item->gr_number}}</span></td>
+                                            <td><span>{{$item->material_number}} /{{$item->vendor_part_number}}</span></td>
+                                            <td><span>{{ Carbon\Carbon::parse($item->gr_date)->format('d F Y') }}</span></td>
+                                            <td><span>{{$item->mat_desc}} ({{$item->valuation_type}})</span></td>
                                             <td><span>{{$item->doc_header_text}}</span></td>
                                             <td><span>{{$item->jumlah}}</span></td>
-                                            <td><span>{{ Carbon\Carbon::parse($item->gr_date)->format('d F Y') }}</span></td>
                                             <td style="text-align: right"><span>Rp{{ number_format($item->jumlah_harga) }}</span></td>  
                                             <td style="text-align: right"><span><?php
                                                 $harga = $item->jumlah_harga;
