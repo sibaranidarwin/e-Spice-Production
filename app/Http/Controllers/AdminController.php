@@ -118,6 +118,7 @@ class AdminController extends Controller
                                     "invoice.faktur_pajak_number",
                                     "invoice.total_harga_everify",
                                     "invoice.ppn",
+                                    "invoice.no_invoice_proposal",
                                     "invoice.del_costs",
                                     "invoice.total_harga_gross",
                                     "invoice.created_at"
@@ -140,26 +141,35 @@ class AdminController extends Controller
         $detail = Invoice::find($id);
         // dd($detail->id_inv);
         $invoices = BA_Reconcile::select("ba_reconcile.id_ba",
-                                    "ba_reconcile.no_ba",
-                                    "ba_reconcile.po_number",
-                                    "ba_reconcile.po_mkp",
-                                    "ba_reconcile.gr_date",
-                                    "ba_reconcile.material_bp",
-                                    "ba_reconcile.status_ba",
-                                    "invoice.id_inv", 
-                                    "invoice.posting_date", 
-                                    "invoice.baselinedate",
-                                    "invoice.vendor_invoice_number",
-                                    "invoice.faktur_pajak_number",
-                                    "invoice.total_harga_everify",
-                                    "invoice.ppn",
-                                    "invoice.del_costs",
-                                    "invoice.total_harga_gross",
-                                    "invoice.created_at"
-                                    )
-                                    ->JOIN("invoice", "ba_reconcile.id_inv", "=", "invoice.id_inv")
-                                    ->where("invoice.id_inv", "=", "$detail->id_inv")
-                                    ->get();
+        "ba_reconcile.no_ba",
+        "ba_reconcile.po_number",
+        "ba_reconcile.gr_number",
+        "ba_reconcile.material_number",
+        "ba_reconcile.vendor_part_number",
+        "ba_reconcile.item",
+        "ba_reconcile.gr_date",
+        "ba_reconcile.harga_satuan",
+        "ba_reconcile.qty",
+        "ba_reconcile.valuation_type",
+        "ba_reconcile.uom",
+        "ba_reconcile.tax_code",
+        "ba_reconcile.material_description",
+        "ba_reconcile.status_ba",
+        "invoice.id_inv", 
+        "invoice.posting_date", 
+        "invoice.baselinedate",
+        "invoice.vendor_invoice_number",
+        "invoice.no_invoice_proposal",
+        "invoice.faktur_pajak_number",
+        "invoice.total_harga_everify",
+        "invoice.ppn",
+        "invoice.del_costs",
+        "invoice.total_harga_gross",
+        "invoice.created_at"
+        )
+        ->JOIN("invoice", "ba_reconcile.id_inv", "=", "invoice.id_inv")
+        ->where("invoice.id_inv", "=", "$detail->id_inv")
+        ->get();
 
         return view('admin.invoice.detailba', compact('invoices'))->with('i',(request()->input('page', 1) -1) *5);
     }

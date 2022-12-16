@@ -71,8 +71,8 @@ label {
                         </button>
                     </div>
                     @elseif($message = Session::get('warning'))
-                    <div class="alert alert-primary alert-dismissible fade show" role="alert">
-                        <strong>Success!</strong> {{$message}}
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        <strong>Error!</strong> {{$message}}
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -89,15 +89,7 @@ label {
                                 <input type="hidden" name="id[]" value="{{$good->id_draft_ba}}">
                                 @endforeach
                                 <div class="row">
-                                    <div class="form-group col-3 bg-white mb-2">
-                                        <label for="">BA Date:</label>
-                                        <input class="form-group" type="text" id="min" name="min">
-                                    </div>
-                                    <div class=" form-group col-3 bg-white mb-2">
-                                        <label for="">To:</label>
-                                        <input class="form-group" type="text" id="max" name="max">
-                                    </div>
-                                <div class="text-right mb-2">
+                                <div class="text-right mb-2 col-3">
                                     <a href="{{url('vendor/draft')}}" type="submit" style="text-align: right"
                                      class="btn btn-danger btn-s" id="simpan" onclick="return confirm('Are you sure?')"> Return</a> &nbsp;&nbsp;&nbsp;
                                      <button class="btn btn-success btn-s" onclick="return confirm('Are you sure?')"><i class="fa fa-cloud-download"></i> Export To excel</button>

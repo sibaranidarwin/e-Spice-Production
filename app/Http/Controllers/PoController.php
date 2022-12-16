@@ -33,6 +33,11 @@ class PoController extends Controller
             case 'Update':
                 $recordIds = $request->get('ids');
                 $newStatus = $request->get('Status');
+
+                if($recordIds == null){
+                    return redirect()->back()->with("destroy","Please select data gr first. Try again!");
+                }
+                
                 $dispute = good_receipt::all()->where("Status", "Dispute")->count();
 
                 $good_receipts = [];

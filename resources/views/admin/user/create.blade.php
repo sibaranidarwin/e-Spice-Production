@@ -123,7 +123,7 @@
                                         <option value="admin">Admin</option>
                                         <option value="warehouse">Warehouse</option>
                                         <option value="accounting">Accounting</option>
-                                        <option value="procument">Procument</option>
+                                        <option value="procurement">Procurement</option>
                                         <option value="vendor">Vendor</option>
 
                                     </select>
