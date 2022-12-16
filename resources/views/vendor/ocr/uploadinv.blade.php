@@ -170,10 +170,12 @@
                                         class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                                 </div>
                         </div>
+                        <a href="javascript:history.back()" type="submit" class="btn btn-danger mb-2" id="simpan" onclick="return confirm('Are you sure?')">Return</a>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <button type="submit" class="btn btn-success mb-2" id="simpan" onclick="return confirm('Are you sure?')">Submit</button>
                     </div>
                     </div>
-
-</form>
+        </form>
 <script type="text/javascript">
 function readFile(input) {
     if (input.files && input.files[0]) {

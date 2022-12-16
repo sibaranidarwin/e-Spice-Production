@@ -25,6 +25,8 @@
         font-size: 11px;
     }
 </style>
+<link rel="stylesheet" href="{{asset('assets/css/argon-dashboard.css')}}">
+
 <div class="breadcrumbs">
     <div class="breadcrumbs-inner">
         <div class="row m-0">
@@ -70,7 +72,7 @@
                         </button>
                     </div>
                     @elseif($message = Session::get('warning'))
-                    <div class="alert alert-primary alert-dismissible fade show" role="alert">
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
                         <strong>Success!</strong> {{$message}}
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
@@ -91,7 +93,7 @@
                               <label for="inputPassword2">To: &nbsp;</label>
                               <input type="date" class="form-control" name="end_date">
                             </div>
-                            <button class="btn btn-primary" type="submit">Submit</button>
+                            <button class="btn btn-primary" onclick="return confirm('Are you sure?')" type="submit">Submit</button>
                           </form>
                         <form action="{{ route('update-datagr-vendor/{id_gr}') }}" method="POST">
                             @csrf

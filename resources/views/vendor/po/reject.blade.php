@@ -16,7 +16,6 @@
 @section('content')
 <link rel="stylesheet" href="{{asset('admin/assets/css/datatable.css')}}">
 <link rel="stylesheet" href="https://cdn.datatables.net/datetime/1.1.2/css/dataTables.dateTime.min.css">
-
 <link rel="stylesheet" href="{{asset('assets/css/argon-dashboard.css')}}">
 
 <style>
@@ -90,7 +89,7 @@
                               <label for="inputPassword2">To: &nbsp;</label>
                               <input type="date" class="form-control" name="end_date">
                             </div>
-                            <button class="btn btn-primary" type="submit">Submit</button>
+                            <button class="btn btn-primary"  onclick="return confirm('Are you sure?')" type="submit">Submit</button>
                           </form>
                         <form action="{{ route('update-datagr-vendor/{id_gr}') }}" method="POST">
                             @csrf

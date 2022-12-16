@@ -42,6 +42,27 @@
                     <div class="card-header">
                         <strong class="card-header">Edit Good Receipt</strong>
                     </div>
+                    @if($message = Session::get('destroy'))
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    @elseif($message = Session::get('success'))
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <strong>Success!</strong> {{$message}}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    @elseif($message = Session::get('warning'))
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        <strong>Success!</strong> {{$message}}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    @endif
                     <div class="card-body">
                         <form autocomplete="off" action="{{ route('update-datagr') }}" method="post"
                             enctype="multipart/form-data">
@@ -76,11 +97,12 @@
                         <table id="list" class="table table-stats order-table ov-h">
                             <thead>
                                 <tr>
+                                    <th>Sts. Gr.</th>
                                     <th>GR Number</th>
-                                    <th>No PO</th>
-                                    <th>PO Item</th>
-                                    <th>GR Slip Date</th>
-                                    <th>Material Number</th>
+                                    <th>PO</th>
+                                    <th>GR Date</th>
+                                    <th>Part Number</th>
+                                    <th>Mat. Desc.</th>
                                     <!-- <th class="text-center">Reference</th> -->
                                     <!-- <th class="text-center">Vendor Part Number</th>
                                         <th class="text-center">Item Description</th>
@@ -91,18 +113,18 @@
                                     <!-- <th class="text-center">Jumlah Harga</th> -->
                                     <th>Tax Code</th>
                                     <!-- <th class="text-center">Valuation Type</th> -->
-                                    <th>Status</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach($good_receipts as $good_receipt)
                                 <tr>
+                                    <td>{{ $good_receipt->status }}</td>
                                     <td><span class="name">{{$good_receipt->gr_number}}</span> </td>
-                                    <td> <span class="">{{$good_receipt->no_po}}</span> </td>
-                                    <td> <span class="">{{$good_receipt->po_item}}</span> </td>
+                                    <td> <span class="">{{$good_receipt->no_po}} /{{$good_receipt->po_item}}</span> </td>
                                     <td><span>{{ Carbon\Carbon::parse($good_receipt->gr_date)->format('d F Y') }}</span></td>
-                                    <td> <span class="">{{$good_receipt->material_number}}</span>
+                                    <td> <span class="">{{$good_receipt->material_number}} /{{$good_receipt->vendor_part_number}}</span>
                                     </td>
+                                    <td> <span class="">{{$good_receipt->mat_desc}} ({{$good_receipt->valuation_type}})</span> </td>
                                     <!-- <td class="text-center"> <span class="">{{$good_receipt->Ref_Doc_No}}</span> </td> -->
                                     <!-- <td class="text-center"> <span class="">{{$good_receipt->Vendor_Part_Number}}</span> </td>
                                         <td class="text-center"> <span class="">{{$good_receipt->Mat_Desc}}</span> </td>
@@ -113,7 +135,6 @@
                                     <!-- <td class="text-center"> <span class="">{{$good_receipt->jumlah_harga}}</span> </td> -->
                                     <td> <span class="">{{$good_receipt->tax_code}}</span> </td>
                                     <!-- <td class="text-center"> <span class=""></span> </td> -->
-                                    <td>{{ $good_receipt->status }}</td>
                                 </tr>
                                 @endforeach
                                 </select>

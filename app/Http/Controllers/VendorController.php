@@ -65,7 +65,6 @@ class VendorController extends Controller
 			$query->where('status','Verified')
 						->orWhereNull('status');})->orderBy('updated_at', 'ASC')->get();
         
-
         return view('vendor.po.index',compact('good_receipts'))
                 ->with('i',(request()->input('page', 1) -1) *5);
     }
@@ -87,7 +86,11 @@ class VendorController extends Controller
                 $query->where('status','Verified')
                             ->orWhereNull('status');})->orderBy('updated_at', 'ASC')->get();
         } else {
-            $good_receipts = good_receipt::latest()->get();
+            $user_vendor = Auth::User()->id_vendor;
+
+            $good_receipts = good_receipt::where('id_vendor', $user_vendor)->where('id_inv',0)->where(function($query) {
+                $query->where('status','Verified')
+                            ->orWhereNull('status');})->orderBy('updated_at', 'ASC')->get();
         }
         
         return view('vendor.po.index', compact('good_receipts'))->with('i',(request()->input('page', 1) -1) *5);
@@ -100,7 +103,9 @@ class VendorController extends Controller
             $user_vendor = Auth::User()->id_vendor;
             $invoice = Invoice::whereBetween('posting_date',[$start_date,$end_date])->Where("id_vendor", $user_vendor)->Where("data_from", "GR")->get();
         } else {
-            $invoice = Invoice::latest()->get();
+            $user_vendor = Auth::User()->id_vendor;
+            // dd($user_vendor);
+            $invoice = Invoice::latest()->Where("id_vendor", $user_vendor)->Where("data_from", "GR")->get();
         }
         
         return view('vendor.invoice.index', compact('invoice'))->with('i',(request()->input('page', 1) -1) *5);
@@ -110,7 +115,10 @@ class VendorController extends Controller
             case 'Dispute':
                 $recordIds = $request->get('ids');
                 $newStatus = $request->get('Status');
-                
+                if($recordIds == null){
+                    return redirect()->back()->with("warning","Please select data gr first. Try again!");
+                }
+
                 $good_receipts = [];
                 foreach($recordIds as $record) {
                     $good_receipt = good_receipt::find($record);
@@ -123,7 +131,10 @@ class VendorController extends Controller
                 $recordIds = $request->get('ids');
                 $newStatus = $request->get('Status');
                 
-                // dd($recordIds);
+                if($recordIds == null){
+                    return redirect()->back()->with("warning","Please select data gr first. Try again!");
+                }
+
                 //buat kode otomatis
                 $q = DB::table('invoice')->select(DB::raw('MAX(RIGHT(no_invoice_proposal, 4)) as kode'));
                 $kd="";
@@ -177,12 +188,16 @@ class VendorController extends Controller
                 // kondisi TAX code ma = 11%
                 $total_harga = $total_dpp + $total_ppn;
                 return view('vendor.po.edit', compact('good_receipts', 'total_dpp', 'total_ppn', 'total_harga','kd','bln'));
+                
                 break;
-
                 case 'ba':
                 $recordIds = $request->get('ids');
                 $newStatus = $request->get('Status');
-                
+              
+                if($recordIds == null){
+                    return redirect()->back()->with("warning","Please select data gr first. Try again!");
+                }
+
                 
                 $good_receipts = [];
                 $q = DB::table('draft_ba')->select(DB::raw('MAX(RIGHT(no_draft, 4)) as kode'))->get();
@@ -248,7 +263,11 @@ class VendorController extends Controller
 
     public function editba(Request $request){
         $recordIds = $request->get('ids');
-        // dd($recordIds);
+        
+        if($recordIds == null){
+            return redirect()->back()->with("warning","Please select data BA first. Try again!");
+        }
+
         //buat kode otomatis
         $q = DB::table('invoice')->select(DB::raw('MAX(RIGHT(no_invoice_proposal, 4)) as kode'));
 
@@ -419,15 +438,7 @@ class VendorController extends Controller
         $user_vendor = Auth::User()->id_vendor;
         $duration = 10;
         $now = date('Y-m-d H:i:s', strtotime("+$duration sec"));
-        // dd($now);
-        //   $ba = BA::select('no_ba','status_ba','status_invoice_proposal')->distinct()->where("id_vendor", $user_vendor)->get(); 
-        // dd($user_vendor);
         $draft = Draft_BA::select('no_draft','status_invoice_proposal')->distinct()->where("id_vendor", $user_vendor)->where("status_invoice_proposal", "Not Yet Verified - Draft BA")->get();
-        // $total_price= Draft_BA::all()->jumlah_harga->get();
-        //  dd($total_price);
-        // $total = $total_price * 2;
-        // $total = Draft_BA::all()->select('sum(jumlah_harga*jumlah) as total');
-        // dd($total);
         return view('Vendor.ba.draft',compact('draft'));
         }
 
@@ -497,6 +508,9 @@ class VendorController extends Controller
     public function draftbaexport(Request $request){
         $recordIds = $request->get('ids');
         // dd($recordIds);
+        if($recordIds == null){
+            return redirect()->back()->with("warning","Please select data Draft BA first. Try again!");
+        }
         foreach($recordIds as $id) {
             $drafts = Draft_BA::find($id);
             $drafts->update([

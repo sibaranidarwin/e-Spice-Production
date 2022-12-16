@@ -139,8 +139,7 @@ class WarehouseController extends Controller
         $detail = Invoice::find($id);
         $dispute = good_receipt::all()->where("Status", "Dispute")->count();
 
-        // dd($detail->id_inv);
-     $invoices = BA_Reconcile::select("ba_reconcile.id_ba",
+       $invoices = BA_Reconcile::select("ba_reconcile.id_ba",
                                     "ba_reconcile.no_ba",
                                     "ba_reconcile.po_number",
                                     "ba_reconcile.gr_number",

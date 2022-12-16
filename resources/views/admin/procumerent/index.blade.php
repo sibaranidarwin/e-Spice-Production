@@ -90,10 +90,10 @@
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-danger fa fa-times"
                                                     onclick="return confirm('Are you sure?')"></button>
-                                                <a href="{{route('masyarakat.showing',$user->id)}}"
+                                                {{-- <a href="{{route('masyarakat.showing',$user->id)}}"
                                                     class="btn fa fa-eye"></a>
                                                 <a href="{{route('masyarakat.edit',$user->id)}}"
-                                                    class="btn btn-primary fa fa-edit"></a>
+                                                    class="btn btn-primary fa fa-edit"></a> --}}
                                             </form>
                                         </span></td>
                                 </tr>

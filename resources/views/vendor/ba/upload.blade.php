@@ -56,6 +56,28 @@ label {
         <div class="row">
             <div class="col-lg-12">
                 <div class="card">
+                    @if($message = Session::get('destroy'))
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <strong>Success!</strong> {{$message}}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    @elseif($message = Session::get('success'))
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <strong>Success!</strong> {{$message}}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    @elseif($message = Session::get('warning'))
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        <strong>Success!</strong> {{$message}}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    @endif
                     @if (count($errors) > 0)
                     <div class="row">
                         <div class="col-md-12 col-md-offset-1">
@@ -89,7 +111,7 @@ label {
                     </div>
                     <div class="card-body">
                         <div class="table-responsive text-nowrap">
-                            <form action="{{ route('vendor-filter') }}" class="form-inline" method="GET">
+                            {{-- <form action="{{ route('vendor-filter') }}" class="form-inline" method="GET">
                                 <div class="form-group mb-2">
                                   <label for="" >BA Date: &nbsp;</label>
                                   <input type="date" class="form-control" name="start_date">
@@ -99,7 +121,7 @@ label {
                                   <input type="date" class="form-control" name="end_date">
                                 </div>
                                 <button class="btn btn-primary" type="submit">Submit</button>
-                              </form>
+                              </form> --}}
                             <form action="{{ route('update-ba-vendor/{id_gr}') }}" method="POST">
                                 @csrf
                                 <table id="list" class="table table-striped" style="font-size: 10px;">
@@ -128,7 +150,7 @@ label {
                                         @foreach($ba as $item)
                                         <tr>
                                             <td><input type="checkbox" name="ids[]" value="{{$item->id_ba}}"></td>
-                                            <td style="width: 10%;">{{$i++}}</td>
+                                            <td><span>{{$i++}}</span></td>
                                             <td><span>{{$item->status_ba}}</span></td>
                                             <td><span>{{$item->status_invoice_proposal}}</span></td>
                                             <td><span>{{ Carbon\Carbon::parse($item->created_at)->format('d F Y') }}</span></td>
