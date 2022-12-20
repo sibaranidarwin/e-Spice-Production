@@ -113,7 +113,7 @@
                                         <th>Curr</th>
                                         <th>Unit Price</th>
                                         <th>Tax Code</th>
-                                        <th>Cause</th>
+                                        <th>Reason</th>
                                     </tr>
                                 </thead>
                                 <tbody style="font-size: 11px;">

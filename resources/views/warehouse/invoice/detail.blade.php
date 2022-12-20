@@ -58,10 +58,10 @@ label {
                     </div> --}}
                     <div class="row">
                         <div class="form-group col-md-6">
-                            <label class="form-control-label" for="Material_Number[]">Total DDP</label>
+                            <label class="form-control-label" for="Material_Number[]">Total DPP</label>
                             <input type="text" class="form-control @error('Material_Number[]') is-invalid @enderror"
                                 name="Material_Number[]" placeholder="Masukkan Tanggal ..."
-                                value="Rp{{ $invoice->total_harga_gross }}" readonly>
+                                value="{{ $invoice->total_harga_gross }}" readonly>
                             @error('Material_Number[]')<span
                                 class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                         </div>
@@ -90,7 +90,7 @@ label {
                         <div class="form-group col-md-6">
                             <label class="form-control-label" for="ppn[]">PPN</label>
                             <input type="text" class="form-control @error('ppn[]') is-invalid @enderror"
-                                name="ppn[]" placeholder="Masukkan Tanggal ..." value="Rp{{ $invoice->ppn }}" readonly>
+                                name="ppn[]" placeholder="Masukkan Tanggal ..." value="{{ $invoice->ppn }}" readonly>
                             @error('ppn[]')<span
                                 class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                         </div>
@@ -104,7 +104,7 @@ label {
                         <div class="form-group col-md-6">
                             <label class="form-control-label" for="total_harga_gross[]">Total Price</label> <br>
                             <input type="text" class="form-control @error('total_harga_gross[]') is-invalid @enderror"
-                                name="total_harga_gross[]" placeholder="Masukkan Tanggal ..." value="{{ $invoice->total_harga_everify }}" readonly>
+                                name="total_harga_gross[]" placeholder="Masukkan Tanggal ..." value="Rp{{ number_format($invoice->total_harga_everify) }}" readonly>
                             @error('total_harga_gross[]')<span
                                 class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                         </div>

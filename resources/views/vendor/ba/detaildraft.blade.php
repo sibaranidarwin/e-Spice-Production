@@ -89,7 +89,7 @@ label {
                                 <input type="hidden" name="id[]" value="{{$good->id_draft_ba}}">
                                 @endforeach
                                 <div class="row">
-                                <div class="text-right mb-2 col-3">
+                                <div class="text-right mb-2 col-4">
                                     <a href="{{url('vendor/draft')}}" type="submit" style="text-align: right"
                                      class="btn btn-danger btn-s" id="simpan" onclick="return confirm('Are you sure?')"> Return</a> &nbsp;&nbsp;&nbsp;
                                      <button class="btn btn-success btn-s" onclick="return confirm('Are you sure?')"><i class="fa fa-cloud-download"></i> Export To excel</button>
@@ -100,6 +100,7 @@ label {
                                 <thead>
                                     <tr>
                                         <th><input type="checkbox" onchange="checkAll(this)"></th>
+                                        <th hidden></th>
                                         <th style="text-align: center;">No</th>
                                         <th style="text-align: center;">Sts. Draft BA</th>
                                         <th style="text-align: center;">Sts. Inv. Props.</th>
@@ -125,6 +126,7 @@ label {
                                     @foreach($draft as $item)
                                     <tr>
                                         <td><input type="checkbox" name="ids[]" value="{{$item->id_draft_ba}}"></td>
+                                        <td hidden><input type="text" name="no_draft" value="{{$item->no_draft}}"></td>
                                         <td>{{$i++}}</td>
                                         <td><span>Verified - Draft BA</span></td>
                                         <td><span>{{$item->status_invoice_proposal}}</span></td>

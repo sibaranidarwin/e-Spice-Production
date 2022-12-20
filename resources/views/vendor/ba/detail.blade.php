@@ -81,24 +81,22 @@ label {
                         </div>
                     @endif
                     <div class="card-header">
-                        <strong class="card-title">BA Reconcile List</strong>
+                        <strong class="card-title">BA Reconcile List <i class="fa fa-list"></i></strong>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive text-nowrap">
                             <div class="row">
-                                <div class="col-half">
                                 <form action="{{ route('vendor-filter') }}" class="form-inline" method="GET">
                                     <div class="form-group">
                                       <label for="" >BA Date: &nbsp;</label>
                                       <input type="date" class="form-control" name="start_date">
                                     </div>
-                                    <div class="form-group mx-sm-3">
+                                    <div class="form-group mx-sm-4">
                                       <label for="inputPassword2">To: &nbsp;</label>
                                       <input type="date" class="form-control" name="end_date">
                                     </div>
-                                    <button class="btn btn-primary" type="submit">Submit</button>
+                                    <button class="btn btn-primary" type="submit"><i class="fa fa-search"></i></button>
                                   </form>
-                                </div>
                                 <div class="col">
                                     <button class="btn btn-success" data-toggle="modal" data-target="#modal-import"><i class="fa fa-cloud-upload"></i>&nbsp; Import Excel</button>
                                 </div>
