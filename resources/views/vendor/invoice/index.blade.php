@@ -16,6 +16,7 @@
 @section('content')
 <link rel="stylesheet" href="{{asset('admin/assets/css/datatable.css')}}">
 
+<link rel="stylesheet" href="https://cdn.datatables.net/datetime/1.1.2/css/dataTables.dateTime.min.css">
 <link rel="stylesheet" href="{{asset('assets/css/argon-dashboard.css')}}">
 
 <style>
@@ -82,17 +83,17 @@ label {
                     </div>
                     <div class="card-body">
                         <div class="table-responsive text-nowrap">
-                            <div class="row">
-                                <div class="form-group col-3 bg-white mb-2">
-                                    <label for="">Invoice Date: </label>
-                                    <input class="form-group" type="text" id="min" name="min">
+                            <form action="{{ route('vendor-filterinv') }}" class="form-inline" method="GET">
+                                <div class="form-group mb-2">
+                                  <label for="" >Invoice Date: &nbsp;</label>
+                                  <input type="date" class="form-control" name="start_date">
                                 </div>
-                                <div class=" form-group col-3 bg-white mb-2">
-                                    <label for="">To:</label>
-                                    <input class="form-group" type="text" id="max" name="max">
+                                <div class="form-group mx-sm-3 mb-2">
+                                  <label for="inputPassword2">To: &nbsp;</label>
+                                  <input type="date" class="form-control" name="end_date">
                                 </div>
-                               
-                            </div>
+                                <button class="btn btn-primary" type="submit">Submit</button>
+                              </form>
                             <form action="{{ route('update-datagr-vendor/{id_gr}') }}" method="POST">
                                 @csrf
                                 <table id="list" class="table table-striped" style="font-size: 10px;">
@@ -100,14 +101,14 @@ label {
                                         <tr>
                                             <th class="serial">No</th>
                                             <th>Sts. Upload SAP</th>
-                                            <th>Sts. Inv. Props</th>
+                                            <th>Sts. Inv. Props.</th>
                                             <th>Invoice Proposal No</th>
                                             <th>Invoice Date</th>
                                             <th>Invoice No</th>
                                             <th>VAT NO</th>
                                             {{-- <th>No E-Verify</th> --}}
                                             <th>Total PPN</th>
-                                            <th>Total DPP</th>
+                                            <th>Total Price</th>
 
                                             <!-- <th class="text-center">Reference</th> -->
                                             <!-- <th class="text-center">Vendor Part Number</th>
@@ -189,7 +190,7 @@ label {
         function(settings, data, dataIndex) {
             var min = minDate.val();
             var max = maxDate.val();
-            var date = new Date(data[3]);
+            var date = new Date(data[4]);
     
             if (
                 (min === null && max === null) ||
@@ -214,7 +215,7 @@ label {
         });
     
         // DataTables initialisation
-        var table = $('#list').DataTable(
+        var table = $('#list').DataTable({
             // {
             //     dom: "<'row'<'col-md-2 bg-white'l><'col-md-5 bg-white'B><'col-md-5 bg-white'f>>" +
             //         "<'row'<'col-md-12'tr>>" +
@@ -225,7 +226,14 @@ label {
             //         sheetName: 'Exported data'
             //     }]
             // }
-        );
+            rowReorder: true,
+             columnDefs: [
+            { orderable: true, className: 'reorder', targets: 0 },
+            { orderable: false, targets: '_all' }
+                    ],
+            lengthMenu: [[10, 25, 50, -1],[10, 25, 50, 'All'],],
+
+            });
     
         // Refilter the table
         $('#min, #max').on('change', function() {

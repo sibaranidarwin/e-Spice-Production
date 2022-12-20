@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\good_receipt;
 use Illuminate\Http\Request;
 
+
 class PoController extends Controller
 {
     //
@@ -32,6 +33,11 @@ class PoController extends Controller
             case 'Update':
                 $recordIds = $request->get('ids');
                 $newStatus = $request->get('Status');
+
+                if($recordIds == null){
+                    return redirect()->back()->with("destroy","Please select data gr first. Try again!");
+                }
+                
                 $dispute = good_receipt::all()->where("Status", "Dispute")->count();
 
                 $good_receipts = [];
@@ -87,4 +93,5 @@ class PoController extends Controller
     {
         return view('admin.po.dispsuted');
     }
+
 }

@@ -18,7 +18,7 @@
             <div class="animated fadeIn">
                 <!-- Widgets  -->
                 <div class="row mt-4">
-                    <div class="col-lg-3 col-md-6">
+                    <div class="col-lg-4 col-md-6">
                         <div class="card">
                             <div class="card-body">
                                 <div class="stat-widget-five">
@@ -37,7 +37,7 @@
                         </div>
                     </div>
 
-                    <div class="col-lg-3 col-md-6">
+                    <div class="col-lg-4 col-md-6">
                         <div class="card">
                             <div class="card-body">
                                 <div class="stat-widget-five">
@@ -56,7 +56,7 @@
                         </div>
                     </div>
 
-                    <div class="col-lg-3 col-md-6">
+                    <div class="col-lg-4 col-md-6">
                         <div class="card">
                             <div class="card-body">
                                 <div class="stat-widget-five">
@@ -75,7 +75,7 @@
                         </div>
                     </div>
 
-                    <div class="col-lg-3 col-md-6">
+                    <div class="col-lg-4 col-md-6">
                         <div class="card">
                             <div class="card-body">
                                 <div class="stat-widget-five">
@@ -92,9 +92,9 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-3 col-md-6">
+                    <div class="col-lg-4 col-md-6">
                         <div class="card">
-                            <div class="card-body">
+                            <div class="card-body">     
                                 <div class="stat-widget-five">
                                     <div class="stat-icon dib flat-color-6">
                                         <i class='fa fa-users'></i>
@@ -109,14 +109,31 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-lg-9 col-md-6">
+                        {{-- <div class="card">
+                            <div class="card-body">
+                                <div class="stat-widget-five">
+                                    <div class="stat-icon dib flat-color-6">
+                                        {{-- <i class='fa fa-users'></i> --}}
+                                    {{-- </div>
+                                    <div class="stat-content">
+                                        <div class="text-left dib">
+                                            {{-- <div class="stat-heading"><strong> Vendor</strong></div>
+                                            <div class="stat-text"><strong class="count">{{ $vendor}}</strong></div> --}}
+                                        {{-- </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> --}}
+                    </div>
 
                     <div class="col-lg-6 col-md-6">
-                    <div class="card bg-info card-outline-danger text">
+                    <div class="card bg-light card-outline-danger text">
                         <span class="pull-right clickable close-icon text-right" data-effect="fadeOut"><i class="fa fa-times"></i></span>
                         <div class="card-block text-white">
                           <blockquote class="card-blockquote text-white">
-                            <h5 class=""><strong> Description: </strong></h5>
-                            <p style="font-size: 13px;"><strong> 1. Terdapat {{ $not_ver}} Data GR dokumen yang harus di Verified.</strong></p>
+                            <p style="font-size: 14px;"><strong>&nbsp; Description: </strong></p>
+                            <p style="font-size: 13px;"><strong>&nbsp; 1. Terdapat {{ $not_ver}} Data GR dokumen yang harus di Verified.</strong></p>
                           </blockquote>
                         </div>
                       </div>

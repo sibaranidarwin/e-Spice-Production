@@ -55,7 +55,7 @@
                 <div class="card">
                     @if($message = Session::get('destroy'))
                     <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                        <strong>Success!</strong> {{$message}}
+                        <strong>Error!</strong> {{$message}}
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -68,8 +68,8 @@
                         </button>
                     </div>
                     @elseif($message = Session::get('warning'))
-                    <div class="alert alert-primary alert-dismissible fade show" role="alert">
-                        <strong>Success!</strong> {{$message}}
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        <strong>Error!</strong> {{$message}}
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -194,7 +194,9 @@
             { orderable: true, className: 'reorder', targets: 1 },
             { orderable: true, className: 'reorder', targets: 6 },
             { orderable: false, targets: '_all' }
-                    ]
+                    ],
+            lengthMenu: [[10, 25, 50, -1],[10, 25, 50, 'All'],],
+
         });
     
         // Refilter the table

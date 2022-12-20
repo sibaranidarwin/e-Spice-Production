@@ -83,19 +83,17 @@ label {
                     </div>
                     <div class="card-body">
                         <div class="table-responsive text-nowrap">
-                            <div class="row">
-                                <div class="form-group col-3 bg-white mb-2">
-                                    <label for="">BA Date:</label>
-                                    <input class="form-group" type="text" id="min" name="min">
+                            <form action="{{ route('vendor-filter') }}" class="form-inline" method="GET">
+                                <div class="form-group mb-2">
+                                  <label for="" >GR Date: &nbsp;</label>
+                                  <input type="date" class="form-control" name="start_date">
                                 </div>
-                                <div class=" form-group col-3 bg-white mb-2">
-                                    <label for="">To:</label>
-                                    <input class="form-group" type="text" id="max" name="max">
+                                <div class="form-group mx-sm-3 mb-2">
+                                  <label for="inputPassword2">To: &nbsp;</label>
+                                  <input type="date" class="form-control" name="end_date">
                                 </div>
-                                {{-- <div class="col-3 mb-2">
-                                    <a href="{{route('exportdraftba')}}" class="btn btn-success sm"><i class="fa fa-cloud-download"></i>&nbsp; Export To Excel</a>
-                                </div> --}}
-                            </div>
+                                <button class="btn btn-primary" type="submit">Submit</button>
+                              </form>
                             <form action="{{ route('update-datagr-vendor/{id_gr}') }}" method="POST">
                                 @csrf
                                 <table id="list" class="table table-striped" style="font-size: 10px;">
@@ -108,8 +106,8 @@ label {
                                             <th>Date</th>
                                             <th>PO</th>
                                             <th>GR Number</th>
-                                            <th>Part Number</th>
                                             <th>GR Date</th>
+                                            <th>Part Number</th>
                                             <th>Mat. Desc.</th>
                                             <th>Header Text</th>
                                             <th>Quantity</th>
@@ -126,10 +124,10 @@ label {
                                             <td><span>{{$item->status_invoice_proposal}}</span></td>
                                             <td>{{ $item->no_draft}}</td>
                                             <td><span>{{ Carbon\Carbon::parse($item->created_at)->format('d F Y') }}</span></td>
-                                            <td><span>{{$item->po_number}}/{{$item->po_item}}</span></td>
+                                            <td><span>{{$item->po_number}} /{{$item->po_item}}</span></td>
                                             <td><span>{{$item->gr_number}}</span></td>
-                                            <td><span>{{$item->material_number}} /{{$item->vendor_part_number}}</span></td>
                                             <td><span>{{ Carbon\Carbon::parse($item->gr_date)->format('d F Y') }}</span></td>
+                                            <td><span>{{$item->material_number}} /{{$item->vendor_part_number}}</span></td>
                                             <td><span>{{$item->mat_desc}} ({{$item->valuation_type}})</span></td>
                                             <td><span>{{$item->doc_header_text}}</span></td>
                                             <td><span>{{$item->jumlah}}</span></td>
@@ -237,7 +235,14 @@ $(document).ready(function() {
     });
 
     // DataTables initialisation
-    var table = $('#list').DataTable();
+    var table = $('#list').DataTable({
+        rowReorder: true,
+             columnDefs: [
+            { orderable: true, className: 'reorder', targets: 0 },
+            { orderable: true, className: 'reorder', targets: 6 },
+            { orderable: false, targets: '_all' }
+                    ]
+    });
 
     // Refilter the table
     $('#min, #max').on('change', function() {

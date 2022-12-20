@@ -61,7 +61,7 @@ label {
                             <label class="form-control-label" for="Material_Number[]">Total DDP</label>
                             <input type="text" class="form-control @error('Material_Number[]') is-invalid @enderror"
                                 name="Material_Number[]" placeholder="Masukkan Tanggal ..."
-                                value="{{ $invoice->total_harga_gross }}" readonly>
+                                value="Rp{{ $invoice->total_harga_gross }}" readonly>
                             @error('Material_Number[]')<span
                                 class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                         </div>
@@ -90,7 +90,7 @@ label {
                         <div class="form-group col-md-6">
                             <label class="form-control-label" for="ppn[]">PPN</label>
                             <input type="text" class="form-control @error('ppn[]') is-invalid @enderror"
-                                name="ppn[]" placeholder="Masukkan Tanggal ..." value="{{ $invoice->ppn }}" readonly>
+                                name="ppn[]" placeholder="Masukkan Tanggal ..." value="Rp{{ $invoice->ppn }}" readonly>
                             @error('ppn[]')<span
                                 class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                         </div>
@@ -116,9 +116,9 @@ label {
                                 class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                         </div>
                         <div class="form-group col-md-6">
-                            <label class="form-control-label" for="del_costs[]">Selisih Harga</label> <br>
+                            <label class="form-control-label" for="del_costs[]">Price Difference</label> <br>
                             <input type="text" class="form-control @error('del_costs[]') is-invalid @enderror"
-                                name="del_costs[]"  value="{{ $invoice->del_costs}}" readonly>
+                                name="del_costs[]"  value="Rp{{ $invoice->del_costs}}" readonly>
                             @error('del_costs[]')<span
                                 class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                         </div>
@@ -129,28 +129,26 @@ label {
                     <table id="list" class="table table-stats order-table ov-h">
                         <thead>
                             <tr>
-                                <th>GR Number</th>
+                                <th>Sts. GR</th>
                                 <th>PO</th>
-                                <th>GR Slip Date</th>
-                                <th>Material Number</th>
-                                <th>Harga Satuan</th>
-                                <th>Jumlah</th>
-                                <th>Tax Code</th>
-                                <th>Status</th>
+                                <th>GR Number</th>
+                                <th>GR Date</th>
+                                <th>Part Number</th>
+                                <th>QTY UoM</th>
+                                <th>Price</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach($invoices as $invoice)
                             <tr>
-                                <td> <span class="">{{$invoice->gr_number}}</span> </td>
-                                <td> <span class="">{{$invoice->no_po}} /{{$invoice->po_item}}</span> </td>
-                                {{-- <td> <span class="">{{$invoice->po_item}}</span> </td> --}}
-                                <td><span>{{ Carbon\Carbon::parse($invoice->gr_date)->format('d F Y') }}</span></td>
-                                <td> <span class="">{{$invoice->material_number}}</span>
-                                <td> <span class="">{{$invoice->harga_satuan}}</span>
-                                <td> <span class="">{{$invoice->jumlah}}</span></td>
-                                <td> <span class="">{{$invoice->tax_code}}</span></td>
+                                
                                 <td> <span class="">{{ $invoice->status }}</span></td>
+                                <td> <span class="">{{$invoice->no_po}} /{{$invoice->po_item}}</span> </td>
+                                <td> <span class="">{{$invoice->gr_number}}</span> </td>
+                                <td><span>{{ Carbon\Carbon::parse($invoice->gr_date)->format('d F Y') }}</span></td>
+                                <td> <span class="">{{$invoice->material_number}} /{{$invoice->vendor_part_number}}</span>
+                                <td> <span class="">{{$invoice->jumlah}}&nbsp;{{$invoice->uom}} </span></td>
+                                <td style="text-align: right;"> <span class="">Rp{{number_format($invoice->harga_satuan)}}</span>
                             </tr>
                             @endforeach
                             </select>

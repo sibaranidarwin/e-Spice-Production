@@ -168,15 +168,16 @@ iframe {
   justify-content: center;
   align-items: center;
   padding: 15px;
+  /* border-bottom: solid #333333; */
   background: #4043bc;
 }
 
 .wrap-login100 {
   width: 960px;
   background: #fff;
-  border-radius: 10px;
+  /* border-radius: 10px; */
   overflow: hidden;
-
+  /* border: solid #; */
   display: -webkit-box;
   display: -webkit-flex;
   display: -moz-box;

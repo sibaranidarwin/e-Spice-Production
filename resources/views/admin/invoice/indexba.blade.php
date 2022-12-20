@@ -1,3 +1,6 @@
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.2/moment.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.5.6/js/dataTables.buttons.min.js"></script>
@@ -7,12 +10,12 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.html5.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.print.min.js"></script>
+<script src="https://cdn.datatables.net/datetime/1.1.2/js/dataTables.dateTime.min.js"></script>
 
 @extends('admin.layouts.app')
 @section('content')
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
-<link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.6/css/buttons.dataTables.min.css">
-<link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
+<link rel="stylesheet" href="{{asset('admin/assets/css/datatable.css')}}">
+
 <link rel="stylesheet" href="https://cdn.datatables.net/datetime/1.1.2/css/dataTables.dateTime.min.css">
 <link rel="stylesheet" href="{{asset('assets/css/argon-dashboard.css')}}">
 
@@ -20,7 +23,7 @@
 .table td,
 .table th,
 label {
-    font-size: 11.4px;
+    font-size: 11px;
 }
 </style>
 <div class="breadcrumbs">
@@ -38,7 +41,7 @@ label {
                     <div class="page-title">
                         <ol class="breadcrumb text-right">
                             <li><a href="#">Dashboard</a></li>
-                            <li><a href="#">Invoice BA</a></li>
+                            <li><a href="#">Invoice Proposal BA</a></li>
                             <li class="active">Show</li>
                         </ol>
                     </div>
@@ -80,19 +83,31 @@ label {
                     </div>
                     <div class="card-body">
                         <div class="table-responsive text-nowrap">
+                            <div class="row">
+                                <div class="form-group col-3 bg-white mb-2">
+                                    <label for="">Invoice Date: </label>
+                                    <input class="form-group" type="text" id="min" name="min">
+                                </div> 
+                                <div class=" form-group col-3 bg-white mb-2">
+                                    <label for="">To: </label>
+                                    <input class="form-group" type="text" id="max" name="max">
+                                </div>
+                            </div>
                             <form action="{{ route('update-datagr-vendor/{id_gr}') }}" method="POST">
                                 @csrf
                                 <table id="list" class="table table-striped" style="font-size: 10px;">
                                     <thead>
                                         <tr>
                                             <th class="serial">No</th>
-                                            <th>Tanggal Invoice</th>
-                                            <th>No Invoice</th>
-                                            <th>No Faktur Pajak</th>
-                                            <th>No E-Verify</th>
+                                            <th>Sts. Upload SAP</th>
+                                            <th>Sts. Inv. Props.</th>
+                                            <th>Invoice Proposal No</th>
+                                            <th>Invoice Date</th>
+                                            <th>Invoice No</th>
+                                            <th>VAT NO</th>
+                                            {{-- <th>No E-Verify</th> --}}
                                             <th>Total PPN</th>
-                                            <th>Total Harga</th>
-                                            <th>Status Upload Sap</th>
+                                            <th>Total Price</th>
 
                                             <!-- <th class="text-center">Reference</th> -->
                                             <!-- <th class="text-center">Vendor Part Number</th>
@@ -111,23 +126,25 @@ label {
                                         @foreach($invoice as $item)
                                         <tr>
                                             <td class="serial">{{++$i}}</td>
-                                            <td>{{$item['posting_date'] }}</td>
+                                            <td>{{$item['status']}}</td>
+                                            <td>{{$item['status_invoice_proposal'] }}</td>
+                                            <td>{{$item['no_invoice_proposal'] }}</td>
+                                            <td><span>{{ Carbon\Carbon::parse($item['posting_date'])->format('d F Y') }}</span></td>
                                             <td>{{$item['vendor_invoice_number'] }}</td>
                                             <td>{{$item['faktur_pajak_number'] }}</td>
-                                            <td>{{$item['everify_number'] }}</td>
-                                            <td>{{$item['ppn']}}</td>
-                                            <td>{{$item['total_harga_everify'] }}</td>
-                                            <td>{{$item['status']}}</td>
+                                            {{-- <td>{{$item['everify_number'] }}</td> --}}
+                                            <td>Rp{{$item['ppn']}}</td>
+                                            <td>Rp{{number_format($item['total_harga_everify']) }}</td>
                                             <td>
                                                 <a href="/admin/detail-invoice-ba/{{$item->id_inv}}"
-                                                    class="btn btn-info btn-sm">Detail</a> 
+                                                    class="btn btn-info btn-sm">Det.</a> 
                                                 <a href="/admin/cetak_pdf_ba/{{$item->id_inv}}" class="btn btn-secondary btn-sm">Print</a>
                                             </td>
                                         </tr>
                                         @endforeach
                                     </tbody>
                                 </table>
-                                &nbsp;&nbsp;&nbsp;<a href="" class="btn btn-success mb-2">Upload SAP</a>
+                                {{-- &nbsp;&nbsp;&nbsp;<a href="" class="btn btn-success mb-2">Upload SAP</a> --}}
                                 {{-- <div class="row">
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<div class="col-md-1 mb-2"><a href=""
                                     class="btn btn-primary">Upload SAP</a></div>
@@ -162,11 +179,69 @@ label {
 
 </div><!-- /#right-panel -->
 
-<script type="text/javascript">
-$(document).ready(function() {
-    $('#list').DataTable();
 
-});
+<script type="text/javascript">
+    var minDate, maxDate;
+    
+    // Custom filtering function which will search data in column four between two values
+    $.fn.dataTable.ext.search.push(
+        function(settings, data, dataIndex) {
+            var min = minDate.val();
+            var max = maxDate.val();
+            var date = new Date(data[4]);
+    
+            if (
+                (min === null && max === null) ||
+                (min === null && date <= max) ||
+                (min <= date && max === null) ||
+                (min <= date && date <= max)
+            ) {
+                return true;
+            }
+            return false;
+        }
+    );
+    
+    $(document).ready(function() {
+    
+        // Create date inputs
+        minDate = new DateTime($('#min'), {
+            format: 'DD MM YYYY'
+        });
+        maxDate = new DateTime($('#max'), {
+            format: 'DD MM YYYY'
+        });
+    
+        // DataTables initialisation
+        var table = $('#list').DataTable({
+            rowReorder: true,
+             columnDefs: [
+            { orderable: true, className: 'reorder', targets: 0 },
+            { orderable: false, targets: '_all' }
+                    ],
+            lengthMenu: [[10, 25, 50, -1],[10, 25, 50, 'All'],],
+
+        }
+            // {
+            //     dom: "<'row'<'col-md-2 bg-white'l><'col-md-5 bg-white'B><'col-md-5 bg-white'f>>" +
+            //         "<'row'<'col-md-12'tr>>" +
+            //         "<'row'<'col-md-6'i><'col-md-6'p>>",
+            //     buttons: [{
+            //         extend: 'excelHtml5',
+            //         autoFilter: true,
+            //         sheetName: 'Exported data'
+            //     }]
+            // }
+        );
+    
+        // Refilter the table
+        $('#min, #max').on('change', function() {
+            table.draw();
+        });
+    
+    
+    });
+
 
 function checkAll(box) {
     let checkboxes = document.getElementsByTagName('input');

@@ -61,7 +61,7 @@ label {
                             <label class="form-control-label" for="Material_Number[]">Total DDP</label>
                             <input type="text" class="form-control @error('Material_Number[]') is-invalid @enderror"
                                 name="Material_Number[]" placeholder="Masukkan Tanggal ..."
-                                value="{{ $invoice->total_harga_gross }}" readonly>
+                                value="Rp{{ $invoice->total_harga_gross }}" readonly>
                             @error('Material_Number[]')<span
                                 class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                         </div>
@@ -90,7 +90,7 @@ label {
                         <div class="form-group col-md-6">
                             <label class="form-control-label" for="ppn[]">PPN</label>
                             <input type="text" class="form-control @error('ppn[]') is-invalid @enderror"
-                                name="ppn[]" placeholder="Masukkan Tanggal ..." value="{{ $invoice->ppn }}" readonly>
+                                name="ppn[]" placeholder="Masukkan Tanggal ..." value="Rp{{ $invoice->ppn }}" readonly>
                             @error('ppn[]')<span
                                 class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                         </div>
@@ -104,7 +104,7 @@ label {
                         <div class="form-group col-md-6">
                             <label class="form-control-label" for="total_harga_gross[]">Total Price</label> <br>
                             <input type="text" class="form-control @error('total_harga_gross[]') is-invalid @enderror"
-                                name="total_harga_gross[]" placeholder="Masukkan Tanggal ..." value="{{ $invoice->total_harga_everify }}" readonly>
+                                name="total_harga_gross[]" placeholder="Masukkan Tanggal ..." value="Rp{{ number_format($invoice->total_harga_everify) }}" readonly>
                             @error('total_harga_gross[]')<span
                                 class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                         </div>
@@ -116,9 +116,9 @@ label {
                                 class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                         </div>
                         <div class="form-group col-md-6">
-                            <label class="form-control-label" for="del_costs[]">Price gap</label> <br>
+                            <label class="form-control-label" for="del_costs[]">Price Difference</label> <br>
                             <input type="text" class="form-control @error('del_costs[]') is-invalid @enderror"
-                                name="del_costs[]"  value="{{ $invoice->del_costs}}" readonly>
+                                name="del_costs[]"  value="Rp{{ $invoice->del_costs}}" readonly>
                             @error('del_costs[]')<span
                                 class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                         </div>
@@ -129,11 +129,16 @@ label {
                     <table id="list" class="table table-stats order-table ov-h">
                         <thead>
                             <tr>
+                                <th>Status</th>
                                 <th>BA Number</th>
-                                <th>PO Number</th>
-                                <th>PO Item</th>
+                                <th>PO </th>
+                                <th>GR Number</th>
                                 <th>GR Date</th>
-                                <th>Material</th>
+                                <th>Part Number</th>
+                                <th>Mat. Desc.</th>
+                                <th>QTY UoM</th>
+                                <th>Price</th>
+
                                 <!-- <th class="text-center">Reference</th> -->
                                 <!-- <th class="text-center">Vendor Part Number</th>
                                         <th class="text-center">Item Description</th>
@@ -144,18 +149,21 @@ label {
                                 <!-- <th class="text-center">Jumlah Harga</th> -->
                                 {{-- <th>Tax Code</th> --}}
                                 <!-- <th class="text-center">Valuation Type</th> -->
-                                <th>Status</th>
+
                             </tr>
                         </thead>
                         <tbody>
                             @foreach($invoices as $ba)
                             <tr>
-                                <td><span class="name">{{$ba->no_ba}}</span> </td>
-                                <td> <span class="">{{$ba->po_number}}</span> </td>
-                                <td> <span class="">{{$ba->item}}</span> </td>
-                                <td><span>{{ Carbon\Carbon::parse($ba->gr_date)->format('d F Y') }}</span></td>
-                                <td> <span class="">{{$ba->material_description}}</span></td>
                                 <td>{{ $ba->status_ba }}</td>
+                                <td><span class="name">{{$ba->no_ba}}</span> </td>
+                                <td> <span class="">{{$ba->po_number}} /{{$ba->item}}</span> </td>
+                                <td><span class="name">{{$ba->gr_number}}</span> </td>
+                                <td><span>{{ Carbon\Carbon::parse($ba->gr_date)->format('d F Y') }}</span></td>
+                                <td> <span class="">{{$ba->material_number}} /{{$ba->vendor_part_number}}</span></td>
+                                <td> <span class="">{{$ba->material_description}} ({{$ba->valuation_type}})</span></td>
+                                <td> <span>{{$ba->qty}}</span>&nbsp;<span>{{$ba->uom}}</span> </td>
+                                <td style="text-align: right;"> <span class="">Rp{{number_format($ba->harga_satuan)}}</span>
                             </tr>
                             @endforeach
                             </select>

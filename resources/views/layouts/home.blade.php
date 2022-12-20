@@ -47,9 +47,9 @@
         <main class="py-4">
             @yield('content')
         </main>
-   <footer>
+   {{-- <footer> --}}
 
-
+{{-- 
        <!-- Footer Start-->
       <div class="footer-main" data-background="assets/img/shape/footer_bg.png">
         <!-- footer-bottom aera -->
@@ -71,7 +71,7 @@
       </div>
        <!-- Footer End-->
 
-   </footer>
+   </footer> --}}
    
     <!-- JS here -->
     

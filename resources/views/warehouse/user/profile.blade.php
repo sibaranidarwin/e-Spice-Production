@@ -1,5 +1,7 @@
 @extends('warehouse.layouts.sidebar')
 @section('content')
+<link rel="stylesheet" href="{{asset('assets/css/argon-dashboard.css')}}">
+
 <div class="breadcrumbs">
     <div class="breadcrumbs-inner">
         <div class="row m-0">
@@ -72,7 +74,7 @@
                                     <label for="">Email</label>
                                     <input type="text" class="form-control" name="email" value="{{$user->email}}">
                                 </div>
-                                <div class="form-group">
+                                <div hidden class="form-group">
                                     <label for="">Password</label>
                                     <input type="password" class="form-control" value="{{$user->password}}" disabled="">
                                     <input type="hidden" name="fotoLama" value="{{$user->foto}}">

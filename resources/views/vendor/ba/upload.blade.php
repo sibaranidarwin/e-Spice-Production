@@ -56,6 +56,28 @@ label {
         <div class="row">
             <div class="col-lg-12">
                 <div class="card">
+                    @if($message = Session::get('destroy'))
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <strong>Success!</strong> {{$message}}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    @elseif($message = Session::get('success'))
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <strong>Success!</strong> {{$message}}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    @elseif($message = Session::get('warning'))
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        <strong>Success!</strong> {{$message}}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    @endif
                     @if (count($errors) > 0)
                     <div class="row">
                         <div class="col-md-12 col-md-offset-1">
@@ -89,19 +111,17 @@ label {
                     </div>
                     <div class="card-body">
                         <div class="table-responsive text-nowrap">
-                            <div class="row">
-                                <div class="form-group col-3 bg-white mb-2">
-                                    <label for="">BA Date:</label>
-                                    <input class="form-group" type="text" id="min" name="min">
+                            {{-- <form action="{{ route('vendor-filter') }}" class="form-inline" method="GET">
+                                <div class="form-group mb-2">
+                                  <label for="" >BA Date: &nbsp;</label>
+                                  <input type="date" class="form-control" name="start_date">
                                 </div>
-                                <div class=" form-group col-3 bg-white mb-2">
-                                    <label for="">To:</label>
-                                    <input class="form-group" type="text" id="max" name="max">
+                                <div class="form-group mx-sm-3 mb-2">
+                                  <label for="inputPassword2">To: &nbsp;</label>
+                                  <input type="date" class="form-control" name="end_date">
                                 </div>
-                                {{-- <div class="col-3 mb-2">
-                                    <button class="btn btn-primary" data-toggle="modal" data-target="#modal-import"><i class="fa fa-cloud-upload"></i>&nbsp; Import Excel</button>
-                                </div> --}}
-                            </div>
+                                <button class="btn btn-primary" type="submit">Submit</button>
+                              </form> --}}
                             <form action="{{ route('update-ba-vendor/{id_gr}') }}" method="POST">
                                 @csrf
                                 <table id="list" class="table table-striped" style="font-size: 10px;">
@@ -116,13 +136,13 @@ label {
                                             <th>GR Number</th>
                                             <th>GR Date</th>
                                             <th>Part Number</th>
-                                            <th>Mat. Desc.</th>
+                                            <th style="width: 10%;">Mat. Desc.</th>
                                             <th>Qty</th>
                                             <th>Price</th>
                                             <th>Total Value</th>
                                             <th>Tax Code</th>
+                                            <th>Ref. </th>
                                             <th>Del. Note</th>
-                                            
                                         </tr>
                                     </thead>
                                     <tbody style="font-size: 11px;">
@@ -130,19 +150,20 @@ label {
                                         @foreach($ba as $item)
                                         <tr>
                                             <td><input type="checkbox" name="ids[]" value="{{$item->id_ba}}"></td>
-                                            <td>{{$i++}}</td>
+                                            <td><span>{{$i++}}</span></td>
                                             <td><span>{{$item->status_ba}}</span></td>
                                             <td><span>{{$item->status_invoice_proposal}}</span></td>
                                             <td><span>{{ Carbon\Carbon::parse($item->created_at)->format('d F Y') }}</span></td>
                                             <td><span>{{$item->po_number}}/{{$item->item}}</span></td>
                                             <td><span>{{$item->gr_number}}</span></td>
                                             <td><span>{{ Carbon\Carbon::parse($item->gr_date)->format('d F Y') }}</span></td>
-                                            <td><span>{{$item->material_description}} <br>({{$item->valuation_type}})</span></td>
-                                            <td><span>{{$item->material_number}}/{{$item->vendor_part_number}}</span></td>
+                                            <td><span>{{$item->material_number}} /{{$item->vendor_part_number}}</span></td>
+                                            <td><span>{{$item->material_description}} /({{$item->valuation_type}})</span></td>
                                             <td><span>{{$item->qty}} {{$item->uom}}</span></td>
                                             <td style="text-align: right"><span>Rp{{ number_format($item->harga_satuan) }}</span></td> 
                                             <td style="text-align: right"><span>Rp{{ number_format($item->jumlah_harga) }}</span></td> 
                                             <td><span>{{$item->tax_code}}</span></td>
+                                            <td><span>{{$item->ref_doc_no}}</span></td>
                                             <td><span>{{$item->delivery_note}}</span></td>
                                         </tr>
                                         @endforeach
@@ -245,7 +266,16 @@ $(document).ready(function() {
     });
 
     // DataTables initialisation
-    var table = $('#list').DataTable();
+    var table = $('#list').DataTable({
+        rowReorder: true,
+             columnDefs: [
+            { orderable: true, className: 'reorder', targets: 1 },
+            { orderable: true, className: 'reorder', targets: 6 },
+            { orderable: false, targets: '_all' }
+                    ],
+            lengthMenu: [[10, 25, 50, -1],[10, 25, 50, 'All'],],
+
+    });
 
     // Refilter the table
     $('#min, #max').on('change', function() {

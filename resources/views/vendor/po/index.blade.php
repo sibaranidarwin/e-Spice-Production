@@ -25,6 +25,8 @@
         font-size: 11px;
     }
 </style>
+<link rel="stylesheet" href="{{asset('assets/css/argon-dashboard.css')}}">
+
 <div class="breadcrumbs">
     <div class="breadcrumbs-inner">
         <div class="row m-0">
@@ -70,7 +72,7 @@
                         </button>
                     </div>
                     @elseif($message = Session::get('warning'))
-                    <div class="alert alert-primary alert-dismissible fade show" role="alert">
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
                         <strong>Success!</strong> {{$message}}
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
@@ -82,19 +84,17 @@
                     </div>
                     <div class="card-body">
                     <div class="table-responsive text-nowrap">
-                        <div class="row">
-                            <div class="col-3 bg-white mb-3">
-                                <label for="">GR Date : </label>
-                                <input type="text" id="min" name="min"> 
-                            </div> 
-                            <div class="col-2 bg-white mb-4">
-                                <label for="">To : </label>
-                                <input type="text" id="max" name="max">
+                        <form action="{{ route('vendor-filter') }}" class="form-inline" method="GET">
+                            <div class="form-group mb-2">
+                              <label for="" >GR Date: &nbsp;</label>
+                              <input type="date" class="form-control" name="start_date">
                             </div>
-                            <div class="col-4">
-                                <label for=""> </label>
+                            <div class="form-group mx-sm-3 mb-2">
+                              <label for="inputPassword2">To: &nbsp;</label>
+                              <input type="date" class="form-control" name="end_date">
                             </div>
-                        </div>
+                            <button class="btn btn-primary" onclick="return confirm('Are you sure?')" type="submit">Submit</button>
+                          </form>
                         <form action="{{ route('update-datagr-vendor/{id_gr}') }}" method="POST">
                             @csrf
                             <table id="list" class="table table-striped" style="width:100%; font-size: 10px;">
@@ -156,7 +156,7 @@
                                 <div class="col-6">
                                 </div>
                                 <div class="col-lg-6 col-md-6">
-                                    <div class="card bg-info card-outline-danger text-cen">
+                                    <div class="card bg-light card-outline-danger text-cen">
                                         <span class="pull-right clickable close-icon text-right" data-effect="fadeOut"><i class="fa fa-times"></i></span>
                                         <div class="card-block text-white">
                                           <blockquote class="card-blockquote text-white">
@@ -250,20 +250,13 @@
         });
         // DataTables initialisation
         var table = $('#list').DataTable({
-            // dom: "<'row'<'col-md-2 bg-white'l><'col-md-5 bg-white'B><'col-md-5 bg-white'f>>" +
-            //     "<'row'<'col-md-12'tr>>" +
-            //     "<'row'<'col-md-6'i><'col-md-6'p>>",
-            // buttons: [{
-            //     extend: 'excelHtml5',
-            //     autoFilter: true,
-            //     sheetName: 'Exported data'
-            // }]
             rowReorder: true,
              columnDefs: [
             { orderable: true, className: 'reorder', targets: 1 },
             { orderable: true, className: 'reorder', targets: 6 },
             { orderable: false, targets: '_all' }
-                    ]
+                    ],
+            lengthMenu: [[10, 25, 50, -1],[10, 25, 50, 'All'],],
         });
     
         // Refilter the table
