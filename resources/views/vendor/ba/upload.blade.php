@@ -72,7 +72,7 @@ label {
                     </div>
                     @elseif($message = Session::get('warning'))
                     <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                        <strong>Success!</strong> {{$message}}
+                        <strong>Error!</strong> {{$message}}
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -105,29 +105,19 @@ label {
                     <div class="card-header">
                         @foreach($ba as $item)
                         @endforeach
-                        <strong class="card-title">BA Reconcile : {{$item->no_ba}}</strong>
+                        <strong class="card-title">No BA Reconcile : {{$item->no_ba}}</strong>
                         <br>
                         <strong class="card-title">Created Ba Reconcile : {{ Carbon\Carbon::parse($item->created_at)->format('d F Y') }}</strong>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive text-nowrap">
-                            {{-- <form action="{{ route('vendor-filter') }}" class="form-inline" method="GET">
-                                <div class="form-group mb-2">
-                                  <label for="" >BA Date: &nbsp;</label>
-                                  <input type="date" class="form-control" name="start_date">
-                                </div>
-                                <div class="form-group mx-sm-3 mb-2">
-                                  <label for="inputPassword2">To: &nbsp;</label>
-                                  <input type="date" class="form-control" name="end_date">
-                                </div>
-                                <button class="btn btn-primary" type="submit">Submit</button>
-                              </form> --}}
                             <form action="{{ route('update-ba-vendor/{id_gr}') }}" method="POST">
                                 @csrf
                                 <table id="list" class="table table-striped" style="font-size: 10px;">
                                     <thead>
                                         <tr>
                                             <th><input type="checkbox" onchange="checkAll(this)"></th>
+                                            <th hidden></th>
                                             <th>No</th>
                                             <th>Sts. BA</th>
                                             <th>Sts. Inv. Props.</th>
@@ -150,6 +140,7 @@ label {
                                         @foreach($ba as $item)
                                         <tr>
                                             <td><input type="checkbox" name="ids[]" value="{{$item->id_ba}}"></td>
+                                            <td hidden><input type="text" name="no_ba" value="{{$item->no_ba}}"></td>
                                             <td><span>{{$i++}}</span></td>
                                             <td><span>{{$item->status_ba}}</span></td>
                                             <td><span>{{$item->status_invoice_proposal}}</span></td>

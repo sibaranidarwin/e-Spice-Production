@@ -79,20 +79,22 @@ label {
                     </div>
                     @endif
                     <div class="card-header">
-                        <strong class="card-title">Draft BA Reconcile List</strong>
+                        <strong class="card-title">Draft BA List <i class="fa fa-list"></i></strong>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive text-nowrap">
                             <form action="{{ route('vendor-filter') }}" class="form-inline" method="GET">
-                                <div class="form-group mb-2">
-                                  <label for="" >Draft BA Date: &nbsp;</label>
+                                <div class="form-group col-md-3">
+                                    </div>
+                                <div class="form-group">
+                                  <label for="" >Date: &nbsp;</label>
                                   <input type="date" class="form-control" name="start_date">
                                 </div>
-                                <div class="form-group mx-sm-3 mb-2">
+                                <div class="form-group mx-sm-3">
                                   <label for="inputPassword2">To: &nbsp;</label>
                                   <input type="date" class="form-control" name="end_date">
                                 </div>
-                                <button class="btn btn-primary" type="submit">Submit</button>
+                                <button class="btn btn-primary" type="submit"><i class="fa fa-search"></i></button>
                               </form>
                             <form action="" method="POST">
                                 @csrf

@@ -118,7 +118,7 @@ label {
                                             <td>{{$item['faktur_pajak_number'] }}</td>
                                             {{-- <td>{{$item['everify_number'] }}</td> --}}
                                             <td style="text-align: right">Rp{{$item['ppn']}}</td>
-                                            <td>Rp{{number_format($item['total_harga_everify']) }}</td>
+                                            <td style="text-align: right">Rp{{number_format($item['total_harga_everify']) }}</td>
                                             <td>
                                                 <a href="/warehouse/detail-invoice-ba/{{$item->id_inv}}"
                                                     class="btn btn-info btn-sm">Det.</a> 

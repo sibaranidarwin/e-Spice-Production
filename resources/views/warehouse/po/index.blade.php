@@ -99,7 +99,6 @@
                                     <th style="text-align: center;">Tax Code</th>
                                     <th style="text-align: center;">Reference</th>
                                     <th style="text-align: center;">Del. Note</th>
-                                    
                                 </tr>
                                 </thead>
                                 <tbody style="font-size: 11px;">

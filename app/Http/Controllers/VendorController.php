@@ -82,7 +82,7 @@ public function puchaseorderreject()
             $user_vendor = Auth::User()->id_vendor;
             $good_receipts = good_receipt::whereBetween('gr_date',[$start_date,$end_date])->where('id_vendor', $user_vendor)->where('id_inv',0)->where(function($query) {
                 $query->where('status','Verified')
-                            ->orWhereNull('status');})->orderBy('updated_at', 'ASC')->get();
+                            ->orWhereNull('status');})->orderBy('gr_date', 'ASC')->get();
         } else {
             $user_vendor = Auth::User()->id_vendor;
 
@@ -261,11 +261,18 @@ public function puchaseorderreject()
 
     public function editba(Request $request){
         $recordIds = $request->get('ids');
-        
+        $no_ba = $request->get('no_ba');
+        // dd($no_ba);
+        $user_vendor = Auth::User()->id_vendor;
+        $ba = BA_Reconcile::where("no_ba", $no_ba)->where("id_vendor", $user_vendor)->where('status_invoice_proposal', 'Not Yet Verified - BA')->get();
+      
         if($recordIds == null){
             return redirect()->back()->with("warning","Please select data BA first. Try again!");
         }
-
+        elseif(count($recordIds) < count($ba)){
+             return redirect()->back()->with("warning","Please select all data Draft BA first. Try again!");
+        } 
+        elseif(count($recordIds) >= count($ba)){
         //buat kode otomatis
         $q = DB::table('invoice')->select(DB::raw('MAX(RIGHT(no_invoice_proposal, 4)) as kode'));
 
@@ -307,6 +314,7 @@ public function puchaseorderreject()
 
         return view('vendor.po.editba', compact('bas', 'total_dpp', 'total_ppn', 'total_harga', 'kd', 'bln'));
     }
+    }
 
      public function update(Request $request)
      {
@@ -314,7 +322,7 @@ public function puchaseorderreject()
          foreach($request->id as $id) {
              $good_receipt = good_receipt::find($id);
              $good_receipt->update([
-                 'status' => 'Dispute',
+                 'status' => 'Disputed',
                  'alasan_disp' => $request->alasan_disp
              ]);
              $good_receipt->save();
@@ -347,10 +355,14 @@ public function puchaseorderreject()
         {
             $kd = date('d-m-Y').'-'."0001";
         }
+
         
         $request->validate([
         'posting_date'  => 'required','date','before:now',
         'vendor_invoice_number'  => 'required',
+        'unplan_cost'       => '',
+        'currency' => '',
+        'total_doc_invoice' => 'required',
         'no_invoice_proposal' => "required",
         'faktur_pajak_number'  => 'required',
         'total_harga_gross' => 'required',
@@ -359,7 +371,9 @@ public function puchaseorderreject()
         'id_vendor' => '',
         'status_invoice_proposal' =>'',
     ]);
-
+    $price_diff = $request->get('del_costs');
+    // dd($price_diff);
+   
     $Invoice = Invoice::create($request->all());
 
     foreach($request->id as $id) {
@@ -403,6 +417,7 @@ public function puchaseorderreject()
         'vendor_invoice_number'  => 'required',
         'no_invoice_proposal' => "required",
         'faktur_pajak_number'  => 'required',
+        'currency' => '',
         'total_harga_gross' => '',
         'del_costs' => '',
         'data_from' => '',
@@ -434,9 +449,9 @@ public function puchaseorderreject()
     public function draft()
         {
         $user_vendor = Auth::User()->id_vendor;
-        $duration = 10;
-        $now = date('Y-m-d H:i:s', strtotime("+$duration sec"));
-        $draft = Draft_BA::select('no_draft','status_invoice_proposal')->distinct()->where("id_vendor", $user_vendor)->where("status_invoice_proposal", "Not Yet Verified - Draft BA")->get();
+        
+        $draft = Draft_BA::select('no_draft','status_invoice_proposal', 'created_at')->distinct()->where("id_vendor", $user_vendor)->where("status_invoice_proposal", "Not Yet Verified - Draft BA")->get();
+        // dd($draft);
         return view('Vendor.ba.draft',compact('draft'));
         }
 
@@ -444,8 +459,8 @@ public function puchaseorderreject()
         {
         $user_vendor = Auth::User()->id_vendor;
 
-        $draft = Draft_BA::where("no_draft", $no_draft)->get();
-        // dd($draft);
+        $draft = Draft_BA::where("no_draft", $no_draft)->where('status_invoice_proposal', 'Not Yet Verified - Draft BA')->get();
+        //  dd($draft);
         return view('Vendor.ba.detaildraft',compact('draft'));
         }
 
@@ -505,10 +520,18 @@ public function puchaseorderreject()
 
     public function draftbaexport(Request $request){
         $recordIds = $request->get('ids');
-        // dd($recordIds);
+        $user_vendor = Auth::User()->id_vendor;
+        $no_draft = $request->get('no_draft');
+        $draft = Draft_BA::where("no_draft", $no_draft)->where("id_vendor", $user_vendor)->Where("status_invoice_proposal", "Not Yet Verified - Draft BA")->get();
+      
         if($recordIds == null){
-            return redirect()->back()->with("warning","Please select data Draft BA first. Try again!");
+            return redirect()->back()->with("warning","Please select data BA first. Try again!");
         }
+        elseif(count($recordIds) < count($draft)){
+            return redirect()->back()->with("warning","Please select all data Draft BA first. Try again!");
+        }
+        elseif(count($recordIds) >= count($draft)){
+
         foreach($recordIds as $id) {
             $drafts = Draft_BA::find($id);
             $drafts->update([
@@ -527,6 +550,7 @@ public function puchaseorderreject()
         return Excel::download(new DraftbaExport,'ba.xlsx');
         return view('vendor.ba.detaildraft', compact('draft'));
         // return Excel::download(new DraftbaExport,'ba.xlsx');
+    }
     }
     
     public function export(){
@@ -578,8 +602,11 @@ public function puchaseorderreject()
                                     "goods_receipt.harga_satuan",
                                     "goods_receipt.jumlah",
                                     "goods_receipt.uom",
+                                    "goods_receipt.currency",
                                     "goods_receipt.tax_code",
+                                    "goods_receipt.mat_desc",
                                     "goods_receipt.status",
+                                    "goods_receipt.valuation_type",
                                     "invoice.id_inv", 
                                     "invoice.posting_date", 
                                     "invoice.baselinedate",
@@ -588,6 +615,8 @@ public function puchaseorderreject()
                                     "invoice.faktur_pajak_number",
                                     "invoice.total_harga_everify",
                                     "invoice.ppn",
+                                    "invoice.total_doc_invoice",
+                                    "invoice.unplan_cost",
                                     "invoice.del_costs",
                                     "invoice.total_harga_gross",
                                     "invoice.created_at"
@@ -658,6 +687,7 @@ public function puchaseorderreject()
                                     "ba_reconcile.gr_date",
                                     "ba_reconcile.harga_satuan",
                                     "ba_reconcile.qty",
+                                    "ba_reconcile.currency",
                                     "ba_reconcile.valuation_type",
                                     "ba_reconcile.uom",
                                     "ba_reconcile.tax_code",
@@ -671,6 +701,7 @@ public function puchaseorderreject()
                                     "invoice.faktur_pajak_number",
                                     "invoice.total_harga_everify",
                                     "invoice.ppn",
+                                    "invoice.total_doc_invoice",
                                     "invoice.del_costs",
                                     "invoice.total_harga_gross",
                                     "invoice.created_at"

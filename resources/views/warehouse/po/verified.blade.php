@@ -141,6 +141,21 @@ a[disabled="disabled"] {
                                         </select>
                                     </tbody>
                                 </table>
+                                <div class="row mt-2">
+                                    <div class="col-6">
+                                    </div>
+                                    <div class="col-lg-6 col-md-6">
+                                        <div class="card bg-light card-outline-danger text-cen">
+                                            <span class="pull-right clickable close-icon text-right" data-effect="fadeOut"><i class="fa fa-times"></i></span>
+                                            <div class="card-block text-white">
+                                              <blockquote class="card-blockquote text-white">
+                                                <p style="font-size: 14px;"><strong>&nbsp; Good receipt status description: </strong></p>
+                                                <p style="font-size: 13px;"><strong>&nbsp; Verified: good receipt data with certain conditions that have been verified <br> by the warehouse.</strong></p>
+                                                </blockquote>
+                                            </div>
+                                          </div>
+                                        </div>
+                                    </div>
                             </form>
                         </div> <!-- /.table-stats -->
                     </div>
@@ -208,12 +223,17 @@ $(document).ready(function() {
         columnDefs: [{
                 orderable: true,
                 className: 'reorder',
-                targets: 1
+                targets: 0
             },
             {
                 orderable: true,
                 className: 'reorder',
-                targets: 6
+                targets: 4
+            },
+            {
+                orderable: true,
+                className: 'reorder',
+                targets: 5
             },
             {
                 orderable: false,
