@@ -6,14 +6,15 @@
 <script src="https://cdn.datatables.net/buttons/1.5.6/js/dataTables.buttons.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.flash.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.html5.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.print.min.js"></script>
 <script src="https://cdn.datatables.net/datetime/1.1.2/js/dataTables.dateTime.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.3.2/js/buttons.colVis.min.js"></script>
 
 @extends('warehouse.layouts.sidebar')
 @section('content')
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.3.2/css/buttons.dataTables.min.css">
 <link rel="stylesheet" href="{{asset('admin/assets/css/datatable.css')}}">
 
 <link rel="stylesheet" href="{{asset('assets/css/argon-dashboard.css')}}">
@@ -100,7 +101,7 @@ label {
                                             <th style="text-align: center;">Tax Code</th>
                                             <th style="text-align: center;">Reference</th>
                                             <th style="text-align: center;">Del. Note</th>
-                                            
+                                            <th style="text-align: center;">Reason</th>    
                                         </tr>
                                         </thead>
                                         <tbody style="font-size: 11px;">
@@ -119,11 +120,27 @@ label {
                                                 <td> <span>{{$good_receipt->tax_code}}</span> </td>
                                                 <td> <span>{{$good_receipt->ref_doc_no}}</span> </td>
                                                 <td> <span>{{$good_receipt->delivery_note}}</span> </td>
+                                                <td><span>{{$good_receipt->alasan_disp}}</span></td>
                                             </tr>
                                         @endforeach
                                         </select>
                                     </tbody>
                                 </table>
+                                <div class="row mt-2">
+                                    <div class="col-6">
+                                    </div>
+                                    <div class="col-lg-6 col-md-6">
+                                        <div class="card bg-light card-outline-danger text-cen">
+                                            <span class="pull-right clickable close-icon text-right" data-effect="fadeOut"><i class="fa fa-times"></i></span>
+                                            <div class="card-block text-white">
+                                              <blockquote class="card-blockquote text-white">
+                                                <p style="font-size: 14px;"><strong>&nbsp; Good receipt status description: </strong></p>
+                                                <p style="font-size: 13px;"><strong>&nbsp; Rejected: good receipt data that is no longer used because it has certain problems</strong></p>
+                                            </blockquote>
+                                            </div>
+                                          </div>
+                                        </div>
+                                    </div>
                                 {{-- &nbsp;&nbsp;<button type="submit" value="Update" name="action" --}}
                                 {{-- class="btn btn-success">Update Data</button> --}}
                             </form>
@@ -189,24 +206,37 @@ $(document).ready(function() {
 
     // DataTables initialisation
     var table = $('#list').DataTable({
+        lengthMenu: [[10, 25, 50, -1],[10, 25, 50, 'All'],],
+        dom: 'Bfrtip',
+        columnDefs: [
+            {
+                targets: 1,
+                className: 'noVis'
+            }
+        ],
+        buttons: [
+            {
+                extend: 'colvis',
+                columns: ':not(.noVis)'
+            }
+        ],
         rowReorder: true,
         columnDefs: [{
                 orderable: true,
                 className: 'reorder',
-                targets: 1
+                targets: 0
             },
             {
                 orderable: true,
                 className: 'reorder',
-                targets: 6
+                targets: 5
             },
             {
                 orderable: false,
                 targets: '_all'
             }
         ],
-        lengthMenu: [[10, 25, 50, -1],[10, 25, 50, 'All'],],
-
+            
     });
 
     // Refilter the table

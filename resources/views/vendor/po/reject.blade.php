@@ -76,21 +76,31 @@
                     </div>
                     @endif
                     <div class="card-header">
-                        <strong class="card-title">Good Receipt Rejected List</strong>
+                        <strong class="card-title">Rejected List <i class="fa fa-list"></i></strong>
                     </div>
                     <div class="card-body">
                     <div class="table-responsive text-nowrap">
                         <form action="{{ route('vendor-filter') }}" class="form-inline" method="GET">
-                            <div class="form-group mb-2">
+                            <div class="form-group col-md-3">
+
+                            </div>
+                            <div class="form-group">
                               <label for="" >GR Date: &nbsp;</label>
                               <input type="date" class="form-control" name="start_date">
                             </div>
-                            <div class="form-group mx-sm-3 mb-2">
+                            <div class="form-group mx-sm-3">
                               <label for="inputPassword2">To: &nbsp;</label>
                               <input type="date" class="form-control" name="end_date">
                             </div>
-                            <button class="btn btn-primary"  onclick="return confirm('Are you sure?')" type="submit">Submit</button>
-                          </form>
+                            <button class="btn btn-primary"  onclick="return confirm('Are you sure?')" type="submit"><i class="fa fa-search"></i></button>
+                          {{-- <div class="form-group col-md-3">
+                            <select class="form-control status" name="">
+                                <option value="">-- Choose Sts. Inv. Props. -- </option>
+                                <option value="Verified">Verified</option>
+                                <option value="Not Verified">Not Verified</option>
+                            </select>   
+                        </div> --}}
+                    </form>
                         <form action="{{ route('update-datagr-vendor/{id_gr}') }}" method="POST">
                             @csrf
                             <table id="list" class="table table-striped" style="font-size: 10px;">
@@ -111,6 +121,7 @@
                                         <th style="text-align: center;">Tax Code</th>
                                         <th style="text-align: center;">Ref.</th>
                                         <th style="text-align: center;">Del. Note</th>
+                                        <th style="text-align: center;">Reason</th>
                                     </tr>
                                 </thead>
                                 <tbody style="font-size: 11px;">
@@ -130,6 +141,7 @@
                                         <td> <span>{{$good_receipt->tax_code}}</span> </td>
                                         <td> <span>{{$good_receipt->ref_doc_no}}</span> </td>
                                         <td> <span>{{$good_receipt->delivery_note}}</span> </td>
+                                        <td> <span></span> </td>
                                     </tr>
                                     @endforeach
                                     </select>
@@ -165,36 +177,8 @@
 </div><!-- /#right-panel -->
 
 <script type="text/javascript">
-    var minDate, maxDate;
-    
-    // Custom filtering function which will search data in column four between two values
-    $.fn.dataTable.ext.search.push(
-        function(settings, data, dataIndex) {
-            var min = minDate.val();
-            var max = maxDate.val();
-            var date = new Date(data[5]);
-    
-            if (
-                (min === null && max === null) ||
-                (min === null && date <= max) ||
-                (min <= date && max === null) ||
-                (min <= date && date <= max)
-            ) {
-                return true;
-            }
-            return false;
-        }
-    );
     
     $(document).ready(function() {
-    
-        // Create date inputs
-        minDate = new DateTime($('#min'), {
-            format: 'DD MM YYYY'
-        });
-        maxDate = new DateTime($('#max'), {
-            format: 'DD MM YYYY'
-        });
     
         // DataTables initialisation
         var table = $('#list').DataTable({
@@ -209,6 +193,7 @@
             rowReorder: true,
              columnDefs: [
             { orderable: true, className: 'reorder', targets: 0 },
+            { orderable: true, className: 'reorder', targets: 3 },
             { orderable: true, className: 'reorder', targets: 4 },
             
             { orderable: false, targets: '_all' }
@@ -217,10 +202,14 @@
 
         });
     
-        // Refilter the table
-        $('#min, #max').on('change', function() {
-            table.draw();
-        });
+        function filterData () {
+		    $('#list').DataTable().search(
+		        $('.status').val()
+		    	).draw();
+		}
+		$('.status').on('change', function () {
+	        filterData();
+	    });
     
     
     });

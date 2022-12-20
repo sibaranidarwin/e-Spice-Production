@@ -33,6 +33,7 @@ class CreateGoodsReceipt extends Migration
             $table->string('gr_number');
             $table->string('uom')->nullable();
             $table->string('currency');
+            $table->string('plant_code');
             $table->string('harga_satuan');
             $table->integer('jumlah');
             $table->string('jumlah_harga')->nullable();

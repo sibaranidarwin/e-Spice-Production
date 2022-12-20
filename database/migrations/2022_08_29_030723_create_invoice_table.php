@@ -25,6 +25,9 @@ class CreateInvoiceTable extends Migration
             $table->string('total_harga_gross')->nullable();
             $table->string('del_costs')->nullable();
             $table->string('ppn')->nullable();
+            $table->string('total_doc_invoice')->nullable();
+            $table->string('unplan_cost')->nullable();
+            $table->string('currency')->nullable();
             $table->date('baselinedate')->nullable();
             $table->string('invoice_doc_item')->nullable();
             $table->string('header_text')->nullable();
