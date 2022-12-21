@@ -137,11 +137,11 @@ label {
                                         <td><span>{{ Carbon\Carbon::parse($item->gr_date)->format('d F Y') }}</span></td>
                                         <td><span>{{$item->material_number}} / {{$item->vendor_part_number}}</span></td>
                                         <td><span>{{$item->mat_desc}} <br>({{$item->valuation_type}})</span></td>
-                                        <td><span>{{$item->doc_header_text}}</span></td>
                                         <td><span>{{$item->jumlah}}</span>&nbsp;<span>{{$item->uom}}</span></td>
+                                        <td><span>{{$item->doc_header_text}}</span></td>
                                         <td> <span>{{$item->currency}}</span> </td>
-                                        <td style="text-align: right"><span>Rp{{ number_format($item->harga_satuan) }}</span></td>
-                                        <td style="text-align: right"></span>Rp{{ number_format($item->jumlah_harga) }}<span></td>
+                                        <td style="text-align: right"><span>{{ number_format($item->harga_satuan) }}</span></td>
+                                        <td style="text-align: right"></span>{{ number_format($item->jumlah_harga) }}<span></td>
                                         <td><span>{{$item->tax_code}}</td>
                                         <td> <span>{{$item->ref_doc_no}}</span> </td>
                                         <td><span>{{$item->delivery_note}}</span> </td>

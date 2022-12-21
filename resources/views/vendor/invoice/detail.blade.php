@@ -169,7 +169,10 @@
                                 <th>Part Number</th>
                                 <th>Mat. Desc.</th>
                                 <th>QTY UoM</th>
+                                <th>Curr</th>
+                                
                                 <th>Price</th>
+                                
                             </tr>
                         </thead>
                         <tbody>
@@ -182,7 +185,8 @@
                             <td> <span class="">{{$invoice->material_number}} /{{$invoice->vendor_part_number}}</span>
                             <td> <span class="">{{$invoice->mat_desc}} ({{$invoice->valuation_type}})</span></td>
                             <td> <span class="">{{$invoice->jumlah}} {{$invoice->uom}}</span></td>
-                            <td style="text-align: right"> <span>Rp{{number_format($invoice->harga_satuan)}}</span> </td>
+                            <td> <span class="">{{$invoice->currency}}</span> </td>
+                            <td style="text-align: right"> <span>{{number_format($invoice->harga_satuan)}}</span> </td>
                             </tr>
                             @endforeach
                         </select>

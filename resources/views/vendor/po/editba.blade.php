@@ -68,7 +68,7 @@ label {
                                     <input type="text"
                                         class="form-control @error('total_harga_gross[]') is-invalid @enderror"
                                         name="total_harga_gross" placeholder="Masukkan Total DDP ..."
-                                        value="Rp{{ number_format($total_dpp) }}" readonly>
+                                        value="{{ number_format($total_dpp) }}" readonly>
                                     @error('total_harga_gross[]')<span
                                         class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                                 </div>
@@ -155,7 +155,7 @@ label {
                                 <div class="form-group col-md-3">
                                     <label class="form-control-label" for="faktur_pajak_number">Unplanned Cost<span
                                             style="color: red"></span></label>
-                                    <input type="number" id="id-3" class="number-decimal form-control"
+                                    <input type="text" id="id-3" class="number-decimal form-control"
                                         name="unplan_cost" placeholder="Fill in Unplanned Cost" autocomplete="off">
                                     @error('faktur_pajak_number[]')<span
                                         class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
@@ -265,7 +265,7 @@ $(function() {
 });
 $(document).on('keyup', '.number-decimal', function(e) {
 
-    var regex = /[^\d.]|\.(?=.*\.)/g;
+    var regex = /[-+][^\d.]|\.(?=.*\.)/g;
     var subst = "";
 
     var str = $(this).val();

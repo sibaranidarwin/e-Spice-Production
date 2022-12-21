@@ -147,9 +147,9 @@ label {
                                         <td> <span>{{$item->delivery_note}}</span> </td>
                                         <td><span>{{$item->jumlah}}</span>&nbsp;<span>{{$item->uom}}</span></td>
                                         <td> <span>{{$item->currency}}</span> </td>
-                                        <td style="text-align: right"><span>Rp{{ number_format($item->harga_satuan) }}</span></td>
+                                        <td style="text-align: right"><span>{{ number_format($item->harga_satuan) }}</span></td>
                                         <td><span>{{$item->tax_code}}</td>
-                                        <td style="text-align: right"></span>Rp{{ number_format($item->jumlah_harga) }}<span></td>
+                                        <td style="text-align: right"></span>{{ number_format($item->jumlah_harga) }}<span></td>
                                     </tr>
                                     @endforeach
                                     </select>

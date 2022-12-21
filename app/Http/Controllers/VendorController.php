@@ -75,39 +75,6 @@ public function puchaseorderreject()
                 ->with('i',(request()->input('page', 1) -1) *5);
     }
 
-    function filter(){
-        if (request()->start_date || request()->end_date) {
-            $start_date = Carbon::parse(request()->start_date)->toDateTimeString();
-            $end_date = Carbon::parse(request()->end_date)->toDateTimeString();
-            $user_vendor = Auth::User()->id_vendor;
-            $good_receipts = good_receipt::whereBetween('gr_date',[$start_date,$end_date])->where('id_vendor', $user_vendor)->where('id_inv',0)->where(function($query) {
-                $query->where('status','Verified')
-                            ->orWhereNull('status');})->orderBy('gr_date', 'ASC')->get();
-        } else {
-            $user_vendor = Auth::User()->id_vendor;
-
-            $good_receipts = good_receipt::where('id_vendor', $user_vendor)->where('id_inv',0)->where(function($query) {
-                $query->where('status','Verified')
-                            ->orWhereNull('status');})->orderBy('updated_at', 'ASC')->get();
-        }
-        
-        return view('vendor.po.index', compact('good_receipts'))->with('i',(request()->input('page', 1) -1) *5);
-    }
-
-    function filterinv(){
-        if (request()->start_date || request()->end_date) {
-            $start_date = Carbon::parse(request()->start_date)->toDateTimeString();
-            $end_date = Carbon::parse(request()->end_date)->toDateTimeString();
-            $user_vendor = Auth::User()->id_vendor;
-            $invoice = Invoice::whereBetween('posting_date',[$start_date,$end_date])->Where("id_vendor", $user_vendor)->Where("data_from", "GR")->get();
-        } else {
-            $user_vendor = Auth::User()->id_vendor;
-            // dd($user_vendor);
-            $invoice = Invoice::latest()->Where("id_vendor", $user_vendor)->Where("data_from", "GR")->get();
-        }
-        
-        return view('vendor.invoice.index', compact('invoice'))->with('i',(request()->input('page', 1) -1) *5);
-    }
     public function edit(Request $request) {
         switch ($request->input('action')) {
             case 'Dispute':
@@ -358,21 +325,18 @@ public function puchaseorderreject()
 
         
         $request->validate([
-        'posting_date'  => 'required','date','before:now',
-        'vendor_invoice_number'  => 'required',
-        'unplan_cost'       => '',
-        'currency' => '',
-        'total_doc_invoice' => 'required',
-        'no_invoice_proposal' => "required",
-        'faktur_pajak_number'  => 'required',
-        'total_harga_gross' => 'required',
-        'del_costs' => '',
-        'data_from' => '',
-        'id_vendor' => '',
-        'status_invoice_proposal' =>'',
+            'posting_date'  => 'required','date','before:now',
+            'vendor_invoice_number'  => 'required',
+            'no_invoice_proposal' => "required",
+            'faktur_pajak_number'  => 'required',
+            'total_doc_invoice' => 'required',
+            'currency' => '',
+            'total_harga_gross' => '',
+            'del_costs' => '',
+            'data_from' => '',
+            'id_vendor' => '',
+            'status_invoice_proposal' =>'',
     ]);
-    $price_diff = $request->get('del_costs');
-    // dd($price_diff);
    
     $Invoice = Invoice::create($request->all());
 
@@ -417,6 +381,7 @@ public function puchaseorderreject()
         'vendor_invoice_number'  => 'required',
         'no_invoice_proposal' => "required",
         'faktur_pajak_number'  => 'required',
+        'total_doc_invoice' => 'required',
         'currency' => '',
         'total_harga_gross' => '',
         'del_costs' => '',
@@ -478,18 +443,18 @@ public function puchaseorderreject()
     public function detailba()
         {
             $user_vendor = Auth::User()->id_vendor;
-            //   $ba = BA::select('no_ba','status_ba','status_invoice_proposal')->distinct()->where("id_vendor", $user_vendor)->get(); 
-
+           
              $BA = Ba::select("ba.no_ba",
              "ba.status_ba",
              "ba_reconcile.status_invoice_proposal",
+             "ba_reconcile.created_at",
              )
              ->distinct()
              ->JOIN("ba_reconcile","ba.no_ba", "=", "ba_reconcile.no_ba")
              ->where("ba.id_vendor", "=", $user_vendor)
              ->where("ba_reconcile.status_invoice_proposal", "=", "Not Yet Verified - BA")
              ->get();
-            //  dd($BA);
+
 
             return view('Vendor.ba.detail',compact('BA'));
         }

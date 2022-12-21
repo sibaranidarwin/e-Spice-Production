@@ -182,5 +182,13 @@ Route::get('vendor/user/{id}/profile', 'VendorController@show')->name('vendor-us
 Route::put('vendor/{id}/profile','VendorController@heyupdate')->name('update-vendor');
 Route::post('vendor/{id}/password','VendorController@editpass')->name('update-pass-vendor');
 
-Route::get('vendor/filter', 'VendorController@filter')->name('vendor-filter');
-Route::get('vendor/filterinv', 'VendorController@filterinv')->name('vendor-filterinv');
+Route::get('vendor/filter', 'FilterController@filter')->name('vendor-filter');
+Route::get('vendor/filterdisp', 'FilterController@filterdisp')->name('vendor-filterdisp');
+Route::get('vendor/filterdraft', 'FilterController@filterdraft')->name('vendor-filterdraft');
+Route::get('vendor/filterhistorydraft', 'FilterController@filterhistorydraft')->name('vendor-filterhistorydraft');
+Route::get('vendor/filterba', 'FilterController@filterba')->name('vendor-filterba');
+Route::get('vendor/filterhistoryba', 'FilterController@filterhistoryba')->name('vendor-filterhistoryba');
+Route::get('vendor/filterinvba', 'FilterController@filterinvba')->name('vendor-filterinvba');
+Route::get('vendor/filterinv', 'FilterController@filterinv')->name('vendor-filterinv');
+
+

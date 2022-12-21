@@ -86,8 +86,10 @@ label {
                     <div class="card-body">
                         <div class="table-responsive text-nowrap">
                             <form action="{{ route('vendor-filter') }}" class="form-inline" method="GET">
+                                <div class="form-group col-md-3">
+                                </div>
                                 <div class="form-group ">
-                                  <label for="" >GR Date: &nbsp;</label>
+                                  <label for="" >Date: &nbsp;</label>
                                   <input type="date" class="form-control" name="start_date">
                                 </div>
                                 <div class="form-group mx-sm-3 ">
@@ -129,7 +131,7 @@ label {
                                             <td><span>{{$item->material_number}} /{{$item->vendor_part_number}}</span></td>
                                             <td><span>{{$item->material_description}}<br>({{$item->valuation_type}})</span></td>
                                             <td><span>{{$item->qty}}</span></td>
-                                            <td style="text-align: right"><span>Rp{{ number_format($item->jumlah_harga) }}</span></td> 
+                                            <td style="text-align: right"><span>{{ number_format($item->jumlah_harga) }}</span></td> 
                                             <td><span>{{$item->tax_code}}</span></td>
                                         </tr>
                                         @endforeach

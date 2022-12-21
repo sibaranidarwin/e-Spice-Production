@@ -128,6 +128,7 @@ label {
                                             <th>Part Number</th>
                                             <th style="width: 10%;">Mat. Desc.</th>
                                             <th>Qty</th>
+                                            <th>Curr</th>
                                             <th>Price</th>
                                             <th>Total Value</th>
                                             <th>Tax Code</th>
@@ -151,8 +152,9 @@ label {
                                             <td><span>{{$item->material_number}} /{{$item->vendor_part_number}}</span></td>
                                             <td><span>{{$item->material_description}} /({{$item->valuation_type}})</span></td>
                                             <td><span>{{$item->qty}} {{$item->uom}}</span></td>
-                                            <td style="text-align: right"><span>Rp{{ number_format($item->harga_satuan) }}</span></td> 
-                                            <td style="text-align: right"><span>Rp{{ number_format($item->jumlah_harga) }}</span></td> 
+                                            <td><span>{{$item->qty}} {{$item->currency}}</span></td>
+                                            <td style="text-align: right"><span>{{ number_format($item->harga_satuan) }}</span></td> 
+                                            <td style="text-align: right"><span>{{ number_format($item->jumlah_harga) }}</span></td> 
                                             <td><span>{{$item->tax_code}}</span></td>
                                             <td><span>{{$item->ref_doc_no}}</span></td>
                                             <td><span>{{$item->delivery_note}}</span></td>

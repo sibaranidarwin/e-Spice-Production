@@ -35,6 +35,7 @@ class CreateBaTable extends Migration
             $table->string('reference')->nullable();
             $table->string('tax_code')->nullable();
             $table->integer('qty');
+            $table->string('gr_number');
             $table->string('harga_satuan');
             $table->string('jumlah_harga');
             $table->string('confirm_price')->nullable();

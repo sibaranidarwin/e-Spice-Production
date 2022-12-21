@@ -86,8 +86,7 @@ label {
                                 <div class="form-group col-md-3">
                                     <label class="form-control-label" for="tax_code">Tax Code</label>
                                     <input type="text" class="form-control @error('tax_code[]') is-invalid @enderror"
-                                        name="tax_code" placeholder="Masukkan Total DDP ..."
-                                        value="{{ $good->tax_code }}" readonly>
+                                        name="tax_code" value="{{ $good->tax_code }}" readonly>
                                     @error('tax_code[]')<span
                                         class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                                 </div>
@@ -104,7 +103,7 @@ label {
                                             style="color: red">*</span></label>
                                     <input id="datefield" type='date' min='1899-01-01' max='2000-13-13'
                                         class="form-control @error('posting_date') is-invalid @enderror"
-                                        name="posting_date" placeholder="Fill in Invoice Date ..." required>
+                                        name="posting_date" placeholder="Masukkan Posting Date ..." required>
                                     @error('posting_date')<span
                                         class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                                 </div>
@@ -113,7 +112,7 @@ label {
                                         by system)</label> <br>
                                     <input type="text"
                                         class="form-control @error('total_harga_everify[]') is-invalid @enderror"
-                                        name=""  placeholder="Masukkan Total Price ..."
+                                        name="" placeholder="Masukkan Total Price ..."
                                         value="{{ number_format($total_harga) }}" readonly>
                                     @error('total_harga_everify[]')<span
                                         class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
@@ -127,11 +126,11 @@ label {
                                         class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                                 </div>
                                 <div class="form-group col-md-3">
-                                    <label class="form-control-label" for="faktur_pajak_number">Total Price (acc. to doc
+                                    <label class="form-control-label"  for="faktur_pajak_number">Total Price (acc. to doc
                                         invoice)<span style="color: red">*</span></label>
                                     <input type="number" id="id-2"
                                         class="form-control @error('faktur_pajak_number[]') is-invalid @enderror"
-                                        placeholder="Fill in Total Price (acc. to doc invoice)"
+                                        name="total_doc_invoice"  placeholder="Fill in Total Price (acc. to doc invoice)"
                                         value="">
                                     @error('faktur_pajak_number[]')<span
                                         class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
@@ -141,7 +140,8 @@ label {
                                             style="color: red">*</span></label>
                                     <input type="text"
                                         class="form-control @error('vendor_invoice_number') is-invalid @enderror"
-                                        name="vendor_invoice_number" placeholder="Fill in Invoice Number ..." required>
+                                        name="vendor_invoice_number" placeholder="Fill in Invoice Number ..."
+                                        value="{{ $good->vendor_invoice_number }}" required>
                                     @error('vendor_invoice_number')<span
                                         class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                                 </div>
@@ -157,8 +157,16 @@ label {
                                     <label class="form-control-label" for="faktur_pajak_number">Unplanned Cost<span
                                             style="color: red"></span></label>
                                     <input type="text" id="id-3" class="number-decimal form-control"
-                                          placeholder="Fill in Unplanned Cost" autocomplete="off">
+                                        name="unplan_cost" placeholder="Fill in Unplanned Cost" autocomplete="off">
                                     @error('faktur_pajak_number[]')<span
+                                        class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
+                                </div>
+                                <div hidden class="form-group col-md-3">
+                                    <input type="number" id="id-1"
+                                        class="form-control @error('total_harga_everify[]') is-invalid @enderror"
+                                        name="total_harga_everify" placeholder="Masukkan Total Price ..."
+                                        value="{{ ($total_harga) }}" readonly>
+                                    @error('total_harga_everify[]')<span
                                         class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                                 </div>
                                 <div class="form-group col-md-6">
@@ -171,6 +179,7 @@ label {
                                     @error('faktur_pajak_number[]')<span
                                         class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                                 </div>
+
                                 <div hidden class="form-group col-md-6">
                                     <input type="text" class="form-control @error('data_from') is-invalid @enderror"
                                         name="data_from" value="GR">
@@ -184,9 +193,6 @@ label {
                                         class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                                 </div>
                             </div>
-                            {{-- <input name="sum1" type="number"><br>
-                            <input name="sum2" type="number"><br>
-                            <input name="sum3" type="number"><br> --}}
                             <a href="{{url('vendor/purchaseorder')}}" type="submit" class="btn btn-danger mb-2"
                                 id="simpan" onclick="return confirm('Are you sure?')">Return</a>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -263,7 +269,7 @@ $(function() {
 
 $(document).on('keyup', '.number-decimal', function(e) {
 
-    var regex = /[^\d.]|\.(?=.*\.)/g;
+    var regex = /[-+][^\d.]|\.(?=.*\.)/g;
     var subst = "";
 
     var str = $(this).val();
@@ -290,7 +296,7 @@ $('#input_mask1').inputmask({
     },
 });
 $("#input_mask_currency").inputmask({
-    prefix: 'Rp ',
+    prefix: '',
     radixPoint: ',',
     groupSeparator: ".",
     alias: "numeric",

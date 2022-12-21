@@ -174,16 +174,7 @@ label {
                                     <th>Mat. Desc.</th>
                                     <th>Qty UOM</th>
                                     <th>Price</th>
-                                    <!-- <th class="text-center">Reference</th> -->
-                                    <!-- <th class="text-center">Vendor Part Number</th>
-                                        <th class="text-center">Item Description</th>
-                                        <th class="text-center">UoM</th>
-                                        <th class="text-center">Currency</th>
-                                        <th class="text-center">Harga Satuan</th>
-                                        <th class="text-center">Jumlah</th> -->
-                                    <!-- <th class="text-center">Jumlah Harga</th> -->
-                                    {{-- <th>Tax Code</th> --}}
-                                    <!-- <th class="text-center">Valuation Type</th> -->
+                                    <th>Curr</th>
 
                                 </tr>
                             </thead>
@@ -200,7 +191,8 @@ label {
                                     <td> <span class="">{{$ba->material_description}} ({{$ba->valuation_type}})</span>
                                     </td>
                                     <td> <span class="">{{$ba->jumlah}} {{$ba->uom}}</span></td>
-                                    <td style="text-align: right"> <span>Rp{{number_format($ba->harga_satuan)}}</span>
+                                    <td> <span class="">{{$ba->currency}}</span> </td>
+                                    <td style="text-align: right"> <span>{{number_format($ba->harga_satuan)}}</span>
                                     </td>
                                 </tr>
                                 @endforeach
