@@ -137,7 +137,7 @@
                                         <td> <span>{{$good_receipt->mat_desc}}</span> <br>({{$good_receipt->valuation_type}})</td>
                                         <td> <span>{{$good_receipt->jumlah}}</span>&nbsp;<span>{{$good_receipt->uom}}</span> </td>
                                         <td> <span>{{$good_receipt->currency}}</span> </td>
-                                        <td style="text-align: right"> <span>Rp{{number_format($good_receipt->harga_satuan)}}</span> </td>
+                                        <td style="text-align: right"> <span>{{number_format($good_receipt->harga_satuan)}}</span> </td>
                                         <td> <span>{{$good_receipt->tax_code}}</span> </td>
                                         <td> <span>{{$good_receipt->ref_doc_no}}</span> </td>
                                         <td> <span>{{$good_receipt->delivery_note}}</span> </td>

@@ -86,7 +86,7 @@ label {
                     <div class="card-body">
                         <div class="table-responsive text-nowrap">
                             <div class="row">
-                                <form action="{{ route('vendor-filter') }}" class="form-inline" method="GET">
+                                <form action="{{ route('vendor-filterba') }}" class="form-inline" method="GET">
                                     <div class="form-group">
                                       <label for="" >BA Date: &nbsp;</label>
                                       <input type="date" class="form-control" name="start_date">
