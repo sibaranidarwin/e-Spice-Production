@@ -83,9 +83,11 @@ label {
                     </div>
                     <div class="card-body">
                         <div class="table-responsive text-nowrap">
-                            <form action="{{ route('vendor-filter') }}" class="form-inline" method="GET">
+                            <form action="{{ route('vendor-filterhistorydraft') }}" class="form-inline" method="GET">
+                                <div class="form-group col-md-3">
+                                </div>
                                 <div class="form-group ">
-                                  <label for="" >GR Date: &nbsp;</label>
+                                  <label for="" >Date: &nbsp;</label>
                                   <input type="date" class="form-control" name="start_date">
                                 </div>
                                 <div class="form-group mx-sm-3">
@@ -131,12 +133,12 @@ label {
                                             <td><span>{{$item->mat_desc}} ({{$item->valuation_type}})</span></td>
                                             <td><span>{{$item->doc_header_text}}</span></td>
                                             <td><span>{{$item->jumlah}}</span></td>
-                                            <td style="text-align: right"><span>Rp{{ number_format($item->jumlah_harga) }}</span></td>  
+                                            <td style="text-align: right"><span>{{ number_format($item->jumlah_harga) }}</span></td>  
                                             <td style="text-align: right"><span><?php
                                                 $harga = $item->jumlah_harga;
                                                 $jumlah = $item->jumlah;
                                                 $total = $harga * $jumlah;
-                                                echo"Rp"; echo number_format($total);
+                                                echo""; echo number_format($total);
                                                 ?></span></td>
                                         </tr>
                                         @endforeach

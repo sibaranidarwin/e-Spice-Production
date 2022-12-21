@@ -88,6 +88,7 @@ label {
                                             <th>No Invoice Proposal</th>
                                             <th>VAT NO</th>
                                             {{-- <th>No E-Verify</th> --}}
+                                            <th>Curr</th>
                                             <th>Total PPN</th>
                                             <th>Total Price</th>
 
@@ -116,8 +117,9 @@ label {
                                             <td>{{$item['no_invoice_proposal'] }}</td>
                                             <td>{{$item['faktur_pajak_number'] }}</td>
                                             {{-- <td>{{$item['everify_number'] }}</td> --}}
+                                            <td>{{$item['currency'] }}</td>
                                             <td style="text-align: right">{{($item['ppn'])}}</td>
-                                            <td style="text-align: right">Rp{{number_format($item['total_harga_everify']) }}</td>
+                                            <td style="text-align: right">{{number_format($item['total_harga_everify']) }}</td>
                                             
                                             <td>
                                                 <a href="/warehouse/detail-invoice/{{$item->id_inv}}"

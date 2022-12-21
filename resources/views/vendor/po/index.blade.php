@@ -98,10 +98,10 @@
                             <button class="btn btn-primary" onclick="return confirm('Are you sure?')" type="submit"><i class="fa fa-search"></i></button>
                             <div class="form-group col-md-4">
                                 {{-- <label> Sts. Inv. Props.: &nbsp; </label> --}}
-                                <select class="form-control status" name="">
+                                <select class="form-control status_invoice" name="">
                                     <option value="">-- Choose Sts. Inv. Props. -- </option>
                                     <option value="Verified">Verified</option>
-                                    <option value="Not Verified">Not Verified</option>
+                                    <option value="Not Yet Verified - Draft BA">Not Yet Verified - Draft BA</option>
                                 </select>
                             </div>
                         </form>
@@ -147,7 +147,7 @@
                                         <td> <span>{{$good_receipt->mat_desc}}</span> <br>({{$good_receipt->valuation_type}})</td>
                                         <td> <span>{{$good_receipt->jumlah}}</span>&nbsp;<span>{{$good_receipt->uom}}</span> </td>
                                         <td> <span>{{$good_receipt->currency}}</span> </td>
-                                        <td style="text-align: right"> <span>Rp{{number_format($good_receipt->harga_satuan)}}</span> </td>
+                                        <td style="text-align: right"> <span>{{number_format($good_receipt->harga_satuan)}}</span> </td>
                                         <td> <span>{{$good_receipt->tax_code}}</span> </td>
                                         <td> <span>{{$good_receipt->ref_doc_no}}</span> </td>
                                         <td> <span>{{$good_receipt->delivery_note}}</span> </td>
@@ -223,10 +223,10 @@
         });
         function filterData () {
 		    $('#list').DataTable().search(
-		        $('.status').val()
+		        $('.status_invoice').val()
 		    	).draw();
 		}
-		$('.status').on('change', function () {
+		$('.status_invoice').on('change', function () {
 	        filterData();
 	    });
     

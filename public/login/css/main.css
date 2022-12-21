@@ -36,6 +36,7 @@
 
 body, html {
 	height: 100%;
+  
 	font-family: Poppins-Regular, sans-serif;
 }
 
@@ -169,12 +170,12 @@ iframe {
   align-items: center;
   padding: 15px;
   /* border-bottom: solid #333333; */
-  background: #4043bc;
+  background: hsl(218deg 50% 91%);
 }
 
 .wrap-login100 {
   width: 960px;
-  background: #fff;
+  background: hsl(0deg 0% 100%);
   /* border-radius: 10px; */
   overflow: hidden;
   /* border: solid #; */
