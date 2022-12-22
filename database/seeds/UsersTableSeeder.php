@@ -40,6 +40,7 @@ class UsersTableSeeder extends Seeder
             'name' => 'United Tractors',
             'id_vendor' => 2011000155,            
             'email' => 'unitedtractors@gmail.com',
+            'npwp' => '4444444444444444',
             'password' => bcrypt('adminadmin'),
             'level' =>'vendor',
         ]); 

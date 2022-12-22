@@ -76,10 +76,32 @@
                     </div>
                     @endif
                     <div class="card-header">
-                        <strong class="card-title">Good Receipt All Status List</strong>
+                        <strong class="card-title"><i class="fa fa-list"></i> All Status List</strong>
                     </div>
                     <div class="card-body">
                     <div class="table-responsive text-nowrap">
+                        <form action="{{ route('warehouse-filter') }}" class="form-inline" method="GET">
+                            <div class="form-group col-md-2">
+
+                            </div>
+                            <div class="form-group ">
+                              <label for="" >GR Date: &nbsp;</label>
+                              <input type="date" class="form-control" name="start_date">
+                            </div>
+                            <div class="form-group mx-sm-4">
+                              <label for="inputPassword2">To: &nbsp;</label>
+                              <input type="date" class="form-control" name="end_date">
+                            </div>
+                            <div class="form-group col-md-3">
+                                {{-- <label> Sts. Inv. Props.: &nbsp; </label> --}}
+                                <select class="form-control status_invoice" name="">
+                                    <option value="">-- Choose Sts. Inv. Props. -- </option>
+                                    <option value="Verified">Verified</option>
+                                    <option value="Not Yet Verified - Draft BA">Not Yet Verified - Draft BA</option>
+                                </select>
+                            </div>
+                            <button class="btn btn-primary" onclick="return confirm('Are you sure?')" type="submit"><i class="fa fa-search"></i></button>
+                        </form>
                         <form action="{{ route('update-datagr/{id}') }}" method="POST">
                             @csrf
                             <table id="list" class="table table-striped" style="font-size: 10px;">
@@ -121,7 +143,7 @@
                                     </select>
                                 </tbody>
                             </table>
-                            <div class="row mt-2">
+                            <div class="row responsive mt-2">
                                 <div class="col-6">
                                 </div>
                                 <div class="col-lg-6 col-md-6">
@@ -203,18 +225,23 @@
         var table = $('#list').DataTable({
             rowReorder: true,
              columnDefs: [
-            { orderable: true, className: 'reorder', targets: 1 },
-            { orderable: true, className: 'reorder', targets: 6 },
+            { orderable: true, className: 'reorder', targets: 0 },
+            { orderable: true, className: 'reorder', targets: 4 },
+            { orderable: true, className: 'reorder', targets: 5 },
             { orderable: false, targets: '_all' }
                     ],
             lengthMenu: [[10, 25, 50, -1],[10, 25, 50, 'All'],],
 
         });
     
-        // Refilter the table
-        $('#min, #max').on('change', function() {
-            table.draw();
-        });
+        function filterData () {
+		    $('#list').DataTable().search(
+		        $('.status_invoice').val()
+		    	).draw();
+		}
+		$('.status_invoice').on('change', function () {
+	        filterData();
+	    });
     
     
     });

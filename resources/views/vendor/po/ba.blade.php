@@ -73,7 +73,7 @@
                                 @php $i = 1 @endphp
                                 <tr>
                                     <td>{{$draft->id_gr}}</td>
-                                    <td>{{$draft->date_draft}}</td>
+                                    <td>{{$draft->created_at}}</td>
                                     <td>{{$draft->po_number}} /{{$draft->po_item}} </td>
                                     <td>{{$draft->material}}</td>
                                     <td>{{$draft->status_draft}}</td>

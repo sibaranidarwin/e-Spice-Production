@@ -79,10 +79,24 @@ label {
                     </div>
                     @endif
                     <div class="card-header">
-                        <strong class="card-title">Good Receipt Rejected List</strong>
+                        <strong class="card-title"><i class="fa fa-list"></i> Rejected List</strong>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive text-nowrap">
+                            <form action="{{ route('warehouse-filterreject') }}" class="form-inline" method="GET">
+                                <div class="form-group col-md-2">
+    
+                                </div>
+                                <div class="form-group ">
+                                  <label for="" >GR Date: &nbsp;</label>
+                                  <input type="date" class="form-control" name="start_date">
+                                </div>
+                                <div class="form-group mx-sm-4">
+                                  <label for="inputPassword2">To: &nbsp;</label>
+                                  <input type="date" class="form-control" name="end_date">
+                                </div>
+                                <button class="btn btn-primary" onclick="return confirm('Are you sure?')" type="submit"><i class="fa fa-search"></i></button>
+                            </form>
                             <form action="{{ route('update-datagr/{id}') }}" method="POST">
                                 @csrf
                                 <table id="list" class="table table-striped" style="font-size: 10px;">
@@ -225,6 +239,11 @@ $(document).ready(function() {
                 orderable: true,
                 className: 'reorder',
                 targets: 0
+            },
+            {
+                orderable: true,
+                className: 'reorder',
+                targets: 4
             },
             {
                 orderable: true,

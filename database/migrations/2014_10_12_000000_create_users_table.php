@@ -20,6 +20,7 @@ class CreateUsersTable extends Migration
             $table->foreign('id_vendor')->references('id_vendor')->on('vendor');
             $table->integer('companycode')->nullable();
             $table->string('email')->unique();
+            $table->string('npwp')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->enum('level',['vendor','admin','warehouse','accounting','procurement']);

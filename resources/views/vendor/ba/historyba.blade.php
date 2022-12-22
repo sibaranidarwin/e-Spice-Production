@@ -85,7 +85,7 @@ label {
                     </div>
                     <div class="card-body">
                         <div class="table-responsive text-nowrap">
-                            <form action="{{ route('vendor-filter') }}" class="form-inline" method="GET">
+                            <form action="{{ route('vendor-filterhistoryba') }}" class="form-inline" method="GET">
                                 <div class="form-group col-md-3">
                                 </div>
                                 <div class="form-group ">
