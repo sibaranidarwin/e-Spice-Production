@@ -79,7 +79,7 @@
                     </div>
                     @endif
                     <div class="card-header">
-                        <strong class="card-title">Verified List <i class="fa fa-list"></i></strong>
+                        <strong class="card-title"><i class="fa fa-list"></i> Verified List</strong>
                     </div>
                     <div class="card-body">
                     <div class="table-responsive text-nowrap">
@@ -95,8 +95,7 @@
                               <label for="inputPassword2">To: &nbsp;</label>
                               <input type="date" class="form-control" name="end_date">
                             </div>
-                            <button class="btn btn-primary" onclick="return confirm('Are you sure?')" type="submit"><i class="fa fa-search"></i></button>
-                            <div class="form-group col-md-4">
+                            <div class="form-group col-md-3">
                                 {{-- <label> Sts. Inv. Props.: &nbsp; </label> --}}
                                 <select class="form-control status_invoice" name="">
                                     <option value="">-- Choose Sts. Inv. Props. -- </option>
@@ -104,6 +103,8 @@
                                     <option value="Not Yet Verified - Draft BA">Not Yet Verified - Draft BA</option>
                                 </select>
                             </div>
+                            <button class="btn btn-primary" onclick="return confirm('Are you sure?')" type="submit"><i class="fa fa-search"></i></button>
+
                         </form>
                         <form action="{{ route('update-datagr-vendor/{id_gr}') }}" method="POST">
                             @csrf
@@ -132,6 +133,8 @@
                                     @foreach($good_receipts as $good_receipt)
                                     <tr>
                                         @if ($good_receipt->status_invoice == 'Not Yet Verified - Draft BA')
+                                        <td><input disabled type="hidden" name="ids[]" value="{{$good_receipt->id_gr}}"></td>
+                                        @elseif ($good_receipt->status_invoice == 'Verified - BA')
                                         <td><input disabled type="hidden" name="ids[]" value="{{$good_receipt->id_gr}}"></td>
                                         @else
                                         <td><input type="checkbox" name="ids[]" value="{{$good_receipt->id_gr}}"></td>
@@ -172,7 +175,7 @@
                                           <blockquote class="card-blockquote text-white">
                                             <p style="font-size: 14px;"><strong>&nbsp; Good receipt status description: </strong></p>
                                             <p style="font-size: 13px;"><strong>&nbsp; 1. Verified: good receipt data with this status means that this data comes from the <br> warehouse and has been verified by the warehouse.</strong></p>
-                                            <p style="font-size: 13px;"><strong>&nbsp; 2. Auto verified: good receipt data with this status means the data from SAP is correct <br> and does not have certain conditions.</strong></p>
+                                            <p style="font-size: 13px;"><strong>&nbsp; 2. Auto Verify: good receipt data with this status means the data from SAP is correct <br> and does not have certain conditions.</strong></p>
                                         </blockquote>
                                         </div>
                                       </div>

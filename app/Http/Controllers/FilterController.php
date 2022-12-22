@@ -58,10 +58,10 @@ class FilterController extends Controller
             $start_date = Carbon::parse(request()->start_date)->toDateTimeString();
             $end_date = Carbon::parse(request()->end_date)->toDateTimeString();
             $user_vendor = Auth::User()->id_vendor;
-            $draft = Draft_BA::whereBetween('created_at',[$start_date,$end_date])->where("id_vendor", $user_vendor)->where('status_invoice_proposal', 'Verified - Draft BA');
+            $draft = Draft_BA::whereBetween('created_at',[$start_date,$end_date])->where("id_vendor", $user_vendor)->where('status_invoice_proposal', 'Verified - Draft BA')->get();
            } else {
             $user_vendor = Auth::User()->id_vendor;
-            $draft = Draft_BA::where("id_vendor", $user_vendor)->where('status_invoice_proposal', 'Verified - Draft BA');
+            $draft = Draft_BA::where("id_vendor", $user_vendor)->where('status_invoice_proposal', 'Verified - Draft BA')->get();
         }
         return view('Vendor.ba.historydraft',compact('draft'));
     }

@@ -146,7 +146,7 @@ label {
                                             <td><span>{{$item->status_ba}}</span></td>
                                             <td><span>{{$item->status_invoice_proposal}}</span></td>
                                             <td><span>{{ Carbon\Carbon::parse($item->created_at)->format('d F Y') }}</span></td>
-                                            <td><span>{{$item->po_number}}/{{$item->item}}</span></td>
+                                            <td><span>{{$item->po_number}} /{{$item->item}}</span></td>
                                             <td><span>{{$item->gr_number}}</span></td>
                                             <td><span>{{ Carbon\Carbon::parse($item->gr_date)->format('d F Y') }}</span></td>
                                             <td><span>{{$item->material_number}} /{{$item->vendor_part_number}}</span></td>

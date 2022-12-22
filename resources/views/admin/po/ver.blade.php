@@ -79,10 +79,32 @@ label{
                     </div>
                     @endif
                     <div class="card-header">
-                        <strong class="card-title">Good Receipt Verified List</strong>
+                        <strong class="card-title">Verified List <i class="fa fa-list"></i></strong>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive text-nowrap">
+                            <form action="{{ route('vendor-filter') }}" class="form-inline" method="GET">
+                                <div class="form-group col-md-2">
+    
+                                </div>
+                                <div class="form-group ">
+                                  <label for="" >GR Date: &nbsp;</label>
+                                  <input type="date" class="form-control" name="start_date">
+                                </div>
+                                <div class="form-group mx-sm-4">
+                                  <label for="inputPassword2">To: &nbsp;</label>
+                                  <input type="date" class="form-control" name="end_date">
+                                </div>
+                                <button class="btn btn-primary" onclick="return confirm('Are you sure?')" type="submit"><i class="fa fa-search"></i></button>
+                                <div class="form-group col-md-4">
+                                    {{-- <label> Sts. Inv. Props.: &nbsp; </label> --}}
+                                    <select class="form-control status_invoice" name="">
+                                        <option value="">-- Choose Sts. Inv. Props. -- </option>
+                                        <option value="Verified">Verified</option>
+                                        <option value="Not Yet Verified - Draft BA">Not Yet Verified - Draft BA</option>
+                                    </select>
+                                </div>
+                            </form>
                             <form action="{{ route('update-datagr/{id}') }}" method="POST">
                                 @csrf
                                 <table id="list" class="table table-striped" style="width:100%; font-size: 10px;">

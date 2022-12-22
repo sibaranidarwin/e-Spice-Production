@@ -77,7 +77,7 @@
                     </div>
                     @endif
                     <div class="card-header">
-                        <strong class="card-title">Disputed List <i class="fa fa-list"></i></strong>
+                        <strong class="card-title"><i class="fa fa-list"></i> Disputed List</strong>
                     </div>
                     <div class="card-body">
                     <div class="table-responsive text-nowrap">

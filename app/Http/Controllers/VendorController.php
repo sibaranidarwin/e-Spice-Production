@@ -44,7 +44,7 @@ class VendorController extends Controller
     {
         $user_vendor = Auth::User()->id_vendor;
         
-        $good_receipt = good_receipt::where('id_vendor', $user_vendor)->where(function($query) {
+        $good_receipt = good_receipt::where('id_vendor', $user_vendor)->where('status','Auto Verify')->where(function($query) {
 			$query->where('status','Verified')
             ->orWhereNull('status');})->count();
         $invoicegr = Invoice::all()->where("data_from", "GR")->Where("id_vendor", $user_vendor)->count();
@@ -62,7 +62,7 @@ class VendorController extends Controller
 
 
         $good_receipts = good_receipt::where('id_vendor', $user_vendor)->where('id_inv',0)->where(function($query) {
-			$query->where('status','Verified')
+			$query->where('status','Verified')->orwhere('status','Auto Verify')
 						->orWhereNull('status');})->orderBy('updated_at', 'ASC')->get();
         return view('vendor.po.index',compact('good_receipts'))
                 ->with('i',(request()->input('page', 1) -1) *5);
@@ -118,6 +118,8 @@ public function puchaseorderreject()
                 $array_bln    = array(1=>"I","II","III", "IV", "V","VI","VII","VIII","IX","X", "XI","XII");
                 $bln      = $array_bln[date('n')];
 
+                $npwp = Auth::User()->npwp;
+
                 // $tax = good_receipt::where('tax_code', 'M2')->get();
                 //  dd($tax);
                 $good_receipts = [];
@@ -152,7 +154,7 @@ public function puchaseorderreject()
 
                 // kondisi TAX code ma = 11%
                 $total_harga = $total_dpp + $total_ppn;
-                return view('vendor.po.edit', compact('good_receipts', 'total_dpp', 'total_ppn', 'total_harga','kd','bln'));
+                return view('vendor.po.edit', compact('good_receipts', 'total_dpp', 'total_ppn', 'total_harga','kd','bln', 'npwp'));
                 
                 break;
                 case 'ba':
@@ -232,7 +234,9 @@ public function puchaseorderreject()
         // dd($no_ba);
         $user_vendor = Auth::User()->id_vendor;
         $ba = BA_Reconcile::where("no_ba", $no_ba)->where("id_vendor", $user_vendor)->where('status_invoice_proposal', 'Not Yet Verified - BA')->get();
-      
+        
+        $npwp = Auth::User()->npwp;
+
         if($recordIds == null){
             return redirect()->back()->with("warning","Please select data BA first. Try again!");
         }
@@ -279,7 +283,7 @@ public function puchaseorderreject()
         $total_ppn = $total_dpp * 0.02;
         $total_harga = $total_dpp + $total_ppn;
 
-        return view('vendor.po.editba', compact('bas', 'total_dpp', 'total_ppn', 'total_harga', 'kd', 'bln'));
+        return view('vendor.po.editba', compact('bas', 'total_dpp', 'total_ppn', 'total_harga', 'kd', 'bln', 'npwp'));
     }
     }
 

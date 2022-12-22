@@ -73,10 +73,23 @@ label {
                     </div>
                     @endif
                     <div class="card-header">
-                        <strong class="card-title">Invoice Proposal BA List</strong>
+                        <strong class="card-title"><i class="fa fa-list"></i> Invoice Proposal BA List</strong>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive text-nowrap">
+                            <form action="{{ route('warehouse-filterinvba') }}" class="form-inline" method="GET">
+                                <div class="form-group col-md-3">
+                                </div>
+                                <div class="form-group ">
+                                  <label for="" >Invoice Date: &nbsp;</label>
+                                  <input type="date" class="form-control" name="start_date">
+                                </div>
+                                <div class="form-group mx-sm-3 ">
+                                  <label for="inputPassword2">To: &nbsp;</label>
+                                  <input type="date" class="form-control" name="end_date">
+                                </div>
+                                <button class="btn btn-primary" type="submit"><i class="fa fa-search"></i></button>
+                              </form>
                             <form action="{{ route('update-datagr-vendor/{id_gr}') }}" method="POST">
                                 @csrf
                                 <table id="list" class="table table-striped" style="font-size: 10px;">
