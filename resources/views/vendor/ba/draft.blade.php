@@ -127,7 +127,7 @@ label {
                                             <td><span>Verified - Draft BA</span></td>
                                             <td><span>{{$item->status_invoice_proposal}}</span></td>
                                             <td><a href="/vendor/draft/{{ $item->no_draft }}">{{ $item->no_draft}}</td>
-                                            <td><span>{{ Carbon\Carbon::parse($item->date_draft)->format('d F Y') }}</span></td>
+                                            <td><span>{{ Carbon\Carbon::parse($item->created_at)->format('d F Y') }}</span></td>
                                             {{-- <td><span>{{$item->po_number}}</span></td>
                                             <td><span>{{$item->mat_desc}} <br>({{$item->valuation_type}})</span></td>
                                             <td><span>{{$item->material_number}} / {{$item->vendor_part_number}}</span></td>

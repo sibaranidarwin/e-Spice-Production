@@ -27,7 +27,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/login-user';
+    protected $redirectTo = '/';
 
     /**
      * Create a new controller instance.
@@ -65,10 +65,10 @@ class LoginController extends Controller
                 return redirect()->route('warehouse/dashboard');
             }
             else{
-                return redirect()->route('login-user')->with('destroy','Email And Password Are Wrong!');
+                return redirect()->route('/')->with('destroy','Email And Password Are Wrong!');
             }
         }else{
-            return redirect('login-user')->with('destroy','Email And Password Are Wrong!');
+            return redirect('/')->with('destroy','Email And Password Are Wrong!');
         }
           
     }

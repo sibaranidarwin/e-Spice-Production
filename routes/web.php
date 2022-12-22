@@ -191,4 +191,12 @@ Route::get('vendor/filterhistoryba', 'FilterController@filterhistoryba')->name('
 Route::get('vendor/filterinvba', 'FilterController@filterinvba')->name('vendor-filterinvba');
 Route::get('vendor/filterinv', 'FilterController@filterinv')->name('vendor-filterinv');
 
+Route::get('warehouse/filter', 'FilterWarehouseController@filter')->name('warehouse-filter');
+Route::get('warehouse/filternot', 'FilterWarehouseController@filternot')->name('warehouse-filternot');
+Route::get('warehouse/filterver', 'FilterWarehouseController@filterver')->name('warehouse-filterver');
+Route::get('warehouse/filterreject', 'FilterWarehouseController@filterreject')->name('warehouse-filterreject');
+
+Route::get('warehouse/filterinv', 'FilterWarehouseController@filterinv')->name('warehouse-filterinv');
+Route::get('warehouse/filterinvba', 'FilterWarehouseController@filterinvba')->name('warehouse-filterinvba');
+
 

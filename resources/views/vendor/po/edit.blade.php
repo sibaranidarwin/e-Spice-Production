@@ -128,8 +128,8 @@ label {
                                 <div class="form-group col-md-3">
                                     <label class="form-control-label"  for="faktur_pajak_number">Total Price (acc. to doc
                                         invoice)<span style="color: red">*</span></label>
-                                    <input type="number" id="id-2"
-                                        class="form-control @error('faktur_pajak_number[]') is-invalid @enderror"
+                                    <input type="text" id="id-2"
+                                        class="number-decimal form-control @error('faktur_pajak_number[]') is-invalid @enderror"
                                         name="total_doc_invoice"  placeholder="Fill in Total Price (acc. to doc invoice)"
                                         value="">
                                     @error('faktur_pajak_number[]')<span
@@ -175,7 +175,7 @@ label {
                                     <input type="text" id="input_mask"
                                         class="form-control @error('faktur_pajak_number[]') is-invalid @enderror"
                                         name="faktur_pajak_number" placeholder="Fill in VAT NO ..."
-                                        value="{{ $good->faktur_pajak_number }}" required>
+                                        value="{{ ($npwp) }}" required>
                                     @error('faktur_pajak_number[]')<span
                                         class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                                 </div>

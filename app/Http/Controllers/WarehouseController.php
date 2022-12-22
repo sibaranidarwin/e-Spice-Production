@@ -59,11 +59,10 @@ class WarehouseController extends Controller
 
     public function po(Request $request, good_receipt $id_gr)
     {   
-        $good_receipts = good_receipt::where('material_number','LG2KOM00707010F691')->where("status","Not Verified")->get();
-        //  dd($good_receipts);
-        //$good_receipts = good_receipt::where("status","Not Verified")->get();
+        $data = good_receipt::select('material_number');
+        // dd($data);
+        $good_receipts = good_receipt::where('material_number', 'LG2KOM00707010F691' )->orWhereNull('status')->get();
 
-        
         $dispute = good_receipt::all()->where("status", "Disputed")->count();
 
         return view('warehouse.po.index',compact('good_receipts', 'dispute'))
