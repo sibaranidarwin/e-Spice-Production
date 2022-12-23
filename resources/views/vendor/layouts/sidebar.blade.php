@@ -109,14 +109,14 @@
     
                     <ul class="nav nav-list collapse sub-menu" id="submenu1">
                         <li>
-                             <a class="accordion-heading" data-toggle="collapse" data-target="#submenu2"><span class=""><i class="fa fa-newspaper-o"></i>Draft BA</span></a>
+                             <a class="accordion-heading" data-toggle="collapse" data-target="#submenu2"><span class=""><i class="fa fa-newspaper-o"></i> Draft BA &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ></span></a>
                               <ul class="nav nav-list collapse sub-menu children" id="submenu2">
                                   <li><a href="{{url('vendor/draft')}}" title="Title"><i class="fa fa-table"></i>Active</a></li>
                                   <li><a href="{{url('vendor/historydraft')}}" title="Title"><i class="fa fa-history"></i>History</a></li>
                                 </ul>
                         </li>
                         <li>
-                            <a class="accordion-heading" data-toggle="collapse" data-target="#submenu3"><span class=""><i class="fa fa-newspaper-o"></i>BA</span></a>
+                            <a class="accordion-heading" data-toggle="collapse" data-target="#submenu3"><span class=""><i class="fa fa-newspaper-o"></i>BA  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ></span></a>
                             <ul class="nav nav-list collapse sub-menu children" id="submenu3">
                                 <li><a href="{{url('vendor/detailba')}}" title="Title"><i class="fa fa-table "></i>Active</a></li>
                                 <li><a href="{{url('vendor/historyba')}}" title="Title"><i class="fa fa-history "></i>History</a></li>

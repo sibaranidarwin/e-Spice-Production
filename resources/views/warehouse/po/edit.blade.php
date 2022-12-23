@@ -78,6 +78,15 @@
                             </div>
 
                             <div class="form-group">
+                                <label class="form-control-label" for="alasan_disp">Reject Identification</label>
+                                <textarea name="alasan_reject" class="form-control"
+                                    placeholder="Please enter the reason for the reject data GR" id="" cols="20"
+                                    rows="5"></textarea>
+                                @error('alasan_disp')<span
+                                    class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
+                            </div>
+
+                            <div class="form-group">
                                 <label class="form-control-label" for="status">Status  <span style="color: red">*</span></label><br>
                                 <select name="status" class="form-control">
                                     <option selected>Silahkan Pilih Status</option>
