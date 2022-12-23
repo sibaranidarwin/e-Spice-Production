@@ -23,7 +23,7 @@
     .table td, .table th,  label{
         font-size: 11px;
     }
-    .hover:hover{
+    .hover:hover {
         border-bottom: 3px solid white;
 }
 </style>
@@ -82,12 +82,13 @@
                     </div>
                     @endif
                     <div class="card-header">
-                         <ul style="list-style-type: none;  margin: 0; padding: 0;  overflow: hidden; background-color: #11CDEF">
-                            <li style="float: left"> <a class="hover" style="display: block; color: white; text-align: center; padding: 14px 16px; text-decoration: none;" href="{{url('vendor/purchaseorder')}}" title="Title"> Verified List</a></li>
-                            <li style="float: left"> <a class="hover" style="display: block; color: white; text-align: center; padding: 14px 16px; text-decoration: none;" href="{{url('vendor/notyetdraft')}}" title="Title"> Not Yet Draft BA List</a></li>
-                            <li style="float: left"><a class="hover" style="display: block; color: white; text-align: center; padding: 14px 16px; text-decoration: none;" href="{{url('vendor/verba')}}" title="Title"> Verified BA List</a></li>
-                          </ul>
-                    </div>
+                        <ul style="list-style-type: none;  margin: 0; padding: 0;  overflow: hidden; background-color: #11CDEF">
+                           <li style="float: left"> <a class="hover" style="display: block; color: white; text-align: center; padding: 14px 16px; text-decoration: none;" href="{{url('vendor/purchaseorder')}}" title="Title"> Verified List</a></li>
+                           <li style="float: left"> <a class="hover" style="display: block; color: white; text-align: center; padding: 14px 16px; text-decoration: none;" href="{{url('vendor/notyetdraft')}}" title="Title"> Not Yet Draft BA List</a></li>
+                           <li style="float: left"><a class="hover" style="display: block; color: white; text-align: center; padding: 14px 16px; text-decoration: none;" href="{{url('vendor/verba')}}" title="Title"> Verified BA List</a></li>
+                         </ul>
+                   </div>
+                    
                     <div class="card-body">
                     <div class="table-responsive text-nowrap ">
                         <form action="{{ route('vendor-filter') }}" class="form-inline" method="GET">
@@ -104,16 +105,21 @@
                               <input type="date" class="form-control" name="end_date">
                             </div>
                             <button class="btn btn-primary" onclick="return confirm('Are you sure?')" type="submit"><i class="fa fa-search"></i></button>
-
-                            <div class="form-group">
-                                {{-- <label> Sts. Inv. Props.: &nbsp; </label> --}}
-                                <select class="form-control status_invoice" name="">
-                                    <option value="">-- Choose Sts. Inv. Props. -- </option>
-                                    <option value="Verified">Verified</option>
-                                    <option value="Not Yet Verified - Draft BA">Not Yet Verified - Draft BA</option>
-                                </select>
-                            </div>
                         </form>
+                        {{-- <div class="flex-w flex-l-m filter-tope-group m-tb-10">
+                            <button class="btn btn-primary" data-filter="*">
+                                Semua Item
+                            </button>
+                            <button class="btn btn-primary" data-filter="status_invoice_proposal">
+                                Not Yet Verified
+                            </button>
+                            <button class="btn btn-primary" data-filter="status_invoice_proposal">
+                                Not Yet Verified - Draft BA
+                            </button>
+                            <button class="btn btn-primary" data-filter="status_invoice_proposal">
+                                Verified - BA
+                            </button>
+                        </div> --}}
                         <form action="{{ route('update-datagr-vendor/{id_gr}') }}" method="POST">
                             @csrf
                             <table id="list" class="table table-striped" style="width:100%; font-size: 10px;">
@@ -138,7 +144,7 @@
                                     </tr>
                                 </thead>
                                 <tbody style="font-size: 11px;">
-                                    @foreach($good_receipts as $good_receipt)
+                                    @foreach($auto as $good_receipt)
                                     <tr>
                                         @if ($good_receipt->status_invoice_proposal == 'Not Yet Verified - Draft BA')
                                         <td><input disabled type="hidden" name="ids[]" value="{{$good_receipt->id_gr}}"></td>
@@ -159,6 +165,7 @@
                                         <td> <span>{{$good_receipt->jumlah}}</span>&nbsp;<span>{{$good_receipt->uom}}</span> </td>
                                         <td> <span>{{$good_receipt->currency}}</span> </td>
                                         <td style="text-align: right"> <span>{{number_format($good_receipt->harga_satuan)}}</span> </td>
+                                        <td> <span>{{$good_receipt->tax_code}}</span> </td>
                                         <td> <span>{{$good_receipt->ref_doc_no}}</span> </td>
                                         <td> <span>{{$good_receipt->delivery_note}}</span> </td>
                                         <td> <span>{{$good_receipt->tax_code}}</span> </td>
@@ -167,11 +174,11 @@
                                     </select>
                                 </tbody>
                             </table>
-                            &nbsp;&nbsp;<button type="submit" name="action" value="Dispute"
+                            &nbsp;&nbsp;<button disabled type="submit" name="action" value="Dispute"
                             class="btn btn-warning btn-sm-3" onclick="return confirm('Are you sure?')">Dispute</button>
-                        &nbsp;&nbsp;&nbsp;&nbsp;<button type="submit" name="action" value="Update"
+                        &nbsp;&nbsp;&nbsp;&nbsp;<button disabled type="submit" name="action" value="Update"
                             class="btn btn-success btn-sm-3" onclick="return confirm('Are you sure?')">Create Invoice Proposal</button>
-                        &nbsp;&nbsp;&nbsp;&nbsp;<button type="submit" name="action" value="ba"
+                        &nbsp;&nbsp;&nbsp;&nbsp;<button disabled type="submit" name="action" value="ba"
                             class="btn btn-primary btn-sm-3" onclick="return confirm('Are you sure?')">Generate Draft BA</button>
                             <div class="row">
                                 <div class="col-6">

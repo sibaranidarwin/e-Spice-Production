@@ -40,7 +40,8 @@ class CreateGoodsReceipt extends Migration
             $table->string('total_harga');
             $table->string('tax_code')->nullable();
             $table->string('alasan_disp')->nullable();
-            $table->enum('status',['Auto Verify','Verified','Not Verified', 'Reject', 'Dispute'])->nullable();
+            $table->string('alasan_reject')->nullable();
+            $table->enum('status',['Auto Verify','Verified','Not Verified', 'Rejected', 'Disputed'])->nullable();
             $table->enum('status_invoice',['Not Yet Verified - Draft BA', 'Verified - BA', 'Reject'])->default("Not Yet Verified - Draft BA")->nullable();
             $table->string('mat_doc_it')->nullable();
             $table->string('year');
@@ -48,6 +49,7 @@ class CreateGoodsReceipt extends Migration
             $table->string('ref_doc_no');
             $table->float('total_ppn');
             $table->text('lampiran');
+            $table->text('lam_disp');
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->nullable()->useCurrentOnUpdate();
         });

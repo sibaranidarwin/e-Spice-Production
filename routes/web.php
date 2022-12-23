@@ -143,6 +143,8 @@ Route::post('warehouse/{id}/password','WarehouseController@editpass')->name('upd
 // // INI MIDDLEWARE Vendor
 Route::get('vendor/dashboard', 'VendorController@index2')->name('vendor/dashboard');
 Route::get('vendor/purchaseorder', 'VendorController@po');
+Route::get('vendor/notyetdraft', 'VendorController@notyetdraft');
+Route::get('vendor/verba', 'VendorController@verba');
 Route::get('vendor/puchaseorderreject', 'VendorController@puchaseorderreject');
 
 Route::post('vendor/dispute-datagr','VendorController@edit')->name('dispute-datagr-vendor/{id}');

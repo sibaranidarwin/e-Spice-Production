@@ -110,10 +110,11 @@
                                         <th>QTY UOM</th>
                                         <th>Curr</th>
                                         <th>Unit Price</th>
-                                        <th>Tax Code</th>
                                         <th>Reference</th>
                                         <th>Del. Note</th>
-                                        <th>Desc. </th>
+                                        <th>Tax Code</th>
+                                        <th>Reason Disp. </th>
+                                        <th>File Disp.</th>
                                     </tr>
                                 </thead>
                                 <tbody style="font-size: 11px;">
@@ -129,10 +130,12 @@
                                         <td> <span>{{$good_receipt->jumlah}}</span>&nbsp;<span>{{$good_receipt->UOM}}</span> </td>
                                         <td> <span>{{$good_receipt->currency}}</span> </td>
                                         <td> <span>Rp. {{number_format($good_receipt->harga_satuan)}}</span> </td>
-                                        <td> <span>{{$good_receipt->tax_code}}</span> </td>
                                         <td> <span>{{$good_receipt->ref_doc_no}}</span> </td>
                                         <td> <span>{{$good_receipt->delivery_note}}</span> </td>
+                                        <td><span>{{$good_receipt->tax_code}}</span></td>
                                         <td><span>{{$good_receipt->alasan_disp}}</span></td>
+                                        <td><a target="_blank" href="{{ $good_receipt->lam_disp}}"
+                                            class="btn btn-success btn-sm">View File</a></td>
                                     </tr>
                                     @endforeach
                                     </select>
