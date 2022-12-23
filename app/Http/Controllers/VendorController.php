@@ -44,7 +44,7 @@ class VendorController extends Controller
     {
         $user_vendor = Auth::User()->id_vendor;
         
-        $good_receipt = good_receipt::where('id_vendor', $user_vendor)->where('status','Auto Verify')->where(function($query) {
+        $good_receipt = good_receipt::where('id_vendor', $user_vendor)->where('id_inv',0)->orwhere('status','Auto Verify')->where(function($query) {
 			$query->where('status','Verified')
             ->orWhereNull('status');})->count();
         $invoicegr = Invoice::all()->where("data_from", "GR")->Where("id_vendor", $user_vendor)->count();
@@ -59,15 +59,97 @@ class VendorController extends Controller
     public function po()
     {   
         $user_vendor = Auth::User()->id_vendor;
-
+        $auto = good_receipt::select(
+        "draft_ba.status_invoice_proposal"
+        )
+        ->JOIN("draft_ba","goods_receipt.id_gr", "=", "draft_ba.id_gr")
+        ->where("draft_ba.id_vendor", "=", $user_vendor)
+        ->get();
 
         $good_receipts = good_receipt::where('id_vendor', $user_vendor)->where('id_inv',0)->where(function($query) {
 			$query->where('status','Verified')->orwhere('status','Auto Verify')
 						->orWhereNull('status');})->orderBy('updated_at', 'ASC')->get();
-        return view('vendor.po.index',compact('good_receipts'))
+                        
+        return view('vendor.po.index',compact('good_receipts', 'auto'))
                 ->with('i',(request()->input('page', 1) -1) *5);
     }
-public function puchaseorderreject()
+    public function notyetdraft(){
+        $user_vendor = Auth::User()->id_vendor;
+
+        $auto = good_receipt::select(
+        "goods_receipt.status",
+        "goods_receipt.plant_code",
+        "goods_receipt.no_po",
+        "goods_receipt.po_item",
+        "goods_receipt.gr_number",
+        "goods_receipt.gr_date",
+        "goods_receipt.material_number",
+        "goods_receipt.vendor_part_number",
+        "goods_receipt.mat_desc",
+        "goods_receipt.valuation_type",
+        "goods_receipt.jumlah",
+        "goods_receipt.uom",
+        "goods_receipt.currency",
+        "goods_receipt.harga_satuan",
+        "goods_receipt.tax_code",
+        "goods_receipt.ref_doc_no",
+        "goods_receipt.delivery_note",
+        "draft_ba.status_invoice_proposal"
+        )
+        ->JOIN("draft_ba","goods_receipt.id_gr", "=", "draft_ba.id_gr")
+        ->where("draft_ba.id_vendor", "=", $user_vendor)
+        ->where('id_inv',0)
+        ->where('status_invoice_proposal', 'Not Yet Verified - Draft BA')
+        ->where(function($query) {
+			$query->where('goods_receipt.status','Verified')
+        ->orwhere('goods_receipt.status','Auto Verify')
+		->orWhereNull('status');})
+        ->orderBy('goods_receipt.updated_at', 'ASC')
+        ->get();
+
+        return view('vendor.po.notyetdraft',compact('auto'))
+        ->with('i',(request()->input('page', 1) -1) *5);
+    }
+
+    public function verba(){
+        $user_vendor = Auth::User()->id_vendor;
+
+        $auto = good_receipt::select(
+        "goods_receipt.status",
+        "goods_receipt.plant_code",
+        "goods_receipt.no_po",
+        "goods_receipt.po_item",
+        "goods_receipt.gr_number",
+        "goods_receipt.gr_date",
+        "goods_receipt.material_number",
+        "goods_receipt.vendor_part_number",
+        "goods_receipt.mat_desc",
+        "goods_receipt.valuation_type",
+        "goods_receipt.jumlah",
+        "goods_receipt.uom",
+        "goods_receipt.currency",
+        "goods_receipt.harga_satuan",
+        "goods_receipt.tax_code",
+        "goods_receipt.ref_doc_no",
+        "goods_receipt.delivery_note",
+        "draft_ba.status_invoice_proposal"
+        )
+        ->JOIN("draft_ba","goods_receipt.id_gr", "=", "draft_ba.id_gr")
+        ->where("draft_ba.id_vendor", "=", $user_vendor)
+        ->where('id_inv',0)
+        ->where('status_invoice_proposal', 'Verified - BA')
+        ->where(function($query) {
+			$query->where('goods_receipt.status','Verified')
+        ->orwhere('goods_receipt.status','Auto Verify')
+		->orWhereNull('status');})
+        ->orderBy('goods_receipt.updated_at', 'ASC')
+        ->get();
+
+        return view('vendor.po.verba',compact('auto'))
+        ->with('i',(request()->input('page', 1) -1) *5);
+    }
+
+    public function puchaseorderreject()
     {   
         $user_vendor = Auth::User()->id_vendor;
         $good_receipts = good_receipt::Where("id_vendor", $user_vendor)->where("Status", "Rejected")->get();
@@ -95,7 +177,7 @@ public function puchaseorderreject()
             case 'Update':
                 $recordIds = $request->get('ids');
                 $newStatus = $request->get('Status');
-                
+                // dd($recordIds);
                 if($recordIds == null){
                     return redirect()->back()->with("warning","Please select data gr first. Try again!");
                 }
@@ -289,15 +371,36 @@ public function puchaseorderreject()
 
      public function update(Request $request)
      {
-     
+        $arrName = [];
+        if ($request->hasFile("lam_disp")) {
+
+            $allowedfileExtension = ['pdf', 'jpg', 'png', 'docx'];
+            $files = $request->file('lam_disp');
+            foreach ($files as $file) {
+                $extension = $file->getClientOriginalExtension();
+
+                if (in_array($extension, $allowedfileExtension)) {
+                    $str = rand();
+                    $result = md5($str);
+                    $filename = pathinfo($extension, PATHINFO_FILENAME);
+                    $name = time() . "-" . $result . '.' . $extension;
+                    $file->move(public_path() . '/lampiran/disputed/', $name);
+                    array_push($arrName, '/lampiran/disputed/' . $name);
+                }
+            }
+        }
+        $fileName = join("#", $arrName);
+
          foreach($request->id as $id) {
              $good_receipt = good_receipt::find($id);
              $good_receipt->update([
                  'status' => 'Disputed',
-                 'alasan_disp' => $request->alasan_disp
+                 'alasan_disp' => $request->alasan_disp,
+                 'lam_disp' => $fileName
              ]);
              $good_receipt->save();
          }
+         
         if($good_receipt){
         //redirect dengan pesan sukses
         return redirect('vendor/purchaseorder')->with('success','Data has been successfully Disputed!');
@@ -439,7 +542,7 @@ public function puchaseorderreject()
         // dd($now);
         $user_vendor = Auth::User()->id_vendor;
         // dd($user_vendor);
-        $draft = Draft_BA::all()->where("id_vendor", $user_vendor)->where('status_invoice_proposal', 'Verified - Draft BA');
+        $draft = Draft_BA::all()->where("id_vendor", $user_vendor)->where('status_invoice_proposal', 'Verified - BA');
         // dd($draft);
         return view('Vendor.ba.historydraft',compact('draft'));
         }
@@ -458,8 +561,7 @@ public function puchaseorderreject()
              ->where("ba.id_vendor", "=", $user_vendor)
              ->where("ba_reconcile.status_invoice_proposal", "=", "Not Yet Verified - BA")
              ->get();
-
-
+            // dd($BA);
             return view('Vendor.ba.detail',compact('BA'));
         }
 
@@ -504,7 +606,7 @@ public function puchaseorderreject()
         foreach($recordIds as $id) {
             $drafts = Draft_BA::find($id);
             $drafts->update([
-                'status_invoice_proposal' => 'Verified - Draft BA',
+                'status_invoice_proposal' => 'Verified - BA',
                 // 'status_draft' => 'Verified - Draft BA'
             ]);
             }

@@ -75,6 +75,7 @@ class PoController extends Controller
              $good_receipt = good_receipt::find($id);
              $good_receipt->update([
                  'status' => $request->status,
+                 'alasan_reject' => $request->alasan_reject,
                  'lampiran' => $fileName
              ]);
              $good_receipt->save();

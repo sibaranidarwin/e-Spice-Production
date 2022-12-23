@@ -98,7 +98,7 @@ label {
                                             <th>Sts. Inv. Props</th>
                                             <th>Invoice Date</th>
                                             <th>Invoice Number</th>
-                                            <th>No Invoice Proposal</th>
+                                            <th>Invoice Number Proposal</th>
                                             <th>VAT NO</th>
                                             {{-- <th>No E-Verify</th> --}}
                                             <th>Curr</th>

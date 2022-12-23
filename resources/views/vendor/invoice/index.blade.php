@@ -106,12 +106,11 @@ label {
                                             <th>Sts. Inv. Props.</th>
                                             <th>Invoice Proposal No</th>
                                             <th>Invoice Date</th>
-                                            <th>Invoice No</th>
+                                            <th>Invoice Number Proposal</th>
                                             <th>VAT NO</th>
                                             <th>Curr</th>
                                             <th>Total PPN</th>
                                             <th>Total Price</th>
-
                                             <th>Action</th>
                                         </tr>
                                     </thead>

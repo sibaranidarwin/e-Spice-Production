@@ -61,7 +61,7 @@ class WarehouseController extends Controller
     {   
         $data = good_receipt::select('material_number');
         // dd($data);
-        $good_receipts = good_receipt::where('material_number', 'LG2KOM00707010F691' )->orWhereNull('status')->get();
+        $good_receipts = good_receipt::where('material_number', 'LG2KOM00707010F691' )->WhereNull('status')->get();
 
         $dispute = good_receipt::all()->where("status", "Disputed")->count();
 

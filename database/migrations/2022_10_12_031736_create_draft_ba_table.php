@@ -39,7 +39,7 @@ class CreateDraftBaTable extends Migration
             $table->string('jumlah_harga')->nullable();
             $table->string('selisih_harga')->nullable();
             $table->enum('status_draft',['Not Yet Verified - Draft BA', 'Verified - Draft BA', 'Verified - BA'])->nullable();
-            $table->enum('status_invoice_proposal',['Not Yet Verified - Draft BA', 'Verified - Draft BA'])->default("Not Yet Verified - Draft BA")->nullable();
+            $table->enum('status_invoice_proposal',['Not Yet Verified - Draft BA', 'Verified - BA'])->default("Not Yet Verified - Draft BA")->nullable();
             $table->string('reason')->nullable();
             $table->timestamps();
         });

@@ -79,7 +79,11 @@ label {
                     </div>
                     @endif
                     <div class="card-header">
-                        <strong class="card-title">Draft BA Reconcile List</strong>
+                        @foreach($draft as $item)
+                        @endforeach
+                        <strong class="card-title">No Draft BA : {{$item->no_draft}}</strong>
+                        <br>
+                        <strong class="card-title">Created Draft BA : {{ Carbon\Carbon::parse($item->created_at)->format('d F Y') }}</strong>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive text-nowrap">
@@ -104,8 +108,6 @@ label {
                                         <th style="text-align: center;">No</th>
                                         <th style="text-align: center;">Sts. Draft BA</th>
                                         <th style="text-align: center;">Sts. Inv. Props.</th>
-                                        <th style="text-align: center;">No Draft BA</th>
-                                        <th style="text-align: center;">Date</th>
                                         <th style="text-align: center;">PO</th>
                                         <th style="text-align: center;">Gr Number</th>
                                         <th style="text-align: center;">GR Date</th>
@@ -116,9 +118,9 @@ label {
                                         <th style="text-align: center;">Curr</th>
                                         <th style="text-align: center;">Price</th>
                                         <th style="text-align: center;">Total Value</th>
-                                        <th style="text-align: center;">Tax Code</th>
                                         <th style="text-align: center;">Ref.</th>
                                         <th style="text-align: center;">Del. Note</th>
+                                        <th style="text-align: center;">Tax Code</th>
                                     </tr>
                                 </thead>
                                 <tbody style="font-size: 11px;">
@@ -130,8 +132,6 @@ label {
                                         <td>{{$i++}}</td>
                                         <td><span>Verified - Draft BA</span></td>
                                         <td><span>{{$item->status_invoice_proposal}}</span></td>
-                                        <td><span>{{ $item->no_draft}}</span></td>
-                                        <td><span>{{ Carbon\Carbon::parse($item->created_at)->format('d F Y') }}</span></td>
                                         <td><span>{{$item->po_number}} /{{$item->po_item}}</span></td>
                                         <td ><span>{{$item->gr_number}}</span></td>
                                         <td><span>{{ Carbon\Carbon::parse($item->gr_date)->format('d F Y') }}</span></td>
@@ -142,9 +142,9 @@ label {
                                         <td> <span>{{$item->currency}}</span> </td>
                                         <td style="text-align: right"><span>{{ number_format($item->harga_satuan) }}</span></td>
                                         <td style="text-align: right"></span>{{ number_format($item->jumlah_harga) }}<span></td>
-                                        <td><span>{{$item->tax_code}}</td>
                                         <td> <span>{{$item->ref_doc_no}}</span> </td>
                                         <td><span>{{$item->delivery_note}}</span> </td>
+                                        <td><span>{{$item->tax_code}}</td>
                                     </tr>
                                     @endforeach
                                     </select>

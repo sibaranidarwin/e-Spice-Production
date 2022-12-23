@@ -49,9 +49,9 @@
                             @endforeach
                             {{-- TODO: Remember this must can upload multiple file and save to db with format (fileone, filetwo, filethree) include the paht  --}}
                             <div class="form-group">
-                                <label class="form-control-label" for="lampiran">Upload File</label><strong
+                                <label class="form-control-label" for="lam_disp">Upload File</label><strong
                                     style=" font-size: 10px;"> *.pdf max = 5MB</strong>
-                                <input type="file" name="lampiran[]" class="form-control" id="lampiran" multiple>
+                                <input type="file" name="lam_disp[]" class="form-control" id="lam_disp" multiple>
                             </div>
 
                             <div class="form-group">

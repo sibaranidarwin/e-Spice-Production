@@ -121,7 +121,6 @@ label {
                                             <th>No</th>
                                             <th>Sts. BA</th>
                                             <th>Sts. Inv. Props.</th>
-                                            <th>Date</th>
                                             <th>PO</th>
                                             <th>GR Number</th>
                                             <th>GR Date</th>
@@ -131,9 +130,9 @@ label {
                                             <th>Curr</th>
                                             <th>Price</th>
                                             <th>Total Value</th>
-                                            <th>Tax Code</th>
                                             <th>Ref. </th>
                                             <th>Del. Note</th>
+                                            <th>Tax Code</th>
                                         </tr>
                                     </thead>
                                     <tbody style="font-size: 11px;">
@@ -145,7 +144,6 @@ label {
                                             <td><span>{{$i++}}</span></td>
                                             <td><span>{{$item->status_ba}}</span></td>
                                             <td><span>{{$item->status_invoice_proposal}}</span></td>
-                                            <td><span>{{ Carbon\Carbon::parse($item->created_at)->format('d F Y') }}</span></td>
                                             <td><span>{{$item->po_number}} /{{$item->item}}</span></td>
                                             <td><span>{{$item->gr_number}}</span></td>
                                             <td><span>{{ Carbon\Carbon::parse($item->gr_date)->format('d F Y') }}</span></td>
@@ -155,9 +153,9 @@ label {
                                             <td><span>{{$item->qty}} {{$item->currency}}</span></td>
                                             <td style="text-align: right"><span>{{ number_format($item->harga_satuan) }}</span></td> 
                                             <td style="text-align: right"><span>{{ number_format($item->jumlah_harga) }}</span></td> 
-                                            <td><span>{{$item->tax_code}}</span></td>
                                             <td><span>{{$item->ref_doc_no}}</span></td>
                                             <td><span>{{$item->delivery_note}}</span></td>
+                                            <td><span>{{$item->tax_code}}</span></td>
                                         </tr>
                                         @endforeach
                                         </select>

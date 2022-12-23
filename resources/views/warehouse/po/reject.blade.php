@@ -25,6 +25,9 @@
 label {
     font-size: 11px;
 }
+div.dt-button-collection {
+  background-color: #0275d8;
+}
 </style>
 <div class="breadcrumbs">
     <div class="breadcrumbs-inner">
@@ -112,10 +115,10 @@ label {
                                             <th style="text-align: center;">Part Number</th>
                                             <th style="text-align: center;">Mat. Desc.</th>
                                             <th style="text-align: center;">QTY UOM</th>
-                                            <th style="text-align: center;">Tax Code</th>
                                             <th style="text-align: center;">Reference</th>
                                             <th style="text-align: center;">Del. Note</th>
-                                            <th style="text-align: center;">Reason</th>    
+                                            <th style="text-align: center;">Tax Code</th>
+                                            <th style="text-align: center;">Reason</th>  
                                         </tr>
                                         </thead>
                                         <tbody style="font-size: 11px;">
@@ -131,10 +134,10 @@ label {
                                                 <td> <span>{{$good_receipt->material_number}}/<br> {{$good_receipt->vendor_part_number}}</span></td>
                                                 <td> <span>{{$good_receipt->mat_desc}}</span> <br>({{$good_receipt->valuation_type}})</td>
                                                 <td> <span>{{$good_receipt->jumlah}}</span>&nbsp;<span>{{$good_receipt->uom}}</span> </td>
-                                                <td> <span>{{$good_receipt->tax_code}}</span> </td>
                                                 <td> <span>{{$good_receipt->ref_doc_no}}</span> </td>
                                                 <td> <span>{{$good_receipt->delivery_note}}</span> </td>
-                                                <td><span>{{$good_receipt->alasan_disp}}</span></td>
+                                                <td> <span>{{$good_receipt->tax_code}}</span> </td>
+                                                <td><span>{{$good_receipt->alasan_reject}}</span></td>
                                             </tr>
                                         @endforeach
                                         </select>
@@ -221,7 +224,9 @@ $(document).ready(function() {
     // DataTables initialisation
     var table = $('#list').DataTable({
         lengthMenu: [[10, 25, 50, -1],[10, 25, 50, 'All'],],
-        dom: 'Bfrtip',
+        dom: "<'row'<'col-md-2 bg-white'l><'col-md-5 bg-white'B><'col-md-5 bg-white'f>>" +
+                "<'row'<'col-md-12'tr>>" +
+                "<'row'<'col-md-6'i><'col-md-6'p>>",
         columnDefs: [
             {
                 targets: 1,
