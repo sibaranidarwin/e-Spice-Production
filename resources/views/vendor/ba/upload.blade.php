@@ -150,7 +150,7 @@ label {
                                             <td><span>{{$item->material_number}} /{{$item->vendor_part_number}}</span></td>
                                             <td><span>{{$item->material_description}} /({{$item->valuation_type}})</span></td>
                                             <td><span>{{$item->qty}} {{$item->uom}}</span></td>
-                                            <td><span>{{$item->qty}} {{$item->currency}}</span></td>
+                                            <td><span>{{$item->currency}}</span></td>
                                             <td style="text-align: right"><span>{{ number_format($item->harga_satuan) }}</span></td> 
                                             <td style="text-align: right"><span>{{ number_format($item->jumlah_harga) }}</span></td> 
                                             <td><span>{{$item->ref_doc_no}}</span></td>

@@ -86,6 +86,9 @@ div.dt-button-collection {
                     </div>
                     <div class="card-body">
                         <div class="table-responsive text-nowrap">
+                            @if ($start_date != null || $end_date != null)
+                            <p style="text-align: center; background-color: #11CDEF; color: white;"><strong class="card-title"></i>GR Date:{{ Carbon\Carbon::parse($start_date)->format('d F Y') }} To: {{ Carbon\Carbon::parse($end_date)->format('d F Y') }}</i></strong></p>
+                            @endif
                             <form action="{{ route('warehouse-filterreject') }}" class="form-inline" method="GET">
                                 <div class="form-group col-md-2">
     

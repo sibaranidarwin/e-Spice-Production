@@ -50,46 +50,53 @@ class WarehouseController extends Controller
     { 
 
         $good_receipts = good_receipt::where("status", "Verified")->orwhere('material_number','LG2KOM00707010F691')->orwhere("status", "Rejected")->get();
-
+        $start_date = null;
+        $end_date = null;
+        $status= null;
         $dispute = good_receipt::all()->where("status", "Disputed")->count();
 
-        return view('warehouse.po.all',compact('good_receipts', 'dispute'))
+        return view('warehouse.po.all',compact('good_receipts', 'dispute', 'start_date', 'end_date', 'status'))
                 ->with('i',(request()->input('page', 1) -1) *5);
     }
 
     public function po(Request $request, good_receipt $id_gr)
     {   
         $data = good_receipt::select('material_number');
-        // dd($data);
+        $start_date = null;
+        $end_date = null;
         $good_receipts = good_receipt::where('material_number', 'LG2KOM00707010F691' )->WhereNull('status')->get();
 
         $dispute = good_receipt::all()->where("status", "Disputed")->count();
 
-        return view('warehouse.po.index',compact('good_receipts', 'dispute'))
+        return view('warehouse.po.index',compact('good_receipts', 'dispute', 'start_date', 'end_date'))
                 ->with('i',(request()->input('page', 1) -1) *5);
     }
     public function pover(){
         $good_receipts = good_receipt::where("status","Verified")->get();
         $dispute = good_receipt::all()->where("status", "Disputed")->count();
+        $start_date = null;
+        $end_date = null;
 
-        return view('warehouse.po.verified',compact('good_receipts', 'dispute'))
+        return view('warehouse.po.verified',compact('good_receipts', 'dispute', 'start_date', 'end_date'))
         ->with('i',(request()->input('page', 1) -1) *5);
     }
     public function poreject(){
         $good_receipts = good_receipt::where("status","Rejected")->get();
-
-        
+        $start_date = null;
+        $end_date = null;
         $dispute = good_receipt::all()->where("status", "Disputed")->count();
 
-        return view('warehouse.po.reject',compact('good_receipts', 'dispute'))
+        return view('warehouse.po.reject',compact('good_receipts', 'dispute', 'start_date', 'end_date'))
         ->with('i',(request()->input('page', 1) -1) *5);
     }
     public function invoice()
-    {
-     $invoice = Invoice::latest()->orWhere("data_from", "GR")->get();
-     $dispute = good_receipt::all()->where("status", "Dispute")->count();
+    { 
+    $start_date = null;
+    $end_date = null;
+    $invoice = Invoice::latest()->orWhere("data_from", "GR")->get();
+    $dispute = good_receipt::all()->where("status", "Dispute")->count();
 
-     return view('warehouse.invoice.index',compact('invoice','dispute'))
+     return view('warehouse.invoice.index',compact('invoice','dispute', 'start_date', 'end_date'))
              ->with('i',(request()->input('page', 1) -1) *5);
     }
     public function detailinvoice(Request $request, $id){
@@ -131,10 +138,12 @@ class WarehouseController extends Controller
 
     public function invoiceba()
     {
+    $start_date = null;
+    $end_date = null;
      $invoice = Invoice::latest()->orWhere("data_from", "BA")->get();
      $dispute = good_receipt::all()->where("Status", "Dispute")->count();
 
-     return view('warehouse.invoice.indexba',compact('invoice','dispute'))
+     return view('warehouse.invoice.indexba',compact('invoice','dispute', 'start_date', 'end_date'))
              ->with('i',(request()->input('page', 1) -1) *5);
     }
 
@@ -179,10 +188,12 @@ class WarehouseController extends Controller
     }
     public function disputed()
     {
+        $start_date = null;
+        $end_date = null;
         $good_receipts = good_receipt::where("status", "Disputed")->get();
         $dispute = good_receipt::all()->where("status", "Disputed")->count();
 
-        return view('warehouse.dispute.index',compact('good_receipts', 'dispute'))
+        return view('warehouse.dispute.index',compact('good_receipts', 'dispute', 'start_date', 'end_date'))
                 ->with('i',(request()->input('page', 1) -1) *5);
     }
     public function showing($id){
