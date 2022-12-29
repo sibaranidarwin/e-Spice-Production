@@ -38,6 +38,28 @@
 
 
     <style>
+.menu_utama {
+   display: inline-block;
+   vertical-align: top;
+   text-align:center;
+   color: white;
+   border: none;
+   cursor: pointer;
+}
+.menu_sub {
+   display: none;
+   list-style-type: none;
+ }
+.menu_sub a{
+   display: block;
+
+   color: white;
+   text-decoration: none;
+}
+#menu_dropdown .menu_utama:hover > .menu_sub {
+   display:block;
+}
+
     #weatherWidget .currentDesc {
         color: #ffffff !important;
     }
@@ -90,6 +112,7 @@
                 <li class="active">
                     <a href="{{url('vendor/dashboard')}}"><i class="menu-icon fa fa-laptop"></i>Dashboard</a>
                 </li>
+                
                 <li class="menu-title">DATA GOOD RECEIPT</li><!-- /.menu-title -->
                 <li class="menu-item-has-children dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
@@ -101,39 +124,30 @@
                     </ul>
                 </li>
 
+                
                 <li class="menu-item-has-children dropdown">
-                    <a class="accordion-heading menu-item-has-children dropdown-toggle" data-toggle="collapse" data-target="#submenu1" aria-haspopup="true"
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"  aria-haspopup="true"
                     aria-expanded="false">
-                          <span class="nav-header-primary"><i class="menu-icon fa fa-newspaper-o"></i>BA Reconcile<span class="pull-right"></span></span>
+                          <i class="menu-icon fa fa-newspaper-o"></i>BA Reconcile
                     </a>
     
-                    <ul class="nav nav-list collapse sub-menu" id="submenu1">
-                        <li>
+                    <ul class="sub-menu children dropdown-menu" id="menu_dropdown">
+                        <li class="menu-item-has-children dropdown menu_utama">
                              <a class="accordion-heading" data-toggle="collapse" data-target="#submenu2"><span class=""><i class="fa fa-newspaper-o"></i> Draft BA &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ></span></a>
-                              <ul class="nav nav-list collapse sub-menu children" id="submenu2">
+                              <ul class="nav nav-list collapse sub-menu children menu_sub" id="submenu2">
                                   <li><a href="{{url('vendor/draft')}}" title="Title"><i class="fa fa-table"></i>Active</a></li>
                                   <li><a href="{{url('vendor/historydraft')}}" title="Title"><i class="fa fa-history"></i>History</a></li>
                                 </ul>
                         </li>
-                        <li>
+                        <li class="menu-item-has-children dropdown menu_utama">
                             <a class="accordion-heading" data-toggle="collapse" data-target="#submenu3"><span class=""><i class="fa fa-newspaper-o"></i>BA  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ></span></a>
-                            <ul class="nav nav-list collapse sub-menu children" id="submenu3">
+                            <ul class="nav nav-list collapse sub-menu children menu_sub" id="submenu3">
                                 <li><a href="{{url('vendor/detailba')}}" title="Title"><i class="fa fa-table "></i>Active</a></li>
                                 <li><a href="{{url('vendor/historyba')}}" title="Title"><i class="fa fa-history "></i>History</a></li>
                             </ul>
                       </li>
                     </ul>
                   </li>
-
-
-                {{-- <li class="menu-item-has-children dropdown ">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                        aria-expanded="false"> <i class="menu-icon fa fa-newspaper-o"></i>BA Reconcile</a>
-                    <ul class="sub-menu children dropdown-menu ">
-                        <li><i class="fa fa-table "></i><a href="{{url('vendor/draft')}}">Draft BA</a></li>
-                        <li><i class="fa fa-table "></i><a href="{{url('vendor/ba')}}">BA</a></li>
-                    </ul>
-                </li> --}}
                   <li class="menu-item-has-children dropdown ">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
                         aria-expanded="false"> <i class="menu-icon fa fa-warning"></i>Disputed Invoice</a>

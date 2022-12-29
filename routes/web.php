@@ -185,6 +185,7 @@ Route::put('vendor/{id}/profile','VendorController@heyupdate')->name('update-ven
 Route::post('vendor/{id}/password','VendorController@editpass')->name('update-pass-vendor');
 
 Route::get('vendor/filter', 'FilterController@filter')->name('vendor-filter');
+Route::get('vendor/filterreject', 'FilterController@filterreject')->name('vendor-filterreject');
 Route::get('vendor/filterdisp', 'FilterController@filterdisp')->name('vendor-filterdisp');
 Route::get('vendor/filterdraft', 'FilterController@filterdraft')->name('vendor-filterdraft');
 Route::get('vendor/filterhistorydraft', 'FilterController@filterhistorydraft')->name('vendor-filterhistorydraft');

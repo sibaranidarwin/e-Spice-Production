@@ -81,10 +81,13 @@ label {
                         </div>
                     @endif
                     <div class="card-header">
-                        <strong class="card-title">BA Reconcile List <i class="fa fa-list"></i></strong>
+                        <strong class="card-title"><i class="fa fa-list"></i> BA Reconcile List </strong>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive text-nowrap">
+                            @if ($start_date != null || $end_date != null)
+                            <p class="title" style="text-align: center; background-color: #11CDEF; color: white;"><strong class="card-title"></i>BA Date:{{ Carbon\Carbon::parse($start_date)->format('d F Y') }} To: {{ Carbon\Carbon::parse($end_date)->format('d F Y') }}</i></strong></p>
+                            @endif
                             <div class="row">
                                 <form action="{{ route('vendor-filterba') }}" class="form-inline" method="GET">
                                     <div class="form-group">

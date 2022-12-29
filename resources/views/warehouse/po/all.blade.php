@@ -24,8 +24,8 @@
         font-size: 11px;
     }
     div.dt-button-collection {
-  background-color: #0275d8;
-}
+     background-color: #0275d8;
+    }
 </style>
 <div class="breadcrumbs">
     <div class="breadcrumbs-inner">
@@ -84,6 +84,9 @@
                     </div>
                     <div class="card-body">
                     <div class="table-responsive text-nowrap">
+                        @if ($start_date != null || $end_date != null || $status != null)
+                        <p style="text-align: center; background-color: #11CDEF; color: white;"><strong class="card-title">GR Date:{{ Carbon\Carbon::parse($start_date)->format('d F Y') }} To: {{ Carbon\Carbon::parse($end_date)->format('d F Y') }} Status Invoice Proposal: {{ ($status) }}</strong></p>
+                        @endif
                         <form action="{{ route('warehouse-filter') }}" class="form-inline" method="GET">
                             <div class="form-group col-md-2">
 
@@ -98,9 +101,9 @@
                             </div>
                             <div class="form-group col-md-3">
                                 {{-- <label> Sts. Inv. Props.: &nbsp; </label> --}}
-                                <select class="form-control status_invoice" name="">
+                                <select class="form-control status_invoice" name="status">
                                     <option value="">-- Choose Sts. Inv. Props. -- </option>
-                                    <option value="Verified">Verified</option>
+                                    <option value="Verified - BA">Verified - BA</option>
                                     <option value="Not Yet Verified - Draft BA">Not Yet Verified - Draft BA</option>
                                 </select>
                             </div>
@@ -252,16 +255,6 @@
             lengthMenu: [[10, 25, 50, -1],[10, 25, 50, 'All'],],
 
         });
-    
-        function filterData () {
-		    $('#list').DataTable().search(
-		        $('.status_invoice').val()
-		    	).draw();
-		}
-		$('.status_invoice').on('change', function () {
-	        filterData();
-	    });
-    
     
     });
     
