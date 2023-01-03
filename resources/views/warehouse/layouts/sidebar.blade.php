@@ -35,26 +35,29 @@
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
     <script src="{{asset('admin/assets/ckeditor/ckeditor.js')}}"></script>
     <style>
-        .menu_utama {
-   display: inline-block;
-   vertical-align: top;
-   color: white;
-   border: none;
-   cursor: pointer;
-}
-.menu_sub {
-   display: none;
-   list-style-type: none;
- }
-.menu_sub a{
-   display: block;
+    .menu_utama {
+        display: inline-block;
+        vertical-align: top;
+        color: white;
+        border: none;
+        cursor: pointer;
+    }
 
-   color: white;
-   text-decoration: none;
-}
-#menu_dropdown .menu_utama:hover > .menu_sub {
-   display:block;
-}
+    .menu_sub {
+        display: none;
+        list-style-type: none;
+    }
+
+    .menu_sub a {
+        display: block;
+
+        color: white;
+        text-decoration: none;
+    }
+
+    #menu_dropdown .menu_utama:hover>.menu_sub {
+        display: block;
+    }
     </style>
 
 </head>
@@ -71,34 +74,41 @@
 
                 <li class="menu-title">DATA GOOD RECEIPT</li><!-- /.menu-title -->
                 <li class="menu-item-has-children dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"  aria-haspopup="true"
-                    aria-expanded="false">
-                <i class="menu-icon fa fa-file"></i>Good Receipt</a>
-    
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false">
+                        <i class="menu-icon fa fa-file"></i>Good Receipt</a>
+
                     <ul class="sub-menu children dropdown-menu" id="menu_dropdown">
                         <li>
-                             <a href="{{url('warehouse/all')}}" class="accordion-heading"><span class=""><i class="fa fa-table"></i>All Status</span></a>
+                            <a href="{{url('warehouse/all')}}" class="accordion-heading"><span class=""><i
+                                        class="fa fa-table"></i>All Status</span></a>
                         </li>
                         <li class="menu_utama">
-                            <a class="accordion-heading" data-toggle="collapse" data-target="#submenu3"><span class=""><i class="fa fa-table"></i>By Status &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ></span></a>
+                            <a class="accordion-heading" data-toggle="collapse" data-target="#submenu3"><span
+                                    class=""><i class="fa fa-table"></i>By Status
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    ></span></a>
                             <ul class="nav nav-list collapse sub-menu children menu_sub" id="submenu3">
-                                <li><a href="{{url('warehouse/po')}}" title="Title"><i class="fa fa-info"></i>Not Verified</a></li>
-                                <li><a href="{{url('warehouse/pover')}}" title="Title"><i class="fa fa-check "></i>Verified</a></li>
-                                <li><a href="{{url('warehouse/poreject')}}" title="Title"><i class="fa fa-close"></i>Rejected</a></li>
+                                <li><a href="{{url('warehouse/po')}}" title="Title"><i class="fa fa-info"></i>Not
+                                        Verified</a></li>
+                                <li><a href="{{url('warehouse/pover')}}" title="Title"><i
+                                            class="fa fa-check "></i>Verified</a></li>
+                                <li><a href="{{url('warehouse/poreject')}}" title="Title"><i
+                                            class="fa fa-close"></i>Rejected</a></li>
                             </ul>
-                      </li>
+                        </li>
                     </ul>
-                  </li>
+                </li>
 
-            <li class="menu-title">DATA Invoice</li><!-- /.menu-title -->
-            <li class="menu-item-has-children dropdown ">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                    aria-expanded="false"> <i class="menu-icon fa fa-file-pdf-o"></i>Invoice Proposal</a>
-                <ul class="sub-menu children dropdown-menu ">
-                    <li><i class="fa fa-table "></i><a href="{{url('warehouse/invoice')}}">Invoice GR</a></li>
-                    <li><i class="fa fa-table "></i><a href="{{url('warehouse/invoiceba')}}">Invoice BA</a></li>
-                </ul>
-            </li>
+                <li class="menu-title">DATA Invoice</li><!-- /.menu-title -->
+                <li class="menu-item-has-children dropdown ">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false"> <i class="menu-icon fa fa-file-pdf-o"></i>Invoice Proposal</a>
+                    <ul class="sub-menu children dropdown-menu ">
+                        <li><i class="fa fa-table "></i><a href="{{url('warehouse/invoice')}}">Invoice GR</a></li>
+                        <li><i class="fa fa-table "></i><a href="{{url('warehouse/invoiceba')}}">Invoice BA</a></li>
+                    </ul>
+                </li>
 
             </ul>
         </div><!-- /.navbar-collapse -->

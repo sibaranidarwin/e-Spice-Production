@@ -81,7 +81,7 @@ label {
                         </div>
                     @endif
                     <div class="card-header">
-                        <strong class="card-title">History BA Reconcile List</strong>
+                        <strong class="card-title"><i class="fa fa-list"></i> History BA Reconcile List</strong>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive text-nowrap">
@@ -103,18 +103,19 @@ label {
                                 <table id="list" class="table table-striped" style="font-size: 10px;">
                                     <thead>
                                         <tr>
-                                            <th>No</th>
-                                            <th>Sts. BA</th>
-                                            <th>Sts. Inv. Props.</th>
-                                            <th>No BA</th>
-                                            <th>Date</th>
-                                            <th>PO</th>
-                                            <th>GR Number</th>
-                                            <th>Part Number</th>
-                                            <th>Mat. Desc.</th>
-                                            <th>Quantity</th>
-                                            <th>Total Price</th>
-                                            <th>Tax Code</th>
+                                            <th style="text-align: center;">No</th>
+                                            <th style="text-align: center;">Sts. BA</th>
+                                            <th style="text-align: center;">Sts. Inv. Props.</th>
+                                            <th style="text-align: center;">No BA</th>
+                                            <th style="text-align: center;">Date</th>
+                                            <th style="text-align: center;">PO</th>
+                                            <th style="text-align: center;">GR Number</th>
+                                            <th style="text-align: center;">Part Number</th>
+                                            <th style="text-align: center;">Mat. Desc.</th>
+                                            <th style="text-align: center;">Quantity</th>
+                                            <th style="text-align: center;">Curr</th>
+                                            <th style="text-align: center;">Total Price</th>
+                                            <th style="text-align: center;">Tax Code</th>
                                         </tr>
                                     </thead>
                                     <tbody style="font-size: 11px;">
@@ -131,6 +132,7 @@ label {
                                             <td><span>{{$item->material_number}} /{{$item->vendor_part_number}}</span></td>
                                             <td><span>{{$item->material_description}}<br>({{$item->valuation_type}})</span></td>
                                             <td><span>{{$item->qty}}</span></td>
+                                            <td> <span>{{$item->currency}}</span> </td>
                                             <td style="text-align: right"><span>{{ number_format($item->jumlah_harga) }}</span></td> 
                                             <td><span>{{$item->tax_code}}</span></td>
                                         </tr>

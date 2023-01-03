@@ -29,7 +29,8 @@ class DraftbaExport implements WithEvents,FromCollection, WithHeadings, ShouldAu
                 $event->sheet->getStyle('S')->getProtection()->setLocked(\PhpOffice\PhpSpreadsheet\Style\Protection::PROTECTION_UNPROTECTED);
                 $event->sheet->getStyle('T')->getProtection()->setLocked(\PhpOffice\PhpSpreadsheet\Style\Protection::PROTECTION_UNPROTECTED);
                 $event->sheet->getStyle('U')->getProtection()->setLocked(\PhpOffice\PhpSpreadsheet\Style\Protection::PROTECTION_UNPROTECTED);
-
+                $event->sheet->getStyle('A1:U1')->getFill()->applyFromArray(['fillType' => 'solid','rotation' => 0, 'color' => ['rgb' => '1E90FF'],]);
+               
                 $event->sheet->getDelegate()->getProtection()->setSheet(true);
             },
         ];

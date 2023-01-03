@@ -79,7 +79,7 @@ label{
                     </div>
                     @endif
                     <div class="card-header">
-                        <strong class="card-title">Verified List <i class="fa fa-list"></i></strong>
+                        <strong class="card-title"><i class="fa fa-list"></i> Verified List</strong>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive text-nowrap">
@@ -95,8 +95,7 @@ label{
                                   <label for="inputPassword2">To: &nbsp;</label>
                                   <input type="date" class="form-control" name="end_date">
                                 </div>
-                                <button class="btn btn-primary" onclick="return confirm('Are you sure?')" type="submit"><i class="fa fa-search"></i></button>
-                                <div class="form-group col-md-4">
+                                <div class="form-group col-md-3">
                                     {{-- <label> Sts. Inv. Props.: &nbsp; </label> --}}
                                     <select class="form-control status_invoice" name="">
                                         <option value="">-- Choose Sts. Inv. Props. -- </option>
@@ -104,6 +103,7 @@ label{
                                         <option value="Not Yet Verified - Draft BA">Not Yet Verified - Draft BA</option>
                                     </select>
                                 </div>
+                                <button class="btn btn-primary" onclick="return confirm('Are you sure?')" type="submit"><i class="fa fa-search"></i></button>
                             </form>
                             <form action="{{ route('update-datagr/{id}') }}" method="POST">
                                 @csrf
@@ -122,9 +122,9 @@ label{
                                             <th style="text-align: center;">Qty UOM</th>
                                             <th style="text-align: center;">Curr</th>
                                             <th style="text-align: center;">Unit Price</th>
-                                            <th style="text-align: center;">Tax Code</th>
                                             <th style="text-align: center;">Ref.</th>
                                             <th style="text-align: center;">Del. Note</th>
+                                            <th style="text-align: center;">Tax Code</th>
                                         </tr>
                                     </thead>
                                     <tbody style="font-size: 11px;">
@@ -142,10 +142,10 @@ label{
                                             <td> <span>{{$good_receipt->mat_desc}}</span> <br>({{$good_receipt->valuation_type}})</td>
                                             <td> <span>{{$good_receipt->jumlah}}</span>&nbsp;<span>{{$good_receipt->uom}}</span> </td>
                                             <td> <span>{{$good_receipt->currency}}</span> </td>
-                                            <td style="text-align: right"> <span>Rp{{number_format($good_receipt->harga_satuan)}}</span> </td>
-                                            <td> <span>{{$good_receipt->tax_code}}</span> </td>
+                                            <td style="text-align: right"> <span>{{number_format($good_receipt->harga_satuan)}}</span> </td>
                                             <td> <span>{{$good_receipt->ref_doc_no}}</span> </td>
                                             <td> <span>{{$good_receipt->delivery_note}}</span> </td>
+                                            <td> <span>{{$good_receipt->tax_code}}</span> </td>
                                         </tr>
                                         @endforeach
                                         </select>
@@ -216,8 +216,8 @@ $(document).ready(function() {
     var table = $('#list').DataTable({
         rowReorder: true,
              columnDefs: [
-            { orderable: true, className: 'reorder', targets: 1 },
-            { orderable: true, className: 'reorder', targets: 6 },
+            { orderable: true, className: 'reorder', targets: 0 },
+            { orderable: true, className: 'reorder', targets: 5 },
             
             { orderable: false, targets: '_all' }
                     ],

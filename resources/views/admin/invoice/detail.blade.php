@@ -104,7 +104,7 @@ label {
                         <div class="form-group col-md-6">
                             <label class="form-control-label" for="total_harga_gross[]">Total Price</label> <br>
                             <input type="text" class="form-control @error('total_harga_gross[]') is-invalid @enderror"
-                                name="total_harga_gross[]" placeholder="Masukkan Tanggal ..." value="Rp{{ number_format($invoice->total_harga_everify) }}" readonly>
+                                name="total_harga_gross[]" placeholder="Masukkan Tanggal ..." value="{{ number_format($invoice->total_harga_everify) }}" readonly>
                             @error('total_harga_gross[]')<span
                                 class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                         </div>
@@ -118,7 +118,7 @@ label {
                         <div class="form-group col-md-6">
                             <label class="form-control-label" for="del_costs[]">Price Difference</label> <br>
                             <input type="text" class="form-control @error('del_costs[]') is-invalid @enderror"
-                                name="del_costs[]"  value="Rp{{ $invoice->del_costs}}" readonly>
+                                name="del_costs[]"  value="{{ $invoice->del_costs}}" readonly>
                             @error('del_costs[]')<span
                                 class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                         </div>

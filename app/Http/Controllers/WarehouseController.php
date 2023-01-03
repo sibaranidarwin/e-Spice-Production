@@ -61,7 +61,6 @@ class WarehouseController extends Controller
 
     public function po(Request $request, good_receipt $id_gr)
     {   
-        $data = good_receipt::select('material_number');
         $start_date = null;
         $end_date = null;
         $good_receipts = good_receipt::where('material_number', 'LG2KOM00707010F691' )->WhereNull('status')->get();

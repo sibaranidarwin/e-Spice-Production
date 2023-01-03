@@ -47,7 +47,8 @@ class AdminController extends Controller
     }
     public function po()
     {   
-        $good_receipts = good_receipt::where("Status","Not Verified")->orWhere("Status", "")->get();
+        $good_receipts = good_receipt::where('material_number', 'LG2KOM00707010F691' )->WhereNull('status')->get();
+
         return view('admin.po.notver',compact('good_receipts'))
                 ->with('i',(request()->input('page', 1) -1) *5);
     }
