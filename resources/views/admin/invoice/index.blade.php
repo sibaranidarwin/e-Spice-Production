@@ -109,20 +109,9 @@ label {
                                             <th>Invoice Date</th>
                                             <th>Invoice No</th>
                                             <th>VAT NO</th>
-                                            {{-- <th>No E-Verify</th> --}}
+                                            <th>Curr</th>
                                             <th>Total PPN</th>
                                             <th>Total Price</th>
-
-                                            <!-- <th class="text-center">Reference</th> -->
-                                            <!-- <th class="text-center">Vendor Part Number</th>
-                                            <th class="text-center">Item Description</th>
-                                            <th class="text-center">UoM</th>
-                                            <th class="text-center">Currency</th>
-                                            <th class="text-center">Harga Satuan</th>
-                                            <th class="text-center">Jumlah</th> -->
-                                            <!-- <th class="text-center">Jumlah Harga</th> -->
-                                            {{-- <th class="text-center">Tax Code</th> --}}
-                                            <!-- <th class="text-center">Valuation Type</th> -->
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -136,9 +125,9 @@ label {
                                             <td><span>{{ Carbon\Carbon::parse($item['posting_date'])->format('d F Y') }}</span></td>
                                             <td>{{$item['vendor_invoice_number'] }}</td>
                                             <td>{{$item['faktur_pajak_number'] }}</td>
-                                            {{-- <td>{{$item['everify_number'] }}</td> --}}
-                                            <td>Rp{{$item['ppn']}}</td>
-                                            <td>{{$item['total_harga_everify'] }}</td>
+                                            <td>{{$item['currency'] }}</td>
+                                            <td>{{$item['ppn']}}</td>
+                                            <td>{{ number_format($item['total_harga_everify']) }}</td>
                                             <td>
                                                 <a href="/admin/detail-invoice/{{$item->id_inv}}"
                                                     class="btn btn-info btn-sm">Det.</a>

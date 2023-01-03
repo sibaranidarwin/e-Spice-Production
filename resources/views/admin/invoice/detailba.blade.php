@@ -105,7 +105,7 @@ label {
                         <div class="form-group col-md-6">
                             <label class="form-control-label" for="total_harga_gross[]">Total Price</label> <br>
                             <input type="text" class="form-control @error('total_harga_gross[]') is-invalid @enderror"
-                                name="total_harga_gross[]" placeholder="Masukkan Tanggal ..." value="Rp{{ number_format($invoice->total_harga_everify) }}" readonly>
+                                name="total_harga_gross[]" placeholder="Masukkan Tanggal ..." value="{{ number_format($invoice->total_harga_everify) }}" readonly>
                             @error('total_harga_gross[]')<span
                                 class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                         </div>

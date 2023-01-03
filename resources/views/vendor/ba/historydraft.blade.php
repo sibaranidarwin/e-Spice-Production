@@ -79,7 +79,7 @@ label {
                     </div>
                     @endif
                     <div class="card-header">
-                        <strong class="card-title">History Draft BA Reconcile List</strong>
+                        <strong class="card-title"><i class="fa fa-list"></i> History Draft BA Reconcile List</strong>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive text-nowrap">
@@ -101,20 +101,20 @@ label {
                                 <table id="list" class="table table-striped" style="font-size: 10px;">
                                     <thead>
                                         <tr>
-                                            <th>No</th>
-                                            <th>Sts. Draft BA</th>
-                                            <th>Sts. Inv. Props.</th>
-                                            <th>No Draft</th>
-                                            <th>Date</th>
-                                            <th>PO</th>
-                                            <th>GR Number</th>
-                                            <th>GR Date</th>
-                                            <th>Part Number</th>
-                                            <th>Mat. Desc.</th>
-                                            <th>Header Text</th>
-                                            <th>Quantity</th>
-                                            <th>Total Price</th>
-                                            <th>Total Value</th>
+                                            <th style="text-align: center;">No</th>
+                                            <th style="text-align: center;">Sts. Draft BA</th>
+                                            <th style="text-align: center;">Sts. Inv. Props.</th>
+                                            <th style="text-align: center;">No Draft</th>
+                                            <th style="text-align: center;">Date</th>
+                                            <th style="text-align: center;">PO</th>
+                                            <th style="text-align: center;">GR Number</th>
+                                            <th style="text-align: center;">GR Date</th>
+                                            <th style="text-align: center;">Part Number</th>
+                                            <th style="text-align: center;">Mat. Desc.</th>
+                                            <th style="text-align: center;">Quantity</th>
+                                            <th style="text-align: center;">Curr</th>
+                                            <th style="text-align: center;">Total Price</th>
+                                            <th style="text-align: center;">Total Value</th>
                                         </tr>
                                     </thead>
                                     <tbody style="font-size: 11px;">
@@ -131,8 +131,8 @@ label {
                                             <td><span>{{ Carbon\Carbon::parse($item->gr_date)->format('d F Y') }}</span></td>
                                             <td><span>{{$item->material_number}} /{{$item->vendor_part_number}}</span></td>
                                             <td><span>{{$item->mat_desc}} ({{$item->valuation_type}})</span></td>
-                                            <td><span>{{$item->doc_header_text}}</span></td>
                                             <td><span>{{$item->jumlah}}</span></td>
+                                            <td> <span>{{$item->currency}}</span> </td>
                                             <td style="text-align: right"><span>{{ number_format($item->jumlah_harga) }}</span></td>  
                                             <td style="text-align: right"><span><?php
                                                 $harga = $item->jumlah_harga;

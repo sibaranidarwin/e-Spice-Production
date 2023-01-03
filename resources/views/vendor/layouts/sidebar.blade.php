@@ -38,27 +38,30 @@
 
 
     <style>
-.menu_utama {
-   display: inline-block;
-   vertical-align: top;
-   text-align:center;
-   color: white;
-   border: none;
-   cursor: pointer;
-}
-.menu_sub {
-   display: none;
-   list-style-type: none;
- }
-.menu_sub a{
-   display: block;
+    .menu_utama {
+        display: inline-block;
+        vertical-align: top;
+        text-align: center;
+        color: white;
+        border: none;
+        cursor: pointer;
+    }
 
-   color: white;
-   text-decoration: none;
-}
-#menu_dropdown .menu_utama:hover > .menu_sub {
-   display:block;
-}
+    .menu_sub {
+        display: none;
+        list-style-type: none;
+    }
+
+    .menu_sub a {
+        display: block;
+
+        color: white;
+        text-decoration: none;
+    }
+
+    #menu_dropdown .menu_utama:hover>.menu_sub {
+        display: block;
+    }
 
     #weatherWidget .currentDesc {
         color: #ffffff !important;
@@ -112,7 +115,7 @@
                 <li class="active">
                     <a href="{{url('vendor/dashboard')}}"><i class="menu-icon fa fa-laptop"></i>Dashboard</a>
                 </li>
-                
+
                 <li class="menu-title">DATA GOOD RECEIPT</li><!-- /.menu-title -->
                 <li class="menu-item-has-children dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
@@ -120,59 +123,66 @@
                     <ul class="sub-menu children dropdown-menu">
                         <li><i class="fa fa-check"></i><a href="{{url('vendor/purchaseorder')}}">Verified</a></li>
                         <li><i class="fa fa-close"></i><a href="{{url('vendor/puchaseorderreject')}}">Rejected</a></li>
-                        </li>
-                    </ul>
                 </li>
+            </ul>
+            </li>
 
-                
-                <li class="menu-item-has-children dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"  aria-haspopup="true"
-                    aria-expanded="false">
-                          <i class="menu-icon fa fa-newspaper-o"></i>BA Reconcile
-                    </a>
-    
-                    <ul class="sub-menu children dropdown-menu" id="menu_dropdown">
-                        <li class="menu-item-has-children dropdown menu_utama">
-                             <a class="accordion-heading" data-toggle="collapse" data-target="#submenu2"><span class=""><i class="fa fa-newspaper-o"></i> Draft BA &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ></span></a>
-                              <ul class="nav nav-list collapse sub-menu children menu_sub" id="submenu2">
-                                  <li><a href="{{url('vendor/draft')}}" title="Title"><i class="fa fa-table"></i>Active</a></li>
-                                  <li><a href="{{url('vendor/historydraft')}}" title="Title"><i class="fa fa-history"></i>History</a></li>
-                                </ul>
-                        </li>
-                        <li class="menu-item-has-children dropdown menu_utama">
-                            <a class="accordion-heading" data-toggle="collapse" data-target="#submenu3"><span class=""><i class="fa fa-newspaper-o"></i>BA  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ></span></a>
-                            <ul class="nav nav-list collapse sub-menu children menu_sub" id="submenu3">
-                                <li><a href="{{url('vendor/detailba')}}" title="Title"><i class="fa fa-table "></i>Active</a></li>
-                                <li><a href="{{url('vendor/historyba')}}" title="Title"><i class="fa fa-history "></i>History</a></li>
-                            </ul>
-                      </li>
-                    </ul>
-                  </li>
-                  <li class="menu-item-has-children dropdown ">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                        aria-expanded="false"> <i class="menu-icon fa fa-warning"></i>Disputed Invoice</a>
-                    <ul class="sub-menu children dropdown-menu ">
-                        <li><i class="fa fa-table "></i><a href="{{url('vendor/disputed')}}">Show</a></li>
-                    </ul>
-                </li>
 
-                <li class="menu-title">DATA Invoice</li><!-- /.menu-title -->
-                <li class="menu-item-has-children dropdown ">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                        aria-expanded="false"> <i class="menu-icon fa fa-file-pdf-o"></i>Invoice Proposal</a>
-                    <ul class="sub-menu children dropdown-menu ">
-                        <li><i class="fa fa-table "></i><a href="{{url('vendor/invoice')}}">Invoice GR</a></li>
-                        <li><i class="fa fa-table "></i><a href="{{url('vendor/invoiceba')}}">Invoice BA</a></li>
-                    </ul>
-                </li>
-                <li class="menu-item-has-children dropdown ">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                        aria-expanded="false"> <i class="menu-icon fa fa-file"></i>Invoice Document</a>
-                    <ul class="sub-menu children dropdown-menu ">
-                        <li><i class="fa fa-upload"></i><a href="{{url('vendor/uploadinv')}}">Upload Invoice</a></li>
-                        <li><i class="fa fa-upload"></i><a href="{{url('vendor/uploadtax')}}">Upload Tax Invoice</a></li>
-                    </ul>
-                </li>
+            <li class="menu-item-has-children dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="menu-icon fa fa-newspaper-o"></i>BA Reconcile
+                </a>
+
+                <ul class="sub-menu children dropdown-menu" id="menu_dropdown">
+                    <li class="menu-item-has-children dropdown menu_utama">
+                        <a class="accordion-heading" data-toggle="collapse" data-target="#submenu2"><span class=""><i
+                                    class="fa fa-newspaper-o"></i> Draft BA &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ></span></a>
+                        <ul class="nav nav-list collapse sub-menu children menu_sub" id="submenu2">
+                            <li><a href="{{url('vendor/draft')}}" title="Title"><i class="fa fa-table"></i>Active</a>
+                            </li>
+                            <li><a href="{{url('vendor/historydraft')}}" title="Title"><i
+                                        class="fa fa-history"></i>History</a></li>
+                        </ul>
+                    </li>
+                    <li class="menu-item-has-children dropdown menu_utama">
+                        <a class="accordion-heading" data-toggle="collapse" data-target="#submenu3"><span class=""><i
+                                    class="fa fa-newspaper-o"></i>BA
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                ></span></a>
+                        <ul class="nav nav-list collapse sub-menu children menu_sub" id="submenu3">
+                            <li><a href="{{url('vendor/detailba')}}" title="Title"><i
+                                        class="fa fa-table "></i>Active</a></li>
+                            <li><a href="{{url('vendor/historyba')}}" title="Title"><i
+                                        class="fa fa-history "></i>History</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li class="menu-item-has-children dropdown ">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="menu-icon fa fa-warning"></i>Disputed Invoice</a>
+                <ul class="sub-menu children dropdown-menu ">
+                    <li><i class="fa fa-table "></i><a href="{{url('vendor/disputed')}}">Show</a></li>
+                </ul>
+            </li>
+
+            <li class="menu-title">DATA Invoice</li><!-- /.menu-title -->
+            <li class="menu-item-has-children dropdown ">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="menu-icon fa fa-file-pdf-o"></i>Invoice Proposal</a>
+                <ul class="sub-menu children dropdown-menu ">
+                    <li><i class="fa fa-table "></i><a href="{{url('vendor/invoice')}}">Invoice GR</a></li>
+                    <li><i class="fa fa-table "></i><a href="{{url('vendor/invoiceba')}}">Invoice BA</a></li>
+                </ul>
+            </li>
+            <li class="menu-item-has-children dropdown ">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="menu-icon fa fa-file"></i>Invoice Document</a>
+                <ul class="sub-menu children dropdown-menu ">
+                    <li><i class="fa fa-upload"></i><a href="{{url('vendor/uploadinv')}}">Upload Invoice</a></li>
+                    <li><i class="fa fa-upload"></i><a href="{{url('vendor/uploadtax')}}">Upload Tax Invoice</a></li>
+                </ul>
+            </li>
 
             </ul>
         </div><!-- /.navbar-collapse -->
@@ -200,7 +210,7 @@
                         aria-expanded="false">
                         <img class="user-avatar rounded-circle" src="{{asset('upload/'.auth()->user()->foto)}}"
                             alt="User Avatar">
-                            &nbsp; {{ auth()->user()->name}}&nbsp;<i class="fa fa-caret-down"></i>
+                        &nbsp; {{ auth()->user()->name}}&nbsp;<i class="fa fa-caret-down"></i>
                     </a>
 
                     <div class="user-menu dropdown-menu">
@@ -212,7 +222,7 @@
 
                         <a class="nav-link" href="{{route('vendor-user.showing',auth()->user()->id)}}"><i
                                 class="fa fa -cog"></i>Settings</a>
-                                {{-- onclick="return confirm('Are you sure?')" --}}
+                        {{-- onclick="return confirm('Are you sure?')" --}}
 
                         <a class="nav-link" href="{{ route('logout') }}" onclick="if (!confirm('Are you sure?')){return false;}else{event.preventDefault();
                                  document.getElementById('logout-form').submit();}">

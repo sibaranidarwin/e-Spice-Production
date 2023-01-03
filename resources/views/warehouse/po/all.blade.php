@@ -231,20 +231,20 @@
         // DataTables initialisation
         var table = $('#list').DataTable({
             dom: "<'row'<'col-md-2 bg-white'l><'col-md-5 bg-white'B><'col-md-5 bg-white'f>>" +
-                "<'row'<'col-md-12'tr>>" +
-                "<'row'<'col-md-6'i><'col-md-6'p>>",
-        columnDefs: [
-            {
-                targets: 1,
-                className: 'noVis'
-            }
-        ],
-        buttons: [
-            {
-                extend: 'colvis',
-                columns: ':not(.noVis)'
-            }
-        ],
+                    "<'row'<'col-md-12'tr>>" +
+                    "<'row'<'col-md-6'i><'col-md-6'p>>",
+            columnDefs: [
+                {
+                    targets: 1,
+                    className: 'noVis'
+                }
+            ],
+            buttons: [
+                {
+                    extend: 'colvis',
+                    columns: ':not(.noVis)'
+                }
+            ],
             rowReorder: true,
              columnDefs: [
             { orderable: true, className: 'reorder', targets: 0 },
