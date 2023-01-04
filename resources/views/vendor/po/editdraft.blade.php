@@ -85,16 +85,7 @@ label {
                                 <th>GR Number</th>
                                 <th>GR Date</th>
                                 <th>Material Number</th>
-                                <!-- <th class="text-center">Reference</th> -->
-                                <!-- <th class="text-center">Vendor Part Number</th>
-                                        <th class="text-center">Item Description</th>
-                                        <th class="text-center">UoM</th>
-                                        <th class="text-center">Currency</th>
-                                        <th class="text-center">Harga Satuan</th>
-                                        <th class="text-center">Jumlah</th> -->
-                                <!-- <th class="text-center">Jumlah Harga</th> -->
                                 <th>Tax Code</th>
-                                <!-- <th class="text-center">Valuation Type</th> -->
                                 <th>Status</th>
                             </tr>
                         </thead>
@@ -106,16 +97,7 @@ label {
                                 <td> <span class="">{{ Carbon\Carbon::parse($good_receipt->gr_date)->format('d F Y') }}</span> </td>
                                 <td> <span class="">{{$good_receipt->material_number}}</span>
                                 </td>
-                                <!-- <td class="text-center"> <span class="">{{$good_receipt->Ref_Doc_No}}</span> </td> -->
-                                <!-- <td class="text-center"> <span class="">{{$good_receipt->Vendor_Part_Number}}</span> </td>
-                                        <td class="text-center"> <span class="">{{$good_receipt->Mat_Desc}}</span> </td>
-                                        <td class="text-center"> <span class="">{{$good_receipt->UOM}}</span> </td>
-                                        <td class="text-center"> <span class="">{{$good_receipt->Currency}}</span> </td>
-                                        <td class="text-center"> <span class="">{{$good_receipt->harga_satuan}}</span> </td>
-                                        <td class="text-center"> <span class="">{{$good_receipt->jumlah}}</span> </td> -->
-                                <!-- <td class="text-center"> <span class="">{{$good_receipt->jumlah_harga}}</span> </td> -->
                                 <td> <span class="">{{$good_receipt->tax_code}}</span> </td>
-                                <!-- <td class="text-center"> <span class=""></span> </td> -->
                                 <td>{{ $good_receipt->status }}</td>
                             </tr>
                             @endforeach

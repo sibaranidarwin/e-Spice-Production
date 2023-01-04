@@ -77,6 +77,9 @@ label {
                     </div>
                     <div class="card-body">
                         <div class="table-responsive text-nowrap">
+                            @if ($start_date != null || $end_date != null)
+                            <p style="text-align: center; background-color: #11CDEF; color: white;"><strong class="card-title"></i>GR Date:{{ Carbon\Carbon::parse($start_date)->format('d F Y') }} To: {{ Carbon\Carbon::parse($end_date)->format('d F Y') }}</i></strong></p>
+                            @endif
                             <form action="{{ route('warehouse-filterinvba') }}" class="form-inline" method="GET">
                                 <div class="form-group col-md-3">
                                 </div>
@@ -102,22 +105,9 @@ label {
                                             <th>Invoice Number</th>
                                             <th>Invoice Number Proposal</th>
                                             <th>VAT NO</th>
-                                            {{-- <th>No E-Verify</th> --}}
                                             <th>Curr</th>
-
                                             <th>Total PPN</th>
                                             <th>Total Price</th>
-
-                                            <!-- <th class="text-center">Reference</th> -->
-                                            <!-- <th class="text-center">Vendor Part Number</th>
-                                            <th class="text-center">Item Description</th>
-                                            <th class="text-center">UoM</th>
-                                            <th class="text-center">Currency</th>
-                                            <th class="text-center">Harga Satuan</th>
-                                            <th class="text-center">Jumlah</th> -->
-                                            <!-- <th class="text-center">Jumlah Harga</th> -->
-                                            {{-- <th class="text-center">Tax Code</th> --}}
-                                            <!-- <th class="text-center">Valuation Type</th> -->
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -143,11 +133,6 @@ label {
                                         @endforeach
                                     </tbody>
                                 </table>
-                                {{-- &nbsp;&nbsp;&nbsp;<a href="" class="btn btn-success mb-2">Upload SAP</a> --}}
-                                {{-- <div class="row">
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<div class="col-md-1 mb-2"><a href=""
-                                    class="btn btn-primary">Upload SAP</a></div>
-                        </div> --}}
                             </form>
                         </div>
                     </div>

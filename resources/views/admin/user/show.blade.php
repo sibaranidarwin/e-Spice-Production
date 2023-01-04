@@ -34,8 +34,8 @@
                 <div class="card">
                     <div class="col-md-6 offset-3"><br>
                         <div class="card">
-                            <div class="card-header">
-                                <i class="fa fa-user"></i><strong class="card-title pl-2">Profile Card</strong>
+                            <div class="card-header" style="text-align: center;">
+                                <i class="fa fa-user"></i><strong class="card-title pl-3">Profile Card</strong>
                             </div>
                             <div class="card-body">
                                 <form class="form-horizontal" action="{{ route('user.update', $user->id) }}"
@@ -73,12 +73,6 @@
                                 <div class="form-group">
                                     <label for="">Email</label>
                                     <input type="text" class="form-control" name="email" value="{{$user->email}}">
-                                </div>
-                                <div class="form-group">
-                                    <label for="">Password</label>
-                                    <input type="password" class="form-control" value="{{$user->password}}" disabled="">
-                                    <input type="hidden" name="fotoLama" value="{{$user->foto}}">
-
                                 </div>
                                 <div class="text-center">
                                     <button type="submit" class="btn btn-primary"

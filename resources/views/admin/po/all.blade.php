@@ -77,7 +77,7 @@
                     </div>
                     @endif
                     <div class="card-header">
-                        <strong class="card-title">All Status List <i class="fa fa-list"></i></strong>
+                        <strong class="card-title"><i class="fa fa-list"></i> All Status List</strong>
                     </div>
                     <div class="card-body">
                     <div class="table-responsive text-nowrap">
@@ -93,15 +93,14 @@
                               <label for="inputPassword2">To: &nbsp;</label>
                               <input type="date" class="form-control" name="end_date">
                             </div>
-                            <button class="btn btn-primary" onclick="return confirm('Are you sure?')" type="submit"><i class="fa fa-search"></i></button>
-                            <div class="form-group col-md-4">
-                                {{-- <label> Sts. Inv. Props.: &nbsp; </label> --}}
+                            <div class="form-group col-md-3">
                                 <select class="form-control status_invoice" name="">
                                     <option value="">-- Choose Sts. Inv. Props. -- </option>
                                     <option value="Verified">Verified</option>
                                     <option value="Not Yet Verified - Draft BA">Not Yet Verified - Draft BA</option>
                                 </select>
                             </div>
+                            <button class="btn btn-primary" onclick="return confirm('Are you sure?')" type="submit"><i class="fa fa-search"></i></button>
                         </form>
                         <form action="{{ route('update-datagr/{id}') }}" method="POST">
                             @csrf
@@ -118,9 +117,9 @@
                                     <th style="text-align: center;">Part Number</th>
                                     <th style="text-align: center;">Mat. Desc.</th>
                                     <th style="text-align: center;">QTY UOM</th>
-                                    <th style="text-align: center;">Tax Code</th>
                                     <th style="text-align: center;">Reference</th>
                                     <th style="text-align: center;">Del. Note</th>
+                                    <th style="text-align: center;">Tax Code</th>
                                 </tr>
                                 </thead>
                                 <tbody style="font-size: 11px;">
@@ -136,9 +135,9 @@
                                         <td> <span>{{$good_receipt->material_number}}/<br> {{$good_receipt->vendor_part_number}}</span></td>
                                         <td> <span>{{$good_receipt->mat_desc}}</span> <br>({{$good_receipt->valuation_type}})</td>
                                         <td> <span>{{$good_receipt->jumlah}}</span>&nbsp;<span>{{$good_receipt->uom}}</span> </td>
-                                        <td> <span>{{$good_receipt->tax_code}}</span> </td>
                                         <td> <span>{{$good_receipt->ref_doc_no}}</span> </td>
                                         <td> <span>{{$good_receipt->delivery_note}}</span> </td>
+                                        <td> <span>{{$good_receipt->tax_code}}</span> </td>
                                     </tr>
                                     @endforeach
                                     </select>
@@ -234,14 +233,6 @@
 
         });
     
-        function filterData () {
-		    $('#list').DataTable().search(
-		        $('.status_invoice').val()
-		    	).draw();
-		}
-		$('.status_invoice').on('change', function () {
-	        filterData();
-	    });
     
     
     });

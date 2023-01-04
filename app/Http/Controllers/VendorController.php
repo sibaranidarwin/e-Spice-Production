@@ -59,43 +59,35 @@ class VendorController extends Controller
     public function po()
     {   
         $user_vendor = Auth::User()->id_vendor;
-        $auto = good_receipt::select(
-        "draft_ba.status_invoice_proposal"
-        )
-        ->JOIN("draft_ba","goods_receipt.id_gr", "=", "draft_ba.id_gr")
-        ->where("draft_ba.id_vendor", "=", $user_vendor)
-        ->get();
+        
+        $start_date = null;
+        $end_date = null;
 
+        // dd($start_date);
         $good_receipts = good_receipt::where('id_vendor', $user_vendor)->where('id_inv',0)->where(function($query) {
 			$query->where('status','Verified')->orwhere('status','Auto Verify')
 						->orWhereNull('status');})->orderBy('updated_at', 'ASC')->get();
-                        
-        return view('vendor.po.index',compact('good_receipts', 'auto'))
-                ->with('i',(request()->input('page', 1) -1) *5);
-    }
-    public function notyetdraft(){
-        $user_vendor = Auth::User()->id_vendor;
 
-        $auto = good_receipt::select(
-        "goods_receipt.status",
-        "goods_receipt.plant_code",
-        "goods_receipt.no_po",
-        "goods_receipt.po_item",
-        "goods_receipt.gr_number",
-        "goods_receipt.gr_date",
-        "goods_receipt.material_number",
-        "goods_receipt.vendor_part_number",
-        "goods_receipt.mat_desc",
-        "goods_receipt.valuation_type",
-        "goods_receipt.jumlah",
-        "goods_receipt.uom",
-        "goods_receipt.currency",
-        "goods_receipt.harga_satuan",
-        "goods_receipt.tax_code",
-        "goods_receipt.ref_doc_no",
-        "goods_receipt.delivery_note",
-        "draft_ba.status_invoice_proposal"
-        )
+        $not = good_receipt::select(
+                            "goods_receipt.status",
+                            "goods_receipt.plant_code",
+                            "goods_receipt.no_po",
+                            "goods_receipt.po_item",
+                            "goods_receipt.gr_number",
+                            "goods_receipt.gr_date",
+                            "goods_receipt.material_number",
+                            "goods_receipt.vendor_part_number",
+                            "goods_receipt.mat_desc",
+                            "goods_receipt.valuation_type",
+                            "goods_receipt.jumlah",
+                            "goods_receipt.uom",
+                            "goods_receipt.currency",
+                            "goods_receipt.harga_satuan",
+                            "goods_receipt.tax_code",
+                            "goods_receipt.ref_doc_no",
+                            "goods_receipt.delivery_note",
+                            "draft_ba.status_invoice_proposal"
+                            )
         ->JOIN("draft_ba","goods_receipt.id_gr", "=", "draft_ba.id_gr")
         ->where("draft_ba.id_vendor", "=", $user_vendor)
         ->where('id_inv',0)
@@ -106,54 +98,50 @@ class VendorController extends Controller
 		->orWhereNull('status');})
         ->orderBy('goods_receipt.updated_at', 'ASC')
         ->get();
-
-        return view('vendor.po.notyetdraft',compact('auto'))
-        ->with('i',(request()->input('page', 1) -1) *5);
+        
+        $ver = good_receipt::select(
+            "goods_receipt.status",
+            "goods_receipt.plant_code",
+            "goods_receipt.no_po",
+            "goods_receipt.po_item",
+            "goods_receipt.gr_number",
+            "goods_receipt.gr_date",
+            "goods_receipt.material_number",
+            "goods_receipt.vendor_part_number",
+            "goods_receipt.mat_desc",
+            "goods_receipt.valuation_type",
+            "goods_receipt.jumlah",
+            "goods_receipt.uom",
+            "goods_receipt.currency",
+            "goods_receipt.harga_satuan",
+            "goods_receipt.tax_code",
+            "goods_receipt.ref_doc_no",
+            "goods_receipt.delivery_note",
+            "draft_ba.status_invoice_proposal"
+            )
+            ->JOIN("draft_ba","goods_receipt.id_gr", "=", "draft_ba.id_gr")
+            ->where("draft_ba.id_vendor", "=", $user_vendor)
+            ->where('id_inv',0)
+            ->where('status_invoice_proposal', 'Verified - BA')
+            ->where(function($query) {
+                $query->where('goods_receipt.status','Verified')
+            ->orwhere('goods_receipt.status','Auto Verify')
+            ->orWhereNull('status');})
+            ->orderBy('goods_receipt.updated_at', 'ASC')
+            ->get();
+        
+        return view('vendor.po.index',compact('good_receipts', 'not', 'ver', 'start_date', 'end_date'))
+                ->with('i',(request()->input('page', 1) -1) *5);
     }
-
-    public function verba(){
-        $user_vendor = Auth::User()->id_vendor;
-
-        $auto = good_receipt::select(
-        "goods_receipt.status",
-        "goods_receipt.plant_code",
-        "goods_receipt.no_po",
-        "goods_receipt.po_item",
-        "goods_receipt.gr_number",
-        "goods_receipt.gr_date",
-        "goods_receipt.material_number",
-        "goods_receipt.vendor_part_number",
-        "goods_receipt.mat_desc",
-        "goods_receipt.valuation_type",
-        "goods_receipt.jumlah",
-        "goods_receipt.uom",
-        "goods_receipt.currency",
-        "goods_receipt.harga_satuan",
-        "goods_receipt.tax_code",
-        "goods_receipt.ref_doc_no",
-        "goods_receipt.delivery_note",
-        "draft_ba.status_invoice_proposal"
-        )
-        ->JOIN("draft_ba","goods_receipt.id_gr", "=", "draft_ba.id_gr")
-        ->where("draft_ba.id_vendor", "=", $user_vendor)
-        ->where('id_inv',0)
-        ->where('status_invoice_proposal', 'Verified - BA')
-        ->where(function($query) {
-			$query->where('goods_receipt.status','Verified')
-        ->orwhere('goods_receipt.status','Auto Verify')
-		->orWhereNull('status');})
-        ->orderBy('goods_receipt.updated_at', 'ASC')
-        ->get();
-
-        return view('vendor.po.verba',compact('auto'))
-        ->with('i',(request()->input('page', 1) -1) *5);
-    }
+   
 
     public function puchaseorderreject()
     {   
         $user_vendor = Auth::User()->id_vendor;
+        $start_date = null;
+        $end_date = null;
         $good_receipts = good_receipt::Where("id_vendor", $user_vendor)->where("Status", "Rejected")->get();
-        return view('vendor.po.reject',compact('good_receipts'))
+        return view('vendor.po.reject',compact('good_receipts', 'start_date', 'end_date'))
                 ->with('i',(request()->input('page', 1) -1) *5);
     }
 
@@ -360,8 +348,6 @@ class VendorController extends Controller
             $total_dpp += $ba->harga_satuan * $ba->qty;
             array_push($bas, $ba);
         }
-        // dd($ba->id_vendor);
-        // dd($total_dpp);
         $total_ppn = $total_dpp * 0.02;
         $total_harga = $total_dpp + $total_ppn;
 
@@ -521,10 +507,12 @@ class VendorController extends Controller
     public function draft()
         {
         $user_vendor = Auth::User()->id_vendor;
-        
+        $start_date = null;
+        $end_date = null;
+
         $draft = Draft_BA::select('no_draft','status_invoice_proposal', 'created_at')->distinct()->where("id_vendor", $user_vendor)->where("status_invoice_proposal", "Not Yet Verified - Draft BA")->get();
         // dd($draft);
-        return view('Vendor.ba.draft',compact('draft'));
+        return view('vendor.ba.draft',compact('draft', 'start_date', 'end_date'));
         }
 
     public function detaildraft($no_draft)
@@ -533,7 +521,7 @@ class VendorController extends Controller
 
         $draft = Draft_BA::where("no_draft", $no_draft)->where('status_invoice_proposal', 'Not Yet Verified - Draft BA')->get();
         //  dd($draft);
-        return view('Vendor.ba.detaildraft',compact('draft'));
+        return view('vendor.ba.detaildraft',compact('draft'));
         }
 
     public function historydraft()
@@ -544,13 +532,15 @@ class VendorController extends Controller
         // dd($user_vendor);
         $draft = Draft_BA::all()->where("id_vendor", $user_vendor)->where('status_invoice_proposal', 'Verified - BA');
         // dd($draft);
-        return view('Vendor.ba.historydraft',compact('draft'));
+        return view('vendor.ba.historydraft',compact('draft'));
         }
 
     public function detailba()
         {
             $user_vendor = Auth::User()->id_vendor;
-           
+            $start_date = null;
+            $end_date = null;
+
              $BA = Ba::select("ba.no_ba",
              "ba.status_ba",
              "ba_reconcile.status_invoice_proposal",
@@ -562,7 +552,7 @@ class VendorController extends Controller
              ->where("ba_reconcile.status_invoice_proposal", "=", "Not Yet Verified - BA")
              ->get();
             // dd($BA);
-            return view('Vendor.ba.detail',compact('BA'));
+            return view('vendor.ba.detail',compact('BA','start_date', 'end_date'));
         }
 
     public function ba($no_ba)
@@ -570,7 +560,7 @@ class VendorController extends Controller
         $user_vendor = Auth::User()->id_vendor;
         $ba = BA_Reconcile::where("no_ba", $no_ba)->where("id_vendor", $user_vendor)->where('status_invoice_proposal', 'Not Yet Verified - BA')->get();
         
-        return view('Vendor.ba.upload',compact('ba'));
+        return view('vendor.ba.upload',compact('ba'));
     }
     public function historyba()
     {
@@ -578,7 +568,7 @@ class VendorController extends Controller
 
         $ba = BA_Reconcile::all()->where("id_vendor", $user_vendor)->where('status_invoice_proposal', 'Verified - BA');
         
-        return view('Vendor.ba.historyba',compact('ba'));
+        return view('vendor.ba.historyba',compact('ba'));
     }
     
     public function uploaddraft(Request $request)
@@ -655,10 +645,12 @@ class VendorController extends Controller
     public function invoice()
     {
         $user_vendor = Auth::User()->id_vendor;
+        $start_date = null;
+        $end_date = null;
         // dd($user_vendor);
         $invoice = Invoice::latest()->Where("id_vendor", $user_vendor)->Where("data_from", "GR")->get();
 
-         return view('vendor.invoice.index',compact('invoice'))
+         return view('vendor.invoice.index',compact('invoice' ,'start_date', 'end_date'))
                  ->with('i',(request()->input('page', 1) -1) *5);
         
     }
@@ -695,6 +687,7 @@ class VendorController extends Controller
                                     ->JOIN("invoice", "goods_receipt.id_inv", "=", "invoice.id_inv")
                                     ->where("invoice.id_inv", "=", "$detail->id_inv")
                                     ->get();
+        // dd($invoices);
 
         return view('vendor.invoice.detail', compact('invoices'))->with('i',(request()->input('page', 1) -1) *5);
     }
@@ -738,10 +731,13 @@ class VendorController extends Controller
     public function invoiceba()
     {
         $user_vendor = Auth::User()->id_vendor;
+        $start_date = null;
+        $end_date = null;
+       
         // dd($user_vendor);
         $invoice = Invoice::latest()->Where("id_vendor", $user_vendor)->Where("data_from", "BA")->get();
          
-        return view('vendor.invoice.indexba',compact('invoice'))
+        return view('vendor.invoice.indexba',compact('invoice', 'start_date', 'end_date'))
                  ->with('i',(request()->input('page', 1) -1) *5);
         
     }

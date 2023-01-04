@@ -24,8 +24,8 @@
         font-size: 11px;
     }
     div.dt-button-collection {
-  background-color: #0275d8;
-}
+     background-color: #0275d8;
+    }
 </style>
 <div class="breadcrumbs">
     <div class="breadcrumbs-inner">
@@ -84,6 +84,9 @@
                     </div>
                     <div class="card-body">
                     <div class="table-responsive text-nowrap">
+                        @if ($start_date != null || $end_date != null || $status != null)
+                        <p style="text-align: center; background-color: #11CDEF; color: white;"><strong class="card-title">GR Date:{{ Carbon\Carbon::parse($start_date)->format('d F Y') }} To: {{ Carbon\Carbon::parse($end_date)->format('d F Y') }} Status Invoice Proposal: {{ ($status) }}</strong></p>
+                        @endif
                         <form action="{{ route('warehouse-filter') }}" class="form-inline" method="GET">
                             <div class="form-group col-md-2">
 
@@ -98,9 +101,9 @@
                             </div>
                             <div class="form-group col-md-3">
                                 {{-- <label> Sts. Inv. Props.: &nbsp; </label> --}}
-                                <select class="form-control status_invoice" name="">
+                                <select class="form-control status_invoice" name="status">
                                     <option value="">-- Choose Sts. Inv. Props. -- </option>
-                                    <option value="Verified">Verified</option>
+                                    <option value="Verified - BA">Verified - BA</option>
                                     <option value="Not Yet Verified - Draft BA">Not Yet Verified - Draft BA</option>
                                 </select>
                             </div>
@@ -228,20 +231,20 @@
         // DataTables initialisation
         var table = $('#list').DataTable({
             dom: "<'row'<'col-md-2 bg-white'l><'col-md-5 bg-white'B><'col-md-5 bg-white'f>>" +
-                "<'row'<'col-md-12'tr>>" +
-                "<'row'<'col-md-6'i><'col-md-6'p>>",
-        columnDefs: [
-            {
-                targets: 1,
-                className: 'noVis'
-            }
-        ],
-        buttons: [
-            {
-                extend: 'colvis',
-                columns: ':not(.noVis)'
-            }
-        ],
+                    "<'row'<'col-md-12'tr>>" +
+                    "<'row'<'col-md-6'i><'col-md-6'p>>",
+            columnDefs: [
+                {
+                    targets: 1,
+                    className: 'noVis'
+                }
+            ],
+            buttons: [
+                {
+                    extend: 'colvis',
+                    columns: ':not(.noVis)'
+                }
+            ],
             rowReorder: true,
              columnDefs: [
             { orderable: true, className: 'reorder', targets: 0 },
@@ -252,16 +255,6 @@
             lengthMenu: [[10, 25, 50, -1],[10, 25, 50, 'All'],],
 
         });
-    
-        function filterData () {
-		    $('#list').DataTable().search(
-		        $('.status_invoice').val()
-		    	).draw();
-		}
-		$('.status_invoice').on('change', function () {
-	        filterData();
-	    });
-    
     
     });
     

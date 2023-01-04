@@ -77,7 +77,7 @@
                     </div>
                     @endif
                     <div class="card-header">
-                        <strong class="card-title">Rejected List <i class="fa fa-list"></i></strong>
+                        <strong class="card-title"><i class="fa fa-list"></i> Rejected List </strong>
                     </div>
                     <div class="card-body">
                     <div class="table-responsive text-nowrap">
@@ -120,9 +120,9 @@
                                         <th style="text-align: center;">Qty UOM</th>
                                         <th style="text-align: center;">Curr</th>
                                         <th style="text-align: center;">Unit Price</th>
-                                        <th style="text-align: center;">Tax Code</th>
                                         <th style="text-align: center;">Ref.</th>
                                         <th style="text-align: center;">Del. Note</th>
+                                        <th style="text-align: center;">Tax Code</th>
                                     </tr>
                                 </thead>
                                 <tbody style="font-size: 11px;">
@@ -138,10 +138,10 @@
                                         <td> <span>{{$good_receipt->mat_desc}}</span> <br>({{$good_receipt->valuation_type}})</td>
                                         <td> <span>{{$good_receipt->jumlah}}</span>&nbsp;<span>{{$good_receipt->uom}}</span> </td>
                                         <td> <span>{{$good_receipt->currency}}</span> </td>
-                                        <td style="text-align: right"> <span>Rp{{number_format($good_receipt->harga_satuan)}}</span> </td>
-                                        <td> <span>{{$good_receipt->tax_code}}</span> </td>
+                                        <td style="text-align: right"> <span>{{number_format($good_receipt->harga_satuan)}}</span> </td>
                                         <td> <span>{{$good_receipt->ref_doc_no}}</span> </td>
                                         <td> <span>{{$good_receipt->delivery_note}}</span> </td>
+                                        <td> <span>{{$good_receipt->tax_code}}</span> </td>
                                     </tr>
                                     @endforeach
                                     </select>

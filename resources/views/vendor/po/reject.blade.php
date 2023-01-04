@@ -80,8 +80,11 @@
                     </div>
                     <div class="card-body">
                     <div class="table-responsive text-nowrap">
-                        <form action="{{ route('vendor-filter') }}" class="form-inline" method="GET">
-                            <div class="form-group col-md-3">
+                        @if ($start_date != null || $end_date != null)
+                        <p style="text-align: center; background-color: #11CDEF; color: white;"><strong class="card-title"></i>GR Date:{{ Carbon\Carbon::parse($start_date)->format('d F Y') }} To: {{ Carbon\Carbon::parse($end_date)->format('d F Y') }}</i></strong></p>
+                        @endif
+                        <form action="{{ route('vendor-filterreject') }}" class="form-inline" method="GET">
+                            <div class="form-group col-md-1">
 
                             </div>
                             <div class="form-group">
@@ -92,14 +95,15 @@
                               <label for="inputPassword2">To: &nbsp;</label>
                               <input type="date" class="form-control" name="end_date">
                             </div>
+                            <div class="form-group ">
+                                <label for="" >Plant Code: &nbsp;</label>
+                                <input type="text" class="form-control" name="minpo">
+                              </div>
+                              <div class="form-group mx-sm-4">
+                                <label for="inputPassword2">To: &nbsp;</label>
+                                <input type="text" class="form-control" name="maxpo">
+                              </div>
                             <button class="btn btn-primary"  onclick="return confirm('Are you sure?')" type="submit"><i class="fa fa-search"></i></button>
-                          {{-- <div class="form-group col-md-3">
-                            <select class="form-control status" name="">
-                                <option value="">-- Choose Sts. Inv. Props. -- </option>
-                                <option value="Verified">Verified</option>
-                                <option value="Not Verified">Not Verified</option>
-                            </select>   
-                        </div> --}}
                     </form>
                         <form action="{{ route('update-datagr-vendor/{id_gr}') }}" method="POST">
                             @csrf
