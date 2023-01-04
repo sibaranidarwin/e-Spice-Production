@@ -18,7 +18,7 @@
                         <ol class="breadcrumb text-right">
                             <li><a href="#">Dashboard</a></li>
                             <li><a href="#">User</a></li>
-                            <li class="active">Semua Warehouse</li>
+                            <li class="active">All Warehouse</li>
                         </ol>
                     </div>
                 </div>
@@ -55,7 +55,7 @@
                     </div>
                     @endif
                     <div class="card-header">
-                        <strong class="card-title">Semua Warehouse</strong>
+                        <strong class="card-title">All Warehouse</strong>
                     </div>
                     <div class="table-stats order-table ov-h">
                         <table class="table ">
@@ -84,8 +84,19 @@
                                     <td class="text-lowercase">{{$user->email}} </td>
                                     <td class="text-center"> <span
                                             class="btn btn-warning font-weight-bold">Warehouse</span> </td>
-                                    <td class="text-center"><span>
-                                        </span></td>
+                                        <td class="text-center"><span>
+                                            <form action="{{route('user.destroy',$user->id)}}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger fa fa-times"
+                                                    onclick="return confirm('Are you sure?')"></button>
+                                                <a href="{{route('warehouse.showing',$user->id)}}"
+                                                    class="btn fa fa-eye"></a>
+                                                <a href="{{route('warehouse.edit',$user->id)}}"
+                                                    class="btn btn-primary fa fa-edit"></a>
+                                            </form>
+                                        </span>
+                                    </td>
                                 </tr>
                                 @endif
                                 @endforeach

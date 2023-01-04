@@ -7,7 +7,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.html5.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.print.min.js"></script>
-@extends('accounting.layouts.sidebar')
+
+@extends('procumerent.layouts.sidebar')
 @section('content')
 <link rel="stylesheet" href="{{asset('admin/assets/css/datatable.css')}}">
 
@@ -126,7 +127,7 @@ label {
                                             <td style="text-align: right">{{number_format($item['total_harga_everify']) }}</td>
                                             
                                             <td>
-                                                <a href="/accounting/detail-invoice/{{$item->id_inv}}"
+                                                <a href="/procumerent/detail-invoice/{{$item->id_inv}}"
                                                     class="btn btn-info btn-sm">Det.</a>
                                             </td>
                                         </tr>

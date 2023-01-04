@@ -18,7 +18,7 @@
                         <ol class="breadcrumb text-right">
                             <li><a href="#">Dashboard</a></li>
                             <li><a href="#">User</a></li>
-                            <li class="active">Semua Procumerent</li>
+                            <li class="active">All Procurement</li>
                         </ol>
                     </div>
                 </div>
@@ -55,7 +55,7 @@
                     </div>
                     @endif
                     <div class="card-header">
-                        <strong class="card-title">Semua Procumerent</strong>
+                        <strong class="card-title">Semua Procurement</strong>
                     </div>
                     <div class="table-stats order-table ov-h">
                         <table class="table ">
@@ -90,10 +90,10 @@
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-danger fa fa-times"
                                                     onclick="return confirm('Are you sure?')"></button>
-                                                {{-- <a href="{{route('masyarakat.showing',$user->id)}}"
-                                                    class="btn fa fa-eye"></a>
-                                                <a href="{{route('masyarakat.edit',$user->id)}}"
-                                                    class="btn btn-primary fa fa-edit"></a> --}}
+                                                    <a href="{{route('procumerent.showing',$user->id)}}"
+                                                        class="btn fa fa-eye"></a>
+                                                    <a href="{{route('procumerent.edit',$user->id)}}"
+                                                        class="btn btn-primary fa fa-edit"></a>
                                             </form>
                                         </span></td>
                                 </tr>

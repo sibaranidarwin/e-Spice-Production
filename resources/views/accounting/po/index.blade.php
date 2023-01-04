@@ -7,19 +7,24 @@
 <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.flash.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.html5.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.print.min.js"></script>
 <script src="https://cdn.datatables.net/datetime/1.1.2/js/dataTables.dateTime.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.3.2/js/buttons.colVis.min.js"></script>
 
 @extends('accounting.layouts.sidebar')
 @section('content')
 <link rel="stylesheet" href="{{asset('admin/assets/css/datatable.css')}}">
+<link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.3.2/css/buttons.dataTables.min.css">
+<link rel="stylesheet" href="{{asset('admin/assets/css/datatable.css')}}">
+
 <link rel="stylesheet" href="{{asset('assets/css/argon-dashboard.css')}}">
 
 <style>
     .table td, .table th,label {
-        font-size: 11.4px;
+        font-size: 11px;
+    }
+    div.dt-button-collection {
+     background-color: #0275d8;
     }
 </style>
 <div class="breadcrumbs">
@@ -54,7 +59,7 @@
                 <div class="card">
                     @if($message = Session::get('destroy'))
                     <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                        <strong>Success!</strong> {{$message}}
+                        <strong>Error!</strong> {{$message}}
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -67,65 +72,77 @@
                         </button>
                     </div>
                     @elseif($message = Session::get('warning'))
-                    <div class="alert alert-primary alert-dismissible fade show" role="alert">
-                        <strong>Success!</strong> {{$message}}
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        <strong>Error!</strong> {{$message}}
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     @endif
                     <div class="card-header">
-                        <strong class="card-title">Good Receipt Not Verified List</strong>
+                        <strong class="card-title"><i class="fa fa-list"></i> Not Verified List</strong>
                     </div>
                     <div class="card-body">
                     <div class="table-responsive text-nowrap">
-                        <form action="{{ route('update-datagr/{id}') }}" method="POST">
+                        @if ($start_date != null || $end_date != null)
+                        <p style="text-align: center; background-color: #11CDEF; color: white;"><strong class="card-title"></i>GR Date:{{ Carbon\Carbon::parse($start_date)->format('d F Y') }} To: {{ Carbon\Carbon::parse($end_date)->format('d F Y') }}</i></strong></p>
+                        @endif
+                        <form action="{{ route('warehouse-filternot') }}" class="form-inline" method="GET">
+                            <div class="form-group col-md-2">
+
+                            </div>
+                            <div class="form-group ">
+                              <label for="" >GR Date: &nbsp;</label>
+                              <input type="date" class="form-control" name="start_date">
+                            </div>
+                            <div class="form-group mx-sm-4">
+                              <label for="inputPassword2">To: &nbsp;</label>
+                              <input type="date" class="form-control" name="end_date">
+                            </div>
+                            <button class="btn btn-primary" onclick="return confirm('Are you sure?')" type="submit"><i class="fa fa-search"></i></button>
+                        </form>
+                        <form action="" method="POST">
                             @csrf
                             <table id="list" class="table table-striped" style="font-size: 10px;">
                                 <thead>
                                     <tr>
-                                        <th style="text-align: center;">No</th>
-                                        <th style="text-align: center;">Sts. GR</th>
-                                        <th style="text-align: center;">Sts. Inv. Props.</th>
-                                        <th style="text-align: center;">Plant Code</th>
-                                        <th style="text-align: center;">PO</th>
-                                        <th style="text-align: center;">GR Number</th>
-                                        <th style="text-align: center;">GR Date</th>
-                                        <th style="text-align: center;">Part Number</th>
-                                        <th style="text-align: center;">Mat. Desc.</th>
-                                        <th style="text-align: center;">Qty UOM</th>
-                                        <th style="text-align: center;">Curr</th>
-                                        <th style="text-align: center;">Unit Price</th>
-                                        <th style="text-align: center;">Tax Code</th>
-                                        <th style="text-align: center;">Ref.</th>
-                                        <th style="text-align: center;">Del. Note</th>
-                                    </tr>
+                                    <th style="text-align: center;">No</th>
+                                    <th style="text-align: center;">Sts. GR</th>
+                                    <th style="text-align: center;">Sts. Inv. Props.</th>
+                                    <th style="text-align: center;">Vendor</th>
+                                    <th style="text-align: center;">PO</th>
+                                    <th style="text-align: center;">GR Number</th>
+                                    <th style="text-align: center;">GR Date</th>
+                                    <th style="text-align: center;">Part Number</th>
+                                    <th style="text-align: center;">Mat. Desc.</th>
+                                    <th style="text-align: center;">QTY UOM</th>
+                                    <th style="text-align: center;">Reference</th>
+                                    <th style="text-align: center;">Del. Note</th>
+                                    <th style="text-align: center;">Tax Code</th>
+                                </tr>
                                 </thead>
                                 <tbody style="font-size: 11px;">
                                     @foreach($good_receipts as $good_receipt)
                                     <tr>
-                                      
                                         <td>{{++$i}}</td>
-                                        <td >{{ $good_receipt->status }}</td>
+                                        <td >Not Yet Verified</td>
                                         <td >{{ $good_receipt->status_invoice }}</td>
-                                        <td >{{ $good_receipt->plant_code }}</td>
+                                        <td >{{ $good_receipt->id_vendor }} /{{ $good_receipt->vendor_name}}</td>
                                         <td ><span>{{$good_receipt->no_po}} /{{$good_receipt->po_item}}</span></td>
                                         <td ><span>{{$good_receipt->gr_number}}</span></td>
                                         <td><span>{{ Carbon\Carbon::parse($good_receipt->gr_date)->format('d F Y') }}</span></td>
                                         <td> <span>{{$good_receipt->material_number}}/<br> {{$good_receipt->vendor_part_number}}</span></td>
                                         <td> <span>{{$good_receipt->mat_desc}}</span> <br>({{$good_receipt->valuation_type}})</td>
                                         <td> <span>{{$good_receipt->jumlah}}</span>&nbsp;<span>{{$good_receipt->uom}}</span> </td>
-                                        <td> <span>{{$good_receipt->currency}}</span> </td>
-                                        <td style="text-align: right"> <span>Rp{{number_format($good_receipt->harga_satuan)}}</span> </td>
-                                        <td> <span>{{$good_receipt->tax_code}}</span> </td>
                                         <td> <span>{{$good_receipt->ref_doc_no}}</span> </td>
                                         <td> <span>{{$good_receipt->delivery_note}}</span> </td>
+                                        <td> <span>{{$good_receipt->tax_code}}</span> </td>
                                     </tr>
                                     @endforeach
                                     </select>
                                 </tbody>
                             </table>
-                        </form>
+                          </form>
                     </div> <!-- /.table-stats -->
                 </div>
             </div>
@@ -188,12 +205,30 @@
     
         // DataTables initialisation
         var table = $('#list').DataTable({
+            dom: "<'row'<'col-md-2 bg-white'l><'col-md-5 bg-white'B><'col-md-5 bg-white'f>>" +
+                "<'row'<'col-md-12'tr>>" +
+                "<'row'<'col-md-6'i><'col-md-6'p>>",
+        columnDefs: [
+            {
+                targets: 1,
+                className: 'noVis'
+            }
+        ],
+        buttons: [
+            {
+                extend: 'colvis',
+                columns: ':not(.noVis)'
+            }
+        ],
             rowReorder: true,
              columnDefs: [
-            { orderable: true, className: 'reorder', targets: 0 },
+            { orderable: true, className: 'reorder', targets: 1 },
+            { orderable: true, className: 'reorder', targets: 5 },
             { orderable: true, className: 'reorder', targets: 6 },
             { orderable: false, targets: '_all' }
-                    ]
+                    ],
+            lengthMenu: [[10, 25, 50, -1],[10, 25, 50, 'All'],],
+
         });
     
         // Refilter the table

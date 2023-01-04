@@ -29,11 +29,10 @@ class FilterWarehouseController extends Controller
             $start_date = Carbon::parse(request()->start_date)->toDateTimeString();
             $end_date = Carbon::parse(request()->end_date)->toDateTimeString();
             $status = request()->status;
-            
-            $good_receipts = good_receipt::whereBetween('gr_date',[$start_date,$end_date])->orwhere('status_invoice', $status)->where('status', 'Verified')->get();
+            $good_receipts = good_receipt::whereBetween('gr_date',[$start_date,$end_date])->where('status_invoice', $status)->where('status', 'Verified')->orderBy('gr_date', 'ASC')->get();
             
             $dispute = good_receipt::all()->where("status", "Disputed")->count();
-    
+            // dd($good_receipts);
         } else {
             $good_receipts = good_receipt::where("status", "Verified")->orwhere('material_number','LG2KOM00707010F691')->orwhere("status", "Rejected")->get();
             $start_date = request()->start_date;

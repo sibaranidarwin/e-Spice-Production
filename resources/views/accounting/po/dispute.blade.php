@@ -1,9 +1,27 @@
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.2/moment.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.6/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.flash.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.print.min.js"></script>
+<script src="https://cdn.datatables.net/datetime/1.1.2/js/dataTables.dateTime.min.js"></script>
+
 @extends('accounting.layouts.sidebar')
 @section('content')
+<link rel="stylesheet" href="{{asset('admin/assets/css/datatable.css')}}">
+
+
 <link rel="stylesheet" href="{{asset('assets/css/argon-dashboard.css')}}">
+
 <style>
-    .table td, .table th {
-        font-size: 11.4px;
+    .table td, .table th,  label{
+        font-size: 11.7px;
     }
 </style>
 <div class="breadcrumbs">
@@ -12,7 +30,7 @@
             <div class="col-sm-4">
                 <div class="page-header float-left">
                     <div class="page-title">
-                        <!-- <h1>Data Purchase Order</h1> -->
+                        <h1>Dashboard</h1>
                     </div>
                 </div>
             </div>
@@ -21,8 +39,8 @@
                     <div class="page-title">
                         <ol class="breadcrumb text-right">
                             <li><a href="#">Dashboard</a></li>
-                            <li><a href="#">Dispute Good Receipt List</a></li>
-                            <li class="active">Create</li>
+                            <li><a href="#">Good Receipt List</a></li>
+                            <li class="active">Show</li>
                         </ol>
                     </div>
                 </div>
@@ -34,153 +52,181 @@
 <div class="content">
     <div class="animated fadeIn">
         <div class="row">
-            <div class="col">
-                <div class="card  shadow h-100">
+            <div class="col-lg-12">
+                <div class="card">
+                    @if($message = Session::get('destroy'))
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <strong>Success!</strong> {{$message}}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    @elseif($message = Session::get('success'))
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <strong>Success!</strong> {{$message}}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    @elseif($message = Session::get('warning'))
+                    <div class="alert alert-primary alert-dismissible fade show" role="alert">
+                        <strong>Success!</strong> {{$message}}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    @endif
                     <div class="card-header">
-                        <strong class="card-header">Dispute Good Receipt</strong>
+                        <strong class="card-title">Dispute Invoice List</strong>
                     </div>
                     <div class="card-body">
-                        <form autocomplete="off" action="{{ route('dispute_datagr') }}" method="post"
-                            enctype="multipart/form-data">
+                    <div class="table-responsive text-nowrap">
+                        <div class="row">
+                            <div class="col-3 bg-white mb-3">
+                                <label for="">GR Date: </label>
+                                <input type="text" id="min" name="min"> 
+                            </div> 
+                            <div class="col-2 bg-white mb-4">
+                                <label for="">To: </label>
+                                <input type="text" id="max" name="max">
+                            </div>
+                            <div class="col-4">
+                                <label for=""> </label>
+                            </div>
+                        </div>
+                        <form action="{{ route('update-datagr-vendor/{id_gr}') }}" method="POST">
                             @csrf
-                            @foreach ($good_receipts as $good)
-                            <input type="hidden" name="id[]" value="{{$good->id_gr}}">
-                            @endforeach
-                            {{-- <b class="mb-4">
-                                    {{ $good->id }}
-                            </b> --}}
-                            {{-- <div class="form-group">
-                                        <label class="form-control-label" for="id">GR Number</label>
-                                        <input type="number" class="form-control @error('id') is-invalid @enderror" name="id" placeholder="Masukkan Tanggal ..." value="{{ $good->id }}">
-                            @error('id')<span class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
-                    </div> --}}
-                    {{-- <div class="form-group">
-                        <label class="form-control-label" for="Status[]">Status</label> <br>
-                        <select name="status[]" class="form-control">
-                            <option value="Verified" {{ $good->Status == "Verified" ? 'selected' : '' }}>
-                                Verified</option>
-                            <option value="Dispute" {{ $good->Status == "Dispute" ? 'selected' : '' }}>Dispute</option>    
-                        </select>
-                    </div> --}}
-                    <div class="form-group">
-                        <label class="form-control-label" for="alasan_disp">Dispute Identification</label>
-                        <input type="text" class="form-control @error('alasan_disp') is-invalid @enderror"
-                            name="alasan_disp" placeholder="Mohon masukan alasan dispute invoice">
-                        @error('alasan_disp')<span
-                            class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
-                    </div>
-                    {{-- <div class="form-group">
-                        <label class="form-control-label" for="no_po[]">PO Number</label>
-                        <input type="number" class="form-control @error('no_po[]') is-invalid @enderror" name="no_po[]"
-                            placeholder="Masukkan Tanggal ..." value="{{ $good->no_po }}">
-                        @error('no_po[]')<span class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
-                    </div>
-                    <div class="form-group">
-                        <label class="form-control-label" for="po_item[]">PO Item</label>
-                        <input type="number" class="form-control @error('po_item[]') is-invalid @enderror"
-                            name="po_item[]" placeholder="Masukkan Tanggal ..." value="{{ $good->po_item }}">
-                        @error('po_item[]')<span
-                            class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
-                    </div>
-                    <div class="form-group">
-                        <label class="form-control-label" for="GR_Date[]">GR Slip Date</label>
-                        <input type="date" class="form-control @error('GR_Date[]') is-invalid @enderror"
-                            name="GR_Date[]" placeholder="Masukkan Tanggal ..." value="{{ $good->GR_Date }}">
-                        @error('GR_Date[]')<span
-                            class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
-                    </div>
-                    <div class="form-group">
-                        <label class="form-control-label" for="Delivery_Note[]">Delivery Note</label>
-                        <input type="text" class="form-control @error('Delivery_Note[]') is-invalid @enderror"
-                            name="Delivery_Note[]" placeholder="Masukkan Tanggal ..." value="{{ $good->Delivery_Note }}">
-                        @error('Delivery_Note[]')<span
-                            class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
-                    </div>
-                    <div class="form-group">
-                        <label class="form-control-label" for="Material_Number[]">Material Number</label>
-                        <input type="text" class="form-control @error('Material_Number[]') is-invalid @enderror"
-                            name="Material_Number[]" placeholder="Masukkan Tanggal ..."
-                            value="{{ $good->Material_Number }}">
-                        @error('Material_Number[]')<span
-                            class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
-                    </div>
-                    <div class="form-group">
-                        <label class="form-control-label" for="Tax_Code[]">Tax Code</label>
-                        <input type="text" class="form-control @error('Tax_Code[]') is-invalid @enderror"
-                            name="Tax_Code[]" placeholder="Masukkan Tanggal ..." value="{{ $good->Tax_Code }}">
-                        @error('Tax_Code[]')<span
-                            class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
-                    </div>
-                    <div class="form-group">
-                        <label class="form-control-label" for="Status[]">Status</label> <br>
-                        <select name="status[]" class="form-control">
-                            <option value="Not Verified" {{ $good->Status == "Not Verified" ? 'selected' : '' }}>Not
-                                Verified</option>
-                            <option value="Verified" {{ $good->Status == "Verified" ? 'selected' : '' }}>Verified
-                            </option>
-                            <option value="Reject" {{ $good->Status == "Reject" ? 'selected' : '' }}>Reject</option>
-                        </select>
-                    </div> --}}
-                    <button type="submit" name="action" value="Dispute" onclick="return confirm('Are you sure?')" class="btn btn-warning" id="simpan">Dispute</button>
-                    <a href="{{url('vendor/purchaseorder')}}" onclick="return confirm('Are you sure?')" class="btn btn-danger">Return</a>
-                    </form>
-                    <br>
-                    <strong class="card-header">Good Receipt Data to be Disputed</strong>
-                    <table id="list" class="table table-stats order-table ov-h">
-                        <thead>
-                            <tr>
-                                <th></th>
-                                <th>GR Number</th>
-                                <th>No PO</th>
-                                <th>PO Item</th>
-                                <th>GR Slip Date</th>
-                                <th>Material Number</th>
-                                <!-- <th class="text-center">Reference</th> -->
-                                <!-- <th class="text-center">Vendor Part Number</th>
-                                        <th class="text-center">Item Description</th>
-                                        <th class="text-center">UoM</th>
-                                        <th class="text-center">Currency</th>
-                                        <th class="text-center">Harga Satuan</th>
-                                        <th class="text-center">Jumlah</th> -->
-                                <!-- <th class="text-center">Jumlah Harga</th> -->
-                                <th>Tax Code</th>
-                                <!-- <th class="text-center">Valuation Type</th> -->
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach($good_receipts as $good_receipt)
-                            <tr>
-                            <td><input type="hidden" name="ids[]" value="{{$good_receipt->id}}"></td>      
-                            
-                            <td>{{++$i}}</td>
-                            <td >{{ $good_receipt->status }}</td>
-                            <td ><span>{{$good_receipt->gr_number}}</span></td>
-                            <td ><span>{{$good_receipt->no_po}}</span></td>
-                            <td><span>{{$good_receipt->po_item}}</span></td>
-                            <td><span>{{$good_receipt->gr_date}}</span></td>
-                            <td> <span>{{$good_receipt->material_number}}</span></td>
-                            <td> <span>{{$good_receipt->ref_doc_no}}</span> </td>
-                            <td> <span>{{$good_receipt->mat_desc}}</span> </td>
-                            <td> <span>{{$good_receipt->jumlah}}</span>&nbsp;<span>{{$good_receipt->uom}}</span> </td>
-                            <td> <span>{{$good_receipt->currency}}</span> </td>
-                            <td> <span>{{$good_receipt->harga_satuan}}</span> </td>
-                            <td> <span>{{$good_receipt->tax_code}}</span> </td>
-                            <td>{{ $good_receipt->status }}</td>
-                            </tr>
-                            @endforeach
-                        </select>
-                        </tbody>
-                    </table>
+                            <table id="list" class="table table-striped" style="font-size: 10px;">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Status</th>
+                                        <th>GR Number</th>
+                                        <th>No PO</th>
+                                        <th>PO Item</th>
+                                        <th>GR Date</th>
+                                        <th>Part Number</th>
+                                        <th>Reference</th>
+                                        <th>Material Description</th>
+                                        <th>Del. Note</th>
+                                        <th>QTY UOM</th>
+                                        <th>Curr</th>
+                                        <th>Unit Price</th>
+                                        <th>Tax Code</th>
+                                        <th>Reason</th>
+                                    </tr>
+                                </thead>
+                                <tbody style="font-size: 11px;">
+                                    @foreach($good_receipts as $good_receipt)
+                                    <tr>
+                                        <td>{{++$i}}</td>
+                                        <td >{{ $good_receipt->status }}</td>
+                                        <td ><span>{{$good_receipt->gr_number}}</span></td>
+                                        <td ><span>{{$good_receipt->no_po}}</span></td>
+                                        <td><span>{{$good_receipt->po_item}}</span></td>
+                                        <td><span>{{ Carbon\Carbon::parse($good_receipt->gr_date)->format('d F Y') }}</span></td>
+                                        <td> <span>{{$good_receipt->material_number}}</span></td>
+                                        <td> <span>{{$good_receipt->ref_doc_no}}</span> </td>
+                                        <td> <span>{{$good_receipt->mat_desc}}<br>({{$good_receipt->valuation_type}})</span> </td>
+                                        <td> <span>{{$good_receipt->delivery_note}}</span> </td>
+                                        <td> <span>{{$good_receipt->jumlah}}</span>&nbsp;<span>{{$good_receipt->UOM}}</span> </td>
+                                        <td> <span>{{$good_receipt->currency}}</span> </td>
+                                        <td> <span>Rp. {{number_format($good_receipt->harga_satuan)}}</span> </td>
+                                        <td> <span>{{$good_receipt->tax_code}}</span> </td>
+                                        <td><span>{{$good_receipt->alasan_disp}}</span></td>
+                                    </tr>
+                                    @endforeach
+                                    </select>
+                                </tbody>
+                            </table>
+                           </form>
+                    </div> <!-- /.table-stats -->
                 </div>
+            </div>
             </div>
         </div>
     </div>
+
 </div>
 </div><!-- .animated -->
 </div><!-- .content -->
 
 <div class="clearfix"></div>
 
+<footer class="site-footer">
+    <div class="footer-inner bg-white">
+        <div class="row">
+            <div class="col-sm-6">
+                <!-- Copyright &copy; 2018 Ela Admin -->
+            </div>
+            <div class="col-sm-6 text-right">
+                Designed by <a href="https://colorlib.com">Colorlib</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
 </div><!-- /#right-panel -->
+
+<script type="text/javascript">
+    var minDate, maxDate;
+    
+    // Custom filtering function which will search data in column four between two values
+    $.fn.dataTable.ext.search.push(
+        function(settings, data, dataIndex) {
+            var min = minDate.val();
+            var max = maxDate.val();
+            var date = new Date(data[5]);
+    
+            if (
+                (min === null && max === null) ||
+                (min === null && date <= max) ||
+                (min <= date && max === null) ||
+                (min <= date && date <= max)
+            ) {
+                return true;
+            }
+            return false;
+        }
+    );
+    
+    $(document).ready(function() {
+    
+        // Create date inputs
+        minDate = new DateTime($('#min'), {
+            format: 'DD MM YYYY'
+        });
+        maxDate = new DateTime($('#max'), {
+            format: 'DD MM YYYY'
+        });
+    
+        // DataTables initialisation
+        var table = $('#list').DataTable();
+    
+        // Refilter the table
+        $('#min, #max').on('change', function() {
+            table.draw();
+        });
+    
+    
+    });
+    
+    function checkAll(box) {
+        let checkboxes = document.getElementsByTagName('input');
+    
+        if (box.checked) { // jika checkbox teratar dipilih maka semua tag input juga dipilih
+            for (let i = 0; i < checkboxes.length; i++) {
+                if (checkboxes[i].type == 'checkbox') {
+                    checkboxes[i].checked = true;
+                }
+            }
+        } else { // jika checkbox teratas tidak dipilih maka semua tag input juga tidak dipilih
+            for (let i = 0; i < checkboxes.length; i++) {
+                if (checkboxes[i].type == 'checkbox') {
+                    checkboxes[i].checked = false;
+                }
+            }
+        }
+    }
+    </script>
 @endsection

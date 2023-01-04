@@ -34,7 +34,31 @@
     <link href="https://cdn.jsdelivr.net/npm/fullcalendar@3.9.0/dist/fullcalendar.min.css" rel="stylesheet" />
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
     <script src="{{asset('admin/assets/ckeditor/ckeditor.js')}}"></script>
-
+    <style>
+        .menu_utama {
+            display: inline-block;
+            vertical-align: top;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+    
+        .menu_sub {
+            display: none;
+            list-style-type: none;
+        }
+    
+        .menu_sub a {
+            display: block;
+    
+            color: white;
+            text-decoration: none;
+        }
+    
+        #menu_dropdown .menu_utama:hover>.menu_sub {
+            display: block;
+        }
+</style>
 
 </head>
 
@@ -42,40 +66,56 @@
         <nav class="navbar navbar-expand-sm navbar-default">
             <div id="main-menu" class="main-menu collapse navbar-collapse">
                 <ul class="nav navbar-nav">
-                <br>    
-                <li class="menu-title">DASHBOARD</li><!-- /.menu-title -->
+                    <li class="menu-title">DASHBOARD</li><!-- /.menu-title -->
                     <li class="active">
                         <a href="{{url('procumerent/dashboard')}}"><i class="menu-icon fa fa-laptop"></i>Dashboard</a>
                     </li>
-                    <li class="menu-title">KELOLA DATA</li><!-- /.menu-title -->
+                    <li class="menu-title">DATA GOOD RECEIPT</li><!-- /.menu-title -->
                     <li class="menu-item-has-children dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                            aria-expanded="false"> <i class="menu-icon fa fa-envelope"></i>Data PO</a>
-                        <ul class="sub-menu children dropdown-menu">
-                            <li><i class="fa fa-tags"></i><a href="{{url('procumerent/po')}}">Tampilkan</a></li>
-                            <li><i class="fa fa-pencil-square-o"></i><a href="{{url('procumerent/createpo')}}">Buat PO</a>
+                            aria-expanded="false">
+                            <i class="menu-icon fa fa-file"></i>Good Receipt</a>
+    
+                        <ul class="sub-menu children dropdown-menu" id="menu_dropdown">
+                            <li>
+                                <a href="{{url('procumerent/all')}}" class="accordion-heading"><span class=""><i
+                                            class="fa fa-table"></i>All Status</span></a>
+                            </li>
+                            <li class="menu_utama">
+                                <a class="accordion-heading" data-toggle="collapse" data-target="#submenu3"><span
+                                        class=""><i class="fa fa-table"></i>By Status
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        ></span></a>
+                                <ul class="nav nav-list collapse sub-menu children menu_sub" id="submenu3">
+                                    <li><a href="{{url('procumerent/po')}}" title="Title"><i class="fa fa-info"></i>Not
+                                            Verified</a></li>
+                                    <li><a href="{{url('procumerent/pover')}}" title="Title"><i
+                                                class="fa fa-check "></i>Verified</a></li>
+                                    <li><a href="{{url('procumerent/poreject')}}" title="Title"><i
+                                                class="fa fa-close"></i>Rejected</a></li>
+                                </ul>
                             </li>
                         </ul>
                     </li>
-
-                    <li class="menu-item-has-children dropdown ">
+    
+                      <li class="menu-item-has-children dropdown ">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                            aria-expanded="false"> <i class="menu-icon fa fa-table"></i>Data Invoice</a>
+                            aria-expanded="false"> <i class="menu-icon fa fa-warning"></i>Disputed Invoice</a>
                         <ul class="sub-menu children dropdown-menu ">
-                            <li><i class="fa fa-table "></i><a href="{{url('procumerent/pengaduan')}}">Tampilkan</a></li>
-
-
+                            <li><i class="fa fa-table "></i><a href="{{url('procumerent/disputed')}}">Show</a></li>
+    
                         </ul>
                     </li>
+                    <li class="menu-title">DATA Invoice</li><!-- /.menu-title -->
                     <li class="menu-item-has-children dropdown ">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                            aria-expanded="false"> <i class="menu-icon fa fa-comments-o"></i>Data PO Bermasalah</a>
+                            aria-expanded="false"> <i class="menu-icon fa fa-file-pdf-o"></i>Invoice Proposal</a>
                         <ul class="sub-menu children dropdown-menu ">
-                            <li><i class="fa fa-table "></i><a href="{{url('procumerent/komentar')}}">Tampilkan</a></li>
-
+                            <li><i class="fa fa-table "></i><a href="{{url('procumerent/invoice')}}">Invoice GR</a></li>
+                            <li><i class="fa fa-table "></i><a href="{{url('procumerent/invoiceba')}}">Invoice BA</a></li>
                         </ul>
                     </li>
-
+    
                 </ul>
             </div><!-- /.navbar-collapse -->
         </nav>
@@ -95,7 +135,10 @@
             </div>
             <div class="top-right">
                 <div class="header-menu">
-
+                    
+                    <div class="user-area dropdown float-right">
+                        <a  href="{{url('')}}" class="dropdown-toggle"><i class="fa fa-bell"><span class="count"></span></i></a>
+                    </div> 
 
                     <div class="user-area dropdown float-right">
                         <a href="#" class="dropdown-toggle active" data-toggle="dropdown" aria-haspopup="true"

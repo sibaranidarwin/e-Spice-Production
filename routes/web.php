@@ -14,7 +14,6 @@
 use Illuminate\Support\Facades\Route;
 
 Auth::routes();
-use Carbon\Carbon;
 
 Route::get('login-user', function () {
     return view('login/index');
@@ -38,11 +37,13 @@ Route::get('about', 'IndexController@about')->name('about');
 // DASHBOARD ADMIN
 Route::resource('admin/dashboard','AdminController')->middleware('admin');
 Route::get('admin/dashboard', 'AdminController@index')->name('admin/dashboard')->middleware('admin');
+
 // Purchase Order
 Route::get('admin/all', 'AdminController@all');
 Route::get('admin/po', 'AdminController@po')->name('admin/po')->middleware('admin');
 Route::get('admin/pover', 'AdminController@pover')->name('admin/pover')->middleware('admin');
 Route::get('admin/poreject', 'AdminController@poreject')->name('admin/poreject')->middleware('admin');
+
 //BA
 Route::get('admin/draft', 'AdminController@draft')->name('admin/draft');
 Route::get('admin/ba', 'AdminController@ba')->name('admin/ba');
@@ -67,29 +68,30 @@ Route::get('admin/user/create', 'UserController@create')->name('tambah-user')->m
 Route::post('admin/user/create', 'UserController@store')->name('create-user')->middleware('admin');
 // Accounting
 Route::resource('admin/accounting', 'AccountingController')->middleware('admin');
-Route::get('admin/accounting/{id}/show', 'AccountingController@showing')->name('accounting.showing')->middleware('admin');
+Route::get('admin/accounting/{id}/show', 'AccountingController@showingaccounting')->name('accounting.showing')->middleware('admin');
 Route::get('admin/accounting/{id}/ubah-accounting', 'AccountingController@profile')->name('accounting.edit')->middleware('admin');
 Route::post('admin/accounting/{id}/ubah-accounting', 'AccountingController@updatedong')->name('accounting-update')->middleware('admin');
 // Warehouse
 Route::resource('admin/warehouse', 'WarehouseController')->middleware('admin');
-Route::get('admin/warehouse/{id}/show', 'WarehouseController@showing')->name('warehouse.showing')->middleware('admin');
+Route::get('admin/warehouse/{id}/show', 'WarehouseController@showingwarehouse')->name('warehouse.showing')->middleware('admin');
 Route::get('admin/warehouse/{id}/ubah-warehouse', 'WarehouseController@profile')->name('warehouse.edit')->middleware('admin');
 Route::post('admin/warehouse/{id}/ubah-warehouse', 'WarehouseController@updatedong')->name('warehouse-update')->middleware('admin');
 // Procumerent
 Route::resource('admin/procumerent', 'ProcumerentController')->middleware('admin');
-Route::get('admin/procumerent/{id}/show', 'ProcumerentController@showing')->name('procumerent.showing')->middleware('admin');
+Route::get('admin/procumerent/{id}/show', 'ProcumerentController@showingprocumerent')->name('procumerent.showing')->middleware('admin');
 Route::get('admin/procumerent/{id}/ubah-procumerent', 'ProcumerentController@profile')->name('procumerent.edit')->middleware('admin');
 Route::post('admin/procumerent/{id}/ubah-procumerent', 'ProcumerentController@updatedong')->name('procumerent-update')->middleware('admin');
 
 // Vendor
 Route::resource('admin/vendor', 'VendorController')->middleware('admin');
-Route::get('admin/vendor/{id}/show', 'VendorController@showing')->name('vendor.showing')->middleware('admin');
+Route::get('admin/vendor/{id}/show', 'VendorController@showingvendor')->name('vendor.showing')->middleware('admin');
 Route::get('admin/vendor/{id}/ubah-vendor', 'VendorController@profile')->name('vendor.edit')->middleware('admin');
 Route::post('admin/vendor/{id}/ubah-vendor', 'VendorController@updatedong')->name('vendor-update')->middleware('admin');
 
 // // INI MIDDLEWARE Accounting
 // // DASHBOARD
 Route::get('accounting/dashboard', 'AccountingController@index2')->name('accounting/dashboard');
+Route::get('accounting/all', 'AccountingController@all');
 Route::get('accounting/po', 'AccountingController@po');
 Route::get('accounting/pover', 'AccountingController@pover');
 Route::get('accounting/poreject', 'AccountingController@poreject');
@@ -112,7 +114,16 @@ Route::get('accounting/user/{id}/show', 'AccountingController@showing')->name('a
 
 // // INI MIDDLEWARE Procumerent
 Route::get('procumerent/dashboard', 'ProcumerentController@index2')->name('procurement/dashboard');
+Route::get('procumerent/all', 'ProcumerentController@all');
 Route::get('procumerent/po', 'ProcumerentController@po');
+Route::get('procumerent/pover', 'ProcumerentController@pover');
+Route::get('procumerent/poreject', 'ProcumerentController@poreject');
+Route::get('procumerent/disputed', 'ProcumerentController@disputed')->name('procumerent/disputed');
+
+Route::get('procumerent/invoice', 'ProcumerentController@invoice')->name('procumerent/invoice');
+Route::get('procumerent/detail-invoice/{id}', 'ProcumerentController@detailinvoice')->name('procumerent-invoice');
+Route::get('procumerent/invoiceba', 'ProcumerentController@invoiceba')->name('procumerent/invoiceba');
+Route::get('procumerent/detail-invoice-ba/{id}', 'ProcumerentController@detailinvoiceba')->name('detail-invoice-ba');
 
 Route::get('procumerent/user/{id}/show', 'ProcumerentController@showing')->name('procumerent-user.show');
 
@@ -122,7 +133,6 @@ Route::get('warehouse/all', 'WarehouseController@all');
 Route::get('warehouse/po', 'WarehouseController@po');
 Route::get('warehouse/pover', 'WarehouseController@pover');
 Route::get('warehouse/poreject', 'WarehouseController@poreject');
-
 
 Route::get('warehouse/invoice', 'WarehouseController@invoice')->name('warehouse/invoice');
 Route::get('warehouse/detail-invoice/{id}', 'WarehouseController@detailinvoice')->name('detail-invoice');
@@ -198,8 +208,7 @@ Route::get('warehouse/filter', 'FilterWarehouseController@filter')->name('wareho
 Route::get('warehouse/filternot', 'FilterWarehouseController@filternot')->name('warehouse-filternot');
 Route::get('warehouse/filterver', 'FilterWarehouseController@filterver')->name('warehouse-filterver');
 Route::get('warehouse/filterreject', 'FilterWarehouseController@filterreject')->name('warehouse-filterreject');
-
 Route::get('warehouse/filterinv', 'FilterWarehouseController@filterinv')->name('warehouse-filterinv');
 Route::get('warehouse/filterinvba', 'FilterWarehouseController@filterinvba')->name('warehouse-filterinvba');
 
-
+Route::get('admin/filter', 'FilterAdminController@filter')->name('admin-filter');

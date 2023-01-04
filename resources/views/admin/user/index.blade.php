@@ -18,7 +18,7 @@
                         <ol class="breadcrumb text-right">
                             <li><a href="#">Dashboard</a></li>
                             <li><a href="#">User</a></li>
-                            <li class="active">Semua User</li>
+                            <li class="active">All User</li>
                         </ol>
                     </div>
                 </div>

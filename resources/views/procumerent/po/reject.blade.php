@@ -12,7 +12,7 @@
 <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.print.min.js"></script>
 <script src="https://cdn.datatables.net/datetime/1.1.2/js/dataTables.dateTime.min.js"></script>
 
-@extends('admin.layouts.app')
+@extends('procumerent.layouts.sidebar')
 @section('content')
 <link rel="stylesheet" href="{{asset('admin/assets/css/datatable.css')}}">
 <link rel="stylesheet" href="https://cdn.datatables.net/datetime/1.1.2/css/dataTables.dateTime.min.css">
@@ -20,8 +20,8 @@
 <link rel="stylesheet" href="{{asset('assets/css/argon-dashboard.css')}}">
 
 <style>
-    .table td, .table th,label {
-        font-size: 11.7px;
+    .table td, .table th,  label{
+        font-size: 11px;
     }
 </style>
 <div class="breadcrumbs">
@@ -77,7 +77,7 @@
                     </div>
                     @endif
                     <div class="card-header">
-                        <strong class="card-title"><i class="fa fa-list"></i> Not Yet Verified List </strong>
+                        <strong class="card-title"><i class="fa fa-list"></i> Rejected List </strong>
                     </div>
                     <div class="card-body">
                     <div class="table-responsive text-nowrap">
@@ -110,16 +110,14 @@
                             </div> &nbsp;&nbsp;
                             <button class="btn btn-primary" onclick="return confirm('Are you sure?')" type="submit"><i class="fa fa-search"></i></button>
                         </form>
-                        <form action="{{ route('update-datagr/{id}') }}" method="POST">
+                        <form action="{{ route('update-datagr-vendor/{id_gr}') }}" method="POST">
                             @csrf
-                            <table id="list" class="table table-striped" style="width:100%; font-size: 10px;">
+                            <table id="list" class="table table-striped" style="font-size: 10px;">
                                 <thead>
                                     <tr>
                                         {{-- <th><input type="checkbox" onchange="checkAll(this)"></th> --}}
                                         <th style="text-align: center;">No</th>
                                         <th style="text-align: center;">Sts. GR</th>
-                                        <th style="text-align: center;">Sts. Inv. Props.</th>
-                                        <th style="text-align: center;">Vendor</th>
                                         <th style="text-align: center;">Plant Code</th>
                                         <th style="text-align: center;">PO</th>
                                         <th style="text-align: center;">GR Number</th>
@@ -137,15 +135,8 @@
                                 <tbody style="font-size: 11px;">
                                     @foreach($good_receipts as $good_receipt)
                                     <tr>
-                                        {{-- @if ($good_receipt->status_invoice == 'Not Yet Verified - Draft BA')
-                                        <td><input disabled type="hidden" name="ids[]" value="{{$good_receipt->id_gr}}"></td>
-                                        @else
-                                        <td><input type="checkbox" name="ids[]" value="{{$good_receipt->id_gr}}"></td>
-                                        @endif --}}
                                         <td>{{++$i}}</td>
                                         <td >{{ $good_receipt->status }}</td>
-                                        <td >{{ $good_receipt->status_invoice }}</td>
-                                        <td >{{ $good_receipt->id_vendor }} /{{ $good_receipt->vendor_name}}</td>
                                         <td >{{ $good_receipt->plant_code }}</td>
                                         <td ><span>{{$good_receipt->no_po}} /{{$good_receipt->po_item}}</span></td>
                                         <td ><span>{{$good_receipt->gr_number}}</span></td>
@@ -163,9 +154,7 @@
                                     </select>
                                 </tbody>
                             </table>
-                           {{-- &nbsp;&nbsp;<button type="submit" value="Update" name="action"
-                                class="btn btn-success">Update Data</button> --}}
-                        </form>
+                           </form>
                     </div> <!-- /.table-stats -->
                 </div>
             </div>
@@ -220,22 +209,31 @@
     
         // Create date inputs
         minDate = new DateTime($('#min'), {
-            format: 'MMMM Do YYYY'
+            format: 'DD MM YYYY'
         });
         maxDate = new DateTime($('#max'), {
-            format: 'MMMM Do YYYY'
+            format: 'DD MM YYYY'
         });
     
         // DataTables initialisation
         var table = $('#list').DataTable({
+            // dom: "<'row'<'col-md-2 bg-white'l><'col-md-5 bg-white'B><'col-md-5 bg-white'f>>" +
+            //     "<'row'<'col-md-12'tr>>" +
+            //     "<'row'<'col-md-6'i><'col-md-6'p>>",
+            // buttons: [{
+            //     extend: 'excelHtml5',
+            //     autoFilter: true,
+            //     sheetName: 'Exported data'
+            // }]
             rowReorder: true,
              columnDefs: [
-            { orderable: true, className: 'reorder', targets: 1 },
-            { orderable: true, className: 'reorder', targets: 6 },
+            { orderable: true, className: 'reorder', targets: 0 },
+            { orderable: true, className: 'reorder', targets: 4 },
             
             { orderable: false, targets: '_all' }
                     ],
             lengthMenu: [[10, 25, 50, -1],[10, 25, 50, 'All'],],
+
         });
     
         // Refilter the table

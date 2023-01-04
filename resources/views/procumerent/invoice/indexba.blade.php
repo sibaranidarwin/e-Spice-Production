@@ -7,11 +7,13 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.html5.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.print.min.js"></script>
-@extends('accounting.layouts.sidebar')
+
+@extends('procumerent.layouts.sidebar')
 @section('content')
 <link rel="stylesheet" href="{{asset('admin/assets/css/datatable.css')}}">
 
 <link rel="stylesheet" href="{{asset('assets/css/argon-dashboard.css')}}">
+
 <style>
 .table td,
 .table th,
@@ -34,7 +36,7 @@ label {
                     <div class="page-title">
                         <ol class="breadcrumb text-right">
                             <li><a href="#">Dashboard</a></li>
-                            <li><a href="#">Invoice List</a></li>
+                            <li><a href="#">Invoice BA</a></li>
                             <li class="active">Show</li>
                         </ol>
                     </div>
@@ -72,14 +74,14 @@ label {
                     </div>
                     @endif
                     <div class="card-header">
-                        <strong class="card-title"><i class="fa fa-list"></i> Invoice Proposal GR List </strong>
+                        <strong class="card-title"><i class="fa fa-list"></i> Invoice Proposal BA List</strong>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive text-nowrap">
                             @if ($start_date != null || $end_date != null)
                             <p style="text-align: center; background-color: #11CDEF; color: white;"><strong class="card-title"></i>GR Date:{{ Carbon\Carbon::parse($start_date)->format('d F Y') }} To: {{ Carbon\Carbon::parse($end_date)->format('d F Y') }}</i></strong></p>
                             @endif
-                            <form action="{{ route('warehouse-filterinv') }}" class="form-inline" method="GET">
+                            <form action="{{ route('warehouse-filterinvba') }}" class="form-inline" method="GET">
                                 <div class="form-group col-md-3">
                                 </div>
                                 <div class="form-group ">
@@ -92,6 +94,7 @@ label {
                                 </div>
                                 <button class="btn btn-primary" type="submit"><i class="fa fa-search"></i></button>
                               </form>
+                            <form action="{{ route('update-datagr-vendor/{id_gr}') }}" method="POST">
                                 @csrf
                                 <table id="list" class="table table-striped" style="font-size: 10px;">
                                     <thead>
@@ -108,7 +111,6 @@ label {
                                             <th>Total Price</th>
                                             <th>Action</th>
                                         </tr>
-                                        </tr>
                                     </thead>
                                     <tbody>
                                         @foreach($invoice as $item)
@@ -122,17 +124,17 @@ label {
                                             <td>{{$item['faktur_pajak_number'] }}</td>
                                             {{-- <td>{{$item['everify_number'] }}</td> --}}
                                             <td>{{$item['currency'] }}</td>
-                                            <td style="text-align: right">{{($item['ppn'])}}</td>
+                                            <td style="text-align: right">{{$item['ppn']}}</td>
                                             <td style="text-align: right">{{number_format($item['total_harga_everify']) }}</td>
-                                            
                                             <td>
-                                                <a href="/accounting/detail-invoice/{{$item->id_inv}}"
-                                                    class="btn btn-info btn-sm">Det.</a>
-                                            </td>
+                                                <a href="/procumerent/detail-invoice-ba/{{$item->id_inv}}"
+                                                    class="btn btn-info btn-sm">Det.</a> 
+                                                </td>
                                         </tr>
                                         @endforeach
                                     </tbody>
                                 </table>
+                            </form>
                         </div>
                     </div>
                 </div> <!-- /.table-stats -->

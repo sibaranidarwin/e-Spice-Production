@@ -73,10 +73,26 @@ label {
                     </div>
                     @endif
                     <div class="card-header">
-                        <strong class="card-title">Invoice Proposal BA List</strong>
+                        <strong class="card-title"><i class="fa fa-list"></i> Invoice Proposal BA List</strong>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive text-nowrap">
+                            @if ($start_date != null || $end_date != null)
+                            <p style="text-align: center; background-color: #11CDEF; color: white;"><strong class="card-title"></i>GR Date:{{ Carbon\Carbon::parse($start_date)->format('d F Y') }} To: {{ Carbon\Carbon::parse($end_date)->format('d F Y') }}</i></strong></p>
+                            @endif
+                            <form action="{{ route('warehouse-filterinvba') }}" class="form-inline" method="GET">
+                                <div class="form-group col-md-3">
+                                </div>
+                                <div class="form-group ">
+                                  <label for="" >Invoice Date: &nbsp;</label>
+                                  <input type="date" class="form-control" name="start_date">
+                                </div>
+                                <div class="form-group mx-sm-3 ">
+                                  <label for="inputPassword2">To: &nbsp;</label>
+                                  <input type="date" class="form-control" name="end_date">
+                                </div>
+                                <button class="btn btn-primary" type="submit"><i class="fa fa-search"></i></button>
+                              </form>
                             <form action="{{ route('update-datagr-vendor/{id_gr}') }}" method="POST">
                                 @csrf
                                 <table id="list" class="table table-striped" style="font-size: 10px;">
@@ -87,22 +103,11 @@ label {
                                             <th>Sts. Inv. Props</th>
                                             <th>Invoice Date</th>
                                             <th>Invoice Number</th>
-                                            <th>No Invoice Proposal</th>
+                                            <th>Invoice Number Proposal</th>
                                             <th>VAT NO</th>
-                                            {{-- <th>No E-Verify</th> --}}
+                                            <th>Curr</th>
                                             <th>Total PPN</th>
                                             <th>Total Price</th>
-
-                                            <!-- <th class="text-center">Reference</th> -->
-                                            <!-- <th class="text-center">Vendor Part Number</th>
-                                            <th class="text-center">Item Description</th>
-                                            <th class="text-center">UoM</th>
-                                            <th class="text-center">Currency</th>
-                                            <th class="text-center">Harga Satuan</th>
-                                            <th class="text-center">Jumlah</th> -->
-                                            <!-- <th class="text-center">Jumlah Harga</th> -->
-                                            {{-- <th class="text-center">Tax Code</th> --}}
-                                            <!-- <th class="text-center">Valuation Type</th> -->
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -117,8 +122,9 @@ label {
                                             <td>{{$item['no_invoice_proposal'] }}</td>
                                             <td>{{$item['faktur_pajak_number'] }}</td>
                                             {{-- <td>{{$item['everify_number'] }}</td> --}}
-                                            <td style="text-align: right">Rp{{$item['ppn']}}</td>
-                                            <td>Rp{{number_format($item['total_harga_everify']) }}</td>
+                                            <td>{{$item['currency'] }}</td>
+                                            <td style="text-align: right">{{$item['ppn']}}</td>
+                                            <td style="text-align: right">{{number_format($item['total_harga_everify']) }}</td>
                                             <td>
                                                 <a href="/accounting/detail-invoice-ba/{{$item->id_inv}}"
                                                     class="btn btn-info btn-sm">Det.</a> 
@@ -127,11 +133,6 @@ label {
                                         @endforeach
                                     </tbody>
                                 </table>
-                                {{-- &nbsp;&nbsp;&nbsp;<a href="" class="btn btn-success mb-2">Upload SAP</a> --}}
-                                {{-- <div class="row">
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<div class="col-md-1 mb-2"><a href=""
-                                    class="btn btn-primary">Upload SAP</a></div>
-                        </div> --}}
                             </form>
                         </div>
                     </div>
