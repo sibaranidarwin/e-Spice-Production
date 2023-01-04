@@ -79,7 +79,7 @@ label {
                     </div>
                     @endif
                     <div class="card-header">
-                        <strong class="card-title"><i class="fa fa-list"> </i>Draft BA List </strong>
+                        <strong class="card-title"><i class="fa fa-list"></i> Draft BA List </strong>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive text-nowrap">

@@ -39,31 +39,36 @@ class AdminController extends Controller
     { 
 
         $good_receipts = good_receipt::where("status", "Verified")->orwhere('material_number','LG2KOM00707010F691')->orwhere("status", "Rejected")->get();
-
+        $vendor_name = good_receipt::get();
         $dispute = good_receipt::all()->where("status", "Disputed")->count();
 
-        return view('admin.po.all',compact('good_receipts', 'dispute'))
+        return view('admin.po.all',compact('good_receipts', 'dispute', 'vendor_name'))
                 ->with('i',(request()->input('page', 1) -1) *5);
     }
     public function po()
     {   
         $good_receipts = good_receipt::where('material_number', 'LG2KOM00707010F691' )->WhereNull('status')->get();
+        $vendor_name = good_receipt::get();
 
-        return view('admin.po.notver',compact('good_receipts'))
+        return view('admin.po.notver',compact('good_receipts', 'vendor_name'))
                 ->with('i',(request()->input('page', 1) -1) *5);
     }
 
     public function pover()
     {   
         $good_receipts = good_receipt::where("Status","Verified")->get();
-        return view('admin.po.ver',compact('good_receipts'))
+        $vendor_name = good_receipt::get();
+
+        return view('admin.po.ver',compact('good_receipts', 'vendor_name'))
                 ->with('i',(request()->input('page', 1) -1) *5);
     }
 
     public function poreject()
     {   
         $good_receipts = good_receipt::where("Status","Reject")->get();
-        return view('admin.po.reject',compact('good_receipts'))
+        $vendor_name = good_receipt::get();
+
+        return view('admin.po.reject',compact('good_receipts', 'vendor_name'))
                 ->with('i',(request()->input('page', 1) -1) *5);
     }
     public function historydraft()
@@ -238,7 +243,9 @@ class AdminController extends Controller
     public function disputed()
     {
         $good_receipts = good_receipt::where("Status", "Dispute")->get();
-        return view('admin.po.disputed',compact('good_receipts'))
+        $vendor_name = good_receipt::get();
+
+        return view('admin.po.disputed',compact('good_receipts', 'vendor_name'))
                 ->with('i',(request()->input('page', 1) -1) *5);
     }
 

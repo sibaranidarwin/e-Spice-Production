@@ -225,7 +225,10 @@
             </div>
             <div class="top-right">
                 <div class="header-menu">
-
+                    
+                    <div class="user-area dropdown float-right">
+                        <a  href="{{url('')}}" class="dropdown-toggle"><i class="fa fa-bell"><span class="count"></span></i></a>
+                    </div>
 
                     <div class="user-area dropdown float-right">
                         <a href="#" class="dropdown-toggle active" data-toggle="dropdown" aria-haspopup="true"
@@ -238,9 +241,6 @@
                         <div class="user-menu dropdown-menu">
                             <a class="nav-link" href="{{route('user.show',auth()->user()->id)}}"><i
                                     class="fa fa- user"></i>Profile</a>
-
-                            <a class="nav-link" href="{{url('admin/pengaduan')}}"><i
-                                    class="fa fa- user"></i>Notifications <span class="count">13</span></a>
 
                             <a class="nav-link" href="{{route('user.showing',auth()->user()->id)}}"><i
                                     class="fa fa -cog"></i>Settings</a>

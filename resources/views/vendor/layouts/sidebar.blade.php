@@ -204,21 +204,23 @@
         <div class="top-right">
             <div class="header-menu">
 
+                <div class="user-area dropdown float-right">
+                    <a  href="{{url('')}}" class="dropdown-toggle"><i class="fa fa-bell"><span class="count"></span></i></a>
+                </div>
 
                 <div class="user-area dropdown float-right">
+                    
                     <a href="#" class="dropdown-toggle active" data-toggle="dropdown" aria-haspopup="true"
                         aria-expanded="false">
+                         {{-- <a href="{{url('')}}"><i class="fa fa- user"></i>Notifications
+                            <span class="count"></span></a> --}}
                         <img class="user-avatar rounded-circle" src="{{asset('upload/'.auth()->user()->foto)}}"
                             alt="User Avatar">
                         &nbsp; {{ auth()->user()->name}}&nbsp;<i class="fa fa-caret-down"></i>
                     </a>
-
                     <div class="user-menu dropdown-menu">
                         <a class="nav-link" href="{{route('vendor-user.show',auth()->user()->id)}}"><i
                                 class="fa fa- user"></i>Profile</a>
-
-                        <a class="nav-link" href="{{url('')}}"><i class="fa fa- user"></i>Notifications
-                            <span class="count"></span></a>
 
                         <a class="nav-link" href="{{route('vendor-user.showing',auth()->user()->id)}}"><i
                                 class="fa fa -cog"></i>Settings</a>
@@ -229,11 +231,12 @@
                             <i class="fa "></i>
                             {{ __('Logout') }}
                         </a>
-
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                             @csrf
                         </form>
+                        
                     </div>
+                    
                 </div>
 
             </div>

@@ -36,49 +36,32 @@
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
     <script src="{{asset('admin/assets/ckeditor/ckeditor.js')}}"></script>
 
-
     <style>
-    #weatherWidget .currentDesc {
-        color: #ffffff !important;
-    }
-
-    .traffic-chart {
-        min-height: 335px;
-    }
-
-    #flotPie1 {
-        height: 150px;
-    }
-
-    #flotPie1 td {
-        padding: 3px;
-    }
-
-    #flotPie1 table {
-        top: 20px !important;
-        right: -10px !important;
-    }
-
-    .chart-container {
-        display: table;
-        min-width: 270px;
-        text-align: left;
-        padding-top: 10px;
-        padding-bottom: 10px;
-    }
-
-    #flotLine5 {
-        height: 105px;
-    }
-
-    #flotBarChart {
-        height: 150px;
-    }
-
-    #cellPaiChart {
-        height: 160px;
-    }
-    </style>
+        .menu_utama {
+            display: inline-block;
+            vertical-align: top;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+    
+        .menu_sub {
+            display: none;
+            list-style-type: none;
+        }
+    
+        .menu_sub a {
+            display: block;
+    
+            color: white;
+            text-decoration: none;
+        }
+    
+        #menu_dropdown .menu_utama:hover>.menu_sub {
+            display: block;
+        }
+</style>
+    
 
 </head>
 
@@ -93,23 +76,31 @@
                 <li class="menu-title">DATA GOOD RECEIPT</li><!-- /.menu-title -->
                 <li class="menu-item-has-children dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                        aria-expanded="false"> <i class="menu-icon fa fa-file"></i>Good Receipt</a>
-                    <ul class="sub-menu children dropdown-menu">
-                        <li><i class="fa fa-info"></i><a href="{{url('accounting/po')}}">Not Verified</a></li>
-                        <li><i class="fa fa-check"></i><a href="{{url('accounting/pover')}}">Verified</a></li>
-                        <li><i class="fa fa-close"></i><a href="{{url('accounting/poreject')}}">Rejected</a></li>
+                        aria-expanded="false">
+                        <i class="menu-icon fa fa-file"></i>Good Receipt</a>
+
+                    <ul class="sub-menu children dropdown-menu" id="menu_dropdown">
+                        <li>
+                            <a href="{{url('accounting/all')}}" class="accordion-heading"><span class=""><i
+                                        class="fa fa-table"></i>All Status</span></a>
+                        </li>
+                        <li class="menu_utama">
+                            <a class="accordion-heading" data-toggle="collapse" data-target="#submenu3"><span
+                                    class=""><i class="fa fa-table"></i>By Status
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    ></span></a>
+                            <ul class="nav nav-list collapse sub-menu children menu_sub" id="submenu3">
+                                <li><a href="{{url('accounting/po')}}" title="Title"><i class="fa fa-info"></i>Not
+                                        Verified</a></li>
+                                <li><a href="{{url('accounting/pover')}}" title="Title"><i
+                                            class="fa fa-check "></i>Verified</a></li>
+                                <li><a href="{{url('accounting/poreject')}}" title="Title"><i
+                                            class="fa fa-close"></i>Rejected</a></li>
+                            </ul>
                         </li>
                     </ul>
                 </li>
 
-                <li class="menu-item-has-children dropdown ">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                        aria-expanded="false"> <i class="menu-icon fa fa-newspaper-o"></i>BA Reconcile</a>
-                    <ul class="sub-menu children dropdown-menu ">
-                        <li><i class="fa fa-table "></i><a href="{{url('accounting/draft')}}">Draft BA</a></li>
-                        <li><i class="fa fa-table "></i><a href="{{url('accounting/ba')}}">BA</a></li>
-                    </ul>
-                </li>
                   <li class="menu-item-has-children dropdown ">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
                         aria-expanded="false"> <i class="menu-icon fa fa-warning"></i>Disputed Invoice</a>
@@ -148,6 +139,9 @@
         <div class="top-right">
             <div class="header-menu">
 
+                <div class="user-area dropdown float-right">
+                    <a  href="{{url('')}}" class="dropdown-toggle"><i class="fa fa-bell"><span class="count"></span></i></a>
+                </div> 
 
                 <div class="user-area dropdown float-right">
                     <a href="#" class="dropdown-toggle active" data-toggle="dropdown" aria-haspopup="true"
@@ -160,9 +154,6 @@
                     <div class="user-menu dropdown-menu">
                         <a class="nav-link" href="{{route('vendor-user.show',auth()->user()->id)}}"><i
                                 class="fa fa- user"></i>Profile</a>
-
-                        <a class="nav-link" href="{{url('')}}"><i class="fa fa- user"></i>Notifications
-                            <span class="count"></span></a>
 
                         <a class="nav-link" href="{{route('vendor-user.showing',auth()->user()->id)}}"><i
                                 class="fa fa -cog"></i>Settings</a>

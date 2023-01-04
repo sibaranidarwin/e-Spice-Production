@@ -84,25 +84,32 @@ label{
                     <div class="card-body">
                         <div class="table-responsive text-nowrap">
                             <form action="{{ route('vendor-filter') }}" class="form-inline" method="GET">
-                                <div class="form-group col-md-2">
+                                <div class="form-group col-md-1">
     
                                 </div>
                                 <div class="form-group ">
                                   <label for="" >GR Date: &nbsp;</label>
                                   <input type="date" class="form-control" name="start_date">
                                 </div>
-                                <div class="form-group mx-sm-4">
+                                <div class="form-group mx-sm-2">
                                   <label for="inputPassword2">To: &nbsp;</label>
                                   <input type="date" class="form-control" name="end_date">
                                 </div>
-                                <div class="form-group col-md-3">
-                                    {{-- <label> Sts. Inv. Props.: &nbsp; </label> --}}
+                                <div class="form-group col-md-2-half">
+                                    <select class="form-control" name="">
+                                        <option>-- Choose Vendor Name -- </option>
+                                            @foreach ($vendor_name as $vendor_name)
+                                                <option value="{{ $vendor_name['vendor_name'] }}">{{ $vendor_name['vendor_name'] }}</option>
+                                            @endforeach
+                                    </select>
+                                </div> &nbsp;&nbsp;
+                                <div class="form-group col-md-2-half">
                                     <select class="form-control status_invoice" name="">
                                         <option value="">-- Choose Sts. Inv. Props. -- </option>
                                         <option value="Verified">Verified</option>
                                         <option value="Not Yet Verified - Draft BA">Not Yet Verified - Draft BA</option>
                                     </select>
-                                </div>
+                                </div>&nbsp;&nbsp;
                                 <button class="btn btn-primary" onclick="return confirm('Are you sure?')" type="submit"><i class="fa fa-search"></i></button>
                             </form>
                             <form action="{{ route('update-datagr/{id}') }}" method="POST">

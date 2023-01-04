@@ -898,4 +898,15 @@ class VendorController extends Controller
 
         }
     }
+
+    public function profile($id){
+        $user = \App\User::find($id);
+        return view('admin.vendor.edit',compact('user'));  
+    }
+
+    public function showingvendor($id){
+        $user = \App\User::find($id);
+        return view('admin.vendor.show',compact('user'));  
+    }
+
 }

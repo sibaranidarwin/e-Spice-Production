@@ -39,7 +39,7 @@ class WarehouseController extends Controller
         $not_ver =  good_receipt::where('material_number','LG2KOM00707010F691')->where("status","Not Verified")->count();
         $invoice = Invoice::all()->where("data_from", "GR")->count();
         $invoiceba = Invoice::all()->where("data_from", "BA")->count();
-        $dispute = good_receipt::all()->where("Status", "Disputed")->count();
+        $dispute = good_receipt::all()->where("status", "Disputed")->count();
         $vendor = User::all()->where("level", "vendor")->count();
         $draft = Draft_BA::count();
         $ba = BA_Reconcile::count();
@@ -254,4 +254,15 @@ class WarehouseController extends Controller
 
         }
     }
+
+    public function profile($id){
+        $user = \App\User::find($id);
+        return view('admin.warehouse.edit',compact('user'));  
+    }
+
+    public function showingwarehouse($id){
+        $user = \App\User::find($id);
+        return view('admin.warehouse.show',compact('user'));  
+    }
+
 }
