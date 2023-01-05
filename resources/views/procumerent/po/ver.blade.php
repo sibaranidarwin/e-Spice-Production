@@ -6,27 +6,24 @@
 <script src="https://cdn.datatables.net/buttons/1.5.6/js/dataTables.buttons.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.flash.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.html5.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.print.min.js"></script>
 <script src="https://cdn.datatables.net/datetime/1.1.2/js/dataTables.dateTime.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/2.3.2/js/buttons.colVis.min.js"></script>
 
-@extends('accounting.layouts.sidebar')
+@extends('procumerent.layouts.sidebar')
 @section('content')
-<link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css">
-<link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.3.2/css/buttons.dataTables.min.css">
 <link rel="stylesheet" href="{{asset('admin/assets/css/datatable.css')}}">
+<link rel="stylesheet" href="https://cdn.datatables.net/datetime/1.1.2/css/dataTables.dateTime.min.css">
 
 <link rel="stylesheet" href="{{asset('assets/css/argon-dashboard.css')}}">
 
 <style>
 .table td,
 .table th,
-label {
-    font-size: 11px;
-}
-div.dt-button-collection {
-  background-color: #0275d8;
+label{
+    font-size: 11.7px;
 }
 </style>
 <div class="breadcrumbs">
@@ -82,87 +79,85 @@ div.dt-button-collection {
                     </div>
                     @endif
                     <div class="card-header">
-                        <strong class="card-title"><i class="fa fa-list"></i> Rejected List</strong>
+                        <strong class="card-title"><i class="fa fa-list"></i> Verified List</strong>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive text-nowrap">
-                            @if ($start_date != null || $end_date != null)
-                            <p style="text-align: center; background-color: #11CDEF; color: white;"><strong class="card-title"></i>GR Date:{{ Carbon\Carbon::parse($start_date)->format('d F Y') }} To: {{ Carbon\Carbon::parse($end_date)->format('d F Y') }}</i></strong></p>
-                            @endif
-                            <form action="{{ route('warehouse-filterreject') }}" class="form-inline" method="GET">
-                                <div class="form-group col-md-2">
+                            <form action="{{ route('vendor-filter') }}" class="form-inline" method="GET">
+                                <div class="form-group col-md-1">
     
                                 </div>
                                 <div class="form-group ">
                                   <label for="" >GR Date: &nbsp;</label>
                                   <input type="date" class="form-control" name="start_date">
                                 </div>
-                                <div class="form-group mx-sm-4">
+                                <div class="form-group mx-sm-2">
                                   <label for="inputPassword2">To: &nbsp;</label>
                                   <input type="date" class="form-control" name="end_date">
                                 </div>
+                                <div class="form-group col-md-2-half">
+                                    <select class="form-control" name="">
+                                        <option>-- Choose Vendor Name -- </option>
+                                            @foreach ($vendor_name as $vendor_name)
+                                                <option value="{{ $vendor_name['vendor_name'] }}">{{ $vendor_name['vendor_name'] }}</option>
+                                            @endforeach
+                                    </select>
+                                </div> &nbsp;&nbsp;
+                                <div class="form-group col-md-2-half">
+                                    <select class="form-control status_invoice" name="">
+                                        <option value="">-- Choose Sts. Inv. Props. -- </option>
+                                        <option value="Verified">Verified</option>
+                                        <option value="Not Yet Verified - Draft BA">Not Yet Verified - Draft BA</option>
+                                    </select>
+                                </div>&nbsp;&nbsp;
                                 <button class="btn btn-primary" onclick="return confirm('Are you sure?')" type="submit"><i class="fa fa-search"></i></button>
                             </form>
                             <form action="{{ route('update-datagr/{id}') }}" method="POST">
                                 @csrf
-                                <table id="list" class="table table-striped" style="font-size: 10px;">
+                                <table id="list" class="table table-striped" style="width:100%; font-size: 10px;">
                                     <thead>
                                         <tr>
                                             <th style="text-align: center;">No</th>
                                             <th style="text-align: center;">Sts. GR</th>
                                             <th style="text-align: center;">Sts. Inv. Props.</th>
-                                            <th style="text-align: center;">Vendor</th>
+                                            <th style="text-align: center;">Plant Code</th>
                                             <th style="text-align: center;">PO</th>
                                             <th style="text-align: center;">GR Number</th>
                                             <th style="text-align: center;">GR Date</th>
                                             <th style="text-align: center;">Part Number</th>
                                             <th style="text-align: center;">Mat. Desc.</th>
-                                            <th style="text-align: center;">QTY UOM</th>
-                                            <th style="text-align: center;">Reference</th>
+                                            <th style="text-align: center;">Qty UOM</th>
+                                            <th style="text-align: center;">Curr</th>
+                                            <th style="text-align: center;">Unit Price</th>
+                                            <th style="text-align: center;">Ref.</th>
                                             <th style="text-align: center;">Del. Note</th>
                                             <th style="text-align: center;">Tax Code</th>
-                                            <th style="text-align: center;">Reason</th>  
                                         </tr>
-                                        </thead>
-                                        <tbody style="font-size: 11px;">
-                                            @foreach($good_receipts as $good_receipt)
-                                            <tr>
-                                                <td>{{++$i}}</td>
-                                                <td >{{ $good_receipt->status }}</td>
-                                                <td >{{ $good_receipt->status_invoice }}</td>
-                                                <td >{{ $good_receipt->id_vendor }} /{{ $good_receipt->vendor_name}}</td>
-                                                <td ><span>{{$good_receipt->no_po}} /{{$good_receipt->po_item}}</span></td>
-                                                <td ><span>{{$good_receipt->gr_number}}</span></td>
-                                                <td><span>{{ Carbon\Carbon::parse($good_receipt->gr_date)->format('d F Y') }}</span></td>
-                                                <td> <span>{{$good_receipt->material_number}}/<br> {{$good_receipt->vendor_part_number}}</span></td>
-                                                <td> <span>{{$good_receipt->mat_desc}}</span> <br>({{$good_receipt->valuation_type}})</td>
-                                                <td> <span>{{$good_receipt->jumlah}}</span>&nbsp;<span>{{$good_receipt->uom}}</span> </td>
-                                                <td> <span>{{$good_receipt->ref_doc_no}}</span> </td>
-                                                <td> <span>{{$good_receipt->delivery_note}}</span> </td>
-                                                <td> <span>{{$good_receipt->tax_code}}</span> </td>
-                                                <td><span>{{$good_receipt->alasan_reject}}</span></td>
-                                            </tr>
+                                    </thead>
+                                    <tbody style="font-size: 11px;">
+                                        @foreach($good_receipts as $good_receipt)
+                                        <tr>
+                                            
+                                            <td>{{++$i}}</td>
+                                            <td >{{ $good_receipt->status }}</td>
+                                            <td >{{ $good_receipt->status_invoice }}</td>
+                                            <td >{{ $good_receipt->plant_code }}</td>
+                                            <td ><span>{{$good_receipt->no_po}} /{{$good_receipt->po_item}}</span></td>
+                                            <td ><span>{{$good_receipt->gr_number}}</span></td>
+                                            <td><span>{{ Carbon\Carbon::parse($good_receipt->gr_date)->format('d F Y') }}</span></td>
+                                            <td> <span>{{$good_receipt->material_number}}/<br> {{$good_receipt->vendor_part_number}}</span></td>
+                                            <td> <span>{{$good_receipt->mat_desc}}</span> <br>({{$good_receipt->valuation_type}})</td>
+                                            <td> <span>{{$good_receipt->jumlah}}</span>&nbsp;<span>{{$good_receipt->uom}}</span> </td>
+                                            <td> <span>{{$good_receipt->currency}}</span> </td>
+                                            <td style="text-align: right"> <span>{{number_format($good_receipt->harga_satuan)}}</span> </td>
+                                            <td> <span>{{$good_receipt->ref_doc_no}}</span> </td>
+                                            <td> <span>{{$good_receipt->delivery_note}}</span> </td>
+                                            <td> <span>{{$good_receipt->tax_code}}</span> </td>
+                                        </tr>
                                         @endforeach
                                         </select>
                                     </tbody>
                                 </table>
-                                <div class="row mt-2">
-                                    <div class="col-6">
-                                    </div>
-                                    <div class="col-lg-6 col-md-6">
-                                        <div class="card bg-light card-outline-danger text-cen">
-                                            <span class="pull-right clickable close-icon text-right" data-effect="fadeOut"><i class="fa fa-times"></i></span>
-                                            <div class="card-block text-white">
-                                              <blockquote class="card-blockquote text-white">
-                                                <p style="font-size: 14px;"><strong>&nbsp; Good receipt status description: </strong></p>
-                                                <p style="font-size: 13px;"><strong>&nbsp; Rejected: good receipt data that is no longer used because it has certain problems</strong></p>
-                                            </blockquote>
-                                            </div>
-                                          </div>
-                                        </div>
-                                    </div>
-                                {{-- &nbsp;&nbsp;<button type="submit" value="Update" name="action" --}}
-                                {{-- class="btn btn-success">Update Data</button> --}}
                             </form>
                         </div> <!-- /.table-stats -->
                     </div>
@@ -226,44 +221,14 @@ $(document).ready(function() {
 
     // DataTables initialisation
     var table = $('#list').DataTable({
-        lengthMenu: [[10, 25, 50, -1],[10, 25, 50, 'All'],],
-        dom: "<'row'<'col-md-2 bg-white'l><'col-md-5 bg-white'B><'col-md-5 bg-white'f>>" +
-                "<'row'<'col-md-12'tr>>" +
-                "<'row'<'col-md-6'i><'col-md-6'p>>",
-        columnDefs: [
-            {
-                targets: 1,
-                className: 'noVis'
-            }
-        ],
-        buttons: [
-            {
-                extend: 'colvis',
-                columns: ':not(.noVis)'
-            }
-        ],
         rowReorder: true,
-        columnDefs: [{
-                orderable: true,
-                className: 'reorder',
-                targets: 0
-            },
-            {
-                orderable: true,
-                className: 'reorder',
-                targets: 4
-            },
-            {
-                orderable: true,
-                className: 'reorder',
-                targets: 5
-            },
-            {
-                orderable: false,
-                targets: '_all'
-            }
-        ],
+             columnDefs: [
+            { orderable: true, className: 'reorder', targets: 0 },
+            { orderable: true, className: 'reorder', targets: 5 },
             
+            { orderable: false, targets: '_all' }
+                    ],
+            lengthMenu: [[10, 25, 50, -1],[10, 25, 50, 'All'],],
     });
 
     // Refilter the table

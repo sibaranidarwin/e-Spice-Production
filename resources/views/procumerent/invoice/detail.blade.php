@@ -157,7 +157,7 @@
                             class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                     </div>
                 </div>
-                    &nbsp;<a href="{{url('accounting/invoice')}}" type="submit" class="btn btn-danger mb-2" id="simpan">Return</a>
+                    &nbsp;<a href="{{url('procumerent/invoice')}}" type="submit" class="btn btn-danger mb-2" id="simpan">Return</a>
                     </form>
                     <table id="list" class="table table-stats order-table ov-h">
                         <thead>

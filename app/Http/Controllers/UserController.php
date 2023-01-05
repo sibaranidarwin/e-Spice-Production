@@ -113,7 +113,7 @@ class UserController extends Controller
                 'email'     => $request->email,
                 "foto"        => $namaBaru,
                 ]);  
-        return  redirect()->back()->with('warning','Data Telah di ubah.');
+        return  redirect()->back()->with('warning','Data Has been changed!');
     }
 
     /**
@@ -127,7 +127,7 @@ class UserController extends Controller
     {
         $user->delete();
         return back()
-                ->with('destroy','1 User Telah Di Hapus.');
+                ->with('destroy','1 User Has Been Deleted!.');
     }
 
     public function showing($id){
