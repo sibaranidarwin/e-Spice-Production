@@ -81,7 +81,10 @@
                     </div>
                     <div class="card-body">
                     <div class="table-responsive text-nowrap">
-                        <form action="{{ route('vendor-filter') }}" class="form-inline" method="GET">
+                        @if ($start_date != null || $end_date != null || $status != null)
+                        <p style="text-align: center; background-color: #11CDEF; color: white;"><strong class="card-title">GR Date:{{ Carbon\Carbon::parse($start_date)->format('d F Y') }} To: {{ Carbon\Carbon::parse($end_date)->format('d F Y') }} Status Invoice Proposal: {{ ($status) }}</strong></p>
+                        @endif
+                        <form action="{{ route('admin-filternot') }}" class="form-inline" method="GET">
                             <div class="form-group col-md-1">
 
                             </div>
@@ -165,6 +168,23 @@
                             </table>
                            {{-- &nbsp;&nbsp;<button type="submit" value="Update" name="action"
                                 class="btn btn-success">Update Data</button> --}}
+                                <div class="row mt-2 col-lg-12 col-md-6" >
+                                    <div class="col-6">
+                                    </div>
+                                    <div class="col-lg-6 col-md-6">
+                                        <div class="card responsive bg-light card-outline-danger text-cen">
+                                            <span class="pull-right clickable close-icon text-right" data-effect="fadeOut"><i class="fa fa-times"></i></span>
+                                            <div class="card-block text-white">
+                                              <blockquote class="card-blockquote text-white">
+                                                <p style="font-size: 14px;"><strong>&nbsp; Good receipt Not verified description: </strong></p>
+                                                <p style="font-size: 13px;"><strong>&nbsp;  Not verified: good receipt data that has certain conditions and requires verification <br>&nbsp;  by the vendor.
+                                                Certain conditions in the GR data that enter the not verified status are <br>&nbsp;  combinations where the data posting date, material number, quantity, vendor id and <br>&nbsp; 
+                                                    reference are the same data.</strong></p>
+                                            </blockquote>
+                                            </div>
+                                          </div>
+                                        </div>
+                                    </div>
                         </form>
                     </div> <!-- /.table-stats -->
                 </div>

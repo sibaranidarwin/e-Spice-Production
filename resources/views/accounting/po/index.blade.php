@@ -84,21 +84,36 @@
                     </div>
                     <div class="card-body">
                     <div class="table-responsive text-nowrap">
-                        @if ($start_date != null || $end_date != null)
-                        <p style="text-align: center; background-color: #11CDEF; color: white;"><strong class="card-title"></i>GR Date:{{ Carbon\Carbon::parse($start_date)->format('d F Y') }} To: {{ Carbon\Carbon::parse($end_date)->format('d F Y') }}</i></strong></p>
+                        @if ($start_date != null || $end_date != null || $status != null)
+                        <p style="text-align: center; background-color: #11CDEF; color: white;"><strong class="card-title">GR Date:{{ Carbon\Carbon::parse($start_date)->format('d F Y') }} To: {{ Carbon\Carbon::parse($end_date)->format('d F Y') }} Status Invoice Proposal: {{ ($status) }}</strong></p>
                         @endif
-                        <form action="{{ route('warehouse-filternot') }}" class="form-inline" method="GET">
-                            <div class="form-group col-md-2">
+                        <form action="{{ route('accounting-filternot') }}" class="form-inline" method="GET">
+                            <div class="form-group col-md-1">
 
                             </div>
                             <div class="form-group ">
                               <label for="" >GR Date: &nbsp;</label>
                               <input type="date" class="form-control" name="start_date">
                             </div>
-                            <div class="form-group mx-sm-4">
+                            <div class="form-group mx-sm-2">
                               <label for="inputPassword2">To: &nbsp;</label>
                               <input type="date" class="form-control" name="end_date">
                             </div>
+                            <div class="form-group col-md-2-half">
+                                <select class="form-control" name="">
+                                    <option>-- Choose Vendor Name -- </option>
+                                        @foreach ($vendor_name as $vendor_name)
+                                            <option value="{{ $vendor_name['vendor_name'] }}">{{ $vendor_name['vendor_name'] }}</option>
+                                        @endforeach
+                                </select>
+                            </div> &nbsp;&nbsp;
+                            <div class="form-group col-md-2-half">
+                                <select class="form-control status_invoice" name="">
+                                    <option value="">-- Choose Sts. Inv. Props. -- </option>
+                                    <option value="Verified">Verified</option>
+                                    <option value="Not Yet Verified - Draft BA">Not Yet Verified - Draft BA</option>
+                                </select>
+                            </div> &nbsp;&nbsp;
                             <button class="btn btn-primary" onclick="return confirm('Are you sure?')" type="submit"><i class="fa fa-search"></i></button>
                         </form>
                         <form action="" method="POST">
@@ -142,6 +157,23 @@
                                     </select>
                                 </tbody>
                             </table>
+                            <div class="row mt-2 col-lg-12 col-md-6" >
+                                <div class="col-6">
+                                </div>
+                                <div class="col-lg-6 col-md-6">
+                                    <div class="card responsive bg-light card-outline-danger text-cen">
+                                        <span class="pull-right clickable close-icon text-right" data-effect="fadeOut"><i class="fa fa-times"></i></span>
+                                        <div class="card-block text-white">
+                                          <blockquote class="card-blockquote text-white">
+                                            <p style="font-size: 14px;"><strong>&nbsp; Good receipt Not verified description: </strong></p>
+                                            <p style="font-size: 13px;"><strong>&nbsp;  Not verified: good receipt data that has certain conditions and requires verification <br>&nbsp;  by the vendor.
+                                            Certain conditions in the GR data that enter the not verified status are <br>&nbsp;  combinations where the data posting date, material number, quantity, vendor id and <br>&nbsp; 
+                                                reference are the same data.</strong></p>
+                                        </blockquote>
+                                        </div>
+                                      </div>
+                                    </div>
+                                </div>
                           </form>
                     </div> <!-- /.table-stats -->
                 </div>

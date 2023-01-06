@@ -83,12 +83,15 @@ label {
                     </div>
                     <div class="card-body">
                         <div class="table-responsive text-nowrap">
-                            <form action="{{ route('vendor-filter') }}" class="form-inline" method="GET">
+                            @if ($start_date != null || $end_date != null)
+                            <p style="text-align: center; background-color: #11CDEF; color: white;"><strong class="card-title"></i>Invoice Date:{{ Carbon\Carbon::parse($start_date)->format('d F Y') }} To: {{ Carbon\Carbon::parse($end_date)->format('d F Y') }}</i></strong></p>
+                            @endif
+                            <form action="{{ route('admin-filterinv') }}" class="form-inline" method="GET">
                                 <div class="form-group col-md-3">
     
                                 </div>
                                 <div class="form-group ">
-                                  <label for="" >GR Date: &nbsp;</label>
+                                  <label for="" >Invoice Date: &nbsp;</label>
                                   <input type="date" class="form-control" name="start_date">
                                 </div>
                                 <div class="form-group mx-sm-4">
@@ -131,8 +134,8 @@ label {
                                             <td>
                                                 <a href="/admin/detail-invoice/{{$item->id_inv}}"
                                                     class="btn btn-info btn-sm">Det.</a>
-                                                <a href="/admin/cetak_pdf/{{$item->id_inv}}"
-                                                    class="btn btn-secondary btn-sm">Print</a>
+                                                {{-- <a href="/admin/cetak_pdf/{{$item->id_inv}}"
+                                                    class="btn btn-secondary btn-sm">Print</a> --}}
                                             </td>
                                         </tr>
                                         @endforeach
@@ -221,6 +224,7 @@ label {
             rowReorder: true,
              columnDefs: [
             { orderable: true, className: 'reorder', targets: 0 },
+            
             { orderable: false, targets: '_all' }
                     ],
             lengthMenu: [[10, 25, 50, -1],[10, 25, 50, 'All'],],

@@ -25,11 +25,14 @@ class FilterWarehouseController extends Controller
     //
     
     function filter(){
-        if (request()->start_date || request()->end_date || request()->status){
+        if (request()->start_date || request()->end_date || request()->status || request()->vendor){
             $start_date = Carbon::parse(request()->start_date)->toDateTimeString();
             $end_date = Carbon::parse(request()->end_date)->toDateTimeString();
             $status = request()->status;
-            $good_receipts = good_receipt::whereBetween('gr_date',[$start_date,$end_date])->where('status_invoice', $status)->where('status', 'Verified')->orderBy('gr_date', 'ASC')->get();
+            $vendor = request()->vendor;
+            $vendor_name = good_receipt::select('vendor_name')->distinct()->get();
+
+            $good_receipts = good_receipt::whereBetween('gr_date',[$start_date,$end_date])->where('vendor_name', $vendor)->where('status_invoice', $status)->where('status', 'Verified')->orderBy('gr_date', 'ASC')->get();
             
             $dispute = good_receipt::all()->where("status", "Disputed")->count();
             // dd($good_receipts);
@@ -38,71 +41,111 @@ class FilterWarehouseController extends Controller
             $start_date = request()->start_date;
             $end_date = request()->end_date;
             $status = request()->status;
+            $vendor = request()->vendor;
+            $vendor_name = good_receipt::select('vendor_name')->distinct()->get();
+
             $dispute = good_receipt::all()->where("status", "Disputed")->count();
     
         }
-        return view('warehouse.po.all',compact('good_receipts', 'dispute', 'start_date', 'end_date', 'status'))
+        return view('warehouse.po.all',compact('good_receipts', 'dispute', 'start_date', 'end_date', 'status', 'vendor','vendor_name'))
         ->with('i',(request()->input('page', 1) -1) *5);
     }
     function filternot(){
-        if (request()->start_date || request()->end_date) {
+        if (request()->start_date || request()->end_date || request()->status || request()->vendor) {
             $start_date = Carbon::parse(request()->start_date)->toDateTimeString();
             $end_date = Carbon::parse(request()->end_date)->toDateTimeString();
-            $good_receipts = good_receipt::whereBetween('gr_date',[$start_date,$end_date])->where('material_number','LG2KOM00707010F691')->where("status","Not Verified")->get();
+            $status = request()->status;
+            $vendor = request()->vendor;
+            $good_receipts = good_receipt::whereBetween('gr_date',[$start_date,$end_date])->where('vendor_name', $vendor)->where('status_invoice', $status)->where('material_number','LG2KOM00707010F691')->where("status","Not Verified")->get();
+            $vendor_name = good_receipt::select('vendor_name')->distinct()->get();
             $dispute = good_receipt::all()->where("status", "Disputed")->count();
     
         } else {
-            $good_receipts = good_receipt::where('material_number','LG2KOM00707010F691')->where("status","Not Verified")->get();
+            $good_receipts = good_receipt::where('material_number','LG2KOM00707010F691')->where("status","Not Verified")->orderBy('gr_date', 'ASC')->get();
             $start_date = request()->start_date;
             $end_date = request()->end_date;
+            $status = request()->status;
+            $vendor = request()->vendor;
+            $vendor_name = good_receipt::select('vendor_name')->distinct()->get();
             $dispute = good_receipt::all()->where("status", "Disputed")->count();
     
         }
-        return view('warehouse.po.index',compact('good_receipts', 'dispute', 'start_date', 'end_date'))
+        return view('warehouse.po.index',compact('good_receipts', 'dispute', 'start_date', 'end_date', 'status', 'vendor', 'vendor_name'))
                 ->with('i',(request()->input('page', 1) -1) *5);
     }
     function filterver(){
-        if (request()->start_date || request()->end_date) {
+        if (request()->start_date || request()->end_date || request()->status || request()->vendor) {
             $start_date = Carbon::parse(request()->start_date)->toDateTimeString();
             $end_date = Carbon::parse(request()->end_date)->toDateTimeString();
-            $good_receipts = good_receipt::whereBetween('gr_date',[$start_date,$end_date])->where("status","Verified")->get();
+            $status = request()->status;
+            $vendor = request()->vendor;
+            $good_receipts = good_receipt::whereBetween('gr_date',[$start_date,$end_date])->where('vendor_name', $vendor)->where('status_invoice', $status)->where('status', 'Verified')->orderBy('gr_date', 'ASC')->get();
+            $vendor_name = good_receipt::select('vendor_name')->distinct()->get();
             $dispute = good_receipt::all()->where("status", "Disputed")->count();
     
         } else {
             $good_receipts = good_receipt::where("status","Verified")->get();
             $start_date = request()->start_date;
             $end_date = request()->end_date;
+            $status = request()->status;
+            $vendor = request()->vendor;
+            $vendor_name = good_receipt::select('vendor_name')->distinct()->get();
             $dispute = good_receipt::all()->where("status", "Disputed")->count();
     
         }
-        return view('warehouse.po.verified',compact('good_receipts', 'dispute', 'start_date', 'end_date'))
+        return view('warehouse.po.verified',compact('good_receipts', 'dispute', 'start_date', 'end_date', 'status', 'vendor', 'vendor_name'))
         ->with('i',(request()->input('page', 1) -1) *5);
     }
     function filterreject(){
-        if (request()->start_date || request()->end_date) {
+        if (request()->start_date || request()->end_date || request()->status || request()->vendor) {
             $start_date = Carbon::parse(request()->start_date)->toDateTimeString();
             $end_date = Carbon::parse(request()->end_date)->toDateTimeString();
-            $good_receipts = good_receipt::whereBetween('gr_date',[$start_date,$end_date])->where("status","Rejected")->get();
+            $status = request()->status;
+            $vendor = request()->vendor;
+            $good_receipts = good_receipt::whereBetween('gr_date',[$start_date,$end_date])->where('vendor_name', $vendor)->where('status','Rejected')->orderBy('gr_date', 'ASC')->get();
+            $vendor_name = good_receipt::select('vendor_name')->distinct()->get();
             $dispute = good_receipt::all()->where("status", "Disputed")->count();
         } else {
             $good_receipts = good_receipt::where("status","Rejected")->get();
             $start_date = request()->start_date;
             $end_date = request()->end_date;
+            $status = request()->status;
+            $vendor = request()->vendor;
+            $vendor_name = good_receipt::select('vendor_name')->distinct()->get();
             $dispute = good_receipt::all()->where("status", "Disputed")->count();
         }
-        return view('warehouse.po.reject',compact('good_receipts', 'dispute', 'start_date', 'end_date'))
+        return view('warehouse.po.reject',compact('good_receipts', 'dispute', 'start_date', 'end_date', 'status', 'vendor', 'vendor_name'))
         ->with('i',(request()->input('page', 1) -1) *5);
     }
+
+    function filterdisp(){
+        if (request()->start_date || request()->end_date || request()->status || request()->vendor) {
+            $start_date = Carbon::parse(request()->start_date)->toDateTimeString();
+            $end_date = Carbon::parse(request()->end_date)->toDateTimeString();
+            $vendor_name = good_receipt::select('vendor_name')->distinct()->get();
+            $status = request()->status;
+            $vendor = request()->vendor;
+            $good_receipts = good_receipt::whereBetween('gr_date',[$start_date,$end_date])->where("status", "Disputed")->get();
+        
+        } else {
+            $start_date = request()->start_date;
+            $end_date = request()->end_date;
+            $status = request()->status;
+            $vendor = request()->vendor;
+            $vendor_name = good_receipt::select('vendor_name')->distinct()->get();
+            $good_receipts = good_receipt::where("status", "Disputed")->get();
+        }
+        return view('warehouse.dispute.index',compact('good_receipts', 'start_date', 'end_date', 'status', 'vendor', 'vendor_name'))->with('i',(request()->input('page', 1) -1) *5);
+    }
+    
     function filterinv(){
         if (request()->start_date || request()->end_date) {
             $start_date = Carbon::parse(request()->start_date)->toDateTimeString();
             $end_date = Carbon::parse(request()->end_date)->toDateTimeString();
-            $user_vendor = Auth::User()->id_vendor;
             $dispute = good_receipt::all()->where("status", "Disputed")->count();
 
             $invoice = Invoice::whereBetween('posting_date',[$start_date,$end_date])->Where("data_from", "GR")->get();
         } else {
-            $user_vendor = Auth::User()->id_vendor;
             $dispute = good_receipt::all()->where("status", "Disputed")->count();
             $start_date = request()->start_date;
             $end_date = request()->end_date;
@@ -117,11 +160,9 @@ class FilterWarehouseController extends Controller
         if (request()->start_date || request()->end_date) {
             $start_date = Carbon::parse(request()->start_date)->toDateTimeString();
             $end_date = Carbon::parse(request()->end_date)->toDateTimeString();
-            $user_vendor = Auth::User()->id_vendor;
             $dispute = good_receipt::all()->where("status", "Disputed")->count();
             $invoice = Invoice::whereBetween('posting_date',[$start_date,$end_date])->Where("data_from", "BA")->get();
         } else {
-            $user_vendor = Auth::User()->id_vendor;
             $start_date = request()->start_date;
             $end_date = request()->end_date;
             $dispute = good_receipt::all()->where("status", "Disputed")->count();

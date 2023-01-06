@@ -173,9 +173,9 @@ label {
                                     <th>Part Number</th>
                                     <th>Mat. Desc.</th>
                                     <th>Qty UOM</th>
-                                    <th>Price</th>
                                     <th>Curr</th>
-
+                                    <th>Price</th>
+                                    
                                 </tr>
                             </thead>
                             <tbody>
