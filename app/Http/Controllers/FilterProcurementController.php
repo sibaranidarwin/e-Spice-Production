@@ -4,12 +4,13 @@ namespace App\Http\Controllers;
 use App\good_receipt;
 use App\Invoice;
 
-use Illuminate\Http\Request;
+
 use Carbon\Carbon;
 
-class FilterAdminController extends Controller
+
+class FilterProcurementController extends Controller
 {
-    function filter(){
+     function filter(){
         if (request()->start_date || request()->end_date){
             $start_date = Carbon::parse(request()->start_date)->toDateTimeString();
             $end_date = Carbon::parse(request()->end_date)->toDateTimeString();
@@ -29,7 +30,7 @@ class FilterAdminController extends Controller
             $dispute = good_receipt::all()->where("status", "Disputed")->count();
     
         }
-        return view('admin.po.all',compact('good_receipts', 'dispute', 'start_date', 'end_date', 'status', 'vendor_name'))
+        return view('procumerent.po.all',compact('good_receipts', 'dispute', 'start_date', 'end_date', 'status', 'vendor_name'))
         ->with('i',(request()->input('page', 1) -1) *5);
     }
 
@@ -40,12 +41,12 @@ class FilterAdminController extends Controller
             $status = request()->status;
             $vendor_name = good_receipt::select('vendor_name')->distinct()->get();
 
-            $good_receipts = good_receipt::whereBetween('gr_date',[$start_date,$end_date])->where('material_number','LG2KOM00707010F691')->where("status","Not Verified")->orderBy('gr_date', 'ASC')->get();
+            $good_receipts = good_receipt::whereBetween('gr_date',[$start_date,$end_date])->where('material_number','LG2KOM00707010F691')->orderBy('gr_date', 'ASC')->get();
             // dd($good_receipts);
             $dispute = good_receipt::all()->where("status", "Disputed")->count();
     
         } else {
-            $good_receipts = good_receipt::where('material_number','LG2KOM00707010F691')->where("status","Not Verified")->get();
+            $good_receipts = good_receipt::where('material_number','LG2KOM00707010F691')->get();
             $start_date = request()->start_date;
             $end_date = request()->end_date;
             $status = request()->status;
@@ -54,7 +55,7 @@ class FilterAdminController extends Controller
             $dispute = good_receipt::all()->where("status", "Disputed")->count();
     
         }
-        return view('admin.po.notver',compact('good_receipts', 'dispute', 'start_date', 'end_date', 'status', 'vendor_name'))
+        return view('procumerent.po.index',compact('good_receipts', 'dispute', 'start_date', 'end_date', 'status', 'vendor_name'))
                 ->with('i',(request()->input('page', 1) -1) *5);
     }
     function filterver(){
@@ -75,7 +76,7 @@ class FilterAdminController extends Controller
             $dispute = good_receipt::all()->where("status", "Disputed")->count();
     
         }
-        return view('admin.po.verified',compact('good_receipts', 'dispute', 'start_date', 'end_date', 'status', 'vendor_name'))
+        return view('procumerent.po.verified',compact('good_receipts', 'dispute', 'start_date', 'end_date', 'status', 'vendor_name'))
         ->with('i',(request()->input('page', 1) -1) *5);
     }
 
@@ -97,7 +98,7 @@ class FilterAdminController extends Controller
 
             $dispute = good_receipt::all()->where("status", "Disputed")->count();
         }
-        return view('admin.po.reject',compact('good_receipts', 'dispute', 'start_date', 'end_date', 'status', 'vendor_name'))
+        return view('procumerent.po.reject',compact('good_receipts', 'dispute', 'start_date', 'end_date', 'status', 'vendor_name'))
         ->with('i',(request()->input('page', 1) -1) *5);
     }
     function filterdisp(){
@@ -116,7 +117,7 @@ class FilterAdminController extends Controller
             $vendor_name = good_receipt::select('vendor_name')->distinct()->get();
             $good_receipts = good_receipt::where("status", "Disputed")->Where("id_vendor", $user_vendor)->get();
         }
-        return view('admin.po.disputed',compact('good_receipts', 'start_date', 'end_date', 'status', 'vendor_name'))->with('i',(request()->input('page', 1) -1) *5);
+        return view('procumerent.po.disputed',compact('good_receipts', 'start_date', 'end_date', 'status', 'vendor_name'))->with('i',(request()->input('page', 1) -1) *5);
     }
 
     function filterinv(){
@@ -136,7 +137,7 @@ class FilterAdminController extends Controller
             $invoice = Invoice::latest()->Where("data_from", "GR")->get();
         }
         
-        return view('admin.invoice.index', compact('invoice', 'dispute', 'start_date', 'end_date', 'status'))->with('i',(request()->input('page', 1) -1) *5);
+        return view('procumerent.invoice.index', compact('invoice', 'dispute', 'start_date', 'end_date', 'status'))->with('i',(request()->input('page', 1) -1) *5);
     }
 
     
@@ -157,6 +158,6 @@ class FilterAdminController extends Controller
             $invoice = Invoice::latest()->Where("data_from", "BA")->get();
         }
         
-        return view('admin.invoice.indexba', compact('invoice', 'dispute', 'start_date', 'end_date', 'status'))->with('i',(request()->input('page', 1) -1) *5);
+        return view('procumerent.invoice.indexba', compact('invoice', 'dispute', 'start_date', 'end_date', 'status'))->with('i',(request()->input('page', 1) -1) *5);
     }
 }

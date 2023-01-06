@@ -194,6 +194,14 @@ Route::get('vendor/user/{id}/profile', 'VendorController@show')->name('vendor-us
 Route::put('vendor/{id}/profile','VendorController@heyupdate')->name('update-vendor');
 Route::post('vendor/{id}/password','VendorController@editpass')->name('update-pass-vendor');
 
+Route::get('admin/filter', 'FilterAdminController@filter')->name('admin-filter');
+Route::get('admin/filternot', 'FilterAdminController@filternot')->name('admin-filternot');
+Route::get('admin/filterver', 'FilterAdminController@filterver')->name('admin-filterver');
+Route::get('admin/filterreject', 'FilterAdminController@filterreject')->name('admin-filterreject');
+Route::get('admin/filterdisp', 'FilterAdminController@filterdisp')->name('admin-filterdisp');
+Route::get('admin/filterinv', 'FilterAdminController@filterinv')->name('admin-filterinv');
+Route::get('admin/filterinvba', 'FilterAdminController@filterinvba')->name('admin-filterinvba');
+
 Route::get('vendor/filter', 'FilterController@filter')->name('vendor-filter');
 Route::get('vendor/filterreject', 'FilterController@filterreject')->name('vendor-filterreject');
 Route::get('vendor/filterdisp', 'FilterController@filterdisp')->name('vendor-filterdisp');
@@ -211,4 +219,18 @@ Route::get('warehouse/filterreject', 'FilterWarehouseController@filterreject')->
 Route::get('warehouse/filterinv', 'FilterWarehouseController@filterinv')->name('warehouse-filterinv');
 Route::get('warehouse/filterinvba', 'FilterWarehouseController@filterinvba')->name('warehouse-filterinvba');
 
-Route::get('admin/filter', 'FilterAdminController@filter')->name('admin-filter');
+Route::get('accounting/filter', 'FilterAccountingController@filter')->name('accounting-filter');
+Route::get('accounting/filternot', 'FilterAccountingController@filternot')->name('accounting-filternot');
+Route::get('accounting/filterver', 'FilterAccountingController@filterver')->name('accounting-filterver');
+Route::get('accounting/filterreject', 'FilterAccountingController@filterreject')->name('accounting-filterreject');
+Route::get('accounting/filterdisp', 'FilterAccountingController@filterdisp')->name('accounting-filterdisp');
+Route::get('accounting/filterinv', 'FilterAccountingController@filterinv')->name('accounting-filterinv');
+Route::get('accounting/filterinvba', 'FilterAccountingController@filterinvba')->name('accounting-filterinvba');
+
+Route::get('procumerent/filter', 'FilterProcurementController@filter')->name('procumerent-filter');
+Route::get('procumerent/filternot', 'FilterProcurementController@filternot')->name('procumerent-filternot');
+Route::get('procumerent/filterver', 'FilterProcurementController@filterver')->name('procumerent-filterver');
+Route::get('procumerent/filterreject', 'FilterProcurementController@filterreject')->name('procumerent-filterreject');
+Route::get('procumerent/filterdisp', 'FilterProcurementController@filterdisp')->name('procumerent-filterdisp');
+Route::get('procumerent/filterinv', 'FilterProcurementController@filterinv')->name('procumerent-filterinv');
+Route::get('procumerent/filterinvba', 'FilterProcurementController@filterinvba')->name('procumerent-filterinvba');

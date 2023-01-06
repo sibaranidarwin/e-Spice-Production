@@ -81,19 +81,28 @@
                     </div>
                     <div class="card-body">
                     <div class="table-responsive text-nowrap">
-                        <div class="row">
-                            <div class="col-3 bg-white mb-3">
-                                <label for="">GR Date: </label>
-                                <input type="text" id="min" name="min"> 
-                            </div> 
-                            <div class="col-2 bg-white mb-4">
-                                <label for="">To: </label>
-                                <input type="text" id="max" name="max">
+                        <form action="{{ route('accounting-filter') }}" class="form-inline" method="GET">
+                            <div class="form-group col-md-2">
+
                             </div>
-                            <div class="col-4">
-                                <label for=""> </label>
+                            <div class="form-group ">
+                              <label for="" >GR Date: &nbsp;</label>
+                              <input type="date" class="form-control" name="start_date">
                             </div>
-                        </div>
+                            <div class="form-group mx-sm-4">
+                              <label for="inputPassword2">To: &nbsp;</label>
+                              <input type="date" class="form-control" name="end_date">
+                            </div>
+                            <div class="form-group col-md-3">
+                                {{-- <label> Sts. Inv. Props.: &nbsp; </label> --}}
+                                <select class="form-control status_invoice" name="status">
+                                    <option value="">-- Choose Sts. Inv. Props. -- </option>
+                                    <option value="Verified - BA">Verified - BA</option>
+                                    <option value="Not Yet Verified - Draft BA">Not Yet Verified - Draft BA</option>
+                                </select>
+                            </div>
+                            <button class="btn btn-primary" onclick="return confirm('Are you sure?')" type="submit"><i class="fa fa-search"></i></button>
+                        </form>
                         <form action="{{ route('update-datagr-vendor/{id_gr}') }}" method="POST">
                             @csrf
                             <table id="list" class="table table-striped" style="font-size: 10px;">
