@@ -1,14 +1,16 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
 use App\good_receipt;
 use App\Invoice;
 
-use Illuminate\Http\Request;
 use Carbon\Carbon;
 
-class FilterAdminController extends Controller
+class FilterAccountingController extends Controller
 {
+    //
     function filter(){
         if (request()->start_date || request()->end_date){
             $start_date = Carbon::parse(request()->start_date)->toDateTimeString();
@@ -29,7 +31,7 @@ class FilterAdminController extends Controller
             $dispute = good_receipt::all()->where("status", "Disputed")->count();
     
         }
-        return view('admin.po.all',compact('good_receipts', 'dispute', 'start_date', 'end_date', 'status', 'vendor_name'))
+        return view('accounting.po.all',compact('good_receipts', 'dispute', 'start_date', 'end_date', 'status', 'vendor_name'))
         ->with('i',(request()->input('page', 1) -1) *5);
     }
 
@@ -54,7 +56,7 @@ class FilterAdminController extends Controller
             $dispute = good_receipt::all()->where("status", "Disputed")->count();
     
         }
-        return view('admin.po.notver',compact('good_receipts', 'dispute', 'start_date', 'end_date', 'status', 'vendor_name'))
+        return view('accounting.po.notver',compact('good_receipts', 'dispute', 'start_date', 'end_date', 'status', 'vendor_name'))
                 ->with('i',(request()->input('page', 1) -1) *5);
     }
     function filterver(){
@@ -75,7 +77,7 @@ class FilterAdminController extends Controller
             $dispute = good_receipt::all()->where("status", "Disputed")->count();
     
         }
-        return view('admin.po.verified',compact('good_receipts', 'dispute', 'start_date', 'end_date', 'status', 'vendor_name'))
+        return view('accounting.po.verified',compact('good_receipts', 'dispute', 'start_date', 'end_date', 'status', 'vendor_name'))
         ->with('i',(request()->input('page', 1) -1) *5);
     }
 
@@ -97,7 +99,7 @@ class FilterAdminController extends Controller
 
             $dispute = good_receipt::all()->where("status", "Disputed")->count();
         }
-        return view('admin.po.reject',compact('good_receipts', 'dispute', 'start_date', 'end_date', 'status', 'vendor_name'))
+        return view('accounting.po.reject',compact('good_receipts', 'dispute', 'start_date', 'end_date', 'status', 'vendor_name'))
         ->with('i',(request()->input('page', 1) -1) *5);
     }
     function filterdisp(){
@@ -116,7 +118,7 @@ class FilterAdminController extends Controller
             $vendor_name = good_receipt::select('vendor_name')->distinct()->get();
             $good_receipts = good_receipt::where("status", "Disputed")->Where("id_vendor", $user_vendor)->get();
         }
-        return view('admin.po.disputed',compact('good_receipts', 'start_date', 'end_date', 'status', 'vendor_name'))->with('i',(request()->input('page', 1) -1) *5);
+        return view('accounting.dispute.index',compact('good_receipts', 'start_date', 'end_date', 'status', 'vendor_name'))->with('i',(request()->input('page', 1) -1) *5);
     }
 
     function filterinv(){
@@ -136,7 +138,7 @@ class FilterAdminController extends Controller
             $invoice = Invoice::latest()->Where("data_from", "GR")->get();
         }
         
-        return view('admin.invoice.index', compact('invoice', 'dispute', 'start_date', 'end_date', 'status'))->with('i',(request()->input('page', 1) -1) *5);
+        return view('accounting.invoice.index', compact('invoice', 'dispute', 'start_date', 'end_date', 'status'))->with('i',(request()->input('page', 1) -1) *5);
     }
 
     
@@ -157,6 +159,6 @@ class FilterAdminController extends Controller
             $invoice = Invoice::latest()->Where("data_from", "BA")->get();
         }
         
-        return view('admin.invoice.indexba', compact('invoice', 'dispute', 'start_date', 'end_date', 'status'))->with('i',(request()->input('page', 1) -1) *5);
+        return view('accounting.invoice.indexba', compact('invoice', 'dispute', 'start_date', 'end_date', 'status'))->with('i',(request()->input('page', 1) -1) *5);
     }
 }

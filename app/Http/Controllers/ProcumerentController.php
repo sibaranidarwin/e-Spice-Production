@@ -60,15 +60,17 @@ class ProcumerentController extends Controller
         $start_date = null;
         $end_date = null;
         $status= null;
+        $vendor_name = good_receipt::distinct()->get();
+
         $dispute = good_receipt::all()->where("status", "Disputed")->count();
 
-        return view('procumerent.po.all',compact('good_receipts', 'dispute', 'start_date', 'end_date', 'status'))
+        return view('procumerent.po.all',compact('good_receipts', 'dispute', 'start_date', 'vendor_name', 'end_date', 'status'))
                 ->with('i',(request()->input('page', 1) -1) *5);
     }
 
     public function po()
     {   
-        $good_receipts = good_receipt::where('material_number', 'LG2KOM00707010F691' )->WhereNull('status')->get();
+        $good_receipts = good_receipt::where('material_number', 'LG2KOM00707010F691' )->where("status","Not Verified")->orderBy('gr_date', 'ASC')->get();
         $start_date = null;
         $end_date = null;
         $vendor_name = good_receipt::get();

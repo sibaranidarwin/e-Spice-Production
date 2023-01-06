@@ -50,48 +50,55 @@ class AccountingController extends Controller
     public function all()
     { 
 
-        $good_receipts = good_receipt::where("status", "Verified")->orwhere('material_number','LG2KOM00707010F691')->orwhere("status", "Rejected")->get();
+        $good_receipts = good_receipt::where("status", "Verified")->orwhere('material_number','LG2KOM00707010F691')->orwhere("status", "Rejected")->orderBy('gr_date', 'ASC')->get();
         $start_date = null;
         $end_date = null;
-        $status= null;
+        $status = null;
+        $vendor_name = good_receipt::select('vendor_name')->distinct()->get();
+
+
         $dispute = good_receipt::all()->where("status", "Disputed")->count();
 
-        return view('accounting.po.all',compact('good_receipts', 'dispute', 'start_date', 'end_date', 'status'))
+        return view('accounting.po.all',compact('good_receipts', 'dispute', 'vendor_name', 'start_date', 'end_date', 'status'))
                 ->with('i',(request()->input('page', 1) -1) *5);
     }
 
     public function po()
     {   
-        $good_receipts = good_receipt::where('material_number', 'LG2KOM00707010F691' )->WhereNull('status')->get();
+        $good_receipts = good_receipt::where('material_number', 'LG2KOM00707010F691' )->where("status","Not Verified")->orderBy('gr_date', 'ASC')->get();
         $start_date = null;
         $end_date = null;
-        $vendor_name = good_receipt::get();
+        $status = null;
+        $vendor_name = good_receipt::select('vendor_name')->distinct()->get();
 
         $status= null;
-        $dispute = good_receipt::all()->where("Status", "Dispute")->count();
+        $dispute = good_receipt::all()->where("status", "Disputed")->count();
 
         return view('accounting.po.index',compact('good_receipts', 'dispute', 'start_date', 'end_date', 'status', 'vendor_name'))
                 ->with('i',(request()->input('page', 1) -1) *5);
     }
     public function pover(){
-        $good_receipts = good_receipt::where("Status","Verified")->get();
+        $good_receipts = good_receipt::where("Status","Verified")->orderBy('gr_date', 'ASC')->get();
         $start_date = null;
         $end_date = null;
-        $status= null;
+        $status = null;
+        $vendor_name = good_receipt::select('vendor_name')->distinct()->get();
         
-        $dispute = good_receipt::all()->where("Status", "Dispute")->count();
+        $dispute = good_receipt::all()->where("status", "Disputed")->count();
 
-        return view('accounting.po.verified',compact('good_receipts', 'dispute', 'start_date', 'end_date', 'status'))
+        return view('accounting.po.verified',compact('good_receipts', 'dispute', 'vendor_name', 'start_date', 'end_date', 'status'))
         ->with('i',(request()->input('page', 1) -1) *5);
     }
     public function poreject(){
-        $good_receipts = good_receipt::where("Status","Reject")->get();
+        $good_receipts = good_receipt::where("status","Rejected")->orderBy('gr_date', 'ASC')->get();
         $start_date = null;
         $end_date = null;
-        $status= null;
-        $dispute = good_receipt::all()->where("Status", "Dispute")->count();
+        $status = null;
+        $vendor_name = good_receipt::select('vendor_name')->distinct()->get();
 
-        return view('accounting.po.reject',compact('good_receipts', 'dispute', 'start_date', 'end_date', 'status'))
+        $dispute = good_receipt::all()->where("status", "Disputed")->count();
+
+        return view('accounting.po.reject',compact('good_receipts', 'dispute', 'vendor_name', 'start_date', 'end_date', 'status'))
         ->with('i',(request()->input('page', 1) -1) *5);
     }
 
@@ -118,8 +125,13 @@ class AccountingController extends Controller
     }
     public function disputed()
     {
-        $good_receipts = good_receipt::where("Status", "Dispute")->get();
-        return view('accounting.dispute.index',compact('good_receipts'))
+        $good_receipts = good_receipt::where("Status", "Dispute")->orderBy('gr_date', 'ASC')->get();
+        $start_date = null;
+        $end_date = null;
+        $status = null;
+        $vendor_name = good_receipt::distinct()->get();
+
+        return view('accounting.dispute.index',compact('good_receipts', 'vendor_name', 'start_date', 'end_date', 'status'))
                 ->with('i',(request()->input('page', 1) -1) *5);
     }
     /**
@@ -176,10 +188,11 @@ class AccountingController extends Controller
     public function invoice(){
 
         $start_date = null;
-        $end_date = null;    
+        $end_date = null;
+        $status = null;  
         $invoice = Invoice::latest()->orWhere("data_from", "GR")->get();
 
-        return view('accounting.invoice.index',compact('invoice', 'start_date', 'end_date'))
+        return view('accounting.invoice.index',compact('invoice', 'start_date', 'end_date', 'status'))
                 ->with('i',(request()->input('page', 1) -1) *5);
    }
    public function detailinvoice(Request $request, $id){
@@ -222,9 +235,10 @@ class AccountingController extends Controller
         {
             $start_date = null;
             $end_date = null;
+            $status = null;
 
             $invoice = Invoice::latest()->orWhere("data_from", "BA")->get();
-            return view('accounting.invoice.indexba',compact('invoice', 'start_date', 'end_date'))
+            return view('accounting.invoice.indexba',compact('invoice', 'start_date', 'end_date', 'status'))
                     ->with('i',(request()->input('page', 1) -1) *5);
             
         }

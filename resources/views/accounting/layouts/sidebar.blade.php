@@ -27,7 +27,6 @@
     <link rel="stylesheet" href="{{asset('admin/assets/css/cs-skin-elastic.css')}}">
     <link rel="stylesheet" href="{{asset('admin/assets/css/style.css')}}">
     <link rel="stylesheet" href="{{asset('admin/assets/css/bootstrap.min.css')}}">
-    <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/html5shiv/3.7.3/html5shiv.min.js"></script> -->
     <link href="https://cdn.jsdelivr.net/npm/chartist@0.11.0/dist/chartist.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/jqvmap@1.5.1/dist/jqvmap.min.css" rel="stylesheet">
 
@@ -145,10 +144,10 @@
 
                 <div class="user-area dropdown float-right">
                     <a href="#" class="dropdown-toggle active" data-toggle="dropdown" aria-haspopup="true"
-                        aria-expanded="false">
+                            aria-expanded="false">
                         <img class="user-avatar rounded-circle" src="{{asset('upload/'.auth()->user()->foto)}}"
                             alt="User Avatar">
-                            &nbsp; {{ auth()->user()->name}}&nbsp;<i class="fa fa-caret-down"></i>
+                            &nbsp; {{ auth()->user()->name}}&nbsp; <i class="fa fa-caret-down"></i>
                     </a>
 
                     <div class="user-menu dropdown-menu">

@@ -133,19 +133,19 @@ div.dt-button-collection {
                                                     </div>
                                                     <div class="form-group ">
                                                         <label for="">GR Date: &nbsp;</label>
-                                                        <input type="date" class="form-control" name="start_date">
+                                                        <input type="date" class="form-control form-control-sm" name="start_date">
                                                     </div>
                                                     <div class="form-group mx-sm-4">
                                                         <label for="inputPassword2">To: &nbsp;</label>
-                                                        <input type="date" class="form-control" name="end_date">
+                                                        <input type="date" class="form-control form-control-sm" name="end_date">
                                                     </div>
                                                     <div class="form-group ">
                                                         <label for="">Plant Code: &nbsp;</label>
-                                                        <input type="text" class="form-control" name="minpo">
+                                                        <input type="text" class="form-control form-control-sm" name="minpo">
                                                     </div>
                                                     <div class="form-group mx-sm-4">
                                                         <label for="inputPassword2">To: &nbsp;</label>
-                                                        <input type="text" class="form-control" name="maxpo">
+                                                        <input type="text" class="form-control form-control-sm" name="maxpo">
                                                     </div>
                                                     <button class="btn btn-primary"
                                                         onclick="return confirm('Are you sure?')" type="submit"><i
@@ -280,19 +280,19 @@ div.dt-button-collection {
                                                     </div>
                                                     <div class="form-group ">
                                                         <label for="">GR Date: &nbsp;</label>
-                                                        <input type="date" class="form-control" name="start_date">
+                                                        <input type="date" class="form-control form-control-sm" name="start_date">
                                                     </div>
                                                     <div class="form-group mx-sm-4">
                                                         <label for="inputPassword2">To: &nbsp;</label>
-                                                        <input type="date" class="form-control" name="end_date">
+                                                        <input type="date" class="form-control form-control-sm" name="end_date">
                                                     </div>
                                                     <div class="form-group ">
                                                         <label for="">Plant Code: &nbsp;</label>
-                                                        <input type="text" class="form-control" name="minpo">
+                                                        <input type="text" class="form-control form-control-sm" name="minpo">
                                                     </div>
                                                     <div class="form-group mx-sm-4">
                                                         <label for="inputPassword2">To: &nbsp;</label>
-                                                        <input type="text" class="form-control" name="maxpo">
+                                                        <input type="text" class="form-control form-control-sm" name="maxpo">
                                                     </div>
                                                     <button class="btn btn-primary"
                                                         onclick="return confirm('Are you sure?')" type="submit"><i
@@ -424,19 +424,19 @@ div.dt-button-collection {
                                                     </div>
                                                     <div class="form-group ">
                                                         <label for="">GR Date: &nbsp;</label>
-                                                        <input type="date" class="form-control" name="start_date">
+                                                        <input type="date" class="form-control form-control-sm" name="start_date">
                                                     </div>
                                                     <div class="form-group mx-sm-4">
                                                         <label for="inputPassword2">To: &nbsp;</label>
-                                                        <input type="date" class="form-control" name="end_date">
+                                                        <input type="date" class="form-control form-control-sm" name="end_date">
                                                     </div>
                                                     <div class="form-group ">
                                                         <label for="">Plant Code: &nbsp;</label>
-                                                        <input type="text" class="form-control" name="minpo">
+                                                        <input type="text" class="form-control form-control-sm" name="minpo">
                                                     </div>
                                                     <div class="form-group mx-sm-4">
                                                         <label for="inputPassword2">To: &nbsp;</label>
-                                                        <input type="text" class="form-control" name="maxpo">
+                                                        <input type="text" class="form-control form-control-sm" name="maxpo">
                                                     </div>
                                                     <button class="btn btn-primary"
                                                         onclick="return confirm('Are you sure?')" type="submit"><i

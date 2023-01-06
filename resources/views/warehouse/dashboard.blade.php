@@ -133,7 +133,7 @@
                         <div class="card-block text-white">
                           <blockquote class="card-blockquote text-white">
                             <p style="font-size: 14px;"><strong>&nbsp; Description: </strong></p>
-                            <p style="font-size: 13px;"><strong>&nbsp; 1. Terdapat {{ $not_ver}} Data GR dokumen yang harus di Verified.</strong></p>
+                            <p style="font-size: 13px;"><strong>&nbsp; There are {{$not_ver}} document GR data that must be updated (this data can be verified/rejected) </strong></p>
                           </blockquote>
                         </div>
                       </div>

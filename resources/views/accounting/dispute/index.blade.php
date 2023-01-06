@@ -15,12 +15,13 @@
 @extends('accounting.layouts.sidebar')
 @section('content')
 <link rel="stylesheet" href="{{asset('admin/assets/css/datatable.css')}}">
+<link rel="stylesheet" href="https://cdn.datatables.net/datetime/1.1.2/css/dataTables.dateTime.min.css">
 
 <link rel="stylesheet" href="{{asset('assets/css/argon-dashboard.css')}}">
 
 <style>
     .table td, .table th,  label{
-        font-size: 11.4px;
+        font-size: 11px;
     }
 </style>
 <div class="breadcrumbs">
@@ -76,61 +77,83 @@
                     </div>
                     @endif
                     <div class="card-header">
-                        <strong class="card-title">Good Receipt Disputed List</strong>
+                        <strong class="card-title"><i class="fa fa-list"></i> Disputed List</strong>
                     </div>
                     <div class="card-body">
                     <div class="table-responsive text-nowrap">
-                        <div class="row">
-                            <div class="col-4 bg-white mb-3">
-                                <label for="">GR Date: </label>
-                                <input type="text" id="min" name="min"> 
-                            </div> 
-                            <div class="col-2 bg-white mb-4">
-                                <label for="">To date: </label>
-                                <input type="text" id="max" name="max">
+                        @if ($start_date != null || $end_date != null || $status != null)
+                        <p style="text-align: center; background-color: #11CDEF; color: white;"><strong class="card-title">GR Date:{{ Carbon\Carbon::parse($start_date)->format('d F Y') }} To: {{ Carbon\Carbon::parse($end_date)->format('d F Y') }} Status Invoice Proposal: {{ ($status) }}</strong></p>
+                        @endif
+                        <form action="{{ route('accounting-filterdisp') }}" class="form-inline" method="GET">
+                            <div class="form-group col-md-1">
+
                             </div>
-                            <div class="col-4">
-                                <label for=""> </label>
+                            <div class="form-group ">
+                              <label for="" >GR Date: &nbsp;</label>
+                              <input type="date" class="form-control" name="start_date">
                             </div>
-                        </div>
+                            <div class="form-group mx-sm-2">
+                              <label for="inputPassword2">To: &nbsp;</label>
+                              <input type="date" class="form-control" name="end_date">
+                            </div>
+                            <div class="form-group col-md-2-half">
+                                <select class="form-control" name="">
+                                    <option>-- Choose Vendor Name -- </option>
+                                        @foreach ($vendor_name as $vendor_name)
+                                            <option value="{{ $vendor_name['vendor_name'] }}">{{ $vendor_name['vendor_name'] }}</option>
+                                        @endforeach
+                                </select>
+                            </div> &nbsp;&nbsp;
+                            <div class="form-group col-md-2-half">
+                                <select class="form-control status_invoice" name="">
+                                    <option value="">-- Choose Sts. Inv. Props. -- </option>
+                                    <option value="Verified">Verified</option>
+                                    <option value="Not Yet Verified - Draft BA">Not Yet Verified - Draft BA</option>
+                                </select>
+                            </div> &nbsp;&nbsp;
+                            <button class="btn btn-primary" onclick="return confirm('Are you sure?')" type="submit"><i class="fa fa-search"></i></button>
+                        </form>
                         <form action="{{ route('update-datagr-vendor/{id_gr}') }}" method="POST">
                             @csrf
                             <table id="list" class="table table-striped" style="font-size: 10px;">
                                 <thead>
                                     <tr>
                                         <th>No</th>
-                                        <th>Status</th>
+                                        <th>Sts. GR</th>
+                                        <th>PO</th>
                                         <th>GR Number</th>
-                                        <th>No PO</th>
-                                        <th>PO Item</th>
                                         <th>GR Date</th>
                                         <th>Part Number</th>
-                                        <th>Reference</th>
-                                        <th>Material Description</th>
+                                        <th>Mat. Desc.</th>
                                         <th>QTY UOM</th>
                                         <th>Curr</th>
                                         <th>Unit Price</th>
+                                        <th>Reference</th>
+                                        <th>Del. Note</th>
                                         <th>Tax Code</th>
-                                        <th>Keterengan</th>
+                                        <th>Reason Disp. </th>
+                                        <th>File Disp.</th>
                                     </tr>
                                 </thead>
                                 <tbody style="font-size: 11px;">
                                     @foreach($good_receipts as $good_receipt)
                                     <tr>
                                         <td>{{++$i}}</td>
-                                        <td >{{ $good_receipt->Status }}</td>
-                                        <td ><span>{{$good_receipt->GR_Number}}</span></td>
-                                        <td ><span>{{$good_receipt->no_po}}</span></td>
-                                        <td><span>{{$good_receipt->po_item}}</span></td>
-                                        <td><span>{{$good_receipt->GR_Date}}</span></td>
-                                        <td> <span>{{$good_receipt->Material_Number}}</span></td>
-                                        <td> <span>{{$good_receipt->Ref_Doc_No}}</span> </td>
-                                        <td> <span>{{$good_receipt->Mat_Desc}}</span> </td>
+                                        <td >{{ $good_receipt->status }}</td>
+                                        <td ><span>{{$good_receipt->no_po}} /{{$good_receipt->po_item}}</span></td>
+                                        <td ><span>{{$good_receipt->gr_number}}</span></td>
+                                        <td><span>{{ Carbon\Carbon::parse($good_receipt->gr_date)->format('d F Y') }}</span></td>
+                                        <td> <span>{{$good_receipt->material_number}}/<br> {{$good_receipt->vendor_part_number}}</span></td>
+                                        <td> <span>{{$good_receipt->mat_desc}}</span> <br>({{$good_receipt->valuation_type}})</td>
                                         <td> <span>{{$good_receipt->jumlah}}</span>&nbsp;<span>{{$good_receipt->UOM}}</span> </td>
-                                        <td> <span>{{$good_receipt->Currency}}</span> </td>
-                                        <td> <span>{{$good_receipt->harga_satuan}}</span> </td>
-                                        <td> <span>{{$good_receipt->Tax_Code}}</span> </td>
+                                        <td> <span>{{$good_receipt->currency}}</span> </td>
+                                        <td> <span>Rp. {{number_format($good_receipt->harga_satuan)}}</span> </td>
+                                        <td> <span>{{$good_receipt->ref_doc_no}}</span> </td>
+                                        <td> <span>{{$good_receipt->delivery_note}}</span> </td>
+                                        <td><span>{{$good_receipt->tax_code}}</span></td>
                                         <td><span>{{$good_receipt->alasan_disp}}</span></td>
+                                        <td><a target="_blank" href="{{ $good_receipt->lam_disp}}"
+                                            class="btn btn-success btn-sm">View File</a></td>
                                     </tr>
                                     @endforeach
                                     </select>
@@ -198,7 +221,15 @@
         });
     
         // DataTables initialisation
-        var table = $('#list').DataTable();
+        var table = $('#list').DataTable({
+            rowReorder: true,
+             columnDefs: [
+            { orderable: true, className: 'reorder', targets: 0 },
+            { orderable: true, className: 'reorder', targets: 2 },
+            { orderable: true, className: 'reorder', targets: 3 },
+            { orderable: false, targets: '_all' }
+                    ]
+        });
     
         // Refilter the table
         $('#min, #max').on('change', function() {

@@ -81,17 +81,20 @@
                     </div>
                     <div class="card-body">
                     <div class="table-responsive text-nowrap">
+                        @if ($start_date != null || $end_date != null)
+                        <p style="text-align: center; background-color: #11CDEF; color: white;"><strong class="card-title"></i>GR Date:{{ Carbon\Carbon::parse($start_date)->format('d F Y') }} To: {{ Carbon\Carbon::parse($end_date)->format('d F Y') }}</i></strong></p>
+                        @endif
                         <form action="{{ route('vendor-filterdisp') }}" class="form-inline" method="GET">
                             <div class="form-group col-md-3">
 
                             </div>
                             <div class="form-group ">
                               <label for="" >GR Date: &nbsp;</label>
-                              <input type="date" class="form-control" name="start_date">
+                              <input type="date" class="form-control form-control-sm" name="start_date">
                             </div>
                             <div class="form-group mx-sm-3 ">
                               <label for="inputPassword2">To: &nbsp;</label>
-                              <input type="date" class="form-control" name="end_date">
+                              <input type="date" class="form-control form-control-sm" name="end_date">
                             </div>
                             <button class="btn btn-primary" type="submit"><i class="fa fa-search"></i></button>
                           </form>
@@ -129,7 +132,7 @@
                                         <td> <span>{{$good_receipt->mat_desc}}</span> <br>({{$good_receipt->valuation_type}})</td>
                                         <td> <span>{{$good_receipt->jumlah}}</span>&nbsp;<span>{{$good_receipt->UOM}}</span> </td>
                                         <td> <span>{{$good_receipt->currency}}</span> </td>
-                                        <td> <span>Rp. {{number_format($good_receipt->harga_satuan)}}</span> </td>
+                                        <td> <span>{{number_format($good_receipt->harga_satuan)}}</span> </td>
                                         <td> <span>{{$good_receipt->ref_doc_no}}</span> </td>
                                         <td> <span>{{$good_receipt->delivery_note}}</span> </td>
                                         <td><span>{{$good_receipt->tax_code}}</span></td>

@@ -91,21 +91,36 @@ div.dt-button-collection {
                     </div>
                     <div class="card-body">
                         <div class="table-responsive text-nowrap">
-                            @if ($start_date != null || $end_date != null)
-                            <p style="text-align: center; background-color: #11CDEF; color: white;"><strong class="card-title"></i>GR Date:{{ Carbon\Carbon::parse($start_date)->format('d F Y') }} To: {{ Carbon\Carbon::parse($end_date)->format('d F Y') }}</i></strong></p>
+                            @if ($start_date != null || $end_date != null || $status != null)
+                            <p style="text-align: center; background-color: #11CDEF; color: white;"><strong class="card-title">GR Date:{{ Carbon\Carbon::parse($start_date)->format('d F Y') }} To: {{ Carbon\Carbon::parse($end_date)->format('d F Y') }} Status Invoice Proposal: {{ ($status) }}</strong></p>
                             @endif
-                            <form action="{{ route('warehouse-filterver') }}" class="form-inline" method="GET">
-                                <div class="form-group col-md-2">
+                            <form action="{{ route('accounting-filterver') }}" class="form-inline" method="GET">
+                                <div class="form-group col-md-1">
     
                                 </div>
                                 <div class="form-group ">
                                   <label for="" >GR Date: &nbsp;</label>
                                   <input type="date" class="form-control" name="start_date">
                                 </div>
-                                <div class="form-group mx-sm-4">
+                                <div class="form-group mx-sm-2">
                                   <label for="inputPassword2">To: &nbsp;</label>
                                   <input type="date" class="form-control" name="end_date">
                                 </div>
+                                <div class="form-group col-md-2-half">
+                                    <select class="form-control" name="">
+                                        <option>-- Choose Vendor Name -- </option>
+                                            @foreach ($vendor_name as $vendor_name)
+                                                <option value="{{ $vendor_name['vendor_name'] }}">{{ $vendor_name['vendor_name'] }}</option>
+                                            @endforeach
+                                    </select>
+                                </div> &nbsp;&nbsp;
+                                <div class="form-group col-md-2-half">
+                                    <select class="form-control status_invoice" name="">
+                                        <option value="">-- Choose Sts. Inv. Props. -- </option>
+                                        <option value="Verified">Verified</option>
+                                        <option value="Not Yet Verified - Draft BA">Not Yet Verified - Draft BA</option>
+                                    </select>
+                                </div> &nbsp;&nbsp;
                                 <button class="btn btn-primary" onclick="return confirm('Are you sure?')" type="submit"><i class="fa fa-search"></i></button>
                             </form>
                             <form action="{{ route('update-datagr/{id}') }}" method="POST">
