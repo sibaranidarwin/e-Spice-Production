@@ -205,7 +205,7 @@
             <div class="header-menu">
 
                 <div class="user-area dropdown float-right">
-                    <a  href="{{url('')}}" class="dropdown-toggle"><i class="fa fa-bell"><span class="count"></span></i></a>
+                    <a  href="{{url('vendor/disputed')}}" class="dropdown-toggle"><i class="fa fa-bell"><span class="count">{{ ($dispute) }}</span></i></a>
                 </div>
 
                 <div class="user-area dropdown float-right">

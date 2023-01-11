@@ -12,38 +12,62 @@ class FilterAccountingController extends Controller
 {
     //
     function filter(){
-        if (request()->start_date || request()->end_date){
-            $start_date = Carbon::parse(request()->start_date)->toDateTimeString();
-            $end_date = Carbon::parse(request()->end_date)->toDateTimeString();
+    if (request()->start_date || request()->end_date || request()->vendor){
+            $start_date =request()->start_date;
+            $end_date = request()->end_date;
+            $vendor = request()->vendor;
             $status = request()->status;
-            $vendor_name = good_receipt::distinct()->get();
-            // dd($vendor_name);
-            $good_receipts = good_receipt::whereBetween('gr_date',[$start_date,$end_date])->orwhere('status_invoice', $status)->where("status", "Verified")->where("status", "Rejected")->orderBy('gr_date', 'ASC')->get();
-
+            $vendor_name = good_receipt::select('vendor_name')->distinct()->get();
+            
+            if($vendor == null){
+            $good_receipts = good_receipt::whereBetween('gr_date',[$start_date,$end_date])->where("status", "Verified")->orwhere('material_number','LG2KOM00707010F691')->orwhere("status", "Rejected")->orderBy('gr_date', 'ASC')->get();
+            }
+            elseif($start_date != null && $end_date != null){
+                $good_receipts = good_receipt::whereBetween('gr_date',[$start_date,$end_date])->where("status", "Verified")->orwhere('material_number','LG2KOM00707010F691')->orwhere("status", "Rejected")->orderBy('gr_date', 'ASC')->get();
+            }
+            elseif($vendor != null){
+            $good_receipts = good_receipt::where("vendor_name", $vendor)->orderBy('gr_date', 'ASC')->get();  
+            }
+            else{
+            $good_receipts = good_receipt::whereBetween('gr_date',[$start_date,$end_date])->orderBy('gr_date', 'ASC')->get();
+            }
+            
             $dispute = good_receipt::all()->where("status", "Disputed")->count();
-            // dd($good_receipts);
+           
         } else {
             $good_receipts = good_receipt::where("status", "Verified")->orwhere('material_number','LG2KOM00707010F691')->orwhere("status", "Rejected")->get();
             $start_date = request()->start_date;
             $end_date = request()->end_date;
-            $status = request()->status;
+            $vendor = request()->vendor;
             $vendor_name = good_receipt::distinct()->get();
             $dispute = good_receipt::all()->where("status", "Disputed")->count();
     
         }
-        return view('accounting.po.all',compact('good_receipts', 'dispute', 'start_date', 'end_date', 'status', 'vendor_name'))
+        return view('accounting.po.all',compact('good_receipts', 'dispute', 'start_date', 'end_date', 'vendor_name', 'vendor'))
         ->with('i',(request()->input('page', 1) -1) *5);
     }
 
     function filternot(){
-        if (request()->start_date || request()->end_date) {
-            $start_date = Carbon::parse(request()->start_date)->toDateTimeString();
-            $end_date = Carbon::parse(request()->end_date)->toDateTimeString();
+        if (request()->start_date || request()->end_date || request()->vendor){
+            $start_date =request()->start_date;
+            $end_date = request()->end_date;
             $status = request()->status;
+            $vendor = request()->vendor;
             $vendor_name = good_receipt::select('vendor_name')->distinct()->get();
 
-            $good_receipts = good_receipt::whereBetween('gr_date',[$start_date,$end_date])->where('material_number','LG2KOM00707010F691')->where("status","Not Verified")->orderBy('gr_date', 'ASC')->get();
-            // dd($good_receipts);
+            if($vendor == null){
+                $good_receipts = good_receipt::whereBetween('gr_date',[$start_date,$end_date])->where('material_number', 'LG2KOM00707010F691' )->WhereNull('status')->orderBy('gr_date', 'ASC')->get();
+                }
+            elseif($vendor != null){
+                $good_receipts = good_receipt::where("vendor_name", $vendor)->where('material_number', 'LG2KOM00707010F691' )->WhereNull('status')->orderBy('gr_date', 'ASC')->get();  
+                }
+            elseif($start_date != null && $end_date != null){
+                $good_receipts = good_receipt::whereBetween('gr_date',[$start_date,$end_date])->where('material_number', 'LG2KOM00707010F691' )->WhereNull('status')->orderBy('gr_date', 'ASC')->get();
+                }
+            else{
+                $good_receipts = good_receipt::whereBetween('gr_date',[$start_date,$end_date])->where('material_number', 'LG2KOM00707010F691' )->WhereNull('status')->orderBy('gr_date', 'ASC')->get();
+                }
+
             $dispute = good_receipt::all()->where("status", "Disputed")->count();
     
         } else {
@@ -51,74 +75,117 @@ class FilterAccountingController extends Controller
             $start_date = request()->start_date;
             $end_date = request()->end_date;
             $status = request()->status;
-            $vendor_name = good_receipt::select('vendor_name')->distinct()->get();
+            $vendor = request()->vendor;
 
             $dispute = good_receipt::all()->where("status", "Disputed")->count();
     
         }
-        return view('accounting.po.notver',compact('good_receipts', 'dispute', 'start_date', 'end_date', 'status', 'vendor_name'))
+        return view('accounting.po.notver',compact('good_receipts', 'dispute', 'start_date', 'end_date', 'status', 'vendor_name', 'vendor'))
                 ->with('i',(request()->input('page', 1) -1) *5);
     }
-    function filterver(){
-        if (request()->start_date || request()->end_date) {
-            $start_date = Carbon::parse(request()->start_date)->toDateTimeString();
-            $end_date = Carbon::parse(request()->end_date)->toDateTimeString();
-            $status = request()->status;
-            $vendor_name = good_receipt::select('vendor_name')->distinct()->get();
-            $good_receipts = good_receipt::whereBetween('gr_date',[$start_date,$end_date])->where("status","Verified")->orderBy('gr_date', 'ASC')->get();
-            $dispute = good_receipt::all()->where("status", "Disputed")->count();
     
+    function filterver(){
+        if (request()->start_date || request()->end_date ||  request()->vendor){
+            $start_date =request()->start_date;
+            $end_date = request()->end_date;
+            $status = request()->status;
+            $vendor = request()->vendor;
+            $vendor_name = good_receipt::select('vendor_name')->distinct()->get();
+            
+            if($vendor == null){
+                $good_receipts = good_receipt::whereBetween('gr_date',[$start_date,$end_date])->where("status", "Verified")->orderBy('gr_date', 'ASC')->get();
+                }
+            elseif($start_date != null && $end_date != null){
+                $good_receipts = good_receipt::whereBetween('gr_date',[$start_date,$end_date])->where("status", "Verified")->orderBy('gr_date', 'ASC')->get();
+                }
+            elseif($vendor != null || $start_date != null && $end_date != null){
+                $good_receipts = good_receipt::where("vendor_name", $vendor)->where("status", "Verified")->orderBy('gr_date', 'ASC')->get();  
+                }
+            else{
+                $good_receipts = good_receipt::whereBetween('gr_date',[$start_date,$end_date])->where("status", "Verified")->orderBy('gr_date', 'ASC')->get();
+                }
+
+            $dispute = good_receipt::all()->where("status", "Disputed")->count();
         } else {
             $good_receipts = good_receipt::where("status","Verified")->get();
             $start_date = request()->start_date;
             $end_date = request()->end_date;
             $status = request()->status;
+            $vendor = request()->vendor;
             $vendor_name = good_receipt::select('vendor_name')->distinct()->get();
             $dispute = good_receipt::all()->where("status", "Disputed")->count();
     
         }
-        return view('accounting.po.verified',compact('good_receipts', 'dispute', 'start_date', 'end_date', 'status', 'vendor_name'))
+        return view('accounting.po.ver',compact('good_receipts', 'dispute', 'start_date', 'end_date', 'status','vendor', 'vendor_name'))
         ->with('i',(request()->input('page', 1) -1) *5);
     }
 
     function filterreject(){
-        if (request()->start_date || request()->end_date) {
-            $start_date = Carbon::parse(request()->start_date)->toDateTimeString();
-            $end_date = Carbon::parse(request()->end_date)->toDateTimeString();
+        if (request()->start_date || request()->end_date || request()->status || request()->vendor){
+            $start_date = request()->start_date;
+            $end_date = request()->end_date;
             $status = request()->status;
+            $vendor = request()->vendor;
             $vendor_name = good_receipt::select('vendor_name')->distinct()->get();
 
-            $good_receipts = good_receipt::whereBetween('gr_date',[$start_date,$end_date])->where("status","Rejected")->orderBy('gr_date', 'ASC')->get();
+            if($vendor == null){
+                $good_receipts = good_receipt::whereBetween('gr_date',[$start_date,$end_date])->where("status","Rejected")->orderBy('gr_date', 'ASC')->get();
+                }
+            elseif($start_date != null && $end_date != null){
+                $good_receipts = good_receipt::whereBetween('gr_date',[$start_date,$end_date])->where("status","Rejected")->orderBy('gr_date', 'ASC')->get();
+                }
+            elseif($vendor != null || $start_date != null && $end_date != null){
+                $good_receipts = good_receipt::where("vendor_name", $vendor)->where("status","Rejected")->orderBy('gr_date', 'ASC')->get();  
+                }
+            else{
+                $good_receipts = good_receipt::whereBetween('gr_date',[$start_date,$end_date])->where("status","Rejected")->orderBy('gr_date', 'ASC')->get();
+                }
+            
             $dispute = good_receipt::all()->where("status", "Disputed")->count();
         } else {
             $good_receipts = good_receipt::where("status","Rejected")->get();
             $start_date = request()->start_date;
             $end_date = request()->end_date;
             $status = request()->status;
+            $vendor = request()->vendor;
             $vendor_name = good_receipt::select('vendor_name')->distinct()->get();
 
             $dispute = good_receipt::all()->where("status", "Disputed")->count();
         }
-        return view('accounting.po.reject',compact('good_receipts', 'dispute', 'start_date', 'end_date', 'status', 'vendor_name'))
+        return view('accounting.po.reject',compact('good_receipts', 'dispute', 'start_date', 'end_date', 'status', 'vendor_name', 'vendor'))
         ->with('i',(request()->input('page', 1) -1) *5);
     }
     function filterdisp(){
-        if (request()->start_date || request()->end_date) {
-            $start_date = Carbon::parse(request()->start_date)->toDateTimeString();
-            $end_date = Carbon::parse(request()->end_date)->toDateTimeString();
+        if (request()->start_date || request()->end_date || request()->vendor){
+            $start_date = request()->start_date;
+            $end_date = request()->end_date;
+            $vendor = request()->vendor;
             $status = request()->status;
-            
             $vendor_name = good_receipt::select('vendor_name')->distinct()->get();
-            $good_receipts = good_receipt::whereBetween('gr_date',[$start_date,$end_date])->where("status", "Disputed")->orderBy('gr_date', 'ASC')->get();
-        } else {
+            
+            if($vendor == null){
+                $good_receipts = good_receipt::whereBetween('gr_date',[$start_date,$end_date])->where("status", "Disputed")->orderBy('gr_date', 'ASC')->get();
+                }
+            elseif($start_date != null && $end_date != null){
+                $good_receipts = good_receipt::whereBetween('gr_date',[$start_date,$end_date])->where("status", "Disputed")->orderBy('gr_date', 'ASC')->get();
+                }
+            elseif($vendor != null || $start_date != null && $end_date != null){
+                $good_receipts = good_receipt::where("vendor_name", $vendor)->where("status", "Disputed")->orderBy('gr_date', 'ASC')->get();  
+                }
+            else{
+                $good_receipts = good_receipt::whereBetween('gr_date',[$start_date,$end_date])->where("status", "Disputed")->orderBy('gr_date', 'ASC')->get();
+                }
+
+            } else {
             $user_vendor = Auth::User()->id_vendor;
             $start_date = request()->start_date;
             $end_date = request()->end_date;
             $status = request()->status;
+            $vendor = request()->vendor;
             $vendor_name = good_receipt::select('vendor_name')->distinct()->get();
             $good_receipts = good_receipt::where("status", "Disputed")->Where("id_vendor", $user_vendor)->get();
         }
-        return view('accounting.dispute.index',compact('good_receipts', 'start_date', 'end_date', 'status', 'vendor_name'))->with('i',(request()->input('page', 1) -1) *5);
+        return view('accounting.dispute.index',compact('good_receipts', 'start_date', 'end_date', 'status', 'vendor_name', 'vendor'))->with('i',(request()->input('page', 1) -1) *5);
     }
 
     function filterinv(){
@@ -135,6 +202,7 @@ class FilterAccountingController extends Controller
             $start_date = request()->start_date;
             $end_date = request()->end_date;
             $status = request()->status;
+            $vendor = request()->vendor;
             $invoice = Invoice::latest()->Where("data_from", "GR")->get();
         }
         

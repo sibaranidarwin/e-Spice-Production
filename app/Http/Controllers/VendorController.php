@@ -49,7 +49,7 @@ class VendorController extends Controller
             ->orWhereNull('status');})->count();
         $invoicegr = Invoice::all()->where("data_from", "GR")->Where("id_vendor", $user_vendor)->count();
         $invoiceba = Invoice::all()->where("data_from", "BA")->Where("id_vendor", $user_vendor)->count();
-        $dispute = good_receipt::all()->where("status", "Dispute")->Where("id_vendor", $user_vendor)->count();
+        $dispute = good_receipt::all()->where("status", "Disputed")->Where("id_vendor", $user_vendor)->count();
         $vendor = User::all()->where("level", "vendor")->count();
         $draft = Draft_BA::all()->Where("id_vendor", $user_vendor)->count();
         $ba = BA_Reconcile::all()->Where("id_vendor", $user_vendor)->count();
@@ -527,12 +527,14 @@ class VendorController extends Controller
     public function historydraft()
         {
         $now = date('Y-m-d');
+        $start_date = null;
+        $end_date = null;
         // dd($now);
         $user_vendor = Auth::User()->id_vendor;
         // dd($user_vendor);
         $draft = Draft_BA::all()->where("id_vendor", $user_vendor)->where('status_invoice_proposal', 'Verified - BA');
         // dd($draft);
-        return view('vendor.ba.historydraft',compact('draft'));
+        return view('vendor.ba.historydraft',compact('draft', 'start_date', 'end_date'));
         }
 
     public function detailba()
@@ -565,10 +567,12 @@ class VendorController extends Controller
     public function historyba()
     {
         $user_vendor = Auth::User()->id_vendor;
+        $start_date = null;
+        $end_date = null;
 
         $ba = BA_Reconcile::all()->where("id_vendor", $user_vendor)->where('status_invoice_proposal', 'Verified - BA');
         
-        return view('vendor.ba.historyba',compact('ba'));
+        return view('vendor.ba.historyba',compact('ba', 'start_date', 'end_date'));
     }
     
     public function uploaddraft(Request $request)
@@ -770,12 +774,14 @@ class VendorController extends Controller
                                     "invoice.ppn",
                                     "invoice.total_doc_invoice",
                                     "invoice.del_costs",
+                                    "invoice.unplan_cost",
                                     "invoice.total_harga_gross",
                                     "invoice.created_at"
                                     )
                                     ->JOIN("invoice", "ba_reconcile.id_inv", "=", "invoice.id_inv")
                                     ->where("invoice.id_inv", "=", "$detail->id_inv")
                                     ->get();
+                                    // dd($invoices);
 
         return view('vendor.invoice.detailba', compact('invoices'))->with('i',(request()->input('page', 1) -1) *5);
     }
@@ -814,9 +820,12 @@ class VendorController extends Controller
     public function disputed()
     {
         $user_vendor = Auth::User()->id_vendor;
+        $start_date = null;
+        $end_date = null;
+        $dispute = good_receipt::where("status", "Disputed")->Where("id_vendor", $user_vendor)->count();
         $good_receipts = good_receipt::where("status", "Disputed")->Where("id_vendor", $user_vendor)->get();
 
-        return view('vendor.dispute.index',compact('good_receipts'))
+        return view('vendor.dispute.index',compact('good_receipts', 'start_date', 'end_date', 'dispute'))
                 ->with('i',(request()->input('page', 1) -1) *5);
     }
 

@@ -98,7 +98,7 @@ class FilterController extends Controller
                 ->orderBy('goods_receipt.updated_at', 'ASC')
                 ->get();
 
-            $good_receipts = good_receipt::whereBetween('gr_date',[$start_date,$end_date])->orwhereBetween('no_po', [$minpo, $maxpo])->where('id_vendor', $user_vendor)->where('id_inv',0)->where(function($query) {
+            $good_receipts = good_receipt::whereBetween('gr_date',[$start_date,$end_date])->where('id_vendor', $user_vendor)->where('id_inv',0)->where(function($query) {
                 $query->where('status','Verified')
                             ->orWhereNull('status');})->orderBy('gr_date', 'ASC')->get();
             // dd($good_receipts);
@@ -181,7 +181,7 @@ class FilterController extends Controller
         if (request()->start_date || request()->end_date) {
             $start_date = Carbon::parse(request()->start_date)->toDateTimeString();
             $end_date = Carbon::parse(request()->end_date)->toDateTimeString();
-            $good_receipts = good_receipt::whereBetween('gr_date',[$start_date,$end_date])->where("status","Rejected")->get();
+            $good_receipts = good_receipt::whereBetween('gr_date',[$start_date,$end_date])->where("status","Rejected")->orderBy('gr_date', 'ASC')->get();
             
         } else {
             $user_vendor = Auth::User()->id_vendor;
@@ -199,7 +199,7 @@ class FilterController extends Controller
             $start_date = Carbon::parse(request()->start_date)->toDateTimeString();
             $end_date = Carbon::parse(request()->end_date)->toDateTimeString();
             $user_vendor = Auth::User()->id_vendor;
-            $good_receipts = good_receipt::whereBetween('gr_date',[$start_date,$end_date])->where("status", "Disputed")->Where("id_vendor", $user_vendor)->get();
+            $good_receipts = good_receipt::whereBetween('gr_date',[$start_date,$end_date])->where("status", "Disputed")->Where("id_vendor", $user_vendor)->orderBy('gr_date', 'ASC')->get();
         } else {
             $user_vendor = Auth::User()->id_vendor;
             $start_date = request()->start_date;
@@ -214,7 +214,7 @@ class FilterController extends Controller
             $start_date = Carbon::parse(request()->start_date)->toDateTimeString();
             $end_date = Carbon::parse(request()->end_date)->toDateTimeString();
             $user_vendor = Auth::User()->id_vendor;
-            $draft = Draft_BA::whereBetween('created_at',[$start_date,$end_date])->where("id_vendor", $user_vendor)->where('status_invoice_proposal', 'Verified - Draft BA')->get();
+            $draft = Draft_BA::whereBetween('created_at',[$start_date,$end_date])->where("id_vendor", $user_vendor)->orwhere('status_invoice_proposal', 'Verified - Draft BA')->orderBy('created_at', 'ASC')->get();
            } else {
             $user_vendor = Auth::User()->id_vendor;
             $start_date = request()->start_date;
@@ -229,7 +229,7 @@ class FilterController extends Controller
             $start_date = Carbon::parse(request()->start_date)->toDateTimeString();
             $end_date = Carbon::parse(request()->end_date)->toDateTimeString();
             $user_vendor = Auth::User()->id_vendor;
-            $ba = BA_Reconcile::whereBetween('created_at',[$start_date,$end_date])->where("id_vendor", $user_vendor)->where('status_invoice_proposal', 'Verified - BA')->get();
+            $ba = BA_Reconcile::whereBetween('created_at',[$start_date,$end_date])->where("id_vendor", $user_vendor)->where('status_invoice_proposal', 'Verified - BA')->orderBy('created_at', 'ASC')->get();
 
         } else {
             $user_vendor = Auth::User()->id_vendor;
@@ -245,7 +245,7 @@ class FilterController extends Controller
             $start_date = Carbon::parse(request()->start_date)->toDateTimeString();
             $end_date = Carbon::parse(request()->end_date)->toDateTimeString();
             $user_vendor = Auth::User()->id_vendor;
-            $invoice = Invoice::whereBetween('posting_date',[$start_date,$end_date])->Where("id_vendor", $user_vendor)->Where("data_from", "GR")->get();
+            $invoice = Invoice::whereBetween('posting_date',[$start_date,$end_date])->Where("id_vendor", $user_vendor)->Where("data_from", "GR")->orderBy('posting_date', 'ASC')->get();
         } else {
             $user_vendor = Auth::User()->id_vendor;
             $start_date = request()->start_date;
@@ -261,7 +261,7 @@ class FilterController extends Controller
             $start_date = Carbon::parse(request()->start_date)->toDateTimeString();
             $end_date = Carbon::parse(request()->end_date)->toDateTimeString();
             $user_vendor = Auth::User()->id_vendor;
-            $invoice = Invoice::whereBetween('posting_date',[$start_date,$end_date])->Where("id_vendor", $user_vendor)->Where("data_from", "BA")->get();
+            $invoice = Invoice::whereBetween('posting_date',[$start_date,$end_date])->Where("id_vendor", $user_vendor)->Where("data_from", "BA")->orderBy('posting_date', 'ASC')->get();
         } else {
             $user_vendor = Auth::User()->id_vendor;
             $start_date = request()->start_date;
@@ -277,7 +277,7 @@ class FilterController extends Controller
             $start_date = Carbon::parse(request()->start_date)->toDateTimeString();
             $end_date = Carbon::parse(request()->end_date)->toDateTimeString();
             $user_vendor = Auth::User()->id_vendor;
-            $draft = Draft_BA::select('no_draft','status_invoice_proposal', 'created_at')->distinct()->whereBetween('created_at',[$start_date,$end_date])->where("id_vendor", $user_vendor)->where("status_invoice_proposal", "Not Yet Verified - Draft BA")->get();
+            $draft = Draft_BA::select('no_draft','status_invoice_proposal', 'created_at')->distinct()->whereBetween('created_at',[$start_date,$end_date])->where("id_vendor", $user_vendor)->where("status_invoice_proposal", "Not Yet Verified - Draft BA")->orderBy('created_at', 'ASC')->get();
         } else {
             $user_vendor = Auth::User()->id_vendor;
             $start_date = request()->start_date;
@@ -301,6 +301,7 @@ class FilterController extends Controller
              ->whereBetween('ba.created_at',[$start_date,$end_date])
              ->where("ba.id_vendor", "=", $user_vendor)
              ->where("ba_reconcile.status_invoice_proposal", "=", "Not Yet Verified - BA")
+             ->orderBy('ba.created_at', 'ASC')
              ->get();
         } else {
             $user_vendor = Auth::User()->id_vendor;

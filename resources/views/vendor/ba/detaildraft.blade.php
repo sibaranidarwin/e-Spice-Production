@@ -114,9 +114,9 @@ label {
                                         <th style="text-align: center;">Part Number</th>
                                         <th style="text-align: center;">Mat. Desc.</th>
                                         <th style="text-align: center;">Qty UOM</th>
-                                        <th style="text-align: center;">Header Text</th>
+                                        {{-- <th style="text-align: center;">Header Text</th> --}}
                                         <th style="text-align: center;">Curr</th>
-                                        <th style="text-align: center;">Price</th>
+                                        <th style="text-align: center;">Net Price</th>
                                         <th style="text-align: center;">Total Value</th>
                                         <th style="text-align: center;">Ref.</th>
                                         <th style="text-align: center;">Del. Note</th>
@@ -138,7 +138,7 @@ label {
                                         <td><span>{{$item->material_number}} / {{$item->vendor_part_number}}</span></td>
                                         <td><span>{{$item->mat_desc}} <br>({{$item->valuation_type}})</span></td>
                                         <td><span>{{$item->jumlah}}</span>&nbsp;<span>{{$item->uom}}</span></td>
-                                        <td><span>{{$item->doc_header_text}}</span></td>
+                                        {{-- <td><span>{{$item->doc_header_text}}</span></td> --}}
                                         <td> <span>{{$item->currency}}</span> </td>
                                         <td style="text-align: right"><span>{{ number_format($item->harga_satuan) }}</span></td>
                                         <td style="text-align: right"></span>{{ number_format($item->jumlah_harga) }}<span></td>

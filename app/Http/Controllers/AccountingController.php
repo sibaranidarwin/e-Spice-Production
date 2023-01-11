@@ -54,12 +54,13 @@ class AccountingController extends Controller
         $start_date = null;
         $end_date = null;
         $status = null;
+        $vendor = null;
         $vendor_name = good_receipt::select('vendor_name')->distinct()->get();
 
 
         $dispute = good_receipt::all()->where("status", "Disputed")->count();
 
-        return view('accounting.po.all',compact('good_receipts', 'dispute', 'vendor_name', 'start_date', 'end_date', 'status'))
+        return view('accounting.po.all',compact('good_receipts', 'dispute', 'vendor_name', 'start_date', 'end_date', 'status', 'vendor'))
                 ->with('i',(request()->input('page', 1) -1) *5);
     }
 
@@ -69,12 +70,13 @@ class AccountingController extends Controller
         $start_date = null;
         $end_date = null;
         $status = null;
+        $vendor = null;
         $vendor_name = good_receipt::select('vendor_name')->distinct()->get();
 
         $status= null;
         $dispute = good_receipt::all()->where("status", "Disputed")->count();
 
-        return view('accounting.po.index',compact('good_receipts', 'dispute', 'start_date', 'end_date', 'status', 'vendor_name'))
+        return view('accounting.po.index',compact('good_receipts', 'dispute', 'start_date', 'end_date', 'status', 'vendor_name', 'vendor'))
                 ->with('i',(request()->input('page', 1) -1) *5);
     }
     public function pover(){
@@ -82,11 +84,12 @@ class AccountingController extends Controller
         $start_date = null;
         $end_date = null;
         $status = null;
+        $vendor = null;
         $vendor_name = good_receipt::select('vendor_name')->distinct()->get();
         
         $dispute = good_receipt::all()->where("status", "Disputed")->count();
 
-        return view('accounting.po.verified',compact('good_receipts', 'dispute', 'vendor_name', 'start_date', 'end_date', 'status'))
+        return view('accounting.po.verified',compact('good_receipts', 'dispute', 'vendor_name', 'start_date', 'end_date', 'status', 'vendor'))
         ->with('i',(request()->input('page', 1) -1) *5);
     }
     public function poreject(){
@@ -94,11 +97,12 @@ class AccountingController extends Controller
         $start_date = null;
         $end_date = null;
         $status = null;
+        $vendor = null;
         $vendor_name = good_receipt::select('vendor_name')->distinct()->get();
 
         $dispute = good_receipt::all()->where("status", "Disputed")->count();
 
-        return view('accounting.po.reject',compact('good_receipts', 'dispute', 'vendor_name', 'start_date', 'end_date', 'status'))
+        return view('accounting.po.reject',compact('good_receipts', 'dispute', 'vendor_name', 'start_date', 'end_date', 'status','vendor'))
         ->with('i',(request()->input('page', 1) -1) *5);
     }
 
@@ -107,7 +111,6 @@ class AccountingController extends Controller
     $draft = Draft_BA::all();
     return view('accounting.ba.draft',compact('draft'));
     }
-
 
     public function ba()
     {
@@ -125,13 +128,14 @@ class AccountingController extends Controller
     }
     public function disputed()
     {
-        $good_receipts = good_receipt::where("Status", "Dispute")->orderBy('gr_date', 'ASC')->get();
+        $good_receipts = good_receipt::where("Status", "Disputed")->orderBy('gr_date', 'ASC')->get();
         $start_date = null;
         $end_date = null;
         $status = null;
-        $vendor_name = good_receipt::distinct()->get();
+        $vendor = null;
+        $vendor_name = good_receipt::select('vendor_name')->distinct()->get();
 
-        return view('accounting.dispute.index',compact('good_receipts', 'vendor_name', 'start_date', 'end_date', 'status'))
+        return view('accounting.dispute.index',compact('good_receipts', 'vendor_name', 'start_date', 'end_date', 'status', 'vendor'))
                 ->with('i',(request()->input('page', 1) -1) *5);
     }
     /**
@@ -139,6 +143,7 @@ class AccountingController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
     public function create()
     {
         //

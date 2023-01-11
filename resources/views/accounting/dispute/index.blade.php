@@ -81,11 +81,11 @@
                     </div>
                     <div class="card-body">
                     <div class="table-responsive text-nowrap">
-                        @if ($start_date != null || $end_date != null || $status != null)
-                        <p style="text-align: center; background-color: #11CDEF; color: white;"><strong class="card-title">GR Date:{{ Carbon\Carbon::parse($start_date)->format('d F Y') }} To: {{ Carbon\Carbon::parse($end_date)->format('d F Y') }} Status Invoice Proposal: {{ ($status) }}</strong></p>
+                        @if ($start_date != null || $end_date != null || $vendor != null)
+                        <p style="text-align: center; background-color: #11CDEF; color: white;"><strong class="card-title">GR Date:{{ Carbon\Carbon::parse($start_date)->format('d F Y') }} To: {{ Carbon\Carbon::parse($end_date)->format('d F Y') }} Vendor Name: {{ ($vendor) }}</strong></p>
                         @endif
                         <form action="{{ route('accounting-filterdisp') }}" class="form-inline" method="GET">
-                            <div class="form-group col-md-1">
+                            <div class="form-group col-md-2">
 
                             </div>
                             <div class="form-group ">
@@ -97,14 +97,14 @@
                               <input type="date" class="form-control" name="end_date">
                             </div>
                             <div class="form-group col-md-2-half">
-                                <select class="form-control" name="">
-                                    <option>-- Choose Vendor Name -- </option>
+                                <select class="form-control" name="vendor">
+                                    <option value="">-- Choose Vendor Name -- </option>
                                         @foreach ($vendor_name as $vendor_name)
                                             <option value="{{ $vendor_name['vendor_name'] }}">{{ $vendor_name['vendor_name'] }}</option>
                                         @endforeach
                                 </select>
                             </div> &nbsp;&nbsp;
-                            <div class="form-group col-md-2-half">
+                            <div hidden class="form-group col-md-2-half">
                                 <select class="form-control status_invoice" name="">
                                     <option value="">-- Choose Sts. Inv. Props. -- </option>
                                     <option value="Verified">Verified</option>

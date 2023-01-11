@@ -87,15 +87,15 @@
                             </div>
                             <div class="form-group ">
                               <label for="" >GR Date: &nbsp;</label>
-                              <input type="date" class="form-control" name="start_date">
+                              <input type="date" class="form-control form-control-sm" name="start_date">
                             </div>
                             <div class="form-group mx-sm-4">
                               <label for="inputPassword2">To: &nbsp;</label>
-                              <input type="date" class="form-control" name="end_date">
+                              <input type="date" class="form-control form-control-sm" name="end_date">
                             </div>
                             <div class="form-group col-md-3">
                                 {{-- <label> Sts. Inv. Props.: &nbsp; </label> --}}
-                                <select class="form-control status_invoice" name="status">
+                                <select class="form-control form-control-sm status_invoice" name="status">
                                     <option value="">-- Choose Sts. Inv. Props. -- </option>
                                     <option value="Verified - BA">Verified - BA</option>
                                     <option value="Not Yet Verified - Draft BA">Not Yet Verified - Draft BA</option>

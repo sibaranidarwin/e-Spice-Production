@@ -117,7 +117,7 @@
                                         <th>Del. Note</th>
                                         <th>Tax Code</th>
                                         <th>Reason Disp. </th>
-                                        <th>File Disp.</th>
+                                        <th>Files Disp.</th>
                                     </tr>
                                 </thead>
                                 <tbody style="font-size: 11px;">

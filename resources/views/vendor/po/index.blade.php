@@ -127,7 +127,6 @@ div.dt-button-collection {
                                                 @endif
                                                 <form action="{{ route('vendor-filter') }}" class="form-inline"
                                                     method="GET">
-                                                    {{-- <div class="row"> --}}
                                                     <div class="form-group col-md-1">
 
                                                     </div>
@@ -326,8 +325,7 @@ div.dt-button-collection {
                                                         <tbody style="font-size: 11px;">
                                                             @foreach($not as $good_receipt)
                                                             <tr>
-                                                                @if ($good_receipt->status_invoice_proposal == 'Not Yet
-                                                                Verified - Draft BA')
+                                                                @if ($good_receipt->status_invoice_proposal == 'Not Yet Verified - Draft BA') 
                                                                 <td><input type="checkbox" disabled name="ids[]"
                                                                         value="{{$good_receipt->id_gr}}"></td>
                                                                 @elseif ($good_receipt->status_invoice_proposal ==
@@ -470,9 +468,8 @@ div.dt-button-collection {
                                                         <tbody style="font-size: 11px;">
                                                             @foreach($ver as $good_receipt)
                                                             <tr>
-                                                                @if ($good_receipt->status_invoice_proposal == 'Not Yet
-                                                                Verified - Draft BA')
-                                                                <td><input type="checkbox" disabled name="ids[]"
+                                                                @if ($good_receipt->status_invoice_proposal == 'Not Yet Verified - Draft BA') 
+                                                                <td><input hidden type="checkbox" disabled name="ids[]"
                                                                         value="{{$good_receipt->id_gr}}"></td>
                                                                 @elseif ($good_receipt->status_invoice_proposal ==
                                                                 'Verified - BA')
