@@ -100,22 +100,22 @@ div.dt-button-collection {
                                 </div>
                                 <div class="form-group ">
                                   <label for="" >GR Date: &nbsp;</label>
-                                  <input type="date" class="form-control" name="start_date">
+                                  <input type="date" class="form-control form-control-sm" name="start_date">
                                 </div>
                                 <div class="form-group mx-sm-2">
                                   <label for="inputPassword2">To: &nbsp;</label>
-                                  <input type="date" class="form-control" name="end_date">
+                                  <input type="date" class="form-control form-control-sm" name="end_date">
                                 </div>
                                 <div class="form-group col-md-2-half">
-                                    <select class="form-control" name="vendor">
-                                        <option>-- Choose Vendor Name -- </option>
+                                    <select class="form-control form-control-sm" name="vendor">
+                                        <option value="">-- Choose Vendor Name -- </option>
                                             @foreach ($vendor_name as $vendor_name)
                                                 <option value="{{ $vendor_name['vendor_name'] }}">{{ $vendor_name['vendor_name'] }}</option>
                                             @endforeach
                                     </select>
                                 </div> &nbsp;&nbsp;
-                                <div class="form-group col-md-2-half">
-                                    <select class="form-control status_invoice" name="status">
+                                <div hidden class="form-group col-md-2-half">
+                                    <select class="form-control form-control-sm status_invoice" name="status">
                                         <option value="">-- Choose Sts. Inv. Props. -- </option>
                                         <option value="Verified">Verified</option>
                                         <option value="Not Yet Verified - Draft BA">Not Yet Verified - Draft BA</option>
@@ -140,8 +140,8 @@ div.dt-button-collection {
                                             <th style="text-align: center;">QTY UOM</th>
                                             <th style="text-align: center;">Reference</th>
                                             <th style="text-align: center;">Del. Note</th>
-                                            <th style="text-align: center;">File</th>
                                             <th style="text-align: center;">Tax Code</th>
+                                            <th style="text-align: center;">Files</th>
                                         </tr>
                                     </thead>
                                     <tbody style="font-size: 11px;">

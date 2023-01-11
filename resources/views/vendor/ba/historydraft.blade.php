@@ -83,6 +83,14 @@ label {
                     </div>
                     <div class="card-body">
                         <div class="table-responsive text-nowrap">
+                            @if ($start_date != null || $end_date != null)
+                            <p style="text-align: center; background-color: #11CDEF; color: white;">
+                                <strong class="card-title"></i>GR
+                                    Date:{{ Carbon\Carbon::parse($start_date)->format('d F Y') }}
+                                    To:
+                                    {{ Carbon\Carbon::parse($end_date)->format('d F Y') }}</i></strong>
+                            </p>
+                            @endif
                             <form action="{{ route('vendor-filterhistorydraft') }}" class="form-inline" method="GET">
                                 <div class="form-group col-md-3">
                                 </div>
@@ -111,10 +119,11 @@ label {
                                             <th style="text-align: center;">GR Date</th>
                                             <th style="text-align: center;">Part Number</th>
                                             <th style="text-align: center;">Mat. Desc.</th>
-                                            <th style="text-align: center;">Quantity</th>
+                                            <th style="text-align: center;">Qty UOM</th>
                                             <th style="text-align: center;">Curr</th>
-                                            <th style="text-align: center;">Total Price</th>
+                                            <th style="text-align: center;">Net Price</th>
                                             <th style="text-align: center;">Total Value</th>
+                                            <th style="text-align: center;">Tax Code</th>
                                         </tr>
                                     </thead>
                                     <tbody style="font-size: 11px;">
@@ -131,7 +140,7 @@ label {
                                             <td><span>{{ Carbon\Carbon::parse($item->gr_date)->format('d F Y') }}</span></td>
                                             <td><span>{{$item->material_number}} /{{$item->vendor_part_number}}</span></td>
                                             <td><span>{{$item->mat_desc}} ({{$item->valuation_type}})</span></td>
-                                            <td><span>{{$item->jumlah}}</span></td>
+                                            <td><span>{{$item->jumlah}}</span>&nbsp;<span>{{$item->uom}}</span></td>
                                             <td> <span>{{$item->currency}}</span> </td>
                                             <td style="text-align: right"><span>{{ number_format($item->jumlah_harga) }}</span></td>  
                                             <td style="text-align: right"><span><?php
@@ -140,6 +149,7 @@ label {
                                                 $total = $harga * $jumlah;
                                                 echo""; echo number_format($total);
                                                 ?></span></td>
+                                            <td><span>{{$item->tax_code}}</span></td>
                                         </tr>
                                         @endforeach
                                         </select>

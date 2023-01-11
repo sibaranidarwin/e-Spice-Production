@@ -75,23 +75,7 @@
                         </div>
                     </div>
 
-                    <div class="col-lg-4 col-md-6">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="stat-widget-five">
-                                    <div class="stat-icon dib flat-color-7">
-                                        <i class='fa fa-warning'></i>
-                                    </div>
-                                    <div class="stat-content">
-                                        <div class="text-left dib">
-                                            <div class="stat-heading"><strong> Disputed</strong></div>
-                                            <div class="stat-text"><strong class="count">{{ $dispute}}</strong></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                  
                     <div class="col-lg-4 col-md-6">
                         <div class="card">
                             <div class="card-body">     
@@ -108,23 +92,6 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-lg-9 col-md-6">
-                        {{-- <div class="card">
-                            <div class="card-body">
-                                <div class="stat-widget-five">
-                                    <div class="stat-icon dib flat-color-6">
-                                        {{-- <i class='fa fa-users'></i> --}}
-                                    {{-- </div>
-                                    <div class="stat-content">
-                                        <div class="text-left dib">
-                                            {{-- <div class="stat-heading"><strong> Vendor</strong></div>
-                                            <div class="stat-text"><strong class="count">{{ $vendor}}</strong></div> --}}
-                                        {{-- </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> --}}
                     </div>
 
                     <div class="col-lg-6 col-md-6">

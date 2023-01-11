@@ -59,12 +59,13 @@ class ProcumerentController extends Controller
         $good_receipts = good_receipt::where("status", "Verified")->orwhere('material_number','LG2KOM00707010F691')->orwhere("status", "Rejected")->get();
         $start_date = null;
         $end_date = null;
-        $status= null;
-        $vendor_name = good_receipt::distinct()->get();
+        $status = null;
+        $vendor = null;
+        $vendor_name = good_receipt::select('vendor_name')->distinct()->get();
 
         $dispute = good_receipt::all()->where("status", "Disputed")->count();
 
-        return view('procumerent.po.all',compact('good_receipts', 'dispute', 'start_date', 'vendor_name', 'end_date', 'status'))
+        return view('procumerent.po.all',compact('good_receipts', 'dispute', 'start_date', 'vendor_name', 'end_date', 'status', 'vendor'))
                 ->with('i',(request()->input('page', 1) -1) *5);
     }
 
@@ -73,48 +74,53 @@ class ProcumerentController extends Controller
         $good_receipts = good_receipt::where('material_number', 'LG2KOM00707010F691' )->where("status","Not Verified")->orderBy('gr_date', 'ASC')->get();
         $start_date = null;
         $end_date = null;
-        $vendor_name = good_receipt::get();
+        $status = null;
+        $vendor = null;
+        $vendor_name = good_receipt::select('vendor_name')->distinct()->get();
 
         $status= null;
         $dispute = good_receipt::all()->where("Status", "Dispute")->count();
 
-        return view('procumerent.po.index',compact('good_receipts', 'dispute', 'start_date', 'end_date', 'status', 'vendor_name'))
+        return view('procumerent.po.index',compact('good_receipts', 'dispute', 'start_date', 'end_date', 'status', 'vendor_name', 'vendor'))
                 ->with('i',(request()->input('page', 1) -1) *5);
     }
     public function pover(){
         $good_receipts = good_receipt::where("Status","Verified")->get();
         $start_date = null;
         $end_date = null;
-        $status= null;
+        $status = null;
+        $vendor = null;
+        $vendor_name = good_receipt::select('vendor_name')->distinct()->get();
         
         $dispute = good_receipt::all()->where("Status", "Dispute")->count();
-        $vendor_name = good_receipt::get();
 
-        return view('procumerent.po.ver',compact('good_receipts', 'dispute', 'start_date', 'end_date', 'status', 'vendor_name'))
+        return view('procumerent.po.ver',compact('good_receipts', 'dispute', 'start_date', 'end_date', 'status', 'vendor_name', 'vendor'))
         ->with('i',(request()->input('page', 1) -1) *5);
     }
     public function poreject(){
         $good_receipts = good_receipt::where("Status","Reject")->get();
         $start_date = null;
         $end_date = null;
-        $status= null;
-        $vendor_name = good_receipt::get();
+        $status = null;
+        $vendor = null;
+        $vendor_name = good_receipt::select('vendor_name')->distinct()->get();
 
         $dispute = good_receipt::all()->where("Status", "Dispute")->count();
 
-        return view('procumerent.po.reject',compact('good_receipts', 'dispute', 'start_date', 'end_date', 'status', 'vendor_name'))
+        return view('procumerent.po.reject',compact('good_receipts', 'dispute', 'start_date', 'end_date', 'status', 'vendor_name', 'vendor'))
         ->with('i',(request()->input('page', 1) -1) *5);
     }
 
     public function disputed()
     {
         $good_receipts = good_receipt::where("Status", "Dispute")->get();
-        $vendor_name = good_receipt::get();
         $start_date = null;
         $end_date = null;
-        $status= null;
+        $status = null;
+        $vendor = null;
+        $vendor_name = good_receipt::select('vendor_name')->distinct()->get();
 
-        return view('procumerent.po.disputed',compact('good_receipts', 'start_date', 'end_date', 'status', 'vendor_name'))
+        return view('procumerent.po.disputed',compact('good_receipts', 'start_date', 'end_date', 'status', 'vendor_name', 'vendor'))
                 ->with('i',(request()->input('page', 1) -1) *5);
     }
 

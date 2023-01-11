@@ -52,12 +52,13 @@ class WarehouseController extends Controller
         $good_receipts = good_receipt::where("status", "Verified")->orwhere('material_number','LG2KOM00707010F691')->orwhere("status", "Rejected")->get();
         $start_date = null;
         $end_date = null;
-        $status= null;
+        $status = null;
+        $vendor = null;
         $vendor_name = good_receipt::select('vendor_name')->distinct()->get();
 
         $dispute = good_receipt::all()->where("status", "Disputed")->count();
 
-        return view('warehouse.po.all',compact('good_receipts', 'dispute', 'start_date', 'end_date', 'status', 'vendor_name'))
+        return view('warehouse.po.all',compact('good_receipts', 'dispute', 'start_date', 'end_date', 'status', 'vendor_name', 'status', 'vendor'))
                 ->with('i',(request()->input('page', 1) -1) *5);
     }
 
@@ -65,13 +66,15 @@ class WarehouseController extends Controller
     {   
         $start_date = null;
         $end_date = null;
+        $status = null;
+        $vendor = null;
         $vendor_name = good_receipt::select('vendor_name')->distinct()->get();
         $good_receipts = good_receipt::where('material_number', 'LG2KOM00707010F691' )->WhereNull('status')->get();
 
         // dd($good_receipts);
         $dispute = good_receipt::all()->where("status", "Disputed")->count();
 
-        return view('warehouse.po.index',compact('good_receipts', 'dispute', 'start_date', 'end_date', 'vendor_name'))
+        return view('warehouse.po.index',compact('good_receipts', 'dispute', 'start_date', 'end_date', 'vendor_name', 'status', 'vendor'))
                 ->with('i',(request()->input('page', 1) -1) *5);
     }
     public function pover(){
@@ -79,19 +82,23 @@ class WarehouseController extends Controller
         $dispute = good_receipt::all()->where("status", "Disputed")->count();
         $start_date = null;
         $end_date = null;
+        $status = null;
+        $vendor = null;
         $vendor_name = good_receipt::select('vendor_name')->distinct()->get();
 
-        return view('warehouse.po.verified',compact('good_receipts', 'dispute', 'start_date', 'end_date', 'vendor_name'))
+        return view('warehouse.po.verified',compact('good_receipts', 'dispute', 'start_date', 'end_date', 'vendor_name', 'status', 'vendor'))
         ->with('i',(request()->input('page', 1) -1) *5);
     }
     public function poreject(){
         $good_receipts = good_receipt::where("status","Rejected")->get();
         $start_date = null;
         $end_date = null;
+        $status = null;
+        $vendor = null;
         $vendor_name = good_receipt::select('vendor_name')->distinct()->get();
         $dispute = good_receipt::all()->where("status", "Disputed")->count();
 
-        return view('warehouse.po.reject',compact('good_receipts', 'dispute', 'start_date', 'end_date', 'vendor_name'))
+        return view('warehouse.po.reject',compact('good_receipts', 'dispute', 'start_date', 'end_date', 'vendor_name', 'status', 'vendor'))
         ->with('i',(request()->input('page', 1) -1) *5);
     }
     public function invoice()

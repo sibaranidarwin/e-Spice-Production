@@ -38,15 +38,15 @@ class AdminController extends Controller
     public function all()
     { 
 
-        $good_receipts = good_receipt::where("status", "Verified")->orwhere('material_number','LG2KOM00707010F691')->orwhere("status", "Rejected")->get();
+        $good_receipts = good_receipt::where("status", "Verified")->orwhere('status', '!=', 'Not Verified')->orwhere('material_number','LG2KOM00707010F691')->orwhere("status", "Rejected")->get();
         $vendor_name = good_receipt::select('vendor_name')->distinct()->get();
         $start_date = null;
         $end_date = null;
-        $status = null;
-
+        $vendor = null;
+        
         $dispute = good_receipt::all()->where("status", "Disputed")->count();
 
-        return view('admin.po.all',compact('good_receipts', 'dispute', 'vendor_name', 'start_date', 'end_date', 'status'))
+        return view('admin.po.all',compact('good_receipts', 'dispute', 'vendor_name', 'start_date', 'end_date', 'vendor'))
                 ->with('i',(request()->input('page', 1) -1) *5);
     }
     public function po()
@@ -55,10 +55,11 @@ class AdminController extends Controller
         $start_date = null;
         $end_date = null;
         $status = null;
+        $vendor = null;
 
-        $vendor_name = good_receipt::get();
+        $vendor_name = good_receipt::select('vendor_name')->distinct()->get();
 
-        return view('admin.po.notver',compact('good_receipts', 'vendor_name', 'start_date', 'end_date', 'status'))
+        return view('admin.po.notver',compact('good_receipts', 'vendor_name', 'start_date', 'end_date', 'status', 'vendor'))
                 ->with('i',(request()->input('page', 1) -1) *5);
     }
 
@@ -68,10 +69,11 @@ class AdminController extends Controller
         $start_date = null;
         $end_date = null;
         $status = null;
+        $vendor = null;
 
         $vendor_name = good_receipt::select('vendor_name')->distinct()->get();
 
-        return view('admin.po.ver',compact('good_receipts', 'vendor_name', 'start_date', 'end_date', 'status'))
+        return view('admin.po.ver',compact('good_receipts', 'vendor_name', 'start_date', 'end_date', 'status', 'vendor'))
                 ->with('i',(request()->input('page', 1) -1) *5);
     }
 
@@ -81,10 +83,11 @@ class AdminController extends Controller
         $start_date = null;
         $end_date = null;
         $status = null;
+        $vendor = null;
 
         $vendor_name = good_receipt::select('vendor_name')->distinct()->get();
 
-        return view('admin.po.reject',compact('good_receipts', 'vendor_name', 'start_date', 'end_date', 'status'))
+        return view('admin.po.reject',compact('good_receipts', 'vendor_name', 'start_date', 'end_date', 'status', 'vendor'))
                 ->with('i',(request()->input('page', 1) -1) *5);
     }
     
@@ -94,10 +97,11 @@ class AdminController extends Controller
         $start_date = null;
         $end_date = null;
         $status = null;
+        $vendor = null;
         $vendor_name = good_receipt::select('vendor_name')->distinct()->get();
 
 
-        return view('admin.po.disputed',compact('good_receipts', 'start_date', 'end_date', 'vendor_name', 'status'))
+        return view('admin.po.disputed',compact('good_receipts', 'start_date', 'end_date', 'vendor_name', 'status', 'vendor'))
                 ->with('i',(request()->input('page', 1) -1) *5);
     }
 

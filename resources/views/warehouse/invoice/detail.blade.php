@@ -145,7 +145,7 @@
                 </div>
                 <div class="form-group col-md-3">
                     <label class="form-control-label" for="faktur_pajak_number">Unplanned Cost<span style="color: red"></span></label>
-                    <input type="number" id="id-3" class="number-decimal form-control" name="unplan_cost" value="{{ number_format($invoice->unplan_cost) }}" autocomplete="off" readonly>
+                    <input type="number" id="id-3" class="number-decimal form-control" name="unplan_cost" value="{{ $invoice->unplan_cost }}" autocomplete="off" readonly>
                     @error('faktur_pajak_number[]')<span
                         class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
             </div> 

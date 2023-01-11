@@ -83,31 +83,31 @@ label{
                     </div>
                     <div class="card-body">
                         <div class="table-responsive text-nowrap">
-                            @if ($start_date != null || $end_date != null || $status != null)
-                            <p style="text-align: center; background-color: #11CDEF; color: white;"><strong class="card-title">GR Date:{{ Carbon\Carbon::parse($start_date)->format('d F Y') }} To: {{ Carbon\Carbon::parse($end_date)->format('d F Y') }} Status Invoice Proposal: {{ ($status) }}</strong></p>
+                            @if ($start_date != null || $end_date != null || $vendor != null)
+                            <p style="text-align: center; background-color: #11CDEF; color: white;"><strong class="card-title">GR Date:{{ Carbon\Carbon::parse($start_date)->format('d F Y') }} To: {{ Carbon\Carbon::parse($end_date)->format('d F Y') }} Vendor Name: {{ ($vendor) }}</strong></p>
                             @endif
-                            <form action="{{ route('procumerent-filter') }}" class="form-inline" method="GET">
-                                <div class="form-group col-md-1">
+                            <form action="{{ route('procumerent-filterver') }}" class="form-inline" method="GET">
+                                <div class="form-group col-md-2">
     
                                 </div>
                                 <div class="form-group ">
                                   <label for="" >GR Date: &nbsp;</label>
-                                  <input type="date" class="form-control" name="start_date">
+                                  <input type="date" class="form-control form-control-sm" name="start_date">
                                 </div>
                                 <div class="form-group mx-sm-2">
                                   <label for="inputPassword2">To: &nbsp;</label>
-                                  <input type="date" class="form-control" name="end_date">
+                                  <input type="date" class="form-control form-control-sm" name="end_date">
                                 </div>
                                 <div class="form-group col-md-2-half">
-                                    <select class="form-control" name="">
-                                        <option>-- Choose Vendor Name -- </option>
+                                    <select class="form-control form-control-sm" name="vendor">
+                                        <option value="">-- Choose Vendor Name -- </option>
                                             @foreach ($vendor_name as $vendor_name)
                                                 <option value="{{ $vendor_name['vendor_name'] }}">{{ $vendor_name['vendor_name'] }}</option>
                                             @endforeach
                                     </select>
                                 </div> &nbsp;&nbsp;
-                                <div class="form-group col-md-2-half">
-                                    <select class="form-control status_invoice" name="">
+                                <div hidden class="form-group col-md-2-half">
+                                    <select class="form-control form-control-sm status_invoice" name="">
                                         <option value="">-- Choose Sts. Inv. Props. -- </option>
                                         <option value="Verified">Verified</option>
                                         <option value="Not Yet Verified - Draft BA">Not Yet Verified - Draft BA</option>
@@ -123,6 +123,7 @@ label{
                                             <th style="text-align: center;">No</th>
                                             <th style="text-align: center;">Sts. GR</th>
                                             <th style="text-align: center;">Sts. Inv. Props.</th>
+                                            <th style="text-align: center;">Vendor</th>
                                             <th style="text-align: center;">Plant Code</th>
                                             <th style="text-align: center;">PO</th>
                                             <th style="text-align: center;">GR Number</th>
@@ -144,6 +145,7 @@ label{
                                             <td>{{++$i}}</td>
                                             <td >{{ $good_receipt->status }}</td>
                                             <td >{{ $good_receipt->status_invoice }}</td>
+                                            <td >{{ $good_receipt->id_vendor }} /{{ $good_receipt->vendor_name}}</td>
                                             <td >{{ $good_receipt->plant_code }}</td>
                                             <td ><span>{{$good_receipt->no_po}} /{{$good_receipt->po_item}}</span></td>
                                             <td ><span>{{$good_receipt->gr_number}}</span></td>

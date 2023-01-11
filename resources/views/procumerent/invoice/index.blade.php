@@ -85,11 +85,11 @@ label {
                                 </div>
                                 <div class="form-group ">
                                   <label for="" >Invoice Date: &nbsp;</label>
-                                  <input type="date" class="form-control" name="start_date">
+                                  <input type="date" class="form-control form-control-sm" name="start_date">
                                 </div>
                                 <div class="form-group mx-sm-3 ">
                                   <label for="inputPassword2">To: &nbsp;</label>
-                                  <input type="date" class="form-control" name="end_date">
+                                  <input type="date" class="form-control form-control-sm" name="end_date">
                                 </div>
                                 <button class="btn btn-primary" type="submit"><i class="fa fa-search"></i></button>
                               </form>

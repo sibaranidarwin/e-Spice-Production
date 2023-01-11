@@ -116,23 +116,23 @@ label {
                                 <table id="list" class="table table-striped" style="font-size: 10px;">
                                     <thead>
                                         <tr>
-                                            <th><input type="checkbox" onchange="checkAll(this)"></th>
+                                            <th style="text-align: center;"><input type="checkbox" onchange="checkAll(this)"></th>
                                             <th hidden></th>
-                                            <th>No</th>
-                                            <th>Sts. BA</th>
-                                            <th>Sts. Inv. Props.</th>
-                                            <th>PO</th>
-                                            <th>GR Number</th>
-                                            <th>GR Date</th>
-                                            <th>Part Number</th>
-                                            <th style="width: 10%;">Mat. Desc.</th>
-                                            <th>Qty</th>
-                                            <th>Curr</th>
-                                            <th>Price</th>
-                                            <th>Total Value</th>
-                                            <th>Ref. </th>
-                                            <th>Del. Note</th>
-                                            <th>Tax Code</th>
+                                            <th style="text-align: center;">No</th>
+                                            <th style="text-align: center;">Sts. BA</th>
+                                            <th style="text-align: center;">Sts. Inv. Props.</th>
+                                            <th style="text-align: center;">PO</th>
+                                            <th style="text-align: center;">GR Number</th>
+                                            <th style="text-align: center;">GR Date</th>
+                                            <th style="text-align: center;">Part Number</th>
+                                            <th style="text-align: center;">Mat. Desc.</th>
+                                            <th style="text-align: center;">Qty UOM</th>
+                                            <th style="text-align: center;">Curr</th>
+                                            <th style="text-align: center;">Net Price</th>
+                                            <th style="text-align: center;">Total Value</th>
+                                            <th style="text-align: center;">Ref. </th>
+                                            <th style="text-align: center;">Del. Note</th>
+                                            <th style="text-align: center;">Tax Code</th>
                                         </tr>
                                     </thead>
                                     <tbody style="font-size: 11px;">
