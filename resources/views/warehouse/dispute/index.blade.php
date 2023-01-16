@@ -113,6 +113,7 @@
                                         <th>Curr</th>
                                         <th>Unit Price</th>
                                         <th>Tax Code</th>
+                                        <th style="text-align: center;">Updated By</th>
                                         <th>Reason</th>
                                     </tr>
                                 </thead>
@@ -131,8 +132,9 @@
                                         <td> <span>{{$good_receipt->delivery_note}}</span> </td>
                                         <td> <span>{{$good_receipt->jumlah}}</span>&nbsp;<span>{{$good_receipt->UOM}}</span> </td>
                                         <td> <span>{{$good_receipt->currency}}</span> </td>
-                                        <td> <span>Rp. {{number_format($good_receipt->harga_satuan)}}</span> </td>
+                                        <td> <span>{{number_format($good_receipt->harga_satuan)}}</span> </td>
                                         <td> <span>{{$good_receipt->tax_code}}</span> </td>
+                                        <td> <span>{{$good_receipt->vendor_name}}</span> </td>
                                         <td><span>{{$good_receipt->alasan_disp}}</span></td>
                                     </tr>
                                     @endforeach

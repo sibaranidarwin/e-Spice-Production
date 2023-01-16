@@ -142,12 +142,12 @@ label {
                                             <td><span>{{$item->material_description}}<br>({{$item->valuation_type}})</span></td>
                                             <td><span>{{$item->qty}}</span>&nbsp;<span>{{$item->uom}}</span></td>
                                             <td> <span>{{$item->currency}}</span> </td>
-                                            <td style="text-align: right"><span>{{ number_format($item->jumlah_harga) }}</span></td>  
+                                            <td style="text-align: right"><span>{{ number_format($item->jumlah_harga, 0,",",".") }}</span></td>  
                                             <td style="text-align: right"><span><?php
                                                 $harga = $item->jumlah_harga;
                                                 $jumlah = $item->qty;
                                                 $total = $harga * $jumlah;
-                                                echo""; echo number_format($total);
+                                                echo""; echo number_format($total, 0,",",".");
                                                 ?></span></td> 
                                             <td><span>{{$item->tax_code}}</span></td>
                                         </tr>

@@ -104,8 +104,8 @@ label {
                                             <th>Invoice Number Proposal</th>
                                             <th>VAT NO</th>
                                             <th>Curr</th>
-                                            <th>Total PPN</th>
-                                            <th>Total Price</th>
+                                            {{-- <th>Total PPN</th>
+                                            <th>Total Price</th> --}}
                                             <th>Action</th>
                                         </tr>
                                         </tr>
@@ -122,9 +122,9 @@ label {
                                             <td>{{$item['faktur_pajak_number'] }}</td>
                                             {{-- <td>{{$item['everify_number'] }}</td> --}}
                                             <td>{{$item['currency'] }}</td>
-                                            <td style="text-align: right">{{($item['ppn'])}}</td>
+                                            {{-- <td style="text-align: right">{{($item['ppn'])}}</td>
                                             <td style="text-align: right">{{number_format($item['total_harga_everify']) }}</td>
-                                            
+                                             --}}
                                             <td>
                                                 <a href="/warehouse/detail-invoice/{{$item->id_inv}}"
                                                     class="btn btn-info btn-sm">Det.</a>

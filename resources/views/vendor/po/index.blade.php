@@ -132,19 +132,23 @@ div.dt-button-collection {
                                                     </div>
                                                     <div class="form-group ">
                                                         <label for="">GR Date: &nbsp;</label>
-                                                        <input type="date" class="form-control form-control-sm" name="start_date">
+                                                        <input type="date" class="form-control form-control-sm"
+                                                            name="start_date">
                                                     </div>
                                                     <div class="form-group mx-sm-4">
                                                         <label for="inputPassword2">To: &nbsp;</label>
-                                                        <input type="date" class="form-control form-control-sm" name="end_date">
+                                                        <input type="date" class="form-control form-control-sm"
+                                                            name="end_date">
                                                     </div>
                                                     <div class="form-group ">
                                                         <label for="">Plant Code: &nbsp;</label>
-                                                        <input type="text" class="form-control form-control-sm" name="minpo">
+                                                        <input type="text" class="form-control form-control-sm"
+                                                            placeholder="Fill in plant code from..." name="minpo">
                                                     </div>
                                                     <div class="form-group mx-sm-4">
                                                         <label for="inputPassword2">To: &nbsp;</label>
-                                                        <input type="text" class="form-control form-control-sm" name="maxpo">
+                                                        <input type="text" class="form-control form-control-sm"
+                                                            placeholder="Fill in plant code to..." name="maxpo">
                                                     </div>
                                                     <button class="btn btn-primary"
                                                         onclick="return confirm('Are you sure?')" type="submit"><i
@@ -206,12 +210,13 @@ div.dt-button-collection {
                                                                         {{$good_receipt->vendor_part_number}}</span>
                                                                 </td>
                                                                 <td> <span>{{$good_receipt->mat_desc}}</span>
-                                                                    <br>({{$good_receipt->valuation_type}})</td>
+                                                                    <br>({{$good_receipt->valuation_type}})
+                                                                </td>
                                                                 <td> <span>{{$good_receipt->jumlah}}</span>&nbsp;<span>{{$good_receipt->uom}}</span>
                                                                 </td>
                                                                 <td> <span>{{$good_receipt->currency}}</span> </td>
                                                                 <td style="text-align: right">
-                                                                    <span>{{number_format($good_receipt->harga_satuan)}}</span>
+                                                                    <span>{{number_format($good_receipt->harga_satuan, 0,",",".")}}</span>
                                                                 </td>
                                                                 <td> <span>{{$good_receipt->ref_doc_no}}</span> </td>
                                                                 <td> <span>{{$good_receipt->delivery_note}}</span> </td>
@@ -279,19 +284,23 @@ div.dt-button-collection {
                                                     </div>
                                                     <div class="form-group ">
                                                         <label for="">GR Date: &nbsp;</label>
-                                                        <input type="date" class="form-control form-control-sm" name="start_date">
+                                                        <input type="date" class="form-control form-control-sm"
+                                                            name="start_date">
                                                     </div>
                                                     <div class="form-group mx-sm-4">
                                                         <label for="inputPassword2">To: &nbsp;</label>
-                                                        <input type="date" class="form-control form-control-sm" name="end_date">
+                                                        <input type="date" class="form-control form-control-sm"
+                                                            name="end_date">
                                                     </div>
                                                     <div class="form-group ">
                                                         <label for="">Plant Code: &nbsp;</label>
-                                                        <input type="text" class="form-control form-control-sm" name="minpo">
+                                                        <input type="text" class="form-control form-control-sm"
+                                                            placeholder="Fill in plant code from..." name="minpo">
                                                     </div>
                                                     <div class="form-group mx-sm-4">
                                                         <label for="inputPassword2">To: &nbsp;</label>
-                                                        <input type="text" class="form-control form-control-sm" name="maxpo">
+                                                        <input type="text" class="form-control form-control-sm"
+                                                            placeholder="Fill in plant code to..." name="maxpo">
                                                     </div>
                                                     <button class="btn btn-primary"
                                                         onclick="return confirm('Are you sure?')" type="submit"><i
@@ -325,7 +334,8 @@ div.dt-button-collection {
                                                         <tbody style="font-size: 11px;">
                                                             @foreach($not as $good_receipt)
                                                             <tr>
-                                                                @if ($good_receipt->status_invoice_proposal == 'Not Yet Verified - Draft BA') 
+                                                                @if ($good_receipt->status_invoice_proposal == 'Not Yet
+                                                                Verified - Draft BA')
                                                                 <td><input type="checkbox" disabled name="ids[]"
                                                                         value="{{$good_receipt->id_gr}}"></td>
                                                                 @elseif ($good_receipt->status_invoice_proposal ==
@@ -348,12 +358,13 @@ div.dt-button-collection {
                                                                         {{$good_receipt->vendor_part_number}}</span>
                                                                 </td>
                                                                 <td> <span>{{$good_receipt->mat_desc}}</span>
-                                                                    <br>({{$good_receipt->valuation_type}})</td>
+                                                                    <br>({{$good_receipt->valuation_type}})
+                                                                </td>
                                                                 <td> <span>{{$good_receipt->jumlah}}</span>&nbsp;<span>{{$good_receipt->uom}}</span>
                                                                 </td>
                                                                 <td> <span>{{$good_receipt->currency}}</span> </td>
                                                                 <td style="text-align: right">
-                                                                    <span>{{number_format($good_receipt->harga_satuan)}}</span>
+                                                                    <span>{{number_format($good_receipt->harga_satuan, 0,",",".")}}</span>
                                                                 </td>
                                                                 <td> <span>{{$good_receipt->ref_doc_no}}</span> </td>
                                                                 <td> <span>{{$good_receipt->delivery_note}}</span> </td>
@@ -422,19 +433,23 @@ div.dt-button-collection {
                                                     </div>
                                                     <div class="form-group ">
                                                         <label for="">GR Date: &nbsp;</label>
-                                                        <input type="date" class="form-control form-control-sm" name="start_date">
+                                                        <input type="date" class="form-control form-control-sm"
+                                                            name="start_date">
                                                     </div>
                                                     <div class="form-group mx-sm-4">
                                                         <label for="inputPassword2">To: &nbsp;</label>
-                                                        <input type="date" class="form-control form-control-sm" name="end_date">
+                                                        <input type="date" class="form-control form-control-sm"
+                                                            name="end_date">
                                                     </div>
                                                     <div class="form-group ">
                                                         <label for="">Plant Code: &nbsp;</label>
-                                                        <input type="text" class="form-control form-control-sm" name="minpo">
+                                                        <input type="text" class="form-control form-control-sm"
+                                                            placeholder="Fill in plant code from..." name="minpo">
                                                     </div>
                                                     <div class="form-group mx-sm-4">
                                                         <label for="inputPassword2">To: &nbsp;</label>
-                                                        <input type="text" class="form-control form-control-sm" name="maxpo">
+                                                        <input type="text" class="form-control form-control-sm"
+                                                            placeholder="Fill in plant code to..." name="maxpo">
                                                     </div>
                                                     <button class="btn btn-primary"
                                                         onclick="return confirm('Are you sure?')" type="submit"><i
@@ -468,7 +483,8 @@ div.dt-button-collection {
                                                         <tbody style="font-size: 11px;">
                                                             @foreach($ver as $good_receipt)
                                                             <tr>
-                                                                @if ($good_receipt->status_invoice_proposal == 'Not Yet Verified - Draft BA') 
+                                                                @if ($good_receipt->status_invoice_proposal == 'Not Yet
+                                                                Verified - Draft BA')
                                                                 <td><input hidden type="checkbox" disabled name="ids[]"
                                                                         value="{{$good_receipt->id_gr}}"></td>
                                                                 @elseif ($good_receipt->status_invoice_proposal ==
@@ -491,12 +507,13 @@ div.dt-button-collection {
                                                                         {{$good_receipt->vendor_part_number}}</span>
                                                                 </td>
                                                                 <td> <span>{{$good_receipt->mat_desc}}</span>
-                                                                    <br>({{$good_receipt->valuation_type}})</td>
+                                                                    <br>({{$good_receipt->valuation_type}})
+                                                                </td>
                                                                 <td> <span>{{$good_receipt->jumlah}}</span>&nbsp;<span>{{$good_receipt->uom}}</span>
                                                                 </td>
                                                                 <td> <span>{{$good_receipt->currency}}</span> </td>
                                                                 <td style="text-align: right">
-                                                                    <span>{{number_format($good_receipt->harga_satuan)}}</span>
+                                                                    <span>{{number_format($good_receipt->harga_satuan, 0,",",".")}}</span>
                                                                 </td>
                                                                 <td> <span>{{$good_receipt->ref_doc_no}}</span> </td>
                                                                 <td> <span>{{$good_receipt->delivery_note}}</span> </td>

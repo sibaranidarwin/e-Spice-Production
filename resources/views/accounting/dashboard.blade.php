@@ -118,6 +118,32 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="col-lg-6 col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="stat-widget-five">
+                                    <div class="stat-content">
+                                        <div id="jumlah"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+        
+                    <div class="col-lg-6 col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="stat-widget-five">
+                                    <div class="stat-content">
+                                        <div id="gereja"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 </div>
                 <!-- /Widgets -->
                 <!--  Traffic  -->
@@ -133,5 +159,124 @@
         <!-- /.site-footer -->
     </div>
     <!-- /#right-panel -->
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script>
+    Highcharts.chart('jumlah', {
+        chart: {
+            type: 'pie'
+        },
+        title: {
+            text: 'Proposal Invoice by PT United Tractors'
+        },
+        series: [{
+            data: [{
+                    name: 'January',
+                    y: 78
+
+                },
+                {
+                    name: 'February',
+                    y: 40
+                },
+                {
+                    name: 'Maret',
+                    y: 40
+                },
+                {
+                    name: 'April',
+                    y: 40
+                },
+                {
+                    name: 'Mei',
+                    y: 40
+                },
+                {
+                    name: 'Juni',
+                    y: 40
+                },
+                {
+                    name: 'July',
+                    y: 40
+                },
+                {
+                    name: 'Agustus',
+                    y: 40
+                },
+                {
+                    name: 'September',
+                    y: 30
+                }, {
+                    name: 'Oktober',
+                    y: 20
+                }, {
+                    name: 'November',
+                    y: 5
+                }, {
+                    name: 'Desember',
+                    y: 5
+                }
+            ]
+        }]
+    });
+    </script>
+    <script>
+    Highcharts.chart('gereja', {
+        chart: {
+            type: 'pie'
+        },
+        title: {
+            text: 'Proposal Invoice by Vendor One Time(AP Others)'
+        },
+        series: [{
+            data: [{
+                    name: 'January',
+                    y: 78
+
+                },
+                {
+                    name: 'February',
+                    y: 40
+                },
+                {
+                    name: 'Maret',
+                    y: 40
+                },
+                {
+                    name: 'April',
+                    y: 40
+                },
+                {
+                    name: 'Mei',
+                    y: 40
+                },
+                {
+                    name: 'Juni',
+                    y: 40
+                },
+                {
+                    name: 'July',
+                    y: 40
+                },
+                {
+                    name: 'Agustus',
+                    y: 40
+                },
+                {
+                    name: 'September',
+                    y: 30
+                }, {
+                    name: 'Oktober',
+                    y: 20
+                }, {
+                    name: 'November',
+                    y: 5
+                }, {
+                    name: 'Desember',
+                    y: 5
+                }
+            ]
+        }]
+    });
+    </script>
 
 @endsection

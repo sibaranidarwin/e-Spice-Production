@@ -116,6 +116,7 @@
                                         <th>Reference</th>
                                         <th>Del. Note</th>
                                         <th>Tax Code</th>
+                                        <th>Updated By</th>
                                         <th>Reason Disp. </th>
                                         <th>Files Disp.</th>
                                     </tr>
@@ -132,13 +133,21 @@
                                         <td> <span>{{$good_receipt->mat_desc}}</span> <br>({{$good_receipt->valuation_type}})</td>
                                         <td> <span>{{$good_receipt->jumlah}}</span>&nbsp;<span>{{$good_receipt->UOM}}</span> </td>
                                         <td> <span>{{$good_receipt->currency}}</span> </td>
-                                        <td> <span>{{number_format($good_receipt->harga_satuan)}}</span> </td>
+                                        <td style="text-align: right">
+                                            <span>{{number_format($good_receipt->harga_satuan, 0,",",".")}}</span>
+                                        </td>
                                         <td> <span>{{$good_receipt->ref_doc_no}}</span> </td>
                                         <td> <span>{{$good_receipt->delivery_note}}</span> </td>
                                         <td><span>{{$good_receipt->tax_code}}</span></td>
+                                        <td><span>{{$good_receipt->vendor_name}}</span></td>
                                         <td><span>{{$good_receipt->alasan_disp}}</span></td>
+                                        @if ($good_receipt->lampiran == null)
+                                        <td><a target="_blank" href="{{ $good_receipt->lam_disp}}" onclick="return false;"
+                                            class="btn btn-light btn-sm">View File</a></td>
+                                        @else
                                         <td><a target="_blank" href="{{ $good_receipt->lam_disp}}"
                                             class="btn btn-success btn-sm">View File</a></td>
+                                        @endif
                                     </tr>
                                     @endforeach
                                     </select>

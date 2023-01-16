@@ -151,8 +151,8 @@ label {
                                             <td><span>{{$item->material_description}} /({{$item->valuation_type}})</span></td>
                                             <td><span>{{$item->qty}} {{$item->uom}}</span></td>
                                             <td><span>{{$item->currency}}</span></td>
-                                            <td style="text-align: right"><span>{{ number_format($item->harga_satuan) }}</span></td> 
-                                            <td style="text-align: right"><span>{{ number_format($item->jumlah_harga) }}</span></td> 
+                                            <td style="text-align: right"><span>{{ number_format($item->harga_satuan, 0,",",".") }}</span></td> 
+                                            <td style="text-align: right"><span>{{ number_format($item->jumlah_harga, 0,",",".") }}</span></td> 
                                             <td><span>{{$item->ref_doc_no}}</span></td>
                                             <td><span>{{$item->delivery_note}}</span></td>
                                             <td><span>{{$item->tax_code}}</span></td>
@@ -166,7 +166,7 @@ label {
                                     <a href="{{url('vendor/detailba')}}" type="submit"
                                     class="btn btn-danger" id="simpan" onclick="return confirm('Are you sure?')"> Return</a> &nbsp;&nbsp;&nbsp;
                                     &nbsp;&nbsp;<button type="submit" name="action" value="Update"
-                                    class="btn btn-success btn-sm-3" onclick="return confirm('Are you sure?')">Create Invoice</button>
+                                    class="btn btn-success btn-sm-3" onclick="return confirm('Are you sure?')">Create Invoice Proposal</button>
                             </form>
                         </div> <!-- /.table-stats -->
                     </div>

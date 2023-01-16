@@ -82,7 +82,7 @@
                     <div class="card-body">
                     <div class="table-responsive text-nowrap">
                         @if ($start_date != null || $end_date != null || $vendor != null)
-                        <p style="text-align: center; background-color: #11CDEF; color: white;"><strong class="card-title">GR Date:{{ Carbon\Carbon::parse($start_date)->format('d F Y') }} To: {{ Carbon\Carbon::parse($end_date)->format('d F Y') }} Vendor Name: {{ ($vendor) }}</strong></p>
+                        <p style="text-align: center; background-color: #11CDEF; color: white;"><strong class="card-title">GR Date:{{ Carbon\Carbon::parse($start_date)->format('d F Y') }} To: {{ Carbon\Carbon::parse($end_date)->format('d F Y') }}&nbsp; || &nbsp;Vendor Name: {{ ($vendor) }}</strong></p>
                         @endif
                         <form action="{{ route('admin-filterdisp') }}" class="form-inline" method="GET">
                             <div class="form-group col-md-2">
@@ -133,7 +133,8 @@
                                         <th>Tax Code</th>
                                         <th>Reference</th>
                                         <th>Del. Note</th>
-                                        <th>Desc. </th>
+                                        <th>Updated By</th>
+                                        <th>Reasons</th>
                                     </tr>
                                 </thead>
                                 <tbody style="font-size: 11px;">
@@ -154,6 +155,7 @@
                                         <td> <span>{{$good_receipt->tax_code}}</span> </td>
                                         <td> <span>{{$good_receipt->ref_doc_no}}</span> </td>
                                         <td> <span>{{$good_receipt->delivery_note}}</span> </td>
+                                        <td><span>{{$good_receipt->vendor_name}}</span></td>
                                         <td><span>{{$good_receipt->alasan_disp}}</span></td>
                                     </tr>
                                     @endforeach
@@ -226,7 +228,7 @@
             rowReorder: true,
              columnDefs: [
             { orderable: true, className: 'reorder', targets: 0 },
-            { orderable: true, className: 'reorder', targets: 2 },
+            { orderable: true, className: 'reorder', targets: 4 },
             { orderable: false, targets: '_all' }
                     ]
         });
