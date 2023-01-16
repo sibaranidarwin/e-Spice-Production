@@ -16,6 +16,7 @@
 <link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.3.2/css/buttons.dataTables.min.css">
 <link rel="stylesheet" href="{{asset('admin/assets/css/datatable.css')}}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/css/select2.min.css">
 
 <link rel="stylesheet" href="{{asset('assets/css/argon-dashboard.css')}}">
 
@@ -87,10 +88,10 @@ div.dt-button-collection {
                     <div class="card-body">
                         <div class="table-responsive text-nowrap">
                             @if ($start_date != null || $end_date != null || $vendor != null)
-                            <p style="text-align: center; background-color: #11CDEF; color: white;"><strong class="card-title">GR Date:{{ Carbon\Carbon::parse($start_date)->format('d F Y') }} To: {{ Carbon\Carbon::parse($end_date)->format('d F Y') }} Vendor Name: {{ ($vendor) }}</strong></p>
+                            <p style="text-align: center; background-color: #11CDEF; color: white;"><strong class="card-title">GR Date:{{ Carbon\Carbon::parse($start_date)->format('d F Y') }} To: {{ Carbon\Carbon::parse($end_date)->format('d F Y') }}&nbsp; || &nbsp; Vendor Name: {{ ($vendor) }}</strong></p>
                             @endif
                             <form action="{{ route('warehouse-filterreject') }}" class="form-inline" method="GET">
-                                <div class="form-group col-md-1">
+                                <div class="form-group col-md-2">
 
                                 </div>
                                 <div class="form-group ">
@@ -102,8 +103,8 @@ div.dt-button-collection {
                                   <input type="date" class="form-control form-control-sm" name="end_date">
                                 </div>
                                 <div class="form-group col-md-2-half">
-                                    <select class="form-control form-control-sm" name="vendor">
-                                        <option value="">-- Choose Vendor Name -- </option>
+                                    <select class="form-control form-control-sm form-select" name="vendor">
+                                        <option value="" >-- Choose Vendor Name -- </option>
                                             @foreach ($vendor_name as $vendor_name)
                                                 <option value="{{ $vendor_name['vendor_name'] }}">{{ $vendor_name['vendor_name'] }}</option>
                                             @endforeach
@@ -136,6 +137,7 @@ div.dt-button-collection {
                                             <th style="text-align: center;">Reference</th>
                                             <th style="text-align: center;">Del. Note</th>
                                             <th style="text-align: center;">Tax Code</th>
+                                            <th style="text-align: center;">Updated By</th>
                                             <th style="text-align: center;">Reason</th>  
                                         </tr>
                                         </thead>
@@ -155,6 +157,7 @@ div.dt-button-collection {
                                                 <td> <span>{{$good_receipt->ref_doc_no}}</span> </td>
                                                 <td> <span>{{$good_receipt->delivery_note}}</span> </td>
                                                 <td> <span>{{$good_receipt->tax_code}}</span> </td>
+                                                <td> <span>Warehouse</span> </td>
                                                 <td><span>{{$good_receipt->alasan_reject}}</span></td>
                                             </tr>
                                         @endforeach
@@ -207,6 +210,7 @@ div.dt-button-collection {
 
 </div><!-- /#right-panel -->
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/js/select2.min.js"></script>
 <script type="text/javascript">
 var minDate, maxDate;
 
@@ -229,6 +233,8 @@ $.fn.dataTable.ext.search.push(
     }
 );
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/js/select2.min.js"></script>
+<script>
 $(document).ready(function() {
 
     // Create date inputs
@@ -306,5 +312,6 @@ function checkAll(box) {
         }
     }
 }
+$(".form-select").select2();
 </script>
 @endsection

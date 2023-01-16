@@ -93,9 +93,17 @@
                               <label for="inputPassword2">To: &nbsp;</label>
                               <input type="date" class="form-control form-control-sm" name="end_date">
                             </div>
-                            <div class="form-group col-md-3">
+                            <div class="form-group col-md-2-half">
+                                <select class="form-control form-control-sm" name="vendor">
+                                    <option value="">-- Choose Vendor Name -- </option>
+                                        @foreach ($vendor_name as $vendor_name)
+                                            <option value="{{ $vendor_name['vendor_name'] }}">{{ $vendor_name['vendor_name'] }}</option>
+                                        @endforeach
+                                </select>
+                            </div> &nbsp;&nbsp;
+                            <div hidden class="form-group col-md-3">
                                 {{-- <label> Sts. Inv. Props.: &nbsp; </label> --}}
-                                <select class="form-control form-control-sm status_invoice" name="status">
+                                <select class="form-control form-control-sm status_invoice" name="">
                                     <option value="">-- Choose Sts. Inv. Props. -- </option>
                                     <option value="Verified - BA">Verified - BA</option>
                                     <option value="Not Yet Verified - Draft BA">Not Yet Verified - Draft BA</option>

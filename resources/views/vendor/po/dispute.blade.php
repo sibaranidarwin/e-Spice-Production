@@ -55,7 +55,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label class="form-control-label" for="alasan_disp">Dispute Identification</label>
+                                <label class="form-control-label" for="alasan_disp">Dispute Reasons</label>
                                 <textarea name="alasan_disp" class="form-control"
                                     placeholder="Please enter the reason for the dispute invoice" id="" cols="20"
                                     rows="5"></textarea>

@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\DB;
 use PDF; //library pdf
 use Auth;
 use Illuminate\Http\Request;
+use Carbon\CarbonImmutable;
 use Illuminate\Support\Facades\Hash;
 use thiagoalessio\TesseractOCR\TesseractOCR;
 use Carbon\Carbon;
@@ -37,31 +38,50 @@ class VendorController extends Controller
     public function index()
     {
         $users = User::first()->paginate(10);
+
         return view('admin.vendor.index', compact('users'))
                 ->with('i',(request()->input('page', 1) -1) *5);
     }
     public function index2()
     {
         $user_vendor = Auth::User()->id_vendor;
+        $user_vendor2 = Auth::User()->name;
+        $name = Auth::User()->name;
+        $a = date('Y-m-d');
+        $b = date('Y-m-d',strtotime('+1 days'));
+        $range = [$a, $b];
         
         $good_receipt = good_receipt::where('id_vendor', $user_vendor)->where('id_inv',0)->orwhere('status','Auto Verify')->where(function($query) {
 			$query->where('status','Verified')
             ->orWhereNull('status');})->count();
+        $now = CarbonImmutable::now()->locale('id_ID');
+        $start_week = $now->startOfMonth()->format('m-d');
+        $end_week = $now->endOfMonth()->format('m-d');
+        $good_receipts =good_receipt::whereRaw("DATE_FORMAT(gr_date, '%m-%d') BETWEEN '{$start_week}' AND '{$end_week}'")->get();
+
         $invoicegr = Invoice::all()->where("data_from", "GR")->Where("id_vendor", $user_vendor)->count();
         $invoiceba = Invoice::all()->where("data_from", "BA")->Where("id_vendor", $user_vendor)->count();
-        $dispute = good_receipt::all()->where("status", "Disputed")->Where("id_vendor", $user_vendor)->count();
+        $dispute = good_receipt::all()->where("status", "Disputed")->Where("vendor_name", $user_vendor2)->count();
+        $notif = good_receipt::all()->where("status", "Disputed")->Where("vendor_name", $name)->whereBetween('updated_at', $range)->count();
         $vendor = User::all()->where("level", "vendor")->count();
         $draft = Draft_BA::all()->Where("id_vendor", $user_vendor)->count();
         $ba = BA_Reconcile::all()->Where("id_vendor", $user_vendor)->count();
 
-        return view('vendor.dashboard',['good_receipt'=>$good_receipt,'draft'=>$draft, 'ba'=>$ba , 'invoicegr'=>$invoicegr, 'invoiceba'=>$invoiceba, 'dispute'=>$dispute, 'vendor'=>$vendor]);
+        return view('vendor.dashboard',['good_receipt'=>$good_receipt,'draft'=>$draft, 'ba'=>$ba , 'invoicegr'=>$invoicegr, 'invoiceba'=>$invoiceba, 'dispute'=>$dispute, 'vendor'=>$vendor, 'notif'=>$notif, 'good_receipts'=>$good_receipts]);
     }
     public function po()
     {   
         $user_vendor = Auth::User()->id_vendor;
-        
+        $name = Auth::User()->name;
+        $a = date('Y-m-d');
+        $b = date('Y-m-d',strtotime('+1 days'));
+        $range = [$a, $b];
+
+        $notif = good_receipt::all()->where("status", "Disputed")->Where("vendor_name", $name)->whereBetween('updated_at', $range)->count();
+
         $start_date = null;
         $end_date = null;
+
 
         // dd($start_date);
         $good_receipts = good_receipt::where('id_vendor', $user_vendor)->where('id_inv',0)->where(function($query) {
@@ -130,18 +150,24 @@ class VendorController extends Controller
             ->orderBy('goods_receipt.updated_at', 'ASC')
             ->get();
         
-        return view('vendor.po.index',compact('good_receipts', 'not', 'ver', 'start_date', 'end_date'))
+        return view('vendor.po.index',compact('good_receipts', 'not', 'ver', 'start_date', 'end_date', 'notif'))
                 ->with('i',(request()->input('page', 1) -1) *5);
     }
    
-
     public function puchaseorderreject()
     {   
+        $name = Auth::User()->name;
+        $a = date('Y-m-d');
+        $b = date('Y-m-d',strtotime('+1 days'));
+        $range = [$a, $b];
+
+        $notif = good_receipt::all()->where("status", "Disputed")->Where("vendor_name", $name)->whereBetween('updated_at', $range)->count();
         $user_vendor = Auth::User()->id_vendor;
         $start_date = null;
         $end_date = null;
+        $dispute = good_receipt::all()->where("status", "Disputed")->Where("id_vendor", $user_vendor)->count();
         $good_receipts = good_receipt::Where("id_vendor", $user_vendor)->where("Status", "Rejected")->get();
-        return view('vendor.po.reject',compact('good_receipts', 'start_date', 'end_date'))
+        return view('vendor.po.reject',compact('good_receipts', 'start_date', 'end_date', 'notif'))
                 ->with('i',(request()->input('page', 1) -1) *5);
     }
 
@@ -150,6 +176,14 @@ class VendorController extends Controller
             case 'Dispute':
                 $recordIds = $request->get('ids');
                 $newStatus = $request->get('Status');
+                $user_vendor = Auth::User()->id_vendor;
+                $name = Auth::User()->name;
+                $a = date('Y-m-d');
+                $b = date('Y-m-d',strtotime('+1 days'));
+                $range = [$a, $b];
+
+                $notif = good_receipt::all()->where("status", "Disputed")->Where("vendor_name", $name)->whereBetween('updated_at', $range)->count();
+                
                 if($recordIds == null){
                     return redirect()->back()->with("warning","Please select data gr first. Try again!");
                 }
@@ -159,18 +193,24 @@ class VendorController extends Controller
                     $good_receipt = good_receipt::find($record);
                     array_push($good_receipts, $good_receipt);
                 }
-                return view('vendor.po.dispute', compact('good_receipts'));
+                return view('vendor.po.dispute', compact('good_receipts', 'notif'));
                 break;
     
             case 'Update':
                 $recordIds = $request->get('ids');
                 $newStatus = $request->get('Status');
+                $name = Auth::User()->name;
+                $a = date('Y-m-d');
+                $b = date('Y-m-d',strtotime('+1 days'));
+                $range = [$a, $b];
+
+                $notif = good_receipt::all()->where("status", "Disputed")->Where("vendor_name", $name)->whereBetween('updated_at', $range)->count();
                 // dd($recordIds);
                 if($recordIds == null){
                     return redirect()->back()->with("warning","Please select data gr first. Try again!");
                 }
 
-                //buat kode otomatis
+                //buat kode otomatis;
                 $q = DB::table('invoice')->select(DB::raw('MAX(RIGHT(no_invoice_proposal, 4)) as kode'));
                 $kd="";
                 if($q->count()>0)
@@ -196,12 +236,12 @@ class VendorController extends Controller
                 $total_dpp = 0;
                 foreach($recordIds as $record) {
                     $good_receipt = good_receipt::find($record);
-                    $total_dpp += $good_receipt->jumlah_harga * $good_receipt->jumlah;
+                    $total_dpp += $good_receipt->harga_satuan * $good_receipt->jumlah;
                     array_push($good_receipts, $good_receipt);
                 }
-                
+                // dd($total_dpp);
                 if (good_receipt::where('tax_code', 'M1')){
-                $total_ppn = $total_dpp * 0.01;
+                $total_ppn = $total_dpp * 0.1;
                 }
                 elseif (good_receipt::where('tax_code', 'M2')){
                 $total_ppn = $total_dpp * 0.02;
@@ -216,7 +256,7 @@ class VendorController extends Controller
                 $total_ppn = $total_dpp * 0.05;
                 }
                 elseif (good_receipt::where('tax_code', 'M6')){
-                    $total_ppn = $total_dpp * 0.06;
+                    $total_ppn = $total_dpp * 0.1;
                     }
                 else{
                 $tota_ppn = $total_dpp * 0.07;
@@ -224,13 +264,18 @@ class VendorController extends Controller
 
                 // kondisi TAX code ma = 11%
                 $total_harga = $total_dpp + $total_ppn;
-                return view('vendor.po.edit', compact('good_receipts', 'total_dpp', 'total_ppn', 'total_harga','kd','bln', 'npwp'));
+                return view('vendor.po.edit', compact('good_receipts', 'total_dpp', 'total_ppn', 'total_harga','kd','bln', 'npwp', 'notif'));
                 
                 break;
                 case 'ba':
                 $recordIds = $request->get('ids');
                 $newStatus = $request->get('Status');
-              
+                $name = Auth::User()->name;
+                $a = date('Y-m-d');
+                $b = date('Y-m-d',strtotime('+1 days'));
+                $range = [$a, $b];
+
+                $notif = good_receipt::all()->where("status", "Disputed")->Where("vendor_name", $name)->whereBetween('updated_at', $range)->count();
                 if($recordIds == null){
                     return redirect()->back()->with("warning","Please select data gr first. Try again!");
                 }
@@ -301,6 +346,12 @@ class VendorController extends Controller
     public function editba(Request $request){
         $recordIds = $request->get('ids');
         $no_ba = $request->get('no_ba');
+        $name = Auth::User()->name;
+            $a = date('Y-m-d');
+            $b = date('Y-m-d',strtotime('+1 days'));
+            $range = [$a, $b];
+
+            $notif = good_receipt::all()->where("status", "Disputed")->Where("vendor_name", $name)->whereBetween('updated_at', $range)->count();
         // dd($no_ba);
         $user_vendor = Auth::User()->id_vendor;
         $ba = BA_Reconcile::where("no_ba", $no_ba)->where("id_vendor", $user_vendor)->where('status_invoice_proposal', 'Not Yet Verified - BA')->get();
@@ -351,7 +402,7 @@ class VendorController extends Controller
         $total_ppn = $total_dpp * 0.02;
         $total_harga = $total_dpp + $total_ppn;
 
-        return view('vendor.po.editba', compact('bas', 'total_dpp', 'total_ppn', 'total_harga', 'kd', 'bln', 'npwp'));
+        return view('vendor.po.editba', compact('bas', 'total_dpp', 'total_ppn', 'total_harga', 'kd', 'bln', 'npwp', 'notif'));
     }
     }
 
@@ -507,21 +558,32 @@ class VendorController extends Controller
     public function draft()
         {
         $user_vendor = Auth::User()->id_vendor;
+        $name = Auth::User()->name;
+        $a = date('Y-m-d');
+        $b = date('Y-m-d',strtotime('+1 days'));
+        $range = [$a, $b];
+        $notif = good_receipt::all()->where("status", "Disputed")->Where("vendor_name", $name)->whereBetween('updated_at', $range)->count();
         $start_date = null;
         $end_date = null;
 
         $draft = Draft_BA::select('no_draft','status_invoice_proposal', 'created_at')->distinct()->where("id_vendor", $user_vendor)->where("status_invoice_proposal", "Not Yet Verified - Draft BA")->get();
         // dd($draft);
-        return view('vendor.ba.draft',compact('draft', 'start_date', 'end_date'));
+        return view('vendor.ba.draft',compact('draft', 'start_date', 'end_date', 'notif'));
         }
 
     public function detaildraft($no_draft)
         {
         $user_vendor = Auth::User()->id_vendor;
+        $name = Auth::User()->name;
+        $a = date('Y-m-d');
+        $b = date('Y-m-d',strtotime('+1 days'));
+        $range = [$a, $b];
+
+        $notif = good_receipt::all()->where("status", "Disputed")->Where("vendor_name", $name)->whereBetween('updated_at', $range)->count();
 
         $draft = Draft_BA::where("no_draft", $no_draft)->where('status_invoice_proposal', 'Not Yet Verified - Draft BA')->get();
         //  dd($draft);
-        return view('vendor.ba.detaildraft',compact('draft'));
+        return view('vendor.ba.detaildraft',compact('draft','notif'));
         }
 
     public function historydraft()
@@ -529,18 +591,28 @@ class VendorController extends Controller
         $now = date('Y-m-d');
         $start_date = null;
         $end_date = null;
-        // dd($now);
+        $name = Auth::User()->name;
+        $a = date('Y-m-d');
+        $b = date('Y-m-d',strtotime('+1 days'));
+        $range = [$a, $b];
+
+        $notif = good_receipt::all()->where("status", "Disputed")->Where("vendor_name", $name)->whereBetween('updated_at', $range)->count();
         $user_vendor = Auth::User()->id_vendor;
-        // dd($user_vendor);
         $draft = Draft_BA::all()->where("id_vendor", $user_vendor)->where('status_invoice_proposal', 'Verified - BA');
         // dd($draft);
-        return view('vendor.ba.historydraft',compact('draft', 'start_date', 'end_date'));
+        return view('vendor.ba.historydraft',compact('draft', 'start_date', 'end_date', 'notif'));
         }
 
     public function detailba()
         {
             $user_vendor = Auth::User()->id_vendor;
             $start_date = null;
+            $name = Auth::User()->name;
+            $a = date('Y-m-d');
+            $b = date('Y-m-d',strtotime('+1 days'));
+            $range = [$a, $b];
+    
+            $notif = good_receipt::all()->where("status", "Disputed")->Where("vendor_name", $name)->whereBetween('updated_at', $range)->count();
             $end_date = null;
 
              $BA = Ba::select("ba.no_ba",
@@ -554,25 +626,37 @@ class VendorController extends Controller
              ->where("ba_reconcile.status_invoice_proposal", "=", "Not Yet Verified - BA")
              ->get();
             // dd($BA);
-            return view('vendor.ba.detail',compact('BA','start_date', 'end_date'));
+            return view('vendor.ba.detail',compact('BA','start_date', 'end_date', 'notif'));
         }
 
     public function ba($no_ba)
     {
         $user_vendor = Auth::User()->id_vendor;
+        $name = Auth::User()->name;
+        $a = date('Y-m-d');
+        $b = date('Y-m-d',strtotime('+1 days'));
+        $range = [$a, $b];
+
+        $notif = good_receipt::all()->where("status", "Disputed")->Where("vendor_name", $name)->whereBetween('updated_at', $range)->count();
         $ba = BA_Reconcile::where("no_ba", $no_ba)->where("id_vendor", $user_vendor)->where('status_invoice_proposal', 'Not Yet Verified - BA')->get();
         
-        return view('vendor.ba.upload',compact('ba'));
+        return view('vendor.ba.upload',compact('ba', 'notif'));
     }
     public function historyba()
     {
         $user_vendor = Auth::User()->id_vendor;
         $start_date = null;
         $end_date = null;
+        $name = Auth::User()->name;
+        $a = date('Y-m-d');
+        $b = date('Y-m-d',strtotime('+1 days'));
+        $range = [$a, $b];
+        $notif = good_receipt::all()->where("status", "Disputed")->Where("vendor_name", $name)->whereBetween('updated_at', $range)->count();
+        $dispute = good_receipt::all()->where("status", "Disputed")->Where("id_vendor", $user_vendor)->count();
 
         $ba = BA_Reconcile::all()->where("id_vendor", $user_vendor)->where('status_invoice_proposal', 'Verified - BA');
         
-        return view('vendor.ba.historyba',compact('ba', 'start_date', 'end_date'));
+        return view('vendor.ba.historyba',compact('ba', 'start_date', 'end_date', 'notif'));
     }
     
     public function uploaddraft(Request $request)
@@ -626,10 +710,16 @@ class VendorController extends Controller
    public function uploadinv()
    {
        $user_vendor = Auth::User()->id_vendor;
+       $name = Auth::User()->name;
+       $a = date('Y-m-d');
+       $b = date('Y-m-d',strtotime('+1 days'));
+       $range = [$a, $b];
+
+       $notif = good_receipt::all()->where("status", "Disputed")->Where("vendor_name", $name)->whereBetween('updated_at', $range)->count();
        // dd($user_vendor);
        $invoice = Invoice::latest()->Where("id_vendor", $user_vendor)->Where("data_from", "GR")->get();
 
-        return view('vendor.ocr.uploadinv',compact('invoice'))
+        return view('vendor.ocr.uploadinv',compact('invoice', 'notif'))
                 ->with('i',(request()->input('page', 1) -1) *5);
        
    }
@@ -651,15 +741,27 @@ class VendorController extends Controller
         $user_vendor = Auth::User()->id_vendor;
         $start_date = null;
         $end_date = null;
+        $name = Auth::User()->name;
+        $a = date('Y-m-d');
+        $b = date('Y-m-d',strtotime('+1 days'));
+        $range = [$a, $b];
+
+        $notif = good_receipt::all()->where("status", "Disputed")->Where("vendor_name", $name)->whereBetween('updated_at', $range)->count();
         // dd($user_vendor);
         $invoice = Invoice::latest()->Where("id_vendor", $user_vendor)->Where("data_from", "GR")->get();
 
-         return view('vendor.invoice.index',compact('invoice' ,'start_date', 'end_date'))
+         return view('vendor.invoice.index',compact('invoice' ,'start_date', 'end_date', 'notif'))
                  ->with('i',(request()->input('page', 1) -1) *5);
         
     }
     public function detailinvoice(Request $request, $id){
         $detail = Invoice::find($id);
+        $name = Auth::User()->name;
+        $a = date('Y-m-d');
+        $b = date('Y-m-d',strtotime('+1 days'));
+        $range = [$a, $b];
+
+        $notif = good_receipt::all()->where("status", "Disputed")->Where("vendor_name", $name)->whereBetween('updated_at', $range)->count();
         $invoices = good_receipt::select("goods_receipt.id_gr",
                                     "goods_receipt.no_po",
                                     "goods_receipt.gr_number",
@@ -693,12 +795,19 @@ class VendorController extends Controller
                                     ->get();
         // dd($invoices);
 
-        return view('vendor.invoice.detail', compact('invoices'))->with('i',(request()->input('page', 1) -1) *5);
+        return view('vendor.invoice.detail', compact('invoices', 'notif'))->with('i',(request()->input('page', 1) -1) *5);
     }
 
     public function cetak_pdf($id)
     {
-                    $detail = Invoice::find($id);
+        $name = Auth::User()->name;
+        $a = date('Y-m-d');
+        $b = date('Y-m-d',strtotime('+1 days'));
+        $range = [$a, $b];
+
+        $notif = good_receipt::all()->where("status", "Disputed")->Where("vendor_name", $name)->whereBetween('updated_at', $range)->count();
+                   
+        $detail = Invoice::find($id);
                     $invoices = good_receipt::select("goods_receipt.id_gr",
                     "goods_receipt.no_po",
                     "goods_receipt.gr_number",
@@ -726,7 +835,7 @@ class VendorController extends Controller
                     ->where("invoice.id_inv", "=", "$detail->id_inv")
                     ->get();
                     
-                    $pdf = PDF::loadView('vendor.invoice.print',compact('invoices'))->setOptions(['defaultFont' => 'sans-serif'])->setPaper('a4', 'landscape');
+                    $pdf = PDF::loadView('vendor.invoice.print',compact('invoices', 'notif'))->setOptions(['defaultFont' => 'sans-serif'])->setPaper('a4', 'landscape');
                     
                     $pdf->save(storage_path().'invoice.pdf');
                     return $pdf->stream();
@@ -737,16 +846,28 @@ class VendorController extends Controller
         $user_vendor = Auth::User()->id_vendor;
         $start_date = null;
         $end_date = null;
+        $name = Auth::User()->name;
+        $a = date('Y-m-d');
+        $b = date('Y-m-d',strtotime('+1 days'));
+        $range = [$a, $b];
+
+        $notif = good_receipt::all()->where("status", "Disputed")->Where("vendor_name", $name)->whereBetween('updated_at', $range)->count();
        
         // dd($user_vendor);
         $invoice = Invoice::latest()->Where("id_vendor", $user_vendor)->Where("data_from", "BA")->get();
          
-        return view('vendor.invoice.indexba',compact('invoice', 'start_date', 'end_date'))
+        return view('vendor.invoice.indexba',compact('invoice', 'start_date', 'end_date', 'notif'))
                  ->with('i',(request()->input('page', 1) -1) *5);
         
     }
     public function detailinvoiceba(Request $request, $id){
         $detail = Invoice::find($id);
+        $name = Auth::User()->name;
+        $a = date('Y-m-d');
+        $b = date('Y-m-d',strtotime('+1 days'));
+        $range = [$a, $b];
+
+        $notif = good_receipt::all()->where("status", "Disputed")->Where("vendor_name", $name)->whereBetween('updated_at', $range)->count();
         // dd($detail->id_inv);
        $invoices = BA_Reconcile::select("ba_reconcile.id_ba",
                                     "ba_reconcile.no_ba",
@@ -783,11 +904,12 @@ class VendorController extends Controller
                                     ->get();
                                     // dd($invoices);
 
-        return view('vendor.invoice.detailba', compact('invoices'))->with('i',(request()->input('page', 1) -1) *5);
+        return view('vendor.invoice.detailba', compact('invoices', 'notif'))->with('i',(request()->input('page', 1) -1) *5);
     }
 
     public function cetak_pdf_ba($id)
     {
+        
         $detail = Invoice::find($id);
         $invoices = BA_Reconcile::select("ba_reconcile.id_ba",
         "ba_reconcile.no_ba",
@@ -819,13 +941,19 @@ class VendorController extends Controller
 
     public function disputed()
     {
-        $user_vendor = Auth::User()->id_vendor;
+        $user_vendor = Auth::User()->name;
+        // dd($user_vendor);
         $start_date = null;
         $end_date = null;
-        $dispute = good_receipt::where("status", "Disputed")->Where("id_vendor", $user_vendor)->count();
-        $good_receipts = good_receipt::where("status", "Disputed")->Where("id_vendor", $user_vendor)->get();
+        $name = Auth::User()->name;
+        $a = date('Y-m-d');
+        $b = date('Y-m-d',strtotime('+1 days'));
+        $range = [$a, $b];
 
-        return view('vendor.dispute.index',compact('good_receipts', 'start_date', 'end_date', 'dispute'))
+        $notif = good_receipt::all()->where("status", "Disputed")->Where("vendor_name", $name)->whereBetween('updated_at', $range)->count();
+        $good_receipts = good_receipt::where("status", "Disputed")->Where("vendor_name", $user_vendor)->get();
+
+        return view('vendor.dispute.index',compact('good_receipts', 'start_date', 'end_date', 'notif'))
                 ->with('i',(request()->input('page', 1) -1) *5);
     }
 
@@ -849,11 +977,23 @@ class VendorController extends Controller
 
     public function showing($id){
         $user = \App\User::find($id);
-        return view('vendor.user.profile',compact('user'));  
+        $name = Auth::User()->name;
+        $a = date('Y-m-d');
+        $b = date('Y-m-d',strtotime('+1 days'));
+        $range = [$a, $b];
+
+        $notif = good_receipt::all()->where("status", "Disputed")->Where("vendor_name", $name)->whereBetween('updated_at', $range)->count();
+        return view('vendor.user.profile',compact('user', 'notif'));  
     }
 
     public function heyupdate(Request $request, User $user)
     {
+        $name = Auth::User()->name;
+        $a = date('Y-m-d');
+        $b = date('Y-m-d',strtotime('+1 days'));
+        $range = [$a, $b];
+
+        $notif = good_receipt::all()->where("status", "Disputed")->Where("vendor_name", $name)->whereBetween('updated_at', $range)->count();
   
             $fotoLama = $request->fotoLama;
             $foto = $request->file('foto');
@@ -876,7 +1016,7 @@ class VendorController extends Controller
     public function show($id){
         $user = \App\User::find($id);
 
-        return view('vendor.user.password',compact('user'));  
+        return view('vendor.user.password',compact('user', 'notif'));  
     }
 
     
@@ -910,12 +1050,24 @@ class VendorController extends Controller
 
     public function profile($id){
         $user = \App\User::find($id);
-        return view('admin.vendor.edit',compact('user'));  
+        $name = Auth::User()->name;
+        $a = date('Y-m-d');
+        $b = date('Y-m-d',strtotime('+1 days'));
+        $range = [$a, $b];
+
+        $notif = good_receipt::all()->where("status", "Disputed")->Where("vendor_name", $name)->whereBetween('updated_at', $range)->count();
+        return view('admin.vendor.edit',compact('user', 'notif'));  
     }
 
     public function showingvendor($id){
         $user = \App\User::find($id);
-        return view('admin.vendor.show',compact('user'));  
+        $name = Auth::User()->name;
+        $a = date('Y-m-d');
+        $b = date('Y-m-d',strtotime('+1 days'));
+        $range = [$a, $b];
+
+        $notif = good_receipt::all()->where("status", "Disputed")->Where("vendor_name", $name)->whereBetween('updated_at', $range)->count();
+        return view('admin.vendor.show',compact('user', 'notif'));  
     }
 
 }

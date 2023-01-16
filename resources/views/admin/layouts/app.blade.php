@@ -225,10 +225,6 @@
             </div>
             <div class="top-right">
                 <div class="header-menu">
-                    
-                    <div class="user-area dropdown float-right">
-                        <a  href="{{url('')}}" class="dropdown-toggle"><i class="fa fa-bell"><span class="count"></span></i></a>
-                    </div>
 
                     <div class="user-area dropdown float-right">
                         <a href="#" class="dropdown-toggle active" data-toggle="dropdown" aria-haspopup="true"

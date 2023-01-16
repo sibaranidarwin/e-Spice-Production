@@ -51,7 +51,7 @@ class AdminController extends Controller
     }
     public function po()
     {   
-        $good_receipts = good_receipt::where('material_number', 'LG2KOM00707010F691' )->where("status","Not Verified")->get();
+        $good_receipts = good_receipt::where('material_number', 'LG2KOM00707010F691' )->WhereNull('status')->get();
         $start_date = null;
         $end_date = null;
         $status = null;
@@ -111,10 +111,10 @@ class AdminController extends Controller
     return view('admin.ba.historydraft',compact('draft'));
     }
     public function draft()
-        {
-        $draft = Draft_BA::all();
-        return view('admin.ba.draft',compact('draft'));
-        }
+    {
+    $draft = Draft_BA::all();
+    return view('admin.ba.draft',compact('draft'));
+    }
 
     public function ba()
     {

@@ -5,6 +5,7 @@ namespace App\Imports;
 use App\Ba;
 use App\BA_Reconcile;
 use App\Draft_BA;
+use App\good_receipt;
 use Auth;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToCollection;
@@ -40,6 +41,7 @@ class Draft_BAImport implements ToCollection, WithHeadingRow
         $array_bln    = array(1=>"I","II","III", "IV", "V","VI","VII","VIII","IX","X", "XI","XII");
         $bln      = $array_bln[date('n')];
         // dd($bln);
+        $user_vendor = Auth::User()->id_vendor;
          Validator::make($rows->toArray(), [
              '*.id_vendor' => '',
              '*.no_ba' => '',
@@ -67,6 +69,8 @@ class Draft_BAImport implements ToCollection, WithHeadingRow
 
          ])->validate();
         foreach ($rows as $row) {
+            if($row['status_ba'] == 'Verified - BA')
+            {
             BA_Reconcile::create([
                 'id_vendor' =>Auth::User()->id_vendor,
                 'no_ba'=>date('Y')."-".$bln."-MKP-BA-".$kd,
@@ -89,7 +93,7 @@ class Draft_BAImport implements ToCollection, WithHeadingRow
                 'harga_satuan'=>$row['harga_satuan'],
                 'jumlah_harga'=>$row['jumlah_harga'],
                 'confirm_price'=>$row['keterangan'],
-                'status_ba'=>"Verified - BA",
+                'status_ba'=>$row['status_ba'],
                 'status_invoice_proposal' =>"Not Yet Verified - BA",
                 'created_at'=>$now = date('Y-m-d H:i:s'),
             ]);
@@ -98,6 +102,38 @@ class Draft_BAImport implements ToCollection, WithHeadingRow
                 'id_vendor' =>Auth::User()->id_vendor,
                 'created_at'=>$now = date('Y-m-d H:i:s'),
             ]);
+        }
+        elseif($row['status_ba'] == 'Disputed' && $row['keterangan'] != null){
+            good_receipt::create([
+                'vendor_name' =>Auth::User()->name,
+                'id_vendor' => '2011000155',
+                'gr_date'=>$row['gr_date'],
+                'no_po'=>$row['po_number'],
+                'po_item'=>$row['item'],
+                'gr_number'=>$row['gr_number'],
+                'mat_desc'=>$row['material_description'],
+                'vendor_part_number'=>$row['vendor_part_number'],	
+                'material_number'=>$row['material_number'],
+                'ref_doc_no'=>$row['ref_doc_no'],
+                'valuation_type'=>$row['valuation_type'],
+                'doc_header_text'=>$row['doc_header_text'],
+                'jumlah'=>$row['qty'],
+                'uom'=>$row['uom'],
+                'currency'=>$row['currency'],
+                'delivery_note'=>$row['delivery_note'],
+                'tax_code'=>$row['tax_code'],
+                'harga_satuan'=>$row['harga_satuan'],
+                'jumlah_harga'=>$row['jumlah_harga'],
+                'total_harga'=>$row['jumlah_harga'],
+                'alasan_disp'=>$row['keterangan'],
+                'status'=>$row['status_ba'],
+                'status_invoice_proposal' =>"Not Yet Verified - BA",
+                'created_at'=>$now = date('Y-m-d H:i:s'),
+            ]);
+        }
+        else{
+            return redirect()->back()->with("warning","Please complete the data. Try again!");
+        }
         }
     }
     // public function model(array $row)

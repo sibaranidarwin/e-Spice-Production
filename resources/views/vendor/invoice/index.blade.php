@@ -113,7 +113,7 @@ label {
                                             <th>VAT NO</th>
                                             <th>Curr</th>
                                             <th>Total PPN</th>
-                                            <th>Total Price</th>
+                                            <th>Total value</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -129,7 +129,7 @@ label {
                                             <td>{{$item['faktur_pajak_number'] }}</td>
                                             <td>{{$item['currency'] }}</td>
                                             <td>{{$item['ppn']}}</td>
-                                            <td>{{ number_format($item['total_harga_everify']) }}</td>
+                                            <td>{{ number_format($item['total_harga_everify'], 0,",",".") }}</td>
                                             <td>
                                                 <a href="/vendor/detail-invoice/{{$item->id_inv}}"
                                                     class="btn btn-info btn-sm">Det.</a>
@@ -140,11 +140,6 @@ label {
                                         @endforeach
                                     </tbody>
                                 </table>
-                                &nbsp;&nbsp;&nbsp;<a href="" class="btn btn-success mb-2">Upload SAP</a>
-                                {{-- <div class="row">
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<div class="col-md-1 mb-2"><a href=""
-                                    class="btn btn-primary">Upload SAP</a></div>
-                        </div> --}}
                             </form>
                         </div>
                     </div>

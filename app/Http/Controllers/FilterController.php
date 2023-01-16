@@ -19,6 +19,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use thiagoalessio\TesseractOCR\TesseractOCR;
 use Carbon\Carbon;
+
 class FilterController extends Controller
 {
     //
@@ -29,7 +30,12 @@ class FilterController extends Controller
             $end_date = Carbon::parse(request()->end_date)->toDateTimeString();
             $minpo = request()->minpo;
             $maxpo = request()->maxpo;
-            // dd($minpo);
+            $name = Auth::User()->name;
+            $a = date('Y-m-d');
+            $b = date('Y-m-d',strtotime('+1 days'));
+            $range = [$a, $b];
+
+            $notif = good_receipt::all()->where("status", "Disputed")->Where("vendor_name", $name)->whereBetween('updated_at', $range)->count();
             
             $user_vendor = Auth::User()->id_vendor;
             $not = good_receipt::select(
@@ -106,7 +112,12 @@ class FilterController extends Controller
             
             $start_date = request()->start_date;
             $end_date = request()->end_date;
-           
+            $name = Auth::User()->name;
+            $a = date('Y-m-d');
+            $b = date('Y-m-d',strtotime('+1 days'));
+            $range = [$a, $b];
+
+            $notif = good_receipt::all()->where("status", "Disputed")->Where("vendor_name", $name)->whereBetween('updated_at', $range)->count();
 
             $user_vendor = Auth::User()->id_vendor;
 
@@ -175,22 +186,33 @@ class FilterController extends Controller
                 $query->where('status','Verified')
                             ->orWhereNull('status');})->orderBy('updated_at', 'ASC')->get();
         }
-        return view('vendor.po.index', compact('good_receipts', 'not', 'ver', 'start_date', 'end_date'))->with('i',(request()->input('page', 1) -1) *5);
+        return view('vendor.po.index', compact('good_receipts', 'not', 'ver', 'start_date', 'end_date', 'notif'))->with('i',(request()->input('page', 1) -1) *5);
     }
     function filterreject(){
         if (request()->start_date || request()->end_date) {
             $start_date = Carbon::parse(request()->start_date)->toDateTimeString();
             $end_date = Carbon::parse(request()->end_date)->toDateTimeString();
             $good_receipts = good_receipt::whereBetween('gr_date',[$start_date,$end_date])->where("status","Rejected")->orderBy('gr_date', 'ASC')->get();
-            
+            $name = Auth::User()->name;
+            $a = date('Y-m-d');
+            $b = date('Y-m-d',strtotime('+1 days'));
+            $range = [$a, $b];
+
+            $notif = good_receipt::all()->where("status", "Disputed")->Where("vendor_name", $name)->whereBetween('updated_at', $range)->count();
         } else {
             $user_vendor = Auth::User()->id_vendor;
             $start_date = request()->start_date;
             $end_date = request()->end_date;
+            $name = Auth::User()->name;
+            $a = date('Y-m-d');
+            $b = date('Y-m-d',strtotime('+1 days'));
+            $range = [$a, $b];
+
+            $notif = good_receipt::all()->where("status", "Disputed")->Where("vendor_name", $name)->whereBetween('updated_at', $range)->count();
             $good_receipts = good_receipt::Where("id_vendor", $user_vendor)->where("status","Rejected")->get();
     
         }
-        return view('vendor.po.reject',compact('good_receipts', 'start_date', 'end_date'))
+        return view('vendor.po.reject',compact('good_receipts', 'start_date', 'end_date', 'notif'))
         ->with('i',(request()->input('page', 1) -1) *5);
     }
 
@@ -199,14 +221,26 @@ class FilterController extends Controller
             $start_date = Carbon::parse(request()->start_date)->toDateTimeString();
             $end_date = Carbon::parse(request()->end_date)->toDateTimeString();
             $user_vendor = Auth::User()->id_vendor;
+            $name = Auth::User()->name;
+            $a = date('Y-m-d');
+            $b = date('Y-m-d',strtotime('+1 days'));
+            $range = [$a, $b];
+
+            $notif = good_receipt::all()->where("status", "Disputed")->Where("vendor_name", $name)->whereBetween('updated_at', $range)->count();
             $good_receipts = good_receipt::whereBetween('gr_date',[$start_date,$end_date])->where("status", "Disputed")->Where("id_vendor", $user_vendor)->orderBy('gr_date', 'ASC')->get();
         } else {
             $user_vendor = Auth::User()->id_vendor;
             $start_date = request()->start_date;
             $end_date = request()->end_date;
+            $name = Auth::User()->name;
+            $a = date('Y-m-d');
+            $b = date('Y-m-d',strtotime('+1 days'));
+            $range = [$a, $b];
+
+            $notif = good_receipt::all()->where("status", "Disputed")->Where("vendor_name", $name)->whereBetween('updated_at', $range)->count();
             $good_receipts = good_receipt::where("status", "Disputed")->Where("id_vendor", $user_vendor)->get();
         }
-        return view('vendor.dispute.index',compact('good_receipts', 'start_date', 'end_date'))->with('i',(request()->input('page', 1) -1) *5);
+        return view('vendor.dispute.index',compact('good_receipts', 'start_date', 'end_date', 'notif'))->with('i',(request()->input('page', 1) -1) *5);
     }
 
     function filterhistorydraft(){
@@ -214,14 +248,26 @@ class FilterController extends Controller
             $start_date = Carbon::parse(request()->start_date)->toDateTimeString();
             $end_date = Carbon::parse(request()->end_date)->toDateTimeString();
             $user_vendor = Auth::User()->id_vendor;
+            $name = Auth::User()->name;
+            $a = date('Y-m-d');
+            $b = date('Y-m-d',strtotime('+1 days'));
+            $range = [$a, $b];
+
+            $notif = good_receipt::all()->where("status", "Disputed")->Where("vendor_name", $name)->whereBetween('updated_at', $range)->count();
             $draft = Draft_BA::whereBetween('created_at',[$start_date,$end_date])->where("id_vendor", $user_vendor)->orwhere('status_invoice_proposal', 'Verified - Draft BA')->orderBy('created_at', 'ASC')->get();
            } else {
             $user_vendor = Auth::User()->id_vendor;
             $start_date = request()->start_date;
             $end_date = request()->end_date;
+            $name = Auth::User()->name;
+            $a = date('Y-m-d');
+            $b = date('Y-m-d',strtotime('+1 days'));
+            $range = [$a, $b];
+
+            $notif = good_receipt::all()->where("status", "Disputed")->Where("vendor_name", $name)->whereBetween('updated_at', $range)->count();
             $draft = Draft_BA::where("id_vendor", $user_vendor)->where('status_invoice_proposal', 'Verified - Draft BA')->get();
         }
-        return view('Vendor.ba.historydraft',compact('draft', 'start_date', 'end_date'));
+        return view('Vendor.ba.historydraft',compact('draft', 'start_date', 'end_date', 'notif'));
     }
 
     function filterhistoryba(){
@@ -229,15 +275,27 @@ class FilterController extends Controller
             $start_date = Carbon::parse(request()->start_date)->toDateTimeString();
             $end_date = Carbon::parse(request()->end_date)->toDateTimeString();
             $user_vendor = Auth::User()->id_vendor;
+            $name = Auth::User()->name;
+            $a = date('Y-m-d');
+            $b = date('Y-m-d',strtotime('+1 days'));
+            $range = [$a, $b];
+
+            $notif = good_receipt::all()->where("status", "Disputed")->Where("vendor_name", $name)->whereBetween('updated_at', $range)->count();
             $ba = BA_Reconcile::whereBetween('created_at',[$start_date,$end_date])->where("id_vendor", $user_vendor)->where('status_invoice_proposal', 'Verified - BA')->orderBy('created_at', 'ASC')->get();
 
         } else {
             $user_vendor = Auth::User()->id_vendor;
             $start_date = request()->start_date;
             $end_date = request()->end_date;
+            $name = Auth::User()->name;
+            $a = date('Y-m-d');
+            $b = date('Y-m-d',strtotime('+1 days'));
+            $range = [$a, $b];
+
+            $notif = good_receipt::all()->where("status", "Disputed")->Where("vendor_name", $name)->whereBetween('updated_at', $range)->count();
             $ba = BA_Reconcile::where("id_vendor", $user_vendor)->where('status_invoice_proposal', 'Verified - BA')->get();
         }
-        return view('Vendor.ba.historyba',compact('ba', 'start_date', 'end_date'));
+        return view('Vendor.ba.historyba',compact('ba', 'start_date', 'end_date', 'notif'));
     }
     
     function filterinv(){
@@ -245,52 +303,92 @@ class FilterController extends Controller
             $start_date = Carbon::parse(request()->start_date)->toDateTimeString();
             $end_date = Carbon::parse(request()->end_date)->toDateTimeString();
             $user_vendor = Auth::User()->id_vendor;
+            $name = Auth::User()->name;
+            $a = date('Y-m-d');
+            $b = date('Y-m-d',strtotime('+1 days'));
+            $range = [$a, $b];
+
+            $notif = good_receipt::all()->where("status", "Disputed")->Where("vendor_name", $name)->whereBetween('updated_at', $range)->count();
             $invoice = Invoice::whereBetween('posting_date',[$start_date,$end_date])->Where("id_vendor", $user_vendor)->Where("data_from", "GR")->orderBy('posting_date', 'ASC')->get();
         } else {
             $user_vendor = Auth::User()->id_vendor;
             $start_date = request()->start_date;
             $end_date = request()->end_date;
-            // dd($user_vendor);
+            $name = Auth::User()->name;
+            $a = date('Y-m-d');
+            $b = date('Y-m-d',strtotime('+1 days'));
+            $range = [$a, $b];
+
+            $notif = good_receipt::all()->where("status", "Disputed")->Where("vendor_name", $name)->whereBetween('updated_at', $range)->count();
             $invoice = Invoice::latest()->Where("id_vendor", $user_vendor)->Where("data_from", "GR")->get();
         }
         
-        return view('vendor.invoice.index', compact('invoice', 'start_date', 'end_date'))->with('i',(request()->input('page', 1) -1) *5);
+        return view('vendor.invoice.index', compact('invoice', 'start_date', 'end_date', 'notif'))->with('i',(request()->input('page', 1) -1) *5);
     }
     function filterinvba(){
         if (request()->start_date || request()->end_date) {
             $start_date = Carbon::parse(request()->start_date)->toDateTimeString();
             $end_date = Carbon::parse(request()->end_date)->toDateTimeString();
             $user_vendor = Auth::User()->id_vendor;
+            $name = Auth::User()->name;
+            $a = date('Y-m-d');
+            $b = date('Y-m-d',strtotime('+1 days'));
+            $range = [$a, $b];
+
+            $notif = good_receipt::all()->where("status", "Disputed")->Where("vendor_name", $name)->whereBetween('updated_at', $range)->count();
             $invoice = Invoice::whereBetween('posting_date',[$start_date,$end_date])->Where("id_vendor", $user_vendor)->Where("data_from", "BA")->orderBy('posting_date', 'ASC')->get();
         } else {
             $user_vendor = Auth::User()->id_vendor;
             $start_date = request()->start_date;
             $end_date = request()->end_date;
-            // dd($user_vendor);
+            $name = Auth::User()->name;
+            $a = date('Y-m-d');
+            $b = date('Y-m-d',strtotime('+1 days'));
+            $range = [$a, $b];
+
+            $notif = good_receipt::all()->where("status", "Disputed")->Where("vendor_name", $name)->whereBetween('updated_at', $range)->count();
             $invoice = Invoice::latest()->Where("id_vendor", $user_vendor)->Where("data_from", "BA")->get();
         }
         
-        return view('vendor.invoice.indexba', compact('invoice', 'start_date', 'end_date'))->with('i',(request()->input('page', 1) -1) *5);
+        return view('vendor.invoice.indexba', compact('invoice', 'start_date', 'end_date','notif'))->with('i',(request()->input('page', 1) -1) *5);
     }
     function filterdraft(){
         if (request()->start_date || request()->end_date) {
             $start_date = Carbon::parse(request()->start_date)->toDateTimeString();
             $end_date = Carbon::parse(request()->end_date)->toDateTimeString();
             $user_vendor = Auth::User()->id_vendor;
+            $name = Auth::User()->name;
+            $a = date('Y-m-d');
+            $b = date('Y-m-d',strtotime('+1 days'));
+            $range = [$a, $b];
+
+            $notif = good_receipt::all()->where("status", "Disputed")->Where("vendor_name", $name)->whereBetween('updated_at', $range)->count();
             $draft = Draft_BA::select('no_draft','status_invoice_proposal', 'created_at')->distinct()->whereBetween('created_at',[$start_date,$end_date])->where("id_vendor", $user_vendor)->where("status_invoice_proposal", "Not Yet Verified - Draft BA")->orderBy('created_at', 'ASC')->get();
         } else {
             $user_vendor = Auth::User()->id_vendor;
             $start_date = request()->start_date;
             $end_date = request()->end_date;
+            $name = Auth::User()->name;
+            $a = date('Y-m-d');
+            $b = date('Y-m-d',strtotime('+1 days'));
+            $range = [$a, $b];
+
+            $notif = good_receipt::all()->where("status", "Disputed")->Where("vendor_name", $name)->whereBetween('updated_at', $range)->count();
             $draft = Draft_BA::select('no_draft','status_invoice_proposal', 'created_at')->distinct()->where("id_vendor", $user_vendor)->where("status_invoice_proposal", "Not Yet Verified - Draft BA")->get();
         }
-        return view('Vendor.ba.draft',compact('draft','start_date', 'end_date'));
+        return view('Vendor.ba.draft',compact('draft','start_date', 'end_date', 'notif'));
     }
     function filterba(){
         if (request()->start_date || request()->end_date) {
             $start_date = Carbon::parse(request()->start_date)->toDateTimeString();
             $end_date = Carbon::parse(request()->end_date)->toDateTimeString();
             $user_vendor = Auth::User()->id_vendor;
+            $name = Auth::User()->name;
+            $a = date('Y-m-d');
+            $b = date('Y-m-d',strtotime('+1 days'));
+            $range = [$a, $b];
+
+            $notif = good_receipt::all()->where("status", "Disputed")->Where("vendor_name", $name)->whereBetween('updated_at', $range)->count();
            
              $BA = Ba::select("ba.no_ba",
              "ba.status_ba",
@@ -307,6 +405,12 @@ class FilterController extends Controller
             $user_vendor = Auth::User()->id_vendor;
             $start_date = request()->start_date;
             $end_date = request()->end_date;
+            $name = Auth::User()->name;
+            $a = date('Y-m-d');
+            $b = date('Y-m-d',strtotime('+1 days'));
+            $range = [$a, $b];
+
+            $notif = good_receipt::all()->where("status", "Disputed")->Where("vendor_name", $name)->whereBetween('updated_at', $range)->count();
             $BA = Ba::select("ba.no_ba",
             "ba.status_ba",
             "ba_reconcile.status_invoice_proposal",
@@ -318,6 +422,6 @@ class FilterController extends Controller
             ->get();
         }
         
-        return view('Vendor.ba.detail',compact('BA', 'start_date', 'end_date'));
+        return view('Vendor.ba.detail',compact('BA', 'start_date', 'end_date', 'notif'));
     }
 }

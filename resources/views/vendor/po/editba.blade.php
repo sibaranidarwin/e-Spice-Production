@@ -106,7 +106,7 @@ label {
                                     @error('posting_date')<span
                                         class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                                 </div>
-                                <div class="form-group col-md-3">
+                                {{-- <div class="form-group col-md-3">
                                     <label class="form-control-label" for="total_harga_everify">Total Price (calculate
                                         by system)</label> <br>
                                     <input type="text"
@@ -115,8 +115,10 @@ label {
                                         value="{{ number_format($total_harga) }}" readonly>
                                     @error('total_harga_everify[]')<span
                                         class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
-                                </div>
-                                <div hidden class="form-group col-md-3">
+                                </div> --}}
+                                <div  class="form-group col-md-3">
+                                    <label class="form-control-label" for="total_harga_everify">Total Price (calculate
+                                        by system)</label> <br>
                                     <input type="number" id="id-1"
                                         class="form-control @error('total_harga_everify[]') is-invalid @enderror"
                                         name="total_harga_everify" placeholder="Masukkan Total Price ..."
@@ -204,8 +206,7 @@ label {
                             <thead>
                                 <tr>
                                     <th>BA Number</th>
-                                    <th>PO Number</th>
-                                    <th>PO MKP</th>
+                                    <th>PO</th>
                                     <th>GR Date</th>
                                     <th>Material Description</th>
                                     <!-- <th class="text-center">Reference</th> -->
@@ -225,11 +226,10 @@ label {
                                 @foreach($bas as $ba)
                                 <tr>
                                     <td><span class="name">{{$ba->no_ba}}</span> </td>
-                                    <td> <span class="">{{$ba->po_number}}</span> </td>
-                                    <td> <span class="">{{$ba->item}}</span> </td>
+                                    <td> <span class="">{{$ba->po_number}}</span>/ <span class="">{{$ba->item}}</span> </td>
                                     <td> <span class="">{{ Carbon\Carbon::parse($ba->gr_date)->format('d F Y') }}</span>
                                     </td>
-                                    <td> <span class="">{{$ba->material_description}}</span></td>
+                                    <td> <span class="">{{$ba->material_description}}</span> (<span class="">{{$ba->valuation_type}}</span>)</td>
                                     <td>{{ $ba->status_ba }}</td>
                                 </tr>
                                 @endforeach
@@ -253,8 +253,8 @@ label {
 <script type="text/javascript">
 $(function() {
     $("#id-1, #id-2, #id-3").keyup(function() {
-        $("#id-5").val(+$("#id-1").val() + +$("#id-3").val() - +$("#id-2").val());
-        var sum = +$("#id-1").val() + +$("#id-3").val() - +$("#id-2").val();
+        $("#id-5").val(+$("#id-1").val() - (+$("#id-2").val() + +$("#id-3").val()));
+         var sum = +$("#id-1").val() - (+$("#id-2").val() + +$("#id-3").val());
         console.log(sum);
         if (sum == 0) {
             $('input[name="go"]').prop('disabled', false);

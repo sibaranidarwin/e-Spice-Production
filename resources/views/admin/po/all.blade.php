@@ -16,6 +16,7 @@
 @section('content')
 <link rel="stylesheet" href="{{asset('admin/assets/css/datatable.css')}}">
 <link rel="stylesheet" href="https://cdn.datatables.net/datetime/1.1.2/css/dataTables.dateTime.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/css/select2.min.css">
 
 <link rel="stylesheet" href="{{asset('assets/css/argon-dashboard.css')}}">
 
@@ -82,7 +83,7 @@
                     <div class="card-body">
                     <div class="table-responsive text-nowrap">
                         @if ($start_date != null || $end_date != null || $vendor != null)
-                        <p style="text-align: center; background-color: #11CDEF; color: white;"><strong class="card-title">GR Date:{{ Carbon\Carbon::parse($start_date)->format('d F Y') }} To: {{ Carbon\Carbon::parse($end_date)->format('d F Y') }} Vendor Name: {{ ($vendor) }}</strong></p>
+                        <p style="text-align: center; background-color: #11CDEF; color: white;"><strong class="card-title">GR Date:{{ Carbon\Carbon::parse($start_date)->format('d F Y') }} To: {{ Carbon\Carbon::parse($end_date)->format('d F Y') }}&nbsp; || &nbsp;Vendor Name: {{ ($vendor) }}</strong></p>
                         @endif
                         <form action="{{ route('admin-filter') }}" class="form-inline" method="GET">
                             <div class="form-group col-md-2">
@@ -97,7 +98,7 @@
                               <input type="date" class="form-control form-control-sm" name="end_date">
                             </div>
                             <div class="form-group col-md-2-half">
-                                <select class="form-control form-control-sm" name="vendor">
+                                <select class="form-control form-control-sm form-select" name="vendor">
                                     <option value="">-- Choose Vendor Name -- </option>
                                         @foreach ($vendor_name as $vendor_name)
                                             <option value="{{ $vendor_name['vendor_name'] }}">{{ $vendor_name['vendor_name'] }}</option>
@@ -199,7 +200,7 @@
 </footer>
 
 </div><!-- /#right-panel -->
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/js/select2.min.js"></script>
 <script type="text/javascript">
     var minDate, maxDate;
     
@@ -265,5 +266,6 @@
             }
         }
     }
+    $(".form-select").select2();
     </script>
 @endsection

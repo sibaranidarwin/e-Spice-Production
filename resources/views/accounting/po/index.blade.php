@@ -85,10 +85,10 @@
                     <div class="card-body">
                     <div class="table-responsive text-nowrap">
                         @if ($start_date != null || $end_date != null || $vendor != null)
-                        <p style="text-align: center; background-color: #11CDEF; color: white;"><strong class="card-title">GR Date:{{ Carbon\Carbon::parse($start_date)->format('d F Y') }} To: {{ Carbon\Carbon::parse($end_date)->format('d F Y') }} Vendor Name: {{ ($vendor) }}</strong></p>
+                        <p style="text-align: center; background-color: #11CDEF; color: white;"><strong class="card-title">GR Date:{{ Carbon\Carbon::parse($start_date)->format('d F Y') }} To: {{ Carbon\Carbon::parse($end_date)->format('d F Y') }}&nbsp; || &nbsp;Vendor Name: {{ ($vendor) }}</strong></p>
                         @endif
                         <form action="{{ route('accounting-filternot') }}" class="form-inline" method="GET">
-                            <div class="form-group col-md-1">
+                            <div class="form-group col-md-2">
 
                             </div>
                             <div class="form-group ">
@@ -107,7 +107,7 @@
                                         @endforeach
                                 </select>
                             </div> &nbsp;&nbsp;
-                            <div class="form-group col-md-2-half">
+                            <div hidden class="form-group col-md-2-half">
                                 <select class="form-control form-control-sm status_invoice" name="">
                                     <option value="">-- Choose Sts. Inv. Props. -- </option>
                                     <option value="Verified">Verified</option>
@@ -131,7 +131,9 @@
                                     <th style="text-align: center;">Part Number</th>
                                     <th style="text-align: center;">Mat. Desc.</th>
                                     <th style="text-align: center;">QTY UOM</th>
-                                    <th style="text-align: center;">Reference</th>
+                                    <th style="text-align: center;">Curr</th>
+                                    <th style="text-align: center;">Unit Price</th>
+                                    <th style="text-align: center;">Ref.</th>
                                     <th style="text-align: center;">Del. Note</th>
                                     <th style="text-align: center;">Tax Code</th>
                                 </tr>
@@ -149,6 +151,10 @@
                                         <td> <span>{{$good_receipt->material_number}}/<br> {{$good_receipt->vendor_part_number}}</span></td>
                                         <td> <span>{{$good_receipt->mat_desc}}</span> <br>({{$good_receipt->valuation_type}})</td>
                                         <td> <span>{{$good_receipt->jumlah}}</span>&nbsp;<span>{{$good_receipt->uom}}</span> </td>
+                                        <td> <span>{{$good_receipt->currency}}</span> </td>
+                                        <td style="text-align: right">
+                                            <span>{{number_format($good_receipt->harga_satuan, 0,",",".")}}</span>
+                                        </td>
                                         <td> <span>{{$good_receipt->ref_doc_no}}</span> </td>
                                         <td> <span>{{$good_receipt->delivery_note}}</span> </td>
                                         <td> <span>{{$good_receipt->tax_code}}</span> </td>

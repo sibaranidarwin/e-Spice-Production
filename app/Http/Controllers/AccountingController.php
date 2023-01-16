@@ -39,12 +39,17 @@ class AccountingController extends Controller
             $good_receipt = good_receipt::count();
             $invoicegr = Invoice::all()->where("data_from", "GR")->count();
             $invoiceba = Invoice::all()->where("data_from", "BA")->count();
-            $dispute = good_receipt::all()->where("Status", "Dispute")->count();
+            $dispute = good_receipt::all()->where("status", "Disputed")->count();
             $vendor = User::all()->where("level", "vendor")->count();
             $draft = Draft_BA::count();
             $ba = BA_Reconcile::count();
+            $a = date('Y-m-d');
+            $b = date('Y-m-d',strtotime('+1 days'));
+            $range = [$a, $b];
+
+            $notif = good_receipt::all()->where("status", "Disputed")->whereBetween('updated_at', $range)->count();
     
-            return view('accounting.dashboard',['good_receipt'=>$good_receipt,'draft'=>$draft, 'ba'=>$ba , 'invoicegr'=>$invoicegr, 'invoiceba'=>$invoiceba, 'dispute'=>$dispute, 'vendor'=>$vendor]);
+            return view('accounting.dashboard',['good_receipt'=>$good_receipt,'draft'=>$draft, 'ba'=>$ba , 'invoicegr'=>$invoicegr, 'invoiceba'=>$invoiceba, 'dispute'=>$dispute, 'vendor'=>$vendor, 'notif'=>$notif]);
         }
     }
     public function all()
@@ -55,28 +60,38 @@ class AccountingController extends Controller
         $end_date = null;
         $status = null;
         $vendor = null;
+            $a = date('Y-m-d');
+            $b = date('Y-m-d',strtotime('+1 days'));
+            $range = [$a, $b];
+
+            $notif = good_receipt::all()->where("status", "Disputed")->whereBetween('updated_at', $range)->count();
         $vendor_name = good_receipt::select('vendor_name')->distinct()->get();
 
 
         $dispute = good_receipt::all()->where("status", "Disputed")->count();
 
-        return view('accounting.po.all',compact('good_receipts', 'dispute', 'vendor_name', 'start_date', 'end_date', 'status', 'vendor'))
+        return view('accounting.po.all',compact('good_receipts', 'dispute', 'vendor_name', 'start_date', 'end_date', 'status', 'vendor', 'notif'))
                 ->with('i',(request()->input('page', 1) -1) *5);
     }
 
     public function po()
     {   
-        $good_receipts = good_receipt::where('material_number', 'LG2KOM00707010F691' )->where("status","Not Verified")->orderBy('gr_date', 'ASC')->get();
+        $good_receipts = good_receipt::where('material_number', 'LG2KOM00707010F691' )->wherenull("status")->orderBy('gr_date', 'ASC')->get();
         $start_date = null;
         $end_date = null;
         $status = null;
         $vendor = null;
+            $a = date('Y-m-d');
+            $b = date('Y-m-d',strtotime('+1 days'));
+            $range = [$a, $b];
+
+        $notif = good_receipt::all()->where("status", "Disputed")->whereBetween('updated_at', $range)->count();
         $vendor_name = good_receipt::select('vendor_name')->distinct()->get();
 
         $status= null;
         $dispute = good_receipt::all()->where("status", "Disputed")->count();
 
-        return view('accounting.po.index',compact('good_receipts', 'dispute', 'start_date', 'end_date', 'status', 'vendor_name', 'vendor'))
+        return view('accounting.po.index',compact('good_receipts', 'dispute', 'start_date', 'end_date', 'status', 'vendor_name', 'vendor', 'notif'))
                 ->with('i',(request()->input('page', 1) -1) *5);
     }
     public function pover(){
@@ -85,11 +100,16 @@ class AccountingController extends Controller
         $end_date = null;
         $status = null;
         $vendor = null;
+            $a = date('Y-m-d');
+            $b = date('Y-m-d',strtotime('+1 days'));
+            $range = [$a, $b];
+
+        $notif = good_receipt::all()->where("status", "Disputed")->whereBetween('updated_at', $range)->count();
         $vendor_name = good_receipt::select('vendor_name')->distinct()->get();
         
         $dispute = good_receipt::all()->where("status", "Disputed")->count();
 
-        return view('accounting.po.verified',compact('good_receipts', 'dispute', 'vendor_name', 'start_date', 'end_date', 'status', 'vendor'))
+        return view('accounting.po.verified',compact('good_receipts', 'dispute', 'vendor_name', 'start_date', 'end_date', 'status', 'vendor', 'notif'))
         ->with('i',(request()->input('page', 1) -1) *5);
     }
     public function poreject(){
@@ -98,17 +118,23 @@ class AccountingController extends Controller
         $end_date = null;
         $status = null;
         $vendor = null;
+            $a = date('Y-m-d');
+            $b = date('Y-m-d',strtotime('+1 days'));
+            $range = [$a, $b];
+
+        $notif = good_receipt::all()->where("status", "Disputed")->whereBetween('updated_at', $range)->count();
         $vendor_name = good_receipt::select('vendor_name')->distinct()->get();
 
         $dispute = good_receipt::all()->where("status", "Disputed")->count();
 
-        return view('accounting.po.reject',compact('good_receipts', 'dispute', 'vendor_name', 'start_date', 'end_date', 'status','vendor'))
+        return view('accounting.po.reject',compact('good_receipts', 'dispute', 'vendor_name', 'start_date', 'end_date', 'status','vendor', 'notif'))
         ->with('i',(request()->input('page', 1) -1) *5);
     }
 
     public function draft()
     {
     $draft = Draft_BA::all();
+    
     return view('accounting.ba.draft',compact('draft'));
     }
 
@@ -133,9 +159,14 @@ class AccountingController extends Controller
         $end_date = null;
         $status = null;
         $vendor = null;
+            $a = date('Y-m-d');
+            $b = date('Y-m-d',strtotime('+1 days'));
+            $range = [$a, $b];
+
+        $notif = good_receipt::all()->where("status", "Disputed")->whereBetween('updated_at', $range)->count();
         $vendor_name = good_receipt::select('vendor_name')->distinct()->get();
 
-        return view('accounting.dispute.index',compact('good_receipts', 'vendor_name', 'start_date', 'end_date', 'status', 'vendor'))
+        return view('accounting.dispute.index',compact('good_receipts', 'vendor_name', 'start_date', 'end_date', 'status', 'vendor', 'notif'))
                 ->with('i',(request()->input('page', 1) -1) *5);
     }
     /**
@@ -195,13 +226,22 @@ class AccountingController extends Controller
         $start_date = null;
         $end_date = null;
         $status = null;  
+            $a = date('Y-m-d');
+            $b = date('Y-m-d',strtotime('+1 days'));
+            $range = [$a, $b];
+
+            $notif = good_receipt::all()->where("status", "Disputed")->whereBetween('updated_at', $range)->count();
         $invoice = Invoice::latest()->orWhere("data_from", "GR")->get();
 
-        return view('accounting.invoice.index',compact('invoice', 'start_date', 'end_date', 'status'))
+        return view('accounting.invoice.index',compact('invoice', 'start_date', 'end_date', 'status', 'notif'))
                 ->with('i',(request()->input('page', 1) -1) *5);
    }
    public function detailinvoice(Request $request, $id){
-    $dispute = good_receipt::all()->where("status", "Dispute")->count();
+            $a = date('Y-m-d');
+            $b = date('Y-m-d',strtotime('+1 days'));
+            $range = [$a, $b];
+
+    $notif = good_receipt::all()->where("status", "Disputed")->whereBetween('updated_at', $range)->count();
     $detail = Invoice::find($id);
     $invoices = good_receipt::select("goods_receipt.id_gr",
                                         "goods_receipt.no_po",
@@ -234,22 +274,31 @@ class AccountingController extends Controller
                                     ->JOIN("invoice", "goods_receipt.id_inv", "=", "invoice.id_inv")
                                     ->where("invoice.id_inv", "=", "$detail->id_inv")
                                     ->get();
-            return view('accounting.invoice.detail', compact('invoices', 'dispute'))->with('i',(request()->input('page', 1) -1) *5);
+            return view('accounting.invoice.detail', compact('invoices', 'notif'))->with('i',(request()->input('page', 1) -1) *5);
         }
         public function invoiceba()
         {
             $start_date = null;
             $end_date = null;
             $status = null;
+            $a = date('Y-m-d');
+            $b = date('Y-m-d',strtotime('+1 days'));
+            $range = [$a, $b];
+
+            $notif = good_receipt::all()->where("status", "Disputed")->whereBetween('updated_at', $range)->count();
 
             $invoice = Invoice::latest()->orWhere("data_from", "BA")->get();
-            return view('accounting.invoice.indexba',compact('invoice', 'start_date', 'end_date', 'status'))
+            return view('accounting.invoice.indexba',compact('invoice', 'start_date', 'end_date', 'status', 'notif'))
                     ->with('i',(request()->input('page', 1) -1) *5);
             
         }
         public function detailinvoiceba(Request $request, $id){
             $detail = Invoice::find($id);
-            $dispute = good_receipt::all()->where("Status", "Dispute")->count();
+            $a = date('Y-m-d');
+            $b = date('Y-m-d',strtotime('+1 days'));
+            $range = [$a, $b];
+
+            $notif = good_receipt::all()->where("status", "Disputed")->whereBetween('updated_at', $range)->count();
     
             // dd($detail->id_inv);
                 $invoices = BA_Reconcile::select("ba_reconcile.id_ba",
@@ -285,7 +334,7 @@ class AccountingController extends Controller
                                         ->where("invoice.id_inv", "=", "$detail->id_inv")
                                         ->get();
     
-            return view('accounting.invoice.detailba', compact('invoices','dispute'))->with('i',(request()->input('page', 1) -1) *5);
+            return view('accounting.invoice.detailba', compact('invoices','notif'))->with('i',(request()->input('page', 1) -1) *5);
         }
     /**
      * Remove the specified resource from storage.
@@ -302,11 +351,21 @@ class AccountingController extends Controller
 
     public function profile($id){
         $user = \App\User::find($id);
-        return view('admin.vendor.edit',compact('user'));  
+            $a = date('Y-m-d');
+            $b = date('Y-m-d',strtotime('+1 days'));
+            $range = [$a, $b];
+
+        $notif = good_receipt::all()->where("status", "Disputed")->whereBetween('updated_at', $range)->count();
+        return view('admin.vendor.edit',compact('user', 'notif'));  
     }
 
     public function showingaccounting($id){
         $user = \App\User::find($id);
-        return view('admin.accounting.show',compact('user'));  
+            $a = date('Y-m-d');
+            $b = date('Y-m-d',strtotime('+1 days'));
+            $range = [$a, $b];
+
+            $notif = good_receipt::all()->where("status", "Disputed")->whereBetween('updated_at', $range)->count();
+        return view('admin.accounting.show',compact('user', 'notif'));  
     }
 }

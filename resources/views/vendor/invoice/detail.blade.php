@@ -108,7 +108,7 @@
                         <input type="text" 
                             class="form-control @error('total_harga_everify[]') is-invalid @enderror"
                             name="" placeholder="Masukkan Total Price ..."
-                            value="{{ number_format($invoice->total_harga_everify) }}" readonly>
+                            value="{{ number_format($invoice->total_harga_everify, 0,",",".") }}" readonly>
                         @error('total_harga_everify[]')<span
                             class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                     </div> 
@@ -125,7 +125,7 @@
                         <input  type="text" id="id-2"
                             class="form-control @error('faktur_pajak_number[]') is-invalid @enderror"
                             name="total_doc_invoice" placeholder="Fill in Total Price (acc. to doc invoice)"
-                            value="{{ number_format($invoice->total_doc_invoice) }}" readonly>
+                            value="{{ number_format($invoice->total_doc_invoice, 0,",",".") }}" readonly>
                         @error('faktur_pajak_number[]')<span
                             class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                 </div> 
@@ -139,13 +139,13 @@
                 <div class="form-group col-md-3">
                     <label class="form-control-label" for="del_costs">Price Difference</label> <br>
                     <input type="number" id="id-5" class="form-control @error('del_costs[]') is-invalid @enderror"
-                        name="del_costs" value="{{ number_format($invoice->del_costs) }}" readonly>
+                        name="del_costs" value="{{ number_format($invoice->del_costs, 0,",",".") }}" readonly>
                     @error('del_costs[]')<span
                         class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                 </div>
                 <div class="form-group col-md-3">
                     <label class="form-control-label" for="faktur_pajak_number">Unplanned Cost<span style="color: red"></span></label>
-                    <input type="number" id="id-3" class="number-decimal form-control" name="unplan_cost" value="{{ $invoice->unplan_cost }}" readonly>
+                    <input type="number" id="id-3" class="number-decimal form-control" name="unplan_cost" value="{{ number_format($invoice->unplan_cost, 0,",",".") }}" readonly>
                     @error('faktur_pajak_number[]')<span
                         class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
             </div> 
@@ -186,7 +186,7 @@
                             <td> <span class="">{{$invoice->mat_desc}} ({{$invoice->valuation_type}})</span></td>
                             <td> <span class="">{{$invoice->jumlah}} {{$invoice->uom}}</span></td>
                             <td> <span class="">{{$invoice->currency}}</span> </td>
-                            <td style="text-align: right"> <span>{{number_format($invoice->harga_satuan)}}</span> </td>
+                            <td style="text-align: right"> <span>{{number_format($invoice->harga_satuan, 0,",",".")}}</span> </td>
                             </tr>
                             @endforeach
                         </select>

@@ -84,7 +84,7 @@
                             </div>
 
                             <div class="form-group" id="hidden1" style="display: none">
-                                <label class="form-control-label" for="alasan_disp">Reject Identification</label>
+                                <label class="form-control-label" for="alasan_disp">Reject Reasons</label>
                                 <textarea name="alasan_reject" class="form-control"
                                     placeholder="Please enter the reason for the reject data GR" id="" cols="20"
                                     rows="5"></textarea>
