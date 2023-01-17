@@ -54,10 +54,14 @@ class VendorController extends Controller
         $good_receipt = good_receipt::where('id_vendor', $user_vendor)->where('id_inv',0)->orwhere('status','Auto Verify')->where(function($query) {
 			$query->where('status','Verified')
             ->orWhereNull('status');})->count();
-        $now = CarbonImmutable::now()->locale('id_ID');
-        $start_week = $now->startOfMonth()->format('m-d');
-        $end_week = $now->endOfMonth()->format('m-d');
-        $good_receipts =good_receipt::whereRaw("DATE_FORMAT(gr_date, '%m-%d') BETWEEN '{$start_week}' AND '{$end_week}'")->get();
+            $year = CarbonImmutable::now()->locale('id_ID')->format('Y');
+            $month = 1;
+            $date = \Carbon\Carbon::parse($year."-".$month."-01"); // universal truth month's first day is 1
+            $start = $date->startOfMonth()->format('Y-m-d H:i:s'); // 2000-02-01 00:00:00
+            $end = $date->endOfMonth()->format('Y-m-d H:i:s');
+            $invgr =Invoice::whereBetween('created_at', [$start, $end])->where("data_from", "GR")->sum('total_harga_everify');
+            $invba =Invoice::whereBetween('created_at', [$start, $end])->where("data_from", "BA")->sum('total_harga_everify');
+            // dd($invgr);
 
         $invoicegr = Invoice::all()->where("data_from", "GR")->Where("id_vendor", $user_vendor)->count();
         $invoiceba = Invoice::all()->where("data_from", "BA")->Where("id_vendor", $user_vendor)->count();
@@ -67,7 +71,7 @@ class VendorController extends Controller
         $draft = Draft_BA::all()->Where("id_vendor", $user_vendor)->count();
         $ba = BA_Reconcile::all()->Where("id_vendor", $user_vendor)->count();
 
-        return view('vendor.dashboard',['good_receipt'=>$good_receipt,'draft'=>$draft, 'ba'=>$ba , 'invoicegr'=>$invoicegr, 'invoiceba'=>$invoiceba, 'dispute'=>$dispute, 'vendor'=>$vendor, 'notif'=>$notif, 'good_receipts'=>$good_receipts]);
+        return view('vendor.dashboard',['good_receipt'=>$good_receipt,'draft'=>$draft, 'ba'=>$ba , 'invoicegr'=>$invoicegr, 'invoiceba'=>$invoiceba, 'dispute'=>$dispute, 'vendor'=>$vendor, 'notif'=>$notif, 'invgr'=>$invgr, 'invba'=>$invba,]);
     }
     public function po()
     {   
@@ -244,22 +248,22 @@ class VendorController extends Controller
                 $total_ppn = $total_dpp * 0.1;
                 }
                 elseif (good_receipt::where('tax_code', 'M2')){
-                $total_ppn = $total_dpp * 0.02;
+                $total_ppn = $total_dpp * 0.2;
                 }
                 elseif (good_receipt::where('tax_code', 'M3')){
-                $total_ppn = $total_dpp * 0.03;
+                $total_ppn = $total_dpp * 0.3;
                 }
                 elseif (good_receipt::where('tax_code', 'M4')){
-                $total_ppn = $total_dpp * 0.04;
+                $total_ppn = $total_dpp * 0.4;
                 }
                 elseif (good_receipt::where('tax_code', 'M5')){
-                $total_ppn = $total_dpp * 0.05;
+                $total_ppn = $total_dpp * 0.5;
                 }
                 elseif (good_receipt::where('tax_code', 'M6')){
                     $total_ppn = $total_dpp * 0.1;
                     }
                 else{
-                $tota_ppn = $total_dpp * 0.07;
+                $tota_ppn = $total_dpp * 0.7;
                 }
 
                 // kondisi TAX code ma = 11%

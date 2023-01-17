@@ -104,7 +104,6 @@
                                 <thead>
                                     <tr>
                                         <th>No</th>
-                                        <th>Sts. GR</th>
                                         <th>PO</th>
                                         <th>GR Number</th>
                                         <th>GR Date</th>
@@ -125,7 +124,6 @@
                                     @foreach($good_receipts as $good_receipt)
                                     <tr>
                                         <td>{{++$i}}</td>
-                                        <td >{{ $good_receipt->status }}</td>
                                         <td ><span>{{$good_receipt->no_po}} /{{$good_receipt->po_item}}</span></td>
                                         <td ><span>{{$good_receipt->gr_number}}</span></td>
                                         <td><span>{{ Carbon\Carbon::parse($good_receipt->gr_date)->format('d F Y') }}</span></td>
