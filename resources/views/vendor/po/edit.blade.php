@@ -1,5 +1,6 @@
 @extends('vendor.layouts.sidebar')
 @section('content')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
@@ -181,6 +182,11 @@ label {
                                     @error('faktur_pajak_number[]')<span
                                         class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                                 </div>
+                                <div hidden class="form-group col-md-6">
+                                    <label class="form-control-label" for="baselinedate">Baselinedate <span
+                                            style="color: red">*</span></label>
+                                            <input type="date" value="<?php echo date('Y-m-d'); ?>" name="baselinedate">
+                                </div>
 
                                 <div hidden class="form-group col-md-6">
                                     <input type="text" class="form-control @error('data_from') is-invalid @enderror"
@@ -288,6 +294,8 @@ $('#input_mask').inputmask({
         },
     },
 });
+
+$('#date').val(new Date().toJSON().slice(0,10));
 
 $('#input_mask1').inputmask({
     mask: '*********-**',

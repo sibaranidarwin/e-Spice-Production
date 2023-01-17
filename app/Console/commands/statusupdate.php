@@ -40,6 +40,6 @@ public function __construct()
 public function handle()
 {
 
-    $affected = DB::table('goods_receipt')->whereDate('created_at', '<', now()->format('Y-m-d H:i:s'))->where('status_invoice', 'Not Yet Verified - Draft BA')->update(array('status_invoice' => 2));
+    // $affected = DB::table('goods_receipt')->whereDate('created_at', '<', now()->format('Y-m-d H:i:s'))->where('status_invoice', 'Not Yet Verified - Draft BA')->update(array('status_invoice' => 2));
 }
 }
