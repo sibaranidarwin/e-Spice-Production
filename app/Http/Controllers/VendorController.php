@@ -813,10 +813,14 @@ class VendorController extends Controller
 
     public function disputed()
     {
+        $start_date = null;
+        $end_date = null;
+        $vendor = null;
+
         $user_vendor = Auth::User()->id_vendor;
         $good_receipts = good_receipt::where("status", "Disputed")->Where("id_vendor", $user_vendor)->get();
 
-        return view('vendor.dispute.index',compact('good_receipts'))
+        return view('vendor.dispute.index',compact('good_receipts', 'start_date', 'end_date', 'vendor'))
                 ->with('i',(request()->input('page', 1) -1) *5);
     }
 
