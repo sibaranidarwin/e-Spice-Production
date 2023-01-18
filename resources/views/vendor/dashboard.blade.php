@@ -48,12 +48,56 @@
 #datatable tr:hover {
     background: #f1f7ff;
 }
+.posisi{
+    float: right;
+}
 
 </style>
+@if ($month != null )
+<p style="text-align: center; background-color: #11CDEF; color: white;"><strong class="card-title">Month :{{ ($month) }} || Year : {{ ($yer) }}</strong></p>
+@endif
+<div style="float: right;">
+    <form action="{{ route('vendor-filterdash') }}" class="form-inline" method="GET">
+    <select class="form-control form-control-sm form-select col-5-half" name="month">
+        <option value="">Choose Month</option>
+                <option value='1'>January</option>
+                <option value="2">February</option>
+                <option value="3">Maret</option>
+                <option value="4">April</option>
+                <option value="5">May</option>
+                <option value="6">June</option>
+                <option value="7">July</option>
+                <option value="8">Agustus</option>
+                <option value="9">September</option>
+                <option value="10">Oktober</option>
+                <option value="11">November</option>
+                <option value="12">December</option>
+    </select>
+    &nbsp;
+    <select class="form-control form-control-sm form-select col-4-half" name="yer">
+        <option value="">Choose Year</option>
+        <option value='2018'>2018</option>
+        <option value="2019">2019</option>
+        <option value="2020">2020</option>
+        <option value="2021">2021</option>
+        <option value="2022">2022</option>
+        <option value="2023">2023</option>
+        <option value="2024">2024</option>
+        <option value="2025">2025</option>
+        <option value="2026">2026</option>
+        <option value="2027">2027</option>
+        <option value="2028">2028</option>
+        <option value="2029">2029</option>       
+    </select>
+    &nbsp;
+    <button class="btn btn-light btn-sm" onclick="return confirm('Are you sure?')" type="submit"><i class="fa fa-search"></i></button>
+    </form>
+    </div>
 <div class="content">
     <!-- Animated -->
     <div class="animated fadeIn">
         <!-- Widgets  -->
+
         <div class="row mt-2">
             <div class="col-lg-4 col-md-6">
                 <div class="card">
@@ -166,7 +210,10 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <hr style="height:2px;border-width:0;color:gray;background-color:gray">
 
+        <div class="row">
             <div class="col-lg-6 col-md-6">
                 <div class="card">
                     <div class="card-body">
@@ -186,6 +233,7 @@
                     </div>
                 </div>
             </div>
+        </div>
         </div>
         <!-- /Widgets -->
         <!--  Traffic  -->
@@ -242,39 +290,34 @@ Highcharts.setOptions({
       yAxis: {
           min: 0,
           title: {
-              text: 'Total Invoice Proposal'
+              text: 'Total Value Invoice Proposal'
           }
       },
-        plotOptions: {
-        series: {
-        borderWidth: 0,
-    
-        dataLabels: {
-            enabled: true
-        }
-        },
-    },
       tooltip: {
-          headerFormat: '<span style="font-size:10px"><b>{point.key}</b></span><table>',
-          pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-              '<td style="padding:0"><b>{point.y}</b></td></tr>',
-          footerFormat: '</table>',
-          shared: true,
-          useHTML: true
-      },
+              headerFormat: '<span style="font-size:10px"><b>{point.key}</b></span><table>',
+              pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                  '<td style="padding:0"><b>{point.y:,.0f}M</b></td></tr>' + 'Count: <b>{point.count:,.1f}</b><br/>',
+              footerFormat: '</table>',
+              shared: true,
+              useHTML: true
+          },
       plotOptions: {
           column: {
               pointPadding: 0.2,
-              borderWidth: 0
+              borderWidth: 0,
+              dataLabels: {
+                            enabled: true,
+                            format: '{point.y:,.0f}'
+                        }
           }
       },
       series: [{
           name: 'Invoice From GR',
-          data: [{!!json_encode($invgr)!!}, 2, 3, 0, 5]
+          data: [{!!json_encode($invgr)!!}],
   
       }, {
           name: 'Invoice From BA',
-          data: [{!!json_encode($invba)!!}, 6, 9, 1, 4]
+          data: [{!!json_encode($invba)!!}]
   
       }]
   });
@@ -294,14 +337,10 @@ Highcharts.setOptions({
               //backgroundColor:"#FBFAE4"
           },
           title: {
-              text: 'Proposal Invoice Statisctic by Year'
+              text: 'Proposal Invoice Statisctic by Monthly'
           },
           xAxis: {
-              categories: [
-                  '2019',
-                  '2020',
-                  '2021',
-                  '2022',
+            categories: [
                   '2023',
               ],
               crosshair: true
@@ -309,34 +348,38 @@ Highcharts.setOptions({
           yAxis: {
               min: 0,
               title: {
-                  text: 'Total Invoice Proposal'
+                text: 'Proposal Invoice Statisctic by Year'
               }
           },
           tooltip: {
-              headerFormat: '<span style="font-size:10px"><b>{point.key}</b></span><table>',
-              pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                  '<td style="padding:0"><b>{point.y}</b></td></tr>',
-              footerFormat: '</table>',
-              shared: true,
-              useHTML: true
-          },
+                  headerFormat: '<span style="font-size:10px"><b>{point.key}</b></span><table>',
+                  pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                      '<td style="padding:0"><b>{point.y:,.0f}M</b></td></tr>' + 'Count: <b>{point.count:,.1f}</b><br/>',
+                  footerFormat: '</table>',
+                  shared: true,
+                  useHTML: true
+              },
           plotOptions: {
               column: {
                   pointPadding: 0.2,
-                  borderWidth: 0
+                  borderWidth: 0,
+                  dataLabels: {
+                                enabled: true,
+                                format: '{point.y:,.0f}'
+                            }
               }
           },
           series: [{
               name: 'Invoice From GR',
-              data: [41661561, 34419934, 33158027, 31209230, 23632635]
+              data: [{!!json_encode($invthngr)!!}],
       
           }, {
               name: 'Invoice From BA',
-              data: [40514123, 32340016, 32224529, 29456321, 22807464]
+              data: [{!!json_encode($invthnba)!!}],
       
           }]
       });
-      </script>
+</script>
 
 <script>
 
