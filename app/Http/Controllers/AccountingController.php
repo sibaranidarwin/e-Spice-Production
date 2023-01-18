@@ -11,6 +11,8 @@ use App\good_receipt;
 use App\Invoice;
 
 
+use Carbon\CarbonImmutable;
+
 use Auth;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
@@ -46,10 +48,26 @@ class AccountingController extends Controller
             $a = date('Y-m-d');
             $b = date('Y-m-d',strtotime('+1 days'));
             $range = [$a, $b];
-
             $notif = good_receipt::all()->where("status", "Disputed")->whereBetween('updated_at', $range)->count();
-    
-            return view('accounting.dashboard',['good_receipt'=>$good_receipt,'draft'=>$draft, 'ba'=>$ba , 'invoicegr'=>$invoicegr, 'invoiceba'=>$invoiceba, 'dispute'=>$dispute, 'vendor'=>$vendor, 'notif'=>$notif]);
+            $vendor_name = good_receipt::select('vendor_name')->distinct()->get();
+
+            $year = CarbonImmutable::now()->locale('id_ID')->format('Y');
+            $month = 1;
+            $date = \Carbon\Carbon::parse($year."-".$month."-01"); // universal truth month's first day is 1
+            $start = $date->startOfMonth()->format('Y-m-d H:i:s'); // 2000-02-01 00:00:00
+            $end = $date->endOfMonth()->format('Y-m-d H:i:s');
+            $invgr =Invoice::whereBetween('created_at', [$start, $end])->where("data_from", "GR")->sum('total_harga_everify');
+            $invba =Invoice::whereBetween('created_at', [$start, $end])->where("data_from", "BA")->sum('total_harga_everify');
+            $totalgr=good_receipt::sum('jumlah_harga');
+            $totalinv =Invoice::where("data_from", "GR")->sum('total_harga_everify');
+            $totalinvba =Invoice::where("data_from", "BA")->sum('total_harga_everify');
+            
+            $year = CarbonImmutable::now()->locale('id_ID')->format('Y');
+            $invthngr =Invoice::whereYear('created_at', $year)->where("data_from", "GR")->sum('total_harga_everify');
+            $invthnba =Invoice::whereYear('created_at', $year)->where("data_from", "BA")->sum('total_harga_everify');
+            $month = null;
+            $year = null;
+            return view('accounting.dashboard',['totalinv'=>$totalinv, 'totalinvba'=>$totalinvba, 'totalgr'=>$totalgr, 'vendor_name'=>$vendor_name,'month'=>$month, 'year'=>$year, 'good_receipt'=>$good_receipt,'draft'=>$draft, 'ba'=>$ba , 'invoicegr'=>$invoicegr, 'invoiceba'=>$invoiceba, 'dispute'=>$dispute, 'vendor'=>$vendor, 'notif'=>$notif, 'invgr'=>$invgr, 'invba'=>$invba, 'invthngr'=>$invthngr, 'invthnba'=>$invthnba]);
         }
     }
     public function all()

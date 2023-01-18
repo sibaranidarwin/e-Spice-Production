@@ -116,7 +116,17 @@ label {
                                     @error('total_harga_everify[]')<span
                                         class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
                                 </div> --}}
-                                <div  class="form-group col-md-3">
+                                <div class="form-group col-md-3">
+                                    <label class="form-control-label" for="total_harga_everify">Total Price (calculate
+                                        by system)</label> <br>
+                                    <input type="text"
+                                        class="form-control @error('total_harga_everify[]') is-invalid @enderror"
+                                        name="" placeholder="Masukkan Total Price ..."
+                                        value="{{ number_format($total_harga, 0,",",".") }}" readonly>
+                                    @error('total_harga_everify[]')<span
+                                        class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
+                                </div>
+                                <div  hidden class="form-group col-md-3">
                                     <label class="form-control-label" for="total_harga_everify">Total Price (calculate
                                         by system)</label> <br>
                                     <input type="number" id="id-1"
@@ -153,6 +163,11 @@ label {
                                         readonly>
                                     @error('del_costs[]')<span
                                         class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
+                                </div>
+                                <div hidden class="form-group col-md-6">
+                                    <label class="form-control-label" for="baselinedate">Baselinedate <span
+                                            style="color: red">*</span></label>
+                                            <input type="date" value="<?php echo date('Y-m-d'); ?>" name="baselinedate">
                                 </div>
                                 <div class="form-group col-md-3">
                                     <label class="form-control-label" for="faktur_pajak_number">Unplanned Cost<span

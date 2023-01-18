@@ -62,6 +62,10 @@ class VendorController extends Controller
             $invgr =Invoice::whereBetween('created_at', [$start, $end])->where("data_from", "GR")->sum('total_harga_everify');
             $invba =Invoice::whereBetween('created_at', [$start, $end])->where("data_from", "BA")->sum('total_harga_everify');
             // dd($invgr);
+            
+            $year = CarbonImmutable::now()->locale('id_ID')->format('Y');
+            $invthngr =Invoice::whereYear('created_at', $year)->where("data_from", "GR")->sum('total_harga_everify');
+            $invthnba =Invoice::whereYear('created_at', $year)->where("data_from", "BA")->sum('total_harga_everify');
 
         $invoicegr = Invoice::all()->where("data_from", "GR")->Where("id_vendor", $user_vendor)->count();
         $invoiceba = Invoice::all()->where("data_from", "BA")->Where("id_vendor", $user_vendor)->count();
@@ -70,8 +74,10 @@ class VendorController extends Controller
         $vendor = User::all()->where("level", "vendor")->count();
         $draft = Draft_BA::all()->Where("id_vendor", $user_vendor)->count();
         $ba = BA_Reconcile::all()->Where("id_vendor", $user_vendor)->count();
+        $month = null;
+        $year = null;
 
-        return view('vendor.dashboard',['good_receipt'=>$good_receipt,'draft'=>$draft, 'ba'=>$ba , 'invoicegr'=>$invoicegr, 'invoiceba'=>$invoiceba, 'dispute'=>$dispute, 'vendor'=>$vendor, 'notif'=>$notif, 'invgr'=>$invgr, 'invba'=>$invba,]);
+        return view('vendor.dashboard',['month'=>$month, 'year'=>$year, 'good_receipt'=>$good_receipt,'draft'=>$draft, 'ba'=>$ba , 'invoicegr'=>$invoicegr, 'invoiceba'=>$invoiceba, 'dispute'=>$dispute, 'vendor'=>$vendor, 'notif'=>$notif, 'invgr'=>$invgr, 'invba'=>$invba, 'invthngr'=>$invthngr, 'invthnba'=>$invthnba]);
     }
     public function po()
     {   
@@ -403,7 +409,7 @@ class VendorController extends Controller
             $total_dpp += $ba->harga_satuan * $ba->qty;
             array_push($bas, $ba);
         }
-        $total_ppn = $total_dpp * 0.02;
+        $total_ppn = $total_dpp * 0.1;
         $total_harga = $total_dpp + $total_ppn;
 
         return view('vendor.po.editba', compact('bas', 'total_dpp', 'total_ppn', 'total_harga', 'kd', 'bln', 'npwp', 'notif'));
@@ -1019,6 +1025,11 @@ class VendorController extends Controller
     }
     public function show($id){
         $user = \App\User::find($id);
+        $name = Auth::User()->name;
+        $a = date('Y-m-d');
+        $b = date('Y-m-d',strtotime('+1 days'));
+        $range = [$a, $b];
+        $notif = good_receipt::all()->where("status", "Disputed")->Where("vendor_name", $name)->whereBetween('updated_at', $range)->count();
 
         return view('vendor.user.password',compact('user', 'notif'));  
     }
