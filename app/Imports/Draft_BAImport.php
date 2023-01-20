@@ -103,7 +103,7 @@ class Draft_BAImport implements ToCollection, WithHeadingRow
                 'created_at'=>$now = date('Y-m-d H:i:s'),
             ]);
         }
-        elseif($row['status_ba'] == 'Disputed' && $row['keterangan'] != null){
+        elseif($row['status_ba'] == "Disputed" && $row['keterangan'] != null){
             good_receipt::create([
                 'vendor_name' =>Auth::User()->name,
                 'id_vendor' => '2011000155',

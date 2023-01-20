@@ -278,4 +278,11 @@ class WarehouseController extends Controller
         return view('admin.warehouse.show',compact('user'));  
     }
 
+    public function cancelreject($id){
+        $cancel = good_receipt::find($id);
+        $cancel->update(['status'=>null]);
+
+        return redirect()->back()->with('success', 'Dispute Invoice data has been successfully cancelled!');
+    }
+
 }

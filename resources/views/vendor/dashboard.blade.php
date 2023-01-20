@@ -202,7 +202,7 @@
                             </div>
                             <div class="stat-content">
                                 <div class="text-left dib">
-                                    <div class="stat-heading"><strong> Disputed</strong></div>
+                                    <div class="stat-heading"><strong> Disputed Invoice</strong></div>
                                     <div class="stat-text"><strong class="count">{{ $dispute}}</strong></div>
                                 </div>
                             </div>
@@ -337,7 +337,7 @@ Highcharts.setOptions({
               //backgroundColor:"#FBFAE4"
           },
           title: {
-              text: 'Proposal Invoice Statisctic by Monthly'
+              text: 'Proposal Invoice Statisctic by Year'
           },
           xAxis: {
             categories: [
