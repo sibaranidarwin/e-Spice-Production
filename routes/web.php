@@ -236,3 +236,6 @@ Route::get('procumerent/filterreject', 'FilterProcurementController@filterreject
 Route::get('procumerent/filterdisp', 'FilterProcurementController@filterdisp')->name('procumerent-filterdisp');
 Route::get('procumerent/filterinv', 'FilterProcurementController@filterinv')->name('procumerent-filterinv');
 Route::get('procumerent/filterinvba', 'FilterProcurementController@filterinvba')->name('procumerent-filterinvba');
+
+Route::get('vendor/canceldisp/{id}', 'VendorController@canceldisp')->name('cancel_disp');
+Route::get('warehouse/cancelreject/{id}', 'WarehouseController@cancelreject')->name('cancel_reject');

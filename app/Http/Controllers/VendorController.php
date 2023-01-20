@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\DB;
 
 use PDF; //library pdf
 use Auth;
-use Illuminate\Http\Request;
+use Illuminate\Http\Request;    
 use Carbon\CarbonImmutable;
 use Illuminate\Support\Facades\Hash;
 use thiagoalessio\TesseractOCR\TesseractOCR;
@@ -187,6 +187,7 @@ class VendorController extends Controller
                 $recordIds = $request->get('ids');
                 $newStatus = $request->get('Status');
                 $user_vendor = Auth::User()->id_vendor;
+
                 $name = Auth::User()->name;
                 $a = date('Y-m-d');
                 $b = date('Y-m-d',strtotime('+1 days'));
@@ -951,7 +952,7 @@ class VendorController extends Controller
 
     public function disputed()
     {
-        $user_vendor = Auth::User()->name;
+        $user_vendor = Auth::User()->id_vendor;
         // dd($user_vendor);
         $start_date = null;
         $end_date = null;
@@ -961,7 +962,8 @@ class VendorController extends Controller
         $range = [$a, $b];
 
         $notif = good_receipt::all()->where("status", "Disputed")->Where("vendor_name", $name)->whereBetween('updated_at', $range)->count();
-        $good_receipts = good_receipt::where("status", "Disputed")->Where("vendor_name", $user_vendor)->get();
+
+        $good_receipts = good_receipt::where("status", "Disputed")->Where("vendor_name", $name)->get();
 
         return view('vendor.dispute.index',compact('good_receipts', 'start_date', 'end_date', 'notif'))
                 ->with('i',(request()->input('page', 1) -1) *5);
@@ -1083,6 +1085,13 @@ class VendorController extends Controller
 
         $notif = good_receipt::all()->where("status", "Disputed")->Where("vendor_name", $name)->whereBetween('updated_at', $range)->count();
         return view('admin.vendor.show',compact('user', 'notif'));  
+    }
+
+    public function canceldisp($id){
+        $cancel = good_receipt::find($id);
+        $cancel->update(['status'=>'Verified']);
+
+        return redirect()->back()->with('success', 'Dispute Invoice data has been successfully cancelled!');
     }
 
 }

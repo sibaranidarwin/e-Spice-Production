@@ -37,7 +37,7 @@ class UsersTableSeeder extends Seeder
             'level' =>'accounting',
         ]); 
         User::create([
-            'name' => 'United Tractors',
+            'name' => 'PT United Tractors',
             'id_vendor' => 2011000155,            
             'email' => 'unitedtractors@gmail.com',
             'npwp' => '4444444444444444',

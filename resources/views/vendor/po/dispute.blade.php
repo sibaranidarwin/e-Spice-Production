@@ -38,7 +38,7 @@
             <div class="col">
                 <div class="card  shadow h-100">
                     <div class="card-header">
-                        <strong class="card-header">Dispute Good Receipt</strong>
+                        <strong class="card-header">Dispute Invoice</strong>
                     </div>
                     <div class="card-body">
                         <form autocomplete="off" action="{{ route('dispute_datagr') }}" method="post"

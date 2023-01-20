@@ -139,6 +139,7 @@ div.dt-button-collection {
                                             <th style="text-align: center;">Tax Code</th>
                                             <th style="text-align: center;">Updated By</th>
                                             <th style="text-align: center;">Reason</th>  
+                                            <th style="text-align: center;">Action</th>  
                                         </tr>
                                         </thead>
                                         <tbody style="font-size: 11px;">
@@ -159,6 +160,10 @@ div.dt-button-collection {
                                                 <td> <span>{{$good_receipt->tax_code}}</span> </td>
                                                 <td> <span>Warehouse</span> </td>
                                                 <td><span>{{$good_receipt->alasan_reject}}</span></td>
+                                                <td class="text-center"><span>
+                                                    <a data-toggle="tooltip" data-placement="bottom" href="/warehouse/cancelreject/{{ $good_receipt->id_gr}}" class="btn btn-danger btn-sm fa fa-times" title="Cancel Rejected"
+                                                        onclick="return confirm('Are you sure?')"></a>
+                                            </span></td>
                                             </tr>
                                         @endforeach
                                         </select>

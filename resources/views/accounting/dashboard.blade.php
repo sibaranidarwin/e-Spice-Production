@@ -3,6 +3,7 @@
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
 <script src="https://code.highcharts.com/modules/accessibility.js"></script>
 <script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/js/select2.min.js"></script>
 
 @extends('accounting.layouts.sidebar')
 @section('content')
@@ -210,7 +211,6 @@
         <!-- /.site-footer -->
     </div>
     <!-- /#right-panel -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/js/select2.min.js"></script>
     <script>
    Highcharts.setOptions({
         lang: {

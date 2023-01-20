@@ -98,7 +98,6 @@
                             </div>
                             <button class="btn btn-primary" type="submit"><i class="fa fa-search"></i></button>
                           </form>
-                        <form action="{{ route('update-datagr-vendor/{id_gr}') }}" method="POST">
                             @csrf
                             <table id="list" class="table table-striped" style="font-size: 10px;">
                                 <thead>
@@ -118,6 +117,7 @@
                                         <th>Updated By</th>
                                         <th>Reason Disp. </th>
                                         <th>Files Disp.</th>
+                                        <th>Action </th>
                                     </tr>
                                 </thead>
                                 <tbody style="font-size: 11px;">
@@ -139,19 +139,22 @@
                                         <td><span>{{$good_receipt->tax_code}}</span></td>
                                         <td><span>{{$good_receipt->vendor_name}}</span></td>
                                         <td><span>{{$good_receipt->alasan_disp}}</span></td>
-                                        @if ($good_receipt->lampiran == null)
+                                        @if ($good_receipt->lam_disp == null)
                                         <td><a target="_blank" href="{{ $good_receipt->lam_disp}}" onclick="return false;"
                                             class="btn btn-light btn-sm">View File</a></td>
                                         @else
                                         <td><a target="_blank" href="{{ $good_receipt->lam_disp}}"
                                             class="btn btn-success btn-sm">View File</a></td>
                                         @endif
+                                        <td class="text-center"><span>
+                                                <a data-toggle="tooltip" data-placement="bottom" href="/vendor/canceldisp/{{ $good_receipt->id_gr}}" class="btn btn-danger btn-sm fa fa-times" title="Cancel Disputed"
+                                                    onclick="return confirm('Are you sure?')"></a>
+                                        </span></td>
                                     </tr>
                                     @endforeach
                                     </select>
                                 </tbody>
                             </table>
-                           </form>
                     </div> <!-- /.table-stats -->
                 </div>
             </div>
