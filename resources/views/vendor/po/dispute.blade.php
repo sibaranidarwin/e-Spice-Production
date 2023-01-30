@@ -95,6 +95,7 @@
                                             /{{$good_receipt->vendor_part_number}}</span>
                                     <td> <span class="">{{$good_receipt->tax_code}}</span> </td>
                                     <td>{{ $good_receipt->status }}</td>
+                                    
                                 </tr>
                                 @endforeach
                                 </select>

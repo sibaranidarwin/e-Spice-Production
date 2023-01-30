@@ -30,8 +30,9 @@ label {
 a[disabled="disabled"] {
     pointer-events: none;
 }
+
 div.dt-button-collection {
-  background-color: #0275d8;
+    background-color: #0275d8;
 }
 </style>
 <div class="breadcrumbs">
@@ -92,26 +93,30 @@ div.dt-button-collection {
                     <div class="card-body">
                         <div class="table-responsive text-nowrap">
                             @if ($start_date != null || $end_date != null || $vendor != null)
-                            <p style="text-align: center; background-color: #11CDEF; color: white;"><strong class="card-title">GR Date:{{ Carbon\Carbon::parse($start_date)->format('d F Y') }} To: {{ Carbon\Carbon::parse($end_date)->format('d F Y') }}&nbsp; || &nbsp;Vendor Name: {{ ($vendor) }}</strong></p>
+                            <p style="text-align: center; background-color: #11CDEF; color: white;"><strong
+                                    class="card-title">GR Date:{{ Carbon\Carbon::parse($start_date)->format('d F Y') }}
+                                    To: {{ Carbon\Carbon::parse($end_date)->format('d F Y') }}&nbsp; || &nbsp;Vendor
+                                    Name: {{ ($vendor) }}</strong></p>
                             @endif
                             <form action="{{ route('accounting-filterver') }}" class="form-inline" method="GET">
                                 <div class="form-group col-md-2">
-    
+
                                 </div>
                                 <div class="form-group ">
-                                  <label for="" >GR Date: &nbsp;</label>
-                                  <input type="date" class="form-control form-control-sm" name="start_date">
+                                    <label for="">GR Date: &nbsp;</label>
+                                    <input type="date" class="form-control form-control-sm" name="start_date">
                                 </div>
                                 <div class="form-group mx-sm-2">
-                                  <label for="inputPassword2">To: &nbsp;</label>
-                                  <input type="date" class="form-control form-control-sm" name="end_date">
+                                    <label for="inputPassword2">To: &nbsp;</label>
+                                    <input type="date" class="form-control form-control-sm" name="end_date">
                                 </div>
                                 <div class="form-group col-md-2-half">
                                     <select class="form-control form-control-sm" name="vendor">
                                         <option value="">-- Choose Vendor Name -- </option>
-                                            @foreach ($vendor_name as $vendor_name)
-                                                <option value="{{ $vendor_name['vendor_name'] }}">{{ $vendor_name['vendor_name'] }}</option>
-                                            @endforeach
+                                        @foreach ($vendor_name as $vendor_name)
+                                        <option value="{{ $vendor_name['vendor_name'] }}">
+                                            {{ $vendor_name['vendor_name'] }}</option>
+                                        @endforeach
                                     </select>
                                 </div> &nbsp;&nbsp;
                                 <div hidden class="form-group col-md-2-half">
@@ -121,7 +126,8 @@ div.dt-button-collection {
                                         <option value="Not Yet Verified - Draft BA">Not Yet Verified - Draft BA</option>
                                     </select>
                                 </div> &nbsp;&nbsp;
-                                <button class="btn btn-primary" onclick="return confirm('Are you sure?')" type="submit"><i class="fa fa-search"></i></button>
+                                <button class="btn btn-primary" onclick="return confirm('Are you sure?')"
+                                    type="submit"><i class="fa fa-search"></i></button>
                             </form>
                             <form action="{{ route('update-datagr/{id}') }}" method="POST">
                                 @csrf
@@ -160,7 +166,8 @@ div.dt-button-collection {
                                             <td> <span>{{$good_receipt->material_number}}/<br>
                                                     {{$good_receipt->vendor_part_number}}</span></td>
                                             <td> <span>{{$good_receipt->mat_desc}}</span>
-                                                <br>({{$good_receipt->valuation_type}})</td>
+                                                <br>({{$good_receipt->valuation_type}})
+                                            </td>
                                             <td> <span>{{$good_receipt->jumlah}}</span>&nbsp;<span>{{$good_receipt->uom}}</span>
                                             </td>
                                             <td> <span>{{$good_receipt->currency}}</span> </td>
@@ -188,16 +195,20 @@ div.dt-button-collection {
                                     </div>
                                     <div class="col-lg-6 col-md-6">
                                         <div class="card bg-light card-outline-danger text-cen">
-                                            <span class="pull-right clickable close-icon text-right" data-effect="fadeOut"><i class="fa fa-times"></i></span>
+                                            <span class="pull-right clickable close-icon text-right"
+                                                data-effect="fadeOut"><i class="fa fa-times"></i></span>
                                             <div class="card-block text-white">
-                                              <blockquote class="card-blockquote text-white">
-                                                <p style="font-size: 14px;"><strong>&nbsp; Good receipt status description: </strong></p>
-                                                <p style="font-size: 13px;"><strong>&nbsp; Verified: good receipt data with certain conditions that have been verified <br> by the warehouse.</strong></p>
+                                                <blockquote class="card-blockquote text-white">
+                                                    <p style="font-size: 14px;"><strong>&nbsp; Good receipt status
+                                                            description: </strong></p>
+                                                    <p style="font-size: 13px;"><strong>&nbsp; Verified: good receipt
+                                                            data with certain conditions that have been verified <br> by
+                                                            the warehouse.</strong></p>
                                                 </blockquote>
                                             </div>
-                                          </div>
                                         </div>
                                     </div>
+                                </div>
                             </form>
                         </div> <!-- /.table-stats -->
                     </div>
@@ -262,20 +273,16 @@ $(document).ready(function() {
     // DataTables initialisation
     var table = $('#list').DataTable({
         dom: "<'row'<'col-md-2 bg-white'l><'col-md-5 bg-white'B><'col-md-5 bg-white'f>>" +
-                "<'row'<'col-md-12'tr>>" +
-                "<'row'<'col-md-6'i><'col-md-6'p>>",
-        columnDefs: [
-            {
-                targets: 1,
-                className: 'noVis'
-            }
-        ],
-        buttons: [
-            {
-                extend: 'colvis',
-                columns: ':not(.noVis)'
-            }
-        ],
+            "<'row'<'col-md-12'tr>>" +
+            "<'row'<'col-md-6'i><'col-md-6'p>>",
+        columnDefs: [{
+            targets: 1,
+            className: 'noVis'
+        }],
+        buttons: [{
+            extend: 'colvis',
+            columns: ':not(.noVis)'
+        }],
         rowReorder: true,
         columnDefs: [{
                 orderable: true,
@@ -297,7 +304,10 @@ $(document).ready(function() {
                 targets: '_all'
             }
         ],
-        lengthMenu: [[10, 25, 50, -1],[10, 25, 50, 'All'],],
+        lengthMenu: [
+            [10, 25, 50, -1],
+            [10, 25, 50, 'All'],
+        ],
     });
 
     // Refilter the table

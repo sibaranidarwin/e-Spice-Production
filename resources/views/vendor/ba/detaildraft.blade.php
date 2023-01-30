@@ -121,6 +121,7 @@ label {
                                         <th style="text-align: center;">Ref.</th>
                                         <th style="text-align: center;">Del. Note</th>
                                         <th style="text-align: center;">Tax Code</th>
+                                        <th style="text-align: center;">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody style="font-size: 11px;">
@@ -145,6 +146,10 @@ label {
                                         <td> <span>{{$item->ref_doc_no}}</span> </td>
                                         <td><span>{{$item->delivery_note}}</span> </td>
                                         <td><span>{{$item->tax_code}}</td>
+                                        <td class="text-center"><span>
+                                                <a data-toggle="tooltip" data-placement="bottom" href="/vendor/canceldraft/{{ $item->id_draft_ba}}" class="btn btn-danger btn-sm fa fa-times" title="Cancel Draft BA"
+                                                    onclick="return confirm('Are you sure?')"></a>
+                                        </span></td>
                                     </tr>
                                     @endforeach
                                     </select>
@@ -198,6 +203,10 @@ label {
               <label>File Excel Draft BA</label>
               <input type="file" name="excel-draft" required>
             </div>
+            <div class="col-md-12">
+                <label>File PDF Draft BA</label>
+                <input type="file" name="pdf-draft" required>
+              </div>
           </div>
         </div>
         <div class="modal-footer justify-content-between">

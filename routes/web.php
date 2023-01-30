@@ -174,6 +174,7 @@ Route::put('vendor/draft','VendorController@uploaddraft');
 Route::post('vendor/exportdraft', 'VendorController@draftbaexport')->name('exportdraftba');
 
 Route::post('vendor/edit-ba','VendorController@editba')->name('update-ba-vendor/{id_gr}');
+Route::post('vendor/ba','VendorController@updateba')->name('update-ba/{id_gr}');
 Route::post('vendor/create_invoice_ba','VendorController@storeba')->name('create-invoice-ba');
 
 Route::get('vendor/uploadinv', 'VendorController@uploadinv')->name('vendor/uploadinv');
@@ -238,4 +239,5 @@ Route::get('procumerent/filterinv', 'FilterProcurementController@filterinv')->na
 Route::get('procumerent/filterinvba', 'FilterProcurementController@filterinvba')->name('procumerent-filterinvba');
 
 Route::get('vendor/canceldisp/{id}', 'VendorController@canceldisp')->name('cancel_disp');
+Route::get('vendor/canceldraft/{id}', 'VendorController@canceldraft')->name('cancel_draft');
 Route::get('warehouse/cancelreject/{id}', 'WarehouseController@cancelreject')->name('cancel_reject');

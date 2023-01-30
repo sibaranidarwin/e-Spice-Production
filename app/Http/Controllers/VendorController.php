@@ -622,7 +622,7 @@ class VendorController extends Controller
             $a = date('Y-m-d');
             $b = date('Y-m-d',strtotime('+1 days'));
             $range = [$a, $b];
-    
+            
             $notif = good_receipt::all()->where("status", "Disputed")->Where("vendor_name", $name)->whereBetween('updated_at', $range)->count();
             $end_date = null;
 
@@ -630,6 +630,7 @@ class VendorController extends Controller
              "ba.status_ba",
              "ba_reconcile.status_invoice_proposal",
              "ba_reconcile.created_at",
+             "ba.lamp"
              )
              ->distinct()
              ->JOIN("ba_reconcile","ba.no_ba", "=", "ba_reconcile.no_ba")
@@ -672,10 +673,44 @@ class VendorController extends Controller
     
     public function uploaddraft(Request $request)
     {
+        
         $file = $request->file('excel-vendor-ba');
         Excel::import(new Draft_BAImport, $file);
         
         return back()->with('success', 'BA Imported Successfully');
+    }
+
+    public  function updateba(Request $request){
+        $arrName = [];
+        if ($request->hasFile("lamp")) {
+
+            $allowedfileExtension = ['pdf', 'jpg', 'png', 'docx'];
+            $files = $request->file('lamp');
+            foreach ($files as $file) {
+                $extension = $file->getClientOriginalExtension();
+
+                if (in_array($extension, $allowedfileExtension)) {
+                    $str = rand();
+                    $result = md5($str);
+                    $filename = pathinfo($extension, PATHINFO_FILENAME);
+                    $name = time() . "-" . $result . '.' . $extension;
+                    $file->move(public_path() . '/lampiran/ba/', $name);
+                    array_push($arrName, '/lampiran/ba/' . $name);
+                }
+            }
+        }
+        $fileName = join("#", $arrName);
+        // dd($fileName);
+        dd($request->id);
+        foreach($request->id as $id) {
+            $good_receipt = good_receipt::find($id);
+            $good_receipt->update([
+                 'lamp' => $fileName
+            ]);
+            $good_receipt->save();
+        }
+        dd($good_receipt);
+        return back()->with('success', 'BA Updated Successfully');
     }
 
     public function draftbaexport(Request $request){
@@ -1092,6 +1127,13 @@ class VendorController extends Controller
         $cancel->update(['status'=>'Verified']);
 
         return redirect()->back()->with('success', 'Dispute Invoice data has been successfully cancelled!');
+    }
+
+    public function canceldraft($id){
+        $cancel = Draft_BA::find($id);
+        $cancel->update(['status_invoice_proposal'=>'Verified - BA']);
+
+        return redirect()->back()->with('success', 'Draft BA has been successfully canceled!');
     }
 
 }
