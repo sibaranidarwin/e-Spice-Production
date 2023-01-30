@@ -114,6 +114,7 @@ label {
                                             <th>Sts. Inv. Props.</th>
                                             <th>No BA</th>
                                             <th>Date</th>
+                                            <th>Lampiran</th>
                                         </tr>
                                     </thead>
                                     <tbody style="font-size: 11px;">
@@ -125,6 +126,13 @@ label {
                                             <td>{{$item->status_invoice_proposal}}</td>
                                             <td> <a href="/vendor/ba/{{ $item->no_ba }}">{{$item->no_ba}}</td>
                                             <td><span>{{ Carbon\Carbon::parse($item->created_at)->format('d F Y') }}</span></td>
+                                            @if ($item->lamp == null)
+                                            <td><a target="_blank" href="{{ $item->lamp}}" onclick="return false;"
+                                                class="btn btn-light btn-sm">View File</a></td>
+                                            @else
+                                            <td><a target="_blank" href="{{ $item->lamp}}"
+                                                class="btn btn-success btn-sm">View File</a></td>
+                                            @endif
                                         </tr>
                                         @endforeach
                                         </select>
@@ -181,6 +189,12 @@ label {
             <div class="col-md-12">
               <label>File Excel BA</label>
               <input type="file" name="excel-vendor-ba" required>
+            </div>
+            <br>
+             {{-- TODO: Remember this must can upload multiple file and save to db with format (fileone, filetwo, filethree) include the paht  --}}
+             <div class="col-md-12">
+                <label for="lamp">File PDF BA &nbsp;</label>
+                <input type="file" name="lamp[]" id="lamp" multiple>
             </div>
           </div>
         </div>

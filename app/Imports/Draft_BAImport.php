@@ -4,7 +4,6 @@ namespace App\Imports;
 
 use App\Ba;
 use App\BA_Reconcile;
-use App\Draft_BA;
 use App\good_receipt;
 use Auth;
 use Illuminate\Support\Collection;

@@ -172,7 +172,7 @@ label {
                                 <div class="form-group col-md-3">
                                     <label class="form-control-label" for="faktur_pajak_number">Unplanned Cost<span
                                             style="color: red"></span></label>
-                                    <input type="text" id="id-3" class="number-decimal form-control"
+                                    <input type="number" min="0" max="1000" step="0.1" id="id-3" class="number-decimal form-control"
                                         name="unplan_cost" placeholder="Fill in Unplanned Cost" autocomplete="off">
                                     @error('faktur_pajak_number[]')<span
                                         class="invalid-feedback font-weight-bold">{{ $message }}</span>@enderror
