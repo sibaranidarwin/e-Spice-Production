@@ -73,6 +73,7 @@
                                 <div class="form-group">
                                     <label for="">Email</label>
                                     <input type="text" class="form-control" name="email" value="{{$user->email}}">
+                                    <input type="hidden" name="fotoLama" value="{{$user->foto}}">
                                 </div>
                                 <div class="text-center">
                                     <button type="submit" class="btn btn-primary"
