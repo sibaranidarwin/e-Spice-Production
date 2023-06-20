@@ -18,6 +18,7 @@ class CreateInvoiceTable extends Migration
             $table->bigInteger('id_vendor');
             $table->date('posting_date');
             $table->string('vendor_invoice_number');
+            $table->integer('invoice_item')->nullable();
             $table->string('no_invoice_proposal');
             $table->string('everify_number')->nullable();
             $table->string('faktur_pajak_number')->nullable();

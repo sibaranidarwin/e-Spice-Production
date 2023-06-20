@@ -38,12 +38,13 @@ class AdminController extends Controller
     public function all()
     { 
 
-        $good_receipts = good_receipt::where("status", "Verified")->orwhere('status', '!=', 'Not Verified')->orwhere('material_number','LG2KOM00707010F691')->orwhere("status", "Rejected")->get();
+        $good_receipts = good_receipt::whereIn("status", ["Verified", "Rejected"])->orwhere('status', '!=', 'Not Verified')->orwhere('material_number','LG2KOM00707010F691')->get();
         $vendor_name = good_receipt::select('vendor_name')->distinct()->get();
         $start_date = null;
         $end_date = null;
         $vendor = null;
         
+        // dd($good_receipts);
         $dispute = good_receipt::all()->where("status", "Disputed")->count();
 
         return view('admin.po.all',compact('good_receipts', 'dispute', 'vendor_name', 'start_date', 'end_date', 'vendor'))
