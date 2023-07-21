@@ -52,7 +52,7 @@ class AdminController extends Controller
     }
     public function po()
     {   
-        $good_receipts = good_receipt::where('material_number', 'LG2KOM00707010F691' )->WhereNull('status')->get();
+        $good_receipts = good_receipt::where('status', '=', 'Not Verified')->get();
         $start_date = null;
         $end_date = null;
         $status = null;

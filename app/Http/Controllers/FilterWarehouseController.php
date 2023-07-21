@@ -69,16 +69,16 @@ class FilterWarehouseController extends Controller
             $vendor_name = good_receipt::select('vendor_name')->distinct()->get();
 
             if($vendor == null){
-                $good_receipts = good_receipt::whereBetween('gr_date',[$start_date,$end_date])->where('material_number', 'LG2KOM00707010F691' )->WhereNull('status')->orderBy('gr_date', 'ASC')->get();
+                $good_receipts = good_receipt::whereBetween('gr_date',[$start_date,$end_date])->where('status', '=', 'Not Verified')->orderBy('gr_date', 'ASC')->get();
                 }
             elseif($vendor != null){
-                    $good_receipts = good_receipt::where("vendor_name", $vendor)->where('material_number', 'LG2KOM00707010F691' )->WhereNull('status')->orderBy('gr_date', 'ASC')->get();  
+                    $good_receipts = good_receipt::where("vendor_name", $vendor)->where('status', '=', 'Not Verified')->orderBy('gr_date', 'ASC')->get();  
                     }
             elseif($start_date != null && $end_date != null){
-                    $good_receipts = good_receipt::whereBetween('gr_date',[$start_date,$end_date])->where('material_number', 'LG2KOM00707010F691' )->WhereNull('status')->orderBy('gr_date', 'ASC')->get();
+                    $good_receipts = good_receipt::whereBetween('gr_date',[$start_date,$end_date])->where('status', '=', 'Not Verified')->orderBy('gr_date', 'ASC')->get();
                 }
             else{
-                $good_receipts = good_receipt::whereBetween('gr_date',[$start_date,$end_date])->where('material_number', 'LG2KOM00707010F691' )->WhereNull('status')->orderBy('gr_date', 'ASC')->get();
+                $good_receipts = good_receipt::whereBetween('gr_date',[$start_date,$end_date])->where('status', '=', 'Not Verified')->WhereNull('status')->orderBy('gr_date', 'ASC')->get();
                 }
 
             $dispute = good_receipt::all()->where("status", "Disputed")->count();
