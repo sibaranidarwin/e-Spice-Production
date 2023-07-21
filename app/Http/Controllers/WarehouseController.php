@@ -69,7 +69,8 @@ class WarehouseController extends Controller
         $status = null;
         $vendor = null;
         $vendor_name = good_receipt::select('vendor_name')->distinct()->get();
-        $good_receipts = good_receipt::where('material_number', 'LG2KOM00707010F691' )->WhereNull('status')->get();
+        
+        $good_receipts = good_receipt::where('status', '=', 'Not Verified')->get();
 
         // dd($good_receipts);
         $dispute = good_receipt::all()->where("status", "Disputed")->count();
